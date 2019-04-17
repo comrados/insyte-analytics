@@ -31,23 +31,28 @@ class CassandraIO:
     username = None
     password = None
 
+    # connection
+    auth = None
+    cluster = None
+    session = None
+
     # read parameters (arrays, if not None, must have equal lengths)
     device_id = None  # array of ids [uuid1, uuid2, ..., uuidN]
     data_source_id = None  # array of ids [id1, id2, ..., idN]
     time_upload = None  # array of tuples of dates [(d_min1 d_max1), (d_min2 d_max2), ..., (d_minN d_maxN)]
     limit = None  # limits the number of retrieved rows
 
-    # connection
-    auth = None
-    cluster = None
-    session = None
+    # write parameters
+    result_id = None  # uuid of the result
+    output_data = None  # array of tuples [(date1, value1), (date2, value2), ..., (dateN, valueN)]
 
-    # empty constructor
     def __init__(self):
+        """empty constructor"""
         pass
 
     @classmethod
     def set_connection_parameters(cls, contact_points=None, keyspace_name=None, port=None, username=None, password=None):
+        """sets connection parameters"""
         if contact_points is not None:
             cls.contact_points = contact_points
         if keyspace_name is not None:
@@ -61,6 +66,7 @@ class CassandraIO:
 
     @classmethod
     def check_connection_parameters(cls):
+        """checks connection parameters"""
         if cls.contact_points is None:
             raise ValueError("Connection parameter 'contact_points' not given")
         if cls.keyspace_name is None:
@@ -74,6 +80,7 @@ class CassandraIO:
 
     @classmethod
     def set_read_parameters(cls, device_id=None, data_source_id=None, time_upload=None):
+        """sets reading parameters"""
         if device_id is not None:
             cls.device_id = device_id
         if data_source_id is not None:
@@ -82,13 +89,30 @@ class CassandraIO:
             cls.time_upload = time_upload
 
     @classmethod
-    def heck_read_parameters(cls):
+    def check_read_parameters(cls):
+        """checks reading parameters"""
         if cls.device_id is None:
-            raise ValueError("Connection parameter 'device_id' not given")
+            raise ValueError("Reading parameter 'device_id' not given")
         if cls.data_source_id is None:
-            raise ValueError("Connection parameter 'data_source_id' not given")
+            raise ValueError("Reading parameter 'data_source_id' not given")
         if cls.time_upload is None:
-            raise ValueError("Connection parameter 'time_upload' not given")
+            raise ValueError("Reading parameter 'time_upload' not given")
+
+    @classmethod
+    def set_write_parameters(cls, result_id=None, output_data=None):
+        """sets writing parameters"""
+        if result_id is not None:
+            cls.result_id = result_id
+        if output_data is not None:
+            cls.output_data = output_data
+
+    @classmethod
+    def check_write_parameters(cls):
+        """checks writing parameters"""
+        if cls.result_id is None:
+            raise ValueError("Writing parameter 'result_id' not given")
+        if cls.output_data is None:
+            raise ValueError("Writing parameter 'output_data' not given")
 
     @classmethod
     def connect(cls):
