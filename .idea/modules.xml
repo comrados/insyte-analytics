@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/insyte.iml" filepath="$PROJECT_DIR$/.idea/insyte.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/insyte-analytics.iml" filepath="$PROJECT_DIR$/.idea/insyte-analytics.iml" />
     </modules>
   </component>
 </project>

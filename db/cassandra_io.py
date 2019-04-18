@@ -1,7 +1,6 @@
 from cassandra.auth import PlainTextAuthProvider
 from cassandra.cluster import Cluster
-from cassandra.query import dict_factory
-
+from cassandra.query import dict_factory, BatchStatement
 
 """
 TABLE data 
@@ -52,7 +51,7 @@ class CassandraIO:
 
     @classmethod
     def set_connection_parameters(cls, contact_points=None, keyspace_name=None, port=None, username=None, password=None):
-        """sets connection parameters"""
+        """set connection parameters"""
         if contact_points is not None:
             cls.contact_points = contact_points
         if keyspace_name is not None:
@@ -66,7 +65,7 @@ class CassandraIO:
 
     @classmethod
     def check_connection_parameters(cls):
-        """checks connection parameters"""
+        """check connection parameters"""
         if cls.contact_points is None:
             raise ValueError("Connection parameter 'contact_points' not given")
         if cls.keyspace_name is None:
@@ -80,7 +79,7 @@ class CassandraIO:
 
     @classmethod
     def set_read_parameters(cls, device_id=None, data_source_id=None, time_upload=None):
-        """sets reading parameters"""
+        """set reading parameters"""
         if device_id is not None:
             cls.device_id = device_id
         if data_source_id is not None:
@@ -90,7 +89,7 @@ class CassandraIO:
 
     @classmethod
     def check_read_parameters(cls):
-        """checks reading parameters"""
+        """check reading parameters"""
         if cls.device_id is None:
             raise ValueError("Reading parameter 'device_id' not given")
         if cls.data_source_id is None:
@@ -100,7 +99,7 @@ class CassandraIO:
 
     @classmethod
     def set_write_parameters(cls, result_id=None, output_data=None):
-        """sets writing parameters"""
+        """set writing parameters"""
         if result_id is not None:
             cls.result_id = result_id
         if output_data is not None:
@@ -108,7 +107,7 @@ class CassandraIO:
 
     @classmethod
     def check_write_parameters(cls):
-        """checks writing parameters"""
+        """check writing parameters"""
         if cls.result_id is None:
             raise ValueError("Writing parameter 'result_id' not given")
         if cls.output_data is None:
@@ -116,6 +115,7 @@ class CassandraIO:
 
     @classmethod
     def connect(cls):
+        """set connection"""
         try:
             cls.check_connection_parameters()
             cls.auth = PlainTextAuthProvider(username=cls.username, password=cls.password)
@@ -125,9 +125,57 @@ class CassandraIO:
             raise ValueError("Impossible to connect: " + repr(err))
 
     @classmethod
-    def read_data(cls):
-        cls.session.row_factory = dict_factory
+    def disconnect(cls):
+        """close connection"""
+        cls.session.shutdown()
+        cls.cluster.shutdown()
 
+    device_id = None  # array of ids [uuid1, uuid2, ..., uuidN]
+    data_source_id = None  # array of ids [id1, id2, ..., idN]
+    time_upload = None  # array of tuples of dates [(d_min1 d_max1), (d_min2 d_max2), ..., (d_minN d_maxN)]
+    limit = None
+
+    @classmethod
+    def read_data(cls, device_id=None, data_source_id=None, time_upload=None, limit=None):
+        """read data from db according to object's parameters"""
+        query = "SELECT * FROM "
+        # TODO
+
+        cls.session.row_factory = dict_factory
         rows = cls.session.execute('SELECT * FROM data WHERE data_source_id=108 ALLOW FILTERING', timeout=10)
 
+    @classmethod
+    def read(cls, query):
+        """general case of data reading"""
+        return cls.session.execute(query, timeout=10)
 
+    @classmethod
+    def write_data(cls):
+        """write data from this object to db"""
+        query = "INSERT INTO data_result (result_id, time_upload, value) VALUES (?, ?, ?) IF NOT EXISTS"
+        return cls.write(query, cls.result_id, cls.output_data)
+
+    @classmethod
+    def write(cls, query, result_id, output_data, batch_size_limit=25000):
+        """general case of data insertion"""
+        res = []
+        try:
+            cls.check_write_parameters()
+            batch = BatchStatement()
+            prepared = cls.session.prepare(query)
+            batch_size = 0
+            # send each 50k values in batches
+            for d in output_data:
+                batch.add(prepared, (result_id, d[0], str(d[1])))
+                batch_size += 1
+                if batch_size >= batch_size_limit:
+                    res.append(cls.session.execute(batch))
+                    batch.clear()
+                    batch_size = 0
+            # send remaining values
+            if batch_size > 0:
+                res.append(cls.session.execute(batch))
+                batch.clear()
+        except ValueError as err:
+            raise ValueError("Impossible to write: " + repr(err))
+        return res
