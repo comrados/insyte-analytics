@@ -43,8 +43,8 @@ dates_data = generator(f)
 x = [d[0] for d in dates_data[:500]]
 y = [d[1] for d in dates_data[:500]]
 
-plt.plot(x, y)
-plt.show()
+#plt.plot(x, y)
+#plt.show()
 
 
 # send batches of 50k values (max batch size 65535)
@@ -75,5 +75,8 @@ def execute_single():
         query = "INSERT INTO data (device_id, data_source_id, time_upload, value) VALUES (%s, %s, %s, %s) IF NOT EXISTS"
         session.execute(query, (device_id, data_source_id, d[0], str(d[1])))
 
-print(len(dates_data))
+#print(len(dates_data))
+
+#print(dates_data[0][0])
+
 execute_batch()
