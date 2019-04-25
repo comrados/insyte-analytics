@@ -125,18 +125,13 @@ class CassandraIO:
             cls.cluster = Cluster(cls.contact_points, auth_provider=cls.auth, port=cls.port)
             cls.session = cls.cluster.connect(cls.keyspace_name)
         except ValueError as err:
-            raise ValueError("Impossible to connect: " + repr(err))
+            raise ValueError("Impossible to connect: " + str(err))
 
     @classmethod
     def disconnect(cls):
         """close connection"""
         cls.session.shutdown()
         cls.cluster.shutdown()
-
-    device_id = None  # array of ids [uuid1, uuid2, ..., uuidN]
-    data_source_id = None  # array of ids [id1, id2, ..., idN]
-    time_upload = None  # array of tuples of dates [(d_min1 d_max1), (d_min2 d_max2), ..., (d_minN d_maxN)]
-    limit = None
 
     @classmethod
     def read_data(cls, device_id=None, data_source_id=None, time_upload=None, limit=None):
@@ -150,12 +145,15 @@ class CassandraIO:
         try:
             cls._check_read_parameters()
             for di, dsi, tu in zip(cls.device_id, cls.data_source_id, cls.time_upload):
-                params = {"di": di, "dsi": dsi, "from": tu[0], "to": tu[1], "limit": limit}
-                query = "SELECT * FROM data WHERE device_id={di} and data_source_id={dsi} and time_upload >= '{from}' and time_upload < '{to}' {limit} ALLOW FILTERING".format(**params)
+                params = {"di": str(di), "dsi": str(dsi), "from": str(tu[0]), "to": str(tu[1]), "limit": limit}
+                query = "SELECT * FROM data WHERE device_id={di} ".format(**params)
+                query += "and data_source_id={dsi} ".format(**params)
+                query += "and time_upload >= '{from}' and time_upload < '{to}' ".format(**params)
+                query += "{limit} ALLOW FILTERING".format(**params)
                 result = cls._read(query)
                 results.append(result)
         except ValueError as err:
-            raise ValueError("Impossible to read: " + repr(err))
+            raise ValueError("Impossible to read: " + str(err))
         return results
 
     @classmethod
@@ -196,5 +194,5 @@ class CassandraIO:
                 res.append(cls.session.execute(batch))
                 batch.clear()
         except ValueError as err:
-            raise ValueError("Impossible to write: " + repr(err))
+            raise ValueError("Impossible to write: " + str(err))
         return res
