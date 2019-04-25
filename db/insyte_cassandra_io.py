@@ -51,6 +51,7 @@ class InsyteCassandraIO:
 
     def __init__(self):
         """empty constructor"""
+        self.logger.debug("Initialization")
         pass
 
     @classmethod
