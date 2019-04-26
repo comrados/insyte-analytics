@@ -4,7 +4,7 @@ from cassandra.policies import DCAwareRoundRobinPolicy
 from cassandra.query import dict_factory, BatchStatement
 import logging
 
-"""
+'''
 TABLE data 
 (
    device_id uuid,
@@ -20,29 +20,28 @@ TABLE data_result (
    value text,
    PRIMARY KEY(result_id, time_upload)
 );
-"""
+'''
 
 
 class InsyteCassandraIO:
-
-    logger = logging.getLogger('InsyteCassandraIO')
+    logger = logging.getLogger('insyte_analytics.db.insyte_cassandra_io')
 
     # connection parameters
-    contact_points = None
-    keyspace_name = None
-    port = None
-    username = None
-    password = None
+    contact_points = None  # list of contact points [cp1, cp1, ..., cpN]
+    keyspace = None  # keyspace name
+    port = None  # port int
+    username = None  # username string
+    password = None  # password string
 
     # connection
-    auth = None
-    cluster = None
-    session = None
+    auth = None  # PlainTextAuthProvider object
+    cluster = None  # Cluster object
+    session = None  # Session object
 
     # read parameters (arrays, must have equal lengths)
-    device_id = None  # array of ids [uuid1, uuid2, ..., uuidN]
-    data_source_id = None  # array of ids [id1, id2, ..., idN]
-    time_upload = None  # array of tuples of dates [(d_min1 d_max1), (d_min2 d_max2), ..., (d_minN d_maxN)]
+    device_id = None  # list of ids [uuid1, uuid2, ..., uuidN]
+    data_source_id = None  # list of ids [id1, id2, ..., idN]
+    time_upload = None  # list of tuples of dates [(d_min1 d_max1), (d_min2 d_max2), ..., (d_minN d_maxN)]
     limit = None  # limits the number of retrieved rows
 
     # write parameters
@@ -50,21 +49,31 @@ class InsyteCassandraIO:
     output_data = None  # array of tuples [(date1, value1), (date2, value2), ..., (dateN, valueN)]
 
     def __init__(self):
-        """empty constructor"""
+        """
+        Empty constructor.
+        """
         self.logger.debug("Initialization")
         pass
 
     @classmethod
-    def _set_connection_parameters(cls, contact_points=None, keyspace_name=None, port=None, username=None,
+    def _set_connection_parameters(cls, contact_points=None, keyspace=None, port=None, username=None,
                                    password=None):
-        """set connection parameters"""
+        """
+        Set connection parameters.
+
+        :param contact_points: list of contact points [cp1, cp1, ..., cpN]
+        :param keyspace: keyspace name
+        :param port: port
+        :param username: username
+        :param password: password
+        """
         cls.logger.debug("Setting connection parameters")
         if contact_points is not None:
-            cls.contact_points = contact_points
+            cls.contact_points = list(contact_points)
             cls.logger.debug("contact_points = " + str(contact_points))
-        if keyspace_name is not None:
-            cls.keyspace_name = keyspace_name
-            cls.logger.debug("keyspace_name = " + str(keyspace_name))
+        if keyspace is not None:
+            cls.keyspace = keyspace
+            cls.logger.debug("keyspace = " + str(keyspace))
         if port is not None:
             cls.port = port
             cls.logger.debug("port = " + str(port))
@@ -77,14 +86,16 @@ class InsyteCassandraIO:
 
     @classmethod
     def _check_connection_parameters(cls):
-        """check connection parameters"""
+        """
+        Check connection parameters.
+        """
         cls.logger.debug("Checking connection parameters")
         if cls.contact_points is None:
             cls.logger.warning("Connection parameter 'contact_points' not set")
             raise Exception("Connection parameter 'contact_points' not set")
-        if cls.keyspace_name is None:
-            cls.logger.warning("Connection parameter 'keyspace_name' not set")
-            raise Exception("Connection parameter 'keyspace_name' not set")
+        if cls.keyspace is None:
+            cls.logger.warning("Connection parameter 'keyspace' not set")
+            raise Exception("Connection parameter 'keyspace' not set")
         if cls.port is None:
             cls.logger.warning("Connection parameter 'port' not set")
             raise Exception("Connection parameter 'port' not set")
@@ -98,7 +109,13 @@ class InsyteCassandraIO:
 
     @classmethod
     def _set_read_parameters(cls, device_id=None, data_source_id=None, time_upload=None):
-        """set reading parameters"""
+        """
+        Set reading parameters.
+
+        :param device_id: list of ids [uuid1, uuid2, ..., uuidN]
+        :param data_source_id: list of ids [id1, id2, ..., idN]
+        :param time_upload: list of tuples of dates [(d_min1 d_max1), (d_min2 d_max2), ..., (d_minN d_maxN)]
+        """
         cls.logger.debug("Setting reading parameters")
         if device_id is not None:
             cls.device_id = device_id
@@ -112,7 +129,9 @@ class InsyteCassandraIO:
 
     @classmethod
     def _check_read_parameters(cls):
-        """check reading parameters"""
+        """
+        Check reading parameters.
+        """
         cls.logger.debug("Checking reading parameters")
         if cls.device_id is None:
             cls.logger.warning("Reading parameter 'device_id' not set")
@@ -130,18 +149,25 @@ class InsyteCassandraIO:
 
     @classmethod
     def _set_write_parameters(cls, result_id=None, output_data=None):
-        """set writing parameters"""
+        """
+        Set writing parameters
+
+        :param result_id: uuid of the result
+        :param output_data: array of tuples [(date1, value1), (date2, value2), ..., (dateN, valueN)]
+        """
         cls.logger.debug("Setting writing parameters")
         if result_id is not None:
             cls.result_id = result_id
             cls.logger.debug("result_id = " + str(result_id))
         if output_data is not None:
             cls.output_data = output_data
-            cls.logger.debug("output_data = " + str(output_data))
+            cls.logger.debug("output_data = <" + str(len(output_data)) + " entries>")
 
     @classmethod
     def _check_write_parameters(cls):
-        """check writing parameters"""
+        """
+        Check writing parameters
+        """
         cls.logger.debug("Checking writing parameters")
         if cls.result_id is None:
             cls.logger.warning("Writing parameter 'result_id' not set")
@@ -152,16 +178,24 @@ class InsyteCassandraIO:
         cls.logger.debug("Writing parameters successfully checked")
 
     @classmethod
-    def connect(cls, contact_points=None, keyspace_name=None, port=None, username=None, password=None):
-        """set connection"""
+    def connect(cls, contact_points=None, keyspace=None, port=None, username=None, password=None):
+        """
+        Set connection.
+
+        :param contact_points: list of contact points [cp1, cp1, ..., cpN]
+        :param keyspace: keyspace name
+        :param port: port
+        :param username: username
+        :param password: password
+        """
         cls.logger.debug("Setting connection")
-        cls._set_connection_parameters(contact_points, keyspace_name, port, username, password)
+        cls._set_connection_parameters(contact_points, keyspace, port, username, password)
         try:
             cls._check_connection_parameters()
             cls.auth = PlainTextAuthProvider(username=cls.username, password=cls.password)
             lbp = DCAwareRoundRobinPolicy()
             cls.cluster = Cluster(cls.contact_points, auth_provider=cls.auth, port=cls.port, load_balancing_policy=lbp)
-            cls.session = cls.cluster.connect(cls.keyspace_name)
+            cls.session = cls.cluster.connect(cls.keyspace)
             cls.logger.debug("Connection set")
         except Exception as err:
             cls.logger.error("Connection failed")
@@ -169,7 +203,9 @@ class InsyteCassandraIO:
 
     @classmethod
     def disconnect(cls):
-        """close connection"""
+        """
+        Close connection.
+        """
         cls.logger.debug("Closing connection")
         if cls.session is not None:
             cls.session.shutdown()
@@ -179,7 +215,16 @@ class InsyteCassandraIO:
 
     @classmethod
     def read_data(cls, device_id=None, data_source_id=None, time_upload=None, limit=None):
-        """read data from db according to object's parameters"""
+        """
+        Read data from db according to object's parameters.
+
+        :param device_id: list of ids [uuid1, uuid2, ..., uuidN]
+        :param data_source_id: list of ids [id1, id2, ..., idN]
+        :param time_upload: list of tuples of dates [(d_min1 d_max1), (d_min2 d_max2), ..., (d_minN d_maxN)]
+        :param limit: retrieved data rows limit
+
+        :return: list of queries results
+        """
         cls.logger.debug("Reading data")
         results = []
         cls._set_read_parameters(device_id, data_source_id, time_upload)
@@ -199,35 +244,64 @@ class InsyteCassandraIO:
                 result = cls._read(query)
                 results.append(result)
         except Exception as err:
-            cls.logger.error("Reading failed")
+            cls.logger.error("Impossible to read: " + str(err))
             raise Exception("Impossible to read: " + str(err))
         cls.logger.debug("Reading complete: " + str([len(x) for x in results]) + " rows returned")
         return results
 
     @classmethod
     def _read(cls, query):
-        """executes query and return rows"""
+        """
+        Executes query and return rows.
+
+        :param query: query to execute
+
+        :return: query result
+        """
         cls.logger.debug("Executing reading query " + str(query))
         results = []
         cls.session.row_factory = dict_factory
-        rows = cls.session.execute(query, timeout=10)
+        try:
+            rows = cls.session.execute(query, timeout=10)
+        except Exception as err:
+            cls.logger.error("Querying failed: " + str(err))
+            raise Exception("Querying failed " + str(err))
         results.extend(rows)
         cls.logger.debug("Query executed: " + str(len(results)) + " rows returned")
         return results
 
     @classmethod
     def write_data(cls, result_id=None, output_data=None, batch_size_limit=25000):
-        """write data from this object to db"""
+        """
+        Write data from this object to db.
+
+        :param result_id: uuid of the result
+        :param output_data: array of tuples [(date1, value1), (date2, value2), ..., (dateN, valueN)]
+        :param batch_size_limit: maximum batch size
+
+        :return: list of result objects
+        """
         cls.logger.debug("Writing data")
         cls._set_write_parameters(result_id, output_data)
         query = "INSERT INTO data_result (result_id, time_upload, value) VALUES (?, ?, ?) IF NOT EXISTS"
-        result = cls._write(query, batch_size_limit)
+        try:
+            result = cls._write(query, batch_size_limit)
+        except Exception as err:
+            cls.logger.error("Writing failed: " + str(err))
+            raise Exception("Writing failed " + str(err))
         cls.logger.debug("Writing complete " + str(result))
         return result
 
     @classmethod
     def _write(cls, query, batch_size_limit):
-        """insert data into db via batch statements"""
+        """
+        Insert data into db via batch statements.
+
+        :param query: query to execute
+        :param batch_size_limit: maximum batch size
+
+        :return: result object
+        """
         cls.logger.debug("Writing data in batches of maximum size " + str(batch_size_limit))
         res = []
         try:
@@ -235,20 +309,21 @@ class InsyteCassandraIO:
             batch = BatchStatement()
             prepared = cls.session.prepare(query)
             batch_size = 0
-            # send each 50k values in batches
+            # Send each 50k values in batches
             for d in cls.output_data:
                 batch.add(prepared, (cls.result_id, d[0], str(d[1])))
                 batch_size += 1
                 if batch_size >= batch_size_limit:
-                    cls.logger.debug("Writing batch " + str(batch_size))
+                    cls.logger.debug("Writing batch of " + str(batch_size) + " rows in batch")
                     res.append(cls.session.execute(batch))
                     batch.clear()
                     batch_size = 0
-            # send remaining values
+            # Send remaining values
             if batch_size > 0:
-                cls.logger.debug("Writing batch " + str(batch_size))
+                cls.logger.debug("Writing batch of " + str(batch_size) + " rows")
                 res.append(cls.session.execute(batch))
                 batch.clear()
         except Exception as err:
-            raise Exception("Impossible to write: " + str(err))
+            cls.logger.error("Batch writing failed")
+            raise Exception("Impossible to write in batches: " + str(err))
         return res

@@ -15,13 +15,13 @@ cluster = Cluster(contact_points, auth_provider=auth, port=port)
 session = cluster.connect(keyspace_name)
 session.row_factory = dict_factory
 
-id = "00000000-0000-0000-0000-000000000000"
+device_id = "00000000-0000-0000-0000-000000000000"
 data_source_id = 108
 date = ("2017-01-01", "2018-01-01")
 
 limit = "LIMIT 10000"
 
-query = "SELECT * FROM data WHERE device_id={} and data_source_id={} and time_upload >= '{}' and time_upload < '{}' {} ALLOW FILTERING".format(id, data_source_id, date[0], date[1], limit)
+query = "SELECT * FROM data WHERE device_id={} and data_source_id={} and time_upload >= '{}' and time_upload < '{}' {} ALLOW FILTERING".format(device_id, data_source_id, date[0], date[1], limit)
 
 print(query)
 
