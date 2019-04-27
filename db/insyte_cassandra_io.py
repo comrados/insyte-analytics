@@ -198,8 +198,8 @@ class InsyteCassandraIO:
             cls.session = cls.cluster.connect(cls.keyspace)
             cls.logger.debug("Connection set")
         except Exception as err:
-            cls.logger.error("Connection failed")
-            raise Exception("Impossible to connect: " + str(err))
+            cls.logger.error("Connection failed: " + str(err))
+            raise Exception("Connection failed: " + str(err))
 
     @classmethod
     def disconnect(cls):

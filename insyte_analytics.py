@@ -1,11 +1,18 @@
 import argparse
 import sys
 import logging
+import os
+import datetime
+import uuid
+
+from db.insyte_cassandra_io import InsyteCassandraIO
+
+ANALYSIS = ['test']
 
 
-def init_args(argv):
+def parse_args(argv):
     """
-    Initializes input arguments for interaction with command prompt
+    Parses input arguments from command prompt.
 
         :param argv: input arguments
 
@@ -15,92 +22,317 @@ def init_args(argv):
                                      prog='insyte_analytics.py')
     # Logger
     parser.add_argument('-l', '--log', dest='log', default=False, action='store_true',
-                        help='enables logging to the file')
-    parser.add_argument('-lf', '--log-file', dest='log_file', default="default.log", help='path to save log file')
+                        help='enables logging to the file, filename=<result_id>.log')
+    parser.add_argument('-lp', '--log-path', dest='log_path', default="logs", help='log file output folder')
     parser.add_argument('-ll', '--log-level', dest='log_level', default=20, type=int, help='logging level')
-
-    # Connection
+    # DB Connection
     parser.add_argument('-cps', '--contact-points', dest='contact_points', nargs='+', required=True,
                         help='contact point addresses')
     parser.add_argument('-ks', '--keyspace', dest='keyspace', required=True, help='keyspace name')
     parser.add_argument('-p', '--port', dest='port', required=True, type=int, help='Port')
     parser.add_argument('-un', '--username', dest='username', required=True, help='username')
     parser.add_argument('-pw', '--password', dest='password', required=True, help='password')
-
-    # Reading
+    # DB Reading
     parser.add_argument('-di', '--device-id', dest='device_id', nargs='+', required=True,
-                        help='device UUIDs sequence of length N (uuid1 ... uuidN)')
+                        help='device UUIDs sequence of length N (uuid1 uuid2 ... uuidN)')
     parser.add_argument('-dsi', '--data-source-id', dest='data_source_id', nargs='+', required=True,
-                        help='data source IDs sequence of length N (id1 ... idN)')
+                        help='data source IDs sequence of length N (id1 id2 ... idN)')
     parser.add_argument('-tu', '--time_upload', dest='time_upload', nargs='+', required=True,
-                        help='dates set of length 2N (d_min1 d_max1 ... d_minN d_maxN) in format YYYY-mm-dd_HH:MM:SS')
+                        help='dates set of length 2N (d_min1 d_max1 d_min2 d_max2 ... d_minN d_maxN)' +
+                             ' in format YYYY-mm-dd_HH:MM:SS')
     parser.add_argument('-lim', '--limit', dest='limit', default=None, type=int,
                         help='limit of retrieved DB entries per query')
-
-    # Writing
+    # DB Writing
     parser.add_argument('-ri', '--result-id', dest='result_id', required=True, help='analysis result UUID')
 
     # Analysis
     parser.add_argument('-a', '--analysis', dest='analysis', required=True, help='analysis function name')
-
-    # TODO dates reformatting, dates to tuples
-
-    '''
-    parser.add_argument('-v', '--verbose', help='Verbose output: parsed args, files, elapsed time, sample rate.',
-                        default=False, action='store_true')
-    group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('-p', '--path', help='Path to the folder with .ogg files.', metavar='<path>')
-    group.add_argument('-f', '--files', nargs='+', help='Distinct file(s) to convert.', metavar='<files>')
-    parser.add_argument('-s', '--sample_rate', help='Sample rate of the output file.', metavar='<sample_rate>',
-                        default=16000, type=int)
-    parser.add_argument('-o', '--out_path', help='Output path. Script saves to the input directory if omitted.')
-    '''
+    parser.add_argument('-aa', '--analysis-args', dest='analysis_args', nargs='*',
+                        help='analysis function arguments key-value pairs (key1 val1 key2 val2 ... keyN valN)')
     try:
-        args = parser.parse_args(argv)
+        parsed_args = parser.parse_args(argv)
     except argparse.ArgumentError:
         parser.print_help()
         sys.exit(2)
     else:
-        return args
+        return parsed_args
     finally:
         print()
 
 
-def init_logger(log, log_file, log_level):
+def init_logger(log_flag, log_path, log_level, result_id):
     """
     Initialize logger.
 
-    :param log_file: log file path
-    :param log_level: https://docs.python.org/3.7/library/logging.html#logging-levels
+    :param log_flag: logging flag
+    :param log_path: log file path
+    :param log_level: logging level https://docs.python.org/3.7/library/logging.html#logging-levels
+    :param result_id: log file name
     :return: Logger object
     """
-    if log:
-        logging.basicConfig(filename=log_file,
-                            filemode='a',
-                            format='%(asctime)s.%(msecs)f %(levelname)s %(module)s.%(funcName)s %(message)s',
-                            datefmt='%Y-%m-%d %H:%M:%S',
-                            level=log_level)
-    else:
-        logging.basicConfig(filemode='a',
-                            format='%(asctime)s.%(msecs)f %(levelname)s %(module)s.%(funcName)s %(message)s',
-                            datefmt='%Y-%m-%d %H:%M:%S',
-                            level=log_level)
+    # log config (if flag is True - output as file, otherwise - in console)
+    configs = {'filemode': 'a', 'format': '%(asctime)s.%(msecs)d %(levelname)s %(module)s.%(funcName)s %(message)s',
+               'datefmt': '%Y-%m-%d %H:%M:%S', 'level': log_level}
+    if log_flag:
+        # check log output directory, create if not exists
+        if not os.path.exists(log_path):
+            os.makedirs(log_path)
+        # logging to file additional config
+        configs['filename'] = os.path.join(log_path, result_id + '.log')
+    logging.basicConfig(**configs)
     return logging.getLogger("insyte_analytics")
 
 
+def check_args(args):
+    """
+    Checks arguments values and modifies data structures/types.
+
+    :param args: namespace of parsed arguments
+    :return: reformatted arguments
+    """
+    logger.debug("Checking parsed arguments")
+    try:
+        args.time_upload = format_tu(args.time_upload)
+        args.device_id = format_di(args.device_id)
+        args.data_source_id = format_dsi(args.data_source_id)
+        check_reading_lengths(args.time_upload, args.device_id, args.data_source_id)
+        args.result_id = format_ri(args.result_id)
+        check_a(args.analysis)
+        args.analysis_args = format_aa(args.analysis_args)
+    except Exception as err:
+        logger.error("Parsed arguments check failed: " + str(err))
+        raise Exception("Parsed arguments check failed: " + str(err))
+    logger.debug("Parsed arguments successfully checked")
+    return args
+
+
+def format_tu(time_upload):
+    """
+    Checks and reformats time upload argument.
+
+    :param time_upload: list of upload times (strings) [d_min1, d_max1, d_min2, d_max2, ..., d_minN, d_maxN]
+    :return: list of tuples of upload times (datetimes) [(d_min1 d_max1), (d_min2 d_max2), ..., (d_minN d_maxN)]
+    """
+    output = []
+    logger.debug("Checking and reformatting 'time_upload': " + str(time_upload))
+    if len(time_upload) % 2 == 0:
+        try:
+            for i in range(0, len(time_upload), 2):
+                d_min = datetime.datetime.strptime(time_upload[i], "%Y-%m-%d_%H:%M:%S")
+                d_max = datetime.datetime.strptime(time_upload[i + 1], "%Y-%m-%d_%H:%M:%S")
+                output.append((d_min, d_max))
+        except Exception as err:
+            raise Exception("Impossible to convert to datetime: " + str(err))
+    else:
+        raise Exception("'time_upload' length must be even number, current length = " + str(len(time_upload)))
+    logger.debug("Modified 'time_upload': " + str(output))
+    return output
+
+
+def format_di(device_id):
+    """
+    Checks and reformats device id argument.
+
+    :param device_id: UUID https://en.wikipedia.org/wiki/Universally_unique_identifier
+    :return: list of uuid objects
+    """
+    output = []
+    logger.debug("Checking and reformatting 'device_id': " + str(device_id))
+    try:
+        for i in range(len(device_id)):
+            output.append(uuid.UUID(device_id[i]))
+    except Exception as err:
+        raise Exception("Impossible to convert to UUID : " + str(err))
+    logger.debug("Checked 'device_id': " + str(output))
+    return output
+
+
+def format_dsi(data_source_id):
+    """
+    Checks and reformats data source id argument.
+
+    :param data_source_id: number of source
+    :return: list of integers
+    """
+    output = []
+    logger.debug("Checking and reformatting 'data_source_id': " + str(data_source_id))
+    try:
+        for i in range(len(data_source_id)):
+            output.append(int(data_source_id[i]))
+    except Exception as err:
+        raise Exception("Impossible to convert to integer : " + str(err))
+    logger.debug("Checked 'data_source_id' : " + str(output))
+    return output
+
+
+def check_reading_lengths(time_upload, device_id, data_source_id):
+    """
+    Checks if lengths of reading parameters equal
+
+    :param time_upload: list of tuples of datetimes [(d_min1 d_max1), (d_min2 d_max2), ..., (d_minN d_maxN)]
+    :param device_id: list of uuid objects [uuid1, uuid2, ..., uuidN]
+    :param data_source_id: list of integers [id1, id2, ..., idN]
+    """
+    lengths = [len(time_upload), len(device_id), len(data_source_id)]
+    logger.debug("Lengths of 'time_upload', 'device_id', 'data_source_id': " + str(lengths))
+    if len(device_id) != len(data_source_id) or len(device_id) != len(time_upload):
+        logger.error("'time_upload', 'device_id', 'data_source_id' have different lengths: " + str(lengths))
+        raise Exception("'time_upload', 'device_id', 'data_source_id' have different lengths: " + str(lengths))
+
+
+def format_ri(result_id):
+    """
+    Checks and reformats result id argument.
+
+    :param result_id: UUID https://en.wikipedia.org/wiki/Universally_unique_identifier
+    :return: uuid object
+    """
+    logger.debug("Checking and reformatting 'result_id': " + str(result_id))
+    try:
+        result_id = uuid.UUID(result_id)
+    except Exception as err:
+        raise Exception("Impossible to convert to UUID : " + str(err))
+    logger.debug("Checked 'result_id': " + str(result_id))
+    return result_id
+
+
+def check_a(analysis):
+    """
+    Checks if analysis function in ANALYSIS list
+
+    :param analysis: function name
+    """
+    logger.debug("Checking if analysis function '" + analysis + "' exists: " + str(analysis in ANALYSIS))
+    if analysis not in ANALYSIS:
+        logger.error("Analysis function '" + analysis + "' not found")
+
+
+def format_aa(analysis_args):
+    """
+    Checks and converts to dictionary analysis args argument.
+
+    :param analysis_args: list of key-value pairs [key1, val1, key2, val2, ..., keyN, valN]
+    :return: dictionary {'key1': val1, 'key2': val2, ..., 'keyN': valN}
+    """
+    output = {}
+    logger.debug("Checking and reformatting 'analysis_args': " + str(analysis_args))
+    if len(analysis_args) % 2 == 0:
+        for i in range(0, len(analysis_args), 2):
+            output[analysis_args[i]] = analysis_args[i + 1]
+    else:
+        raise Exception("'analysis_args' length must be even number, current length = " + str(len(analysis_args)))
+    logger.debug("Modified 'analysis_args': " + str(output))
+    return output
+
+
 def main(arg):
-    logger = init_logger(arg.log, arg.log_file, arg.log_level)
+    global logger
+    logger = init_logger(arg.log, arg.log_path, arg.log_level, arg.result_id)
     logger.info("Session started")
-    print(arg.log, arg.log_file, arg.log_level)
+    try:
+        # Check and modify args
+        check_args(arg)
+
+        # Connect to DB and read data
+        db = InsyteCassandraIO()
+        db.connect(contact_points=arg.contact_points, keyspace=arg.keyspace, port=arg.port, username=arg.username,
+                   password=arg.password)
+        data = db.read_data(device_id=arg.device_id, data_source_id=arg.data_source_id, time_upload=arg.time_upload)
+
+        # Analyze data, write back and disconnect
+        # TODO analysis functions
+        # result = db.write_data(result_id=arg.result_id, output_data=output_data)
+        db.disconnect()
+    except Exception as err:
+        logger.error("Session failed: " + str(err))
+    print(arg.log, arg.log_path, arg.log_level)
     print(arg.contact_points, args.keyspace, args.port, args.username, args.password)
     print(arg.result_id)
     print(arg.device_id, arg.data_source_id, arg.time_upload, arg.limit)
-    print(arg.analysis)
-    logger.info("Session ended\n")
+    print(arg.analysis, arg.analysis_args)
+    logger.info("Session successfully ended\n")
 
 
 if __name__ == "__main__":
-    # -l --log-file default.log --log-level 10 --contact-points 92.53.78.60 --keyspace ems --port 9042 --username ems_user --password All4OnS9daW! --result-id 00000000-0000-0000-0000-000000000000 --device-id 00000000-0000-0000-0000-000000000000 --data-source-id 1 --time_upload 2018-01-01_00:00:00 2019-01-01_00:00:00 --limit 100 --analysis test
-    # -l -lf default.log -ll 10 -cps 92.53.78.60 -ks ems -p 9042 -un ems_user -pw All4OnS9daW! -ri 00000000-0000-0000-0000-000000000000 -di 00000000-0000-0000-0000-000000000000 -dsi 1 -tu 2018-01-01_00:00:00 2019-01-01_00:00:00 -lim 100 -a test
-    args = init_args(sys.argv[1:])
+    args = parse_args(sys.argv[1:])
     main(args)
+
+    '''
+    -l
+    -lp
+    logs
+    -ll
+    10
+    -cps
+    92.53.78.60
+    -ks
+    ems
+    -p
+    9042
+    -un
+    ems_user
+    -pw
+    All4OnS9daW!
+    -ri
+    00000000-0000-0000-0000-000000000000
+    -di
+    00000000-0000-0000-0000-000000000000
+    00000000-0000-0000-0000-000000000001
+    -dsi
+    1
+    2
+    -tu
+    2018-01-01_00:00:00
+    2019-01-01_00:00:00
+    2018-01-01_00:00:00
+    2019-01-01_00:00:00
+    -lim
+    100
+    -a
+    test
+    -aa
+    key1
+    val1
+    key2
+    val2
+    '''
+
+    '''
+    --log
+    --log-path
+    logs
+    --log-level
+    10
+    --contact-points
+    92.53.78.60
+    --keyspace
+    ems
+    --port
+    9042
+    --username
+    ems_user
+    --password
+    All4OnS9daW!
+    --result-id
+    00000000-0000-0000-0000-000000000000
+    --device-id
+    00000000-0000-0000-0000-000000000000
+    00000000-0000-0000-0000-000000000001
+    --data-source-id
+    1
+    2
+    --time_upload
+    2018-01-01_00:00:00
+    2019-01-01_00:00:00
+    2018-01-01_00:00:00
+    2019-01-01_00:00:00
+    --limit
+    100
+    --analysis
+    test
+    --analysis-args
+    key1
+    val1
+    key2
+    val2
+    '''
