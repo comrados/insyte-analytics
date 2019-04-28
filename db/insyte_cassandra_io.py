@@ -46,7 +46,7 @@ class InsyteCassandraIO:
 
     # write parameters
     result_id = None  # uuid of the result
-    output_data = None  # array of tuples [(date1, value1), (date2, value2), ..., (dateN, valueN)]
+    output_data = None  # list of tuples [(date1, value1), (date2, value2), ..., (dateN, valueN)]
 
     def __init__(self):
         """

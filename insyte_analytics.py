@@ -4,6 +4,7 @@ import logging
 import os
 import datetime
 import uuid
+import pandas as pd
 
 from db.insyte_cassandra_io import InsyteCassandraIO
 
@@ -39,7 +40,7 @@ def parse_args(argv):
                         help='data source IDs sequence of length N (id1 id2 ... idN)')
     parser.add_argument('-tu', '--time_upload', dest='time_upload', nargs='+', required=True,
                         help='dates set of length 2N (d_min1 d_max1 d_min2 d_max2 ... d_minN d_maxN)' +
-                             ' in format YYYY-mm-dd_HH:MM:SS')
+                             ' in format YYYY-mm-dd_HH:MM:SS±ZZZZ')
     parser.add_argument('-lim', '--limit', dest='limit', default=None, type=int,
                         help='limit of retrieved DB entries per query')
     # DB Writing
@@ -118,8 +119,8 @@ def format_tu(time_upload):
     if len(time_upload) % 2 == 0:
         try:
             for i in range(0, len(time_upload), 2):
-                d_min = datetime.datetime.strptime(time_upload[i], "%Y-%m-%d_%H:%M:%S")
-                d_max = datetime.datetime.strptime(time_upload[i + 1], "%Y-%m-%d_%H:%M:%S")
+                d_min = datetime.datetime.strptime(time_upload[i], "%Y-%m-%d_%H:%M:%S%z")
+                d_max = datetime.datetime.strptime(time_upload[i + 1], "%Y-%m-%d_%H:%M:%S%z")
                 output.append((d_min, d_max))
         except Exception as err:
             raise Exception("Impossible to convert to datetime: " + str(err))
@@ -225,6 +226,56 @@ def format_aa(analysis_args):
     return output
 
 
+def data_to_df(data):
+    """
+    Converts queries results to dataframe
+
+    :param data:
+    :return:
+    """
+    logger.debug("Converting downloaded data to DataFrame")
+    df = pd.DataFrame()
+    # create DataFrame from DB data
+    try:
+        if len(data) > 0:
+            for i in range(len(data)):
+                dat = data[i]
+                if len(dat) > 0:
+                    column = str(dat[0]['device_id']) + '_' + str(dat[0]['data_source_id'])
+                    temp = pd.DataFrame.from_dict(dat)
+                    temp.rename({'value': column}, axis=1, inplace=True)
+                    temp.drop(['device_id', 'data_source_id'], axis=1, inplace=True)
+                    if i > 0:
+                        df = pd.merge(df, temp, how='outer', left_on='time_upload', right_on='time_upload')
+                    else:
+                        df = temp
+            # Sort by date
+            df.sort_values('time_upload', inplace=True)
+            # Fill NaNs
+            df.fillna(0., inplace=True)
+        else:
+            logger.error("No data to convert, 'data' length = 0")
+            raise Exception("No data to convert, 'data' length = 0")
+    except Exception as err:
+        logger.error("Failed to convert data to DataFrame: " + str(err))
+        raise Exception("Failed to convert data to DataFrame: " + str(err))
+    logger.debug("Downloaded data successfully converted to DataFrame")
+    return df
+
+
+def analyze(analysis, arguments, data_frame):
+    """
+    Calls analysis functions, returns analysis result.
+
+    :param analysis: analysis function name
+    :param arguments: dictonary of analysis function arguments
+    :param data_frame: dataframe with data (time series)
+    :return: list of tuples for writing [(date1, value1), (date2, value2), ..., (dateN, valueN)]
+    """
+    # TODO write it
+    return
+
+
 def main(arg):
     global logger
     logger = init_logger(arg.log, arg.log_path, arg.log_level, arg.result_id)
@@ -238,19 +289,20 @@ def main(arg):
         db.connect(contact_points=arg.contact_points, keyspace=arg.keyspace, port=arg.port, username=arg.username,
                    password=arg.password)
         data = db.read_data(device_id=arg.device_id, data_source_id=arg.data_source_id, time_upload=arg.time_upload)
-
+        df = data_to_df(data)
+        analyze(arg.analysis, arg.analysis_args, df)
         # Analyze data, write back and disconnect
         # TODO analysis functions
         # result = db.write_data(result_id=arg.result_id, output_data=output_data)
         db.disconnect()
+        logger.info("Session successfully ended")
     except Exception as err:
-        logger.error("Session failed: " + str(err))
+        logger.error("Session ended with error: " + str(err))
     print(arg.log, arg.log_path, arg.log_level)
     print(arg.contact_points, args.keyspace, args.port, args.username, args.password)
     print(arg.result_id)
     print(arg.device_id, arg.data_source_id, arg.time_upload, arg.limit)
     print(arg.analysis, arg.analysis_args)
-    logger.info("Session successfully ended\n")
 
 
 if __name__ == "__main__":
@@ -277,15 +329,15 @@ if __name__ == "__main__":
     00000000-0000-0000-0000-000000000000
     -di
     00000000-0000-0000-0000-000000000000
-    00000000-0000-0000-0000-000000000001
+    00000000-0000-0000-0000-000000000000
     -dsi
-    1
-    2
+    108
+    107
     -tu
-    2018-01-01_00:00:00
-    2019-01-01_00:00:00
-    2018-01-01_00:00:00
-    2019-01-01_00:00:00
+    2017-02-01_00:00:00+0000
+    2018-02-01_00:00:00+0000
+    2017-01-01_00:00:00+0000
+    2018-01-01_00:00:00+0000
     -lim
     100
     -a
@@ -322,10 +374,10 @@ if __name__ == "__main__":
     1
     2
     --time_upload
-    2018-01-01_00:00:00
-    2019-01-01_00:00:00
-    2018-01-01_00:00:00
-    2019-01-01_00:00:00
+    2018-01-01_00:00:00+0000
+    2019-01-01_00:00:00+0000
+    2018-01-01_00:00:00+0000
+    2019-01-01_00:00:00+0000
     --limit
     100
     --analysis
