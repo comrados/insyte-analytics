@@ -5,8 +5,8 @@ import os
 import datetime
 import uuid
 import pandas as pd
-
-from db.insyte_cassandra_io import InsyteCassandraIO
+import analytics
+import db
 
 ANALYSIS = ['test']
 
@@ -250,9 +250,11 @@ def data_to_df(data):
                     else:
                         df = temp
             # Sort by date
-            df.sort_values('time_upload', inplace=True)
+            df.set_index('time_upload', inplace=True)
+            df.sort_index(inplace=True)
             # Fill NaNs
             df.fillna(0., inplace=True)
+            df = df.apply(pd.to_numeric)
         else:
             logger.error("No data to convert, 'data' length = 0")
             raise Exception("No data to convert, 'data' length = 0")
@@ -272,8 +274,19 @@ def analyze(analysis, arguments, data_frame):
     :param data_frame: dataframe with data (time series)
     :return: list of tuples for writing [(date1, value1), (date2, value2), ..., (dateN, valueN)]
     """
-    # TODO write it
-    return
+    logger.debug("Starting analysis")
+    try:
+        if analysis == 'test':
+            result = analytics.TestAnalysis().analyze(arguments, data_frame)
+        else:
+            logger.error("Analysis function doesn't exist: " + analysis)
+            raise Exception("Analysis function doesn't exist: " + analysis)
+    except Exception as err:
+        logger.error("Analysis failed: " + str(err))
+        raise Exception("Analysis failed: " + str(err))
+    logger.debug("Analysis successfully complete")
+    result.reset_index(inplace=True)
+    return [tuple(x.values()) for x in result.to_dict('records')]
 
 
 def main(arg):
@@ -285,16 +298,17 @@ def main(arg):
         check_args(arg)
 
         # Connect to DB and read data
-        db = InsyteCassandraIO()
-        db.connect(contact_points=arg.contact_points, keyspace=arg.keyspace, port=arg.port, username=arg.username,
-                   password=arg.password)
-        data = db.read_data(device_id=arg.device_id, data_source_id=arg.data_source_id, time_upload=arg.time_upload)
+        db_connection = db.InsyteCassandraIO()
+        db_connection.connect(contact_points=arg.contact_points, keyspace=arg.keyspace, port=arg.port,
+                              username=arg.username, password=arg.password)
+        data = db_connection.read_data(device_id=arg.device_id, data_source_id=arg.data_source_id,
+                                       time_upload=arg.time_upload)
         df = data_to_df(data)
-        analyze(arg.analysis, arg.analysis_args, df)
         # Analyze data, write back and disconnect
-        # TODO analysis functions
+        output_data = analyze(arg.analysis, arg.analysis_args, df)
+        # TODO improve output (list output)
         # result = db.write_data(result_id=arg.result_id, output_data=output_data)
-        db.disconnect()
+        db_connection.disconnect()
         logger.info("Session successfully ended")
     except Exception as err:
         logger.error("Session ended with error: " + str(err))
@@ -343,10 +357,10 @@ if __name__ == "__main__":
     -a
     test
     -aa
-    key1
-    val1
-    key2
-    val2
+    operation
+    add
+    value
+    150.0
     '''
 
     '''

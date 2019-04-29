@@ -50,10 +50,9 @@ class InsyteCassandraIO:
 
     def __init__(self):
         """
-        Empty constructor.
+        Constructor.
         """
         self.logger.debug("Initialization")
-        pass
 
     @classmethod
     def _set_connection_parameters(cls, contact_points=None, keyspace=None, port=None, username=None,
