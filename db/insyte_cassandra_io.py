@@ -45,7 +45,7 @@ class InsyteCassandraIO:
     limit = None  # limits the number of retrieved rows
 
     # write parameters
-    result_id = None  # uuid of the result
+    result_id = None  # list of result ids [uuid1, uuid2, ..., uuidK]
     output_data = None  # list of tuples [(date1, value1), (date2, value2), ..., (dateN, valueN)]
 
     def __init__(self):
@@ -174,6 +174,14 @@ class InsyteCassandraIO:
         if cls.output_data is None:
             cls.logger.warning("Writing parameter 'output_data' not set")
             raise Exception("Writing parameter 'output_data' not set")
+        if len(cls.output_data) == 0:
+            cls.logger.warning("'output_data' is empty")
+            raise Exception("'output_data' is empty")
+        if len(cls.output_data[0]) != len(cls.result_id):
+            cls.logger.warning("'output_data' and 'result_id' have different lengths: "
+                               + str(len(cls.output_data[0])) + " and " + str(len(cls.result_id)))
+            raise Exception("'output_data' and 'result_id' have different lengths: "
+                            + str(len(cls.output_data[0])) + " and " + str(len(cls.result_id)))
         cls.logger.debug("Writing parameters successfully checked")
 
     @classmethod
@@ -274,7 +282,7 @@ class InsyteCassandraIO:
         """
         Write data from this object to db.
 
-        :param result_id: uuid of the result
+        :param result_id: list of ids [uuid1, uuid2, ..., uuidK]
         :param output_data: array of tuples [(date1, value1), (date2, value2), ..., (dateN, valueN)]
         :param batch_size_limit: maximum batch size
 
@@ -308,20 +316,22 @@ class InsyteCassandraIO:
             batch = BatchStatement()
             prepared = cls.session.prepare(query)
             batch_size = 0
-            # Send each 50k values in batches
-            for d in cls.output_data:
-                batch.add(prepared, (cls.result_id, d[0], str(d[1])))
-                batch_size += 1
-                if batch_size >= batch_size_limit:
-                    cls.logger.debug("Writing batch of " + str(batch_size) + " rows in batch")
+            for i in range(len(cls.result_id)):
+                cls.logger.debug("Writing results for: " + str(cls.result_id[i]))
+                # Send each 50k values in batches
+                for d in cls.output_data:
+                    batch.add(prepared, (cls.result_id[i], d[0], str(d[i + 1])))
+                    batch_size += 1
+                    if batch_size >= batch_size_limit:
+                        cls.logger.debug("Writing batch of " + str(batch_size) + " rows in batch")
+                        res.append(cls.session.execute(batch))
+                        batch.clear()
+                        batch_size = 0
+                # Send remaining values
+                if batch_size > 0:
+                    cls.logger.debug("Writing batch of " + str(batch_size) + " rows")
                     res.append(cls.session.execute(batch))
                     batch.clear()
-                    batch_size = 0
-            # Send remaining values
-            if batch_size > 0:
-                cls.logger.debug("Writing batch of " + str(batch_size) + " rows")
-                res.append(cls.session.execute(batch))
-                batch.clear()
         except Exception as err:
             cls.logger.error("Batch writing failed")
             raise Exception("Impossible to write in batches: " + str(err))

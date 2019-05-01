@@ -35,21 +35,22 @@ def parse_args(argv):
     parser.add_argument('-pw', '--password', dest='password', required=True, help='password')
     # DB Reading
     parser.add_argument('-di', '--device-id', dest='device_id', nargs='+', required=True,
-                        help='device UUIDs sequence of length N (uuid1 uuid2 ... uuidN)')
+                        help='device UUIDs sequence of length N <uuid1 uuid2 ... uuidN>')
     parser.add_argument('-dsi', '--data-source-id', dest='data_source_id', nargs='+', required=True,
-                        help='data source IDs sequence of length N (id1 id2 ... idN)')
+                        help='data source IDs sequence of length N <id1 id2 ... idN>')
     parser.add_argument('-tu', '--time_upload', dest='time_upload', nargs='+', required=True,
-                        help='dates set of length 2N (d_min1 d_max1 d_min2 d_max2 ... d_minN d_maxN)' +
+                        help='dates set of length 2N <d_min1 d_max1 d_min2 d_max2 ... d_minN d_maxN>' +
                              ' in format YYYY-mm-dd_HH:MM:SS±ZZZZ')
     parser.add_argument('-lim', '--limit', dest='limit', default=None, type=int,
                         help='limit of retrieved DB entries per query')
     # DB Writing
-    parser.add_argument('-ri', '--result-id', dest='result_id', required=True, help='analysis result UUID')
+    parser.add_argument('-ri', '--result-id', dest='result_id', nargs='+', required=True,
+                        help='analysis result UUIDs sequence of length K <uuid1 uuid2 ... uuidK>')
 
     # Analysis
     parser.add_argument('-a', '--analysis', dest='analysis', required=True, help='analysis function name')
     parser.add_argument('-aa', '--analysis-args', dest='analysis_args', nargs='*',
-                        help='analysis function arguments key-value pairs (key1 val1 key2 val2 ... keyN valN)')
+                        help='analysis function arguments key-value pairs <key1 val1 key2 val2 ... keyN valN>')
     try:
         parsed_args = parser.parse_args(argv)
     except argparse.ArgumentError:
@@ -79,7 +80,11 @@ def init_logger(log_flag, log_path, log_level, result_id):
         if not os.path.exists(log_path):
             os.makedirs(log_path)
         # logging to file additional config
-        configs['filename'] = os.path.join(log_path, result_id + '.log')
+        logname = ""
+        for ri in result_id:
+            logname += str(ri) + "_"
+        logname = logname[0:len(logname)-1]
+        configs['filename'] = os.path.join(log_path, logname + '.log')
     logging.basicConfig(**configs)
     return logging.getLogger("insyte_analytics")
 
@@ -188,13 +193,15 @@ def format_ri(result_id):
     :param result_id: UUID https://en.wikipedia.org/wiki/Universally_unique_identifier
     :return: uuid object
     """
+    output = []
     logger.debug("Checking and reformatting 'result_id': " + str(result_id))
     try:
-        result_id = uuid.UUID(result_id)
+        for i in range(len(result_id)):
+            output.append(uuid.UUID(result_id[i]))
     except Exception as err:
         raise Exception("Impossible to convert to UUID : " + str(err))
-    logger.debug("Checked 'result_id': " + str(result_id))
-    return result_id
+    logger.debug("Checked 'result_id': " + str(output))
+    return output
 
 
 def check_a(analysis):
@@ -249,12 +256,9 @@ def data_to_df(data):
                         df = pd.merge(df, temp, how='outer', left_on='time_upload', right_on='time_upload')
                     else:
                         df = temp
-            # Sort by date
+            # Sort by date and set time_upload as index
             df.set_index('time_upload', inplace=True)
             df.sort_index(inplace=True)
-            # Fill NaNs
-            df.fillna(0., inplace=True)
-            df = df.apply(pd.to_numeric)
         else:
             logger.error("No data to convert, 'data' length = 0")
             raise Exception("No data to convert, 'data' length = 0")
@@ -285,6 +289,7 @@ def analyze(analysis, arguments, data_frame):
         logger.error("Analysis failed: " + str(err))
         raise Exception("Analysis failed: " + str(err))
     logger.debug("Analysis successfully complete")
+    # Reset index
     result.reset_index(inplace=True)
     return [tuple(x.values()) for x in result.to_dict('records')]
 
@@ -307,7 +312,7 @@ def main(arg):
         # Analyze data, write back and disconnect
         output_data = analyze(arg.analysis, arg.analysis_args, df)
         # TODO improve output (list output)
-        # result = db.write_data(result_id=arg.result_id, output_data=output_data)
+        result = db_connection.write_data(result_id=arg.result_id, output_data=output_data)
         db_connection.disconnect()
         logger.info("Session successfully ended")
     except Exception as err:
@@ -341,6 +346,7 @@ if __name__ == "__main__":
     All4OnS9daW!
     -ri
     00000000-0000-0000-0000-000000000000
+    00000000-0000-0000-0000-000000000001
     -di
     00000000-0000-0000-0000-000000000000
     00000000-0000-0000-0000-000000000000
@@ -361,44 +367,4 @@ if __name__ == "__main__":
     add
     value
     150.0
-    '''
-
-    '''
-    --log
-    --log-path
-    logs
-    --log-level
-    10
-    --contact-points
-    92.53.78.60
-    --keyspace
-    ems
-    --port
-    9042
-    --username
-    ems_user
-    --password
-    All4OnS9daW!
-    --result-id
-    00000000-0000-0000-0000-000000000000
-    --device-id
-    00000000-0000-0000-0000-000000000000
-    00000000-0000-0000-0000-000000000001
-    --data-source-id
-    1
-    2
-    --time_upload
-    2018-01-01_00:00:00+0000
-    2019-01-01_00:00:00+0000
-    2018-01-01_00:00:00+0000
-    2019-01-01_00:00:00+0000
-    --limit
-    100
-    --analysis
-    test
-    --analysis-args
-    key1
-    val1
-    key2
-    val2
     '''

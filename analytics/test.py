@@ -60,6 +60,29 @@ class TestAnalysis:
             raise Exception("Wrong parameter 'value': " + str(cls.value) + " " + str(err))
 
     @classmethod
+    def _preprocess_df(cls):
+        """
+        Preprocesses DataFrame
+        """
+        cls.logger.debug("Preprocessing DataFrame")
+        try:
+            # Fill NaNs
+            cls.data.fillna(0., inplace=True)
+            # Convert values (strings) to numeric
+            cls.data = cls.data.apply(pd.to_numeric)
+        except Exception as err:
+            cls.logger.error("Failed to preprocess DataFrame: " + str(err))
+            raise Exception("Failed to preprocess DataFrame: " + str(err))
+        cls.logger.debug("DataFrame preprocessed")
+
+    @classmethod
+    def _postprocess_df(cls):
+        """
+        Postprocesses DataFrame
+        """
+        pass
+
+    @classmethod
     def analyze(cls, parameters, data):
         """
         Run analysis.
@@ -71,24 +94,23 @@ class TestAnalysis:
         cls.data = data
         try:
             cls._parse_parameters()
+            cls._preprocess_df()
             if cls.operation == 'sub':
                 cls.logger.debug("Subtracting: " + str(cls.value))
-                cls.data.sub(cls.value)
-                return cls.data.sub(cls.value)
+                cls.data = cls.data.sub(cls.value)
             elif cls.operation == 'add':
                 cls.logger.debug("Adding: " + str(cls.value))
-                cls.data.add(cls.value)
-                return cls.data.add(cls.value)
+                cls.data = cls.data.add(cls.value)
             elif cls.operation == 'mul':
                 cls.logger.debug("Multiplying by: " + str(cls.value))
-                cls.data.mul(cls.value)
-                return cls.data.mul(cls.value)
+                cls.data = cls.data.mul(cls.value)
             elif cls.operation == 'div':
                 cls.logger.debug("Dividing by: " + str(cls.value))
-                cls.data.div(cls.value)
-                return cls.data.div(cls.value)
+                cls.data = cls.data.div(cls.value)
             else:
                 raise Exception("Unknown operation: " + str(cls.operation))
+            cls._preprocess_df()
+            return cls.data
         except Exception as err:
             cls.logger.error("Impossible to analyze: " + str(err))
             raise Exception("Impossible to analyze: " + str(err))
