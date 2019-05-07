@@ -332,6 +332,7 @@ class InsyteCassandraIO:
                     cls.logger.debug("Writing batch of " + str(batch_size) + " rows")
                     res.append(cls.session.execute(batch))
                     batch.clear()
+                    batch_size = 0
         except Exception as err:
             cls.logger.error("Batch writing failed")
             raise Exception("Impossible to write in batches: " + str(err))
