@@ -294,11 +294,6 @@ def main(arg):
         logger.info("Session successfully ended")
     except Exception as err:
         logger.error("Session ended with error: " + str(err))
-    print(arg.log, arg.log_path, arg.log_level)
-    print(arg.contact_points, args.keyspace, args.port, args.username, args.password)
-    print(arg.result_id)
-    print(arg.device_id, arg.data_source_id, arg.time_upload, arg.limit)
-    print(arg.analysis, arg.analysis_args)
 
 
 if __name__ == "__main__":
