@@ -82,7 +82,7 @@ def init_logger(log_flag, log_path, log_level, result_id):
         logname = ""
         for ri in result_id:
             logname += str(ri) + "_"
-        logname = logname[0:len(logname)-1]
+        logname = logname[0:len(logname) - 1]
         configs['filename'] = os.path.join(log_path, logname + '.log')
     logging.basicConfig(**configs)
     return logging.getLogger("insyte_analytics")
@@ -205,13 +205,17 @@ def format_ri(result_id):
 
 def check_a(analysis):
     """
-    Checks if analysis function in ANALYSIS list
+    Checks if analysis function in analytics.ANALYSIS list
 
     :param analysis: function name
     """
-    logger.debug("Checking if analysis function '" + analysis + "' exists: " + str(analysis in ANALYSIS))
-    if analysis not in ANALYSIS:
-        logger.error("Analysis function '" + analysis + "' not found")
+    logger.debug("Checking analysis existence: " + str(analysis))
+    if not analytics.check_analysis(analysis):
+        logger.error(
+            "Analysis function '" + str(analysis) + "' not found, available functions: " + str(analytics.ANALYSIS))
+        raise Exception(
+            "Analysis function '" + str(analysis) + "' not found, available functions: " + str(analytics.ANALYSIS))
+    logger.debug("Analysis exists: " + str(analysis))
 
 
 def format_aa(analysis_args):
@@ -268,31 +272,6 @@ def data_to_df(data):
     return df
 
 
-def analyze(analysis, arguments, data_frame):
-    """
-    Calls analysis functions, returns analysis result.
-
-    :param analysis: analysis function name
-    :param arguments: dictonary of analysis function arguments
-    :param data_frame: dataframe with data (time series)
-    :return: list of tuples for writing [(date1, value1), (date2, value2), ..., (dateN, valueN)]
-    """
-    logger.debug("Starting analysis")
-    try:
-        if analysis == 'test':
-            result = analytics.TestAnalysis().analyze(arguments, data_frame)
-        else:
-            logger.error("Analysis function doesn't exist: " + analysis)
-            raise Exception("Analysis function doesn't exist: " + analysis)
-    except Exception as err:
-        logger.error("Analysis failed: " + str(err))
-        raise Exception("Analysis failed: " + str(err))
-    logger.debug("Analysis successfully complete")
-    # Reset index
-    result.reset_index(inplace=True)
-    return [tuple(x.values()) for x in result.to_dict('records')]
-
-
 def main(arg):
     global logger
     logger = init_logger(arg.log, arg.log_path, arg.log_level, arg.result_id)
@@ -309,7 +288,7 @@ def main(arg):
                                        time_upload=arg.time_upload)
         df = data_to_df(data)
         # Analyze data, write back and disconnect
-        output_data = analyze(arg.analysis, arg.analysis_args, df)
+        output_data = analytics.analyze(arg.analysis, arg.analysis_args, df)
         result = db_connection.write_data(result_id=arg.result_id, output_data=output_data)
         db_connection.disconnect()
         logger.info("Session successfully ended")
@@ -361,6 +340,47 @@ All4OnS9daW!
 -a
 test
 -aa
+operation
+add
+value
+150.0
+'''
+
+'''
+--log
+--log-path
+logs
+--log-level
+10
+--contact-points
+92.53.78.60
+--keyspace
+ems
+--port
+9042
+--username
+ems_user
+--password
+All4OnS9daW!
+--result-id
+00000000-0000-0000-0000-000000000011
+00000000-0000-0000-0000-000000000010
+--device-id
+00000000-0000-0000-0000-000000000000
+00000000-0000-0000-0000-000000000000
+--data-source-id
+108
+107
+--time_upload
+2017-02-01_00:00:00+0000
+2018-02-01_00:00:00+0000
+2017-01-01_00:00:00+0000
+2018-01-01_00:00:00+0000
+--limit
+100
+--analysis
+test
+--analysis-args
 operation
 add
 value

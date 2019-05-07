@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="12f8726f-fb14-4ba6-9c8b-89c2ed12558e" name="Default Changelist" comment="test analysis">
+    <list default="true" id="12f8726f-fb14-4ba6-9c8b-89c2ed12558e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/insyte_cassandra_io.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/insyte_cassandra_io.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/insyte_analytics.py" beforeDir="false" afterPath="$PROJECT_DIR$/insyte_analytics.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_read.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_read.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -51,11 +50,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/insyte_analytics.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-368">
-              <caret line="312" selection-start-line="312" selection-end-line="312" />
+            <state relative-caret-position="444">
+              <caret line="212" column="46" lean-forward="true" selection-start-line="212" selection-start-column="46" selection-end-line="212" selection-end-column="46" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -63,11 +62,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/db/insyte_cassandra_io.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-4856">
-              <caret line="18" column="14" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="14" />
+            <state relative-caret-position="442">
+              <caret line="26" column="4" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="73" />
               <folding>
                 <element signature="e#0#48#0" expanded="true" />
               </folding>
@@ -76,9 +75,33 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/analytics/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+              <folding>
+                <element signature="e#0#30#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/analytics/test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="295">
+              <caret line="98" column="66" selection-start-line="98" selection-start-column="66" selection-end-line="98" selection-end-column="66" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/logs/00000000-0000-0000-0000-000000000011_00000000-0000-0000-0000-000000000010.log">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2738" />
+            <state relative-caret-position="-102" />
           </provider>
         </entry>
       </file>
@@ -103,6 +126,8 @@
       <find>keyspace_</find>
       <find>keyspace_name</find>
       <find>requi</find>
+      <find>handle</find>
+      <find>class handler</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -134,13 +159,14 @@
         <option value="$PROJECT_DIR$/db/cassandra_io.py" />
         <option value="$PROJECT_DIR$/default.log" />
         <option value="$PROJECT_DIR$/tests/test_db_module.py" />
-        <option value="$PROJECT_DIR$/analytics/__init__.py" />
         <option value="$PROJECT_DIR$/logs/00000000-0000-0000-0000-000000000000.log" />
         <option value="$PROJECT_DIR$/analytics/test.py" />
         <option value="$PROJECT_DIR$/db/__init__.py" />
-        <option value="$PROJECT_DIR$/insyte_analytics.py" />
         <option value="$PROJECT_DIR$/db/insyte_cassandra_io.py" />
         <option value="$PROJECT_DIR$/tests/test_read.py" />
+        <option value="$PROJECT_DIR$/logs/00000000-0000-0000-0000-000000000011_00000000-0000-0000-0000-000000000010.log" />
+        <option value="$PROJECT_DIR$/insyte_analytics.py" />
+        <option value="$PROJECT_DIR$/analytics/__init__.py" />
       </list>
     </option>
   </component>
@@ -163,6 +189,16 @@
             <path>
               <item name="insyte-analytics" type="b2602c69:ProjectViewProjectNode" />
               <item name="insyte-analytics" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="insyte-analytics" type="b2602c69:ProjectViewProjectNode" />
+              <item name="insyte-analytics" type="462c0819:PsiDirectoryNode" />
+              <item name="analytics" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="insyte-analytics" type="b2602c69:ProjectViewProjectNode" />
+              <item name="insyte-analytics" type="462c0819:PsiDirectoryNode" />
+              <item name="db" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="insyte-analytics" type="b2602c69:ProjectViewProjectNode" />
@@ -228,7 +264,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
-      <option name="PARAMETERS" value="-l -lp logs -ll 10 -cps 92.53.78.60 -ks ems -p 9042 -un ems_user -pw All4OnS9daW! -ri 00000000-0000-0000-0000-000000000011 00000000-0000-0000-0000-000000000010 -di 00000000-0000-0000-0000-000000000000 00000000-0000-0000-0000-000000000000 -dsi 108 107 -tu 2017-02-01_00:00:00+0000 2018-02-01_00:00:00+0000 2017-01-01_00:00:00+0000 2018-01-01_00:00:00+0000 -lim 100 -a test -aa operation add value 150.0" />
+      <option name="PARAMETERS" value="--log --log-path logs --log-level 10 --contact-points 92.53.78.60 --keyspace ems --port 9042 --username ems_user --password All4OnS9daW! --result-id 00000000-0000-0000-0000-000000000011 00000000-0000-0000-0000-000000000010 --device-id 00000000-0000-0000-0000-000000000000 00000000-0000-0000-0000-000000000000 --data-source-id 108 107 --time_upload 2017-02-01_00:00:00+0000 2018-02-01_00:00:00+0000 2017-01-01_00:00:00+0000 2018-01-01_00:00:00+0000 --limit 100 --analysis test --analysis-args operation add value 150.0" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -392,7 +428,14 @@
       <option name="project" value="LOCAL" />
       <updated>1556575059164</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="test analysis">
+      <created>1557216414048</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1557216414048</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -413,13 +456,13 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.66348773" visible="true" weight="0.28304905" />
-      <window_info id="Structure" order="1" sideWeight="0.33651227" side_tool="true" visible="true" weight="0.28304905" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.66346157" visible="true" weight="0.28304905" />
+      <window_info id="Structure" order="1" sideWeight="0.33653846" side_tool="true" visible="true" weight="0.28304905" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32879582" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.19111112" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.18444444" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.19111112" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.45666668" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -527,11 +570,6 @@
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/insyte_analytics.py</url>
-          <line>312</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/tests/test_read.py</url>
           <line>36</line>
           <option name="timeStamp" value="13" />
@@ -573,31 +611,7 @@
     <entry file="file://$USER_HOME$/.PyCharmCE2019.1/system/python_stubs/-968531858/builtins.py" />
     <entry file="file://$USER_HOME$/.local/lib/python3.7/site-packages/cassandra/query.py" />
     <entry file="file://$USER_HOME$/anaconda3/lib/python3.7/site-packages/pandas/core/frame.py" />
-    <entry file="file://$PROJECT_DIR$/analytics/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="10" selection-start-column="10" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/logs/00000000-0000-0000-0000-000000000000.log" />
-    <entry file="file://$PROJECT_DIR$/db/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="24" selection-start-column="24" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/analytics/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="98" column="66" selection-start-line="98" selection-start-column="66" selection-end-line="98" selection-end-column="66" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_insert.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -633,11 +647,6 @@
     <entry file="file://$PROJECT_DIR$/logs/00000000-0000-0000-0000-000000000000_00000000-0000-0000-0000-000000000001.log">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/logs/00000000-0000-0000-0000-000000000011_00000000-0000-0000-0000-000000000010.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2738" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_read.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="400">
@@ -648,22 +657,61 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/insyte_analytics.py">
+    <entry file="file://$PROJECT_DIR$/analytics/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-368">
-          <caret line="312" selection-start-line="312" selection-end-line="312" />
+        <state relative-caret-position="295">
+          <caret line="98" column="66" selection-start-line="98" selection-start-column="66" selection-end-line="98" selection-end-column="66" />
           <folding>
-            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#0#14#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logs/00000000-0000-0000-0000-000000000011_00000000-0000-0000-0000-000000000010.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-102" />
+      </provider>
+    </entry>
+    <entry file="file://C:/ProgramData/Anaconda3/Lib/logging/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="13214">
+          <caret line="819" column="15" selection-start-line="819" selection-start-column="15" selection-end-line="819" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="24" selection-start-column="24" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/db/insyte_cassandra_io.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4856">
-          <caret line="18" column="14" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="14" />
+        <state relative-caret-position="442">
+          <caret line="26" column="4" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="73" />
           <folding>
             <element signature="e#0#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/analytics/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/insyte_analytics.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="444">
+          <caret line="212" column="46" lean-forward="true" selection-start-line="212" selection-start-column="46" selection-end-line="212" selection-end-column="46" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
