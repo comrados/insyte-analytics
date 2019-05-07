@@ -177,11 +177,11 @@ class InsyteCassandraIO:
         if len(cls.output_data) == 0:
             cls.logger.warning("'output_data' is empty")
             raise Exception("'output_data' is empty")
-        if len(cls.output_data[0]) != len(cls.result_id):
+        if len(cls.output_data[0]) - 1 != len(cls.result_id):
             cls.logger.warning("'output_data' and 'result_id' have different lengths: "
-                               + str(len(cls.output_data[0])) + " and " + str(len(cls.result_id)))
+                               + str(len(cls.output_data[0]) - 1) + " and " + str(len(cls.result_id)))
             raise Exception("'output_data' and 'result_id' have different lengths: "
-                            + str(len(cls.output_data[0])) + " and " + str(len(cls.result_id)))
+                            + str(len(cls.output_data[0]) - 1) + " and " + str(len(cls.result_id)))
         cls.logger.debug("Writing parameters successfully checked")
 
     @classmethod

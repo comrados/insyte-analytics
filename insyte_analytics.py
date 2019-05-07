@@ -46,7 +46,6 @@ def parse_args(argv):
     # DB Writing
     parser.add_argument('-ri', '--result-id', dest='result_id', nargs='+', required=True,
                         help='analysis result UUIDs sequence of length K <uuid1 uuid2 ... uuidK>')
-
     # Analysis
     parser.add_argument('-a', '--analysis', dest='analysis', required=True, help='analysis function name')
     parser.add_argument('-aa', '--analysis-args', dest='analysis_args', nargs='*',
@@ -311,7 +310,6 @@ def main(arg):
         df = data_to_df(data)
         # Analyze data, write back and disconnect
         output_data = analyze(arg.analysis, arg.analysis_args, df)
-        # TODO improve output (list output)
         result = db_connection.write_data(result_id=arg.result_id, output_data=output_data)
         db_connection.disconnect()
         logger.info("Session successfully ended")
@@ -328,43 +326,43 @@ if __name__ == "__main__":
     args = parse_args(sys.argv[1:])
     main(args)
 
-    '''
-    -l
-    -lp
-    logs
-    -ll
-    10
-    -cps
-    92.53.78.60
-    -ks
-    ems
-    -p
-    9042
-    -un
-    ems_user
-    -pw
-    All4OnS9daW!
-    -ri
-    00000000-0000-0000-0000-000000000000
-    00000000-0000-0000-0000-000000000001
-    -di
-    00000000-0000-0000-0000-000000000000
-    00000000-0000-0000-0000-000000000000
-    -dsi
-    108
-    107
-    -tu
-    2017-02-01_00:00:00+0000
-    2018-02-01_00:00:00+0000
-    2017-01-01_00:00:00+0000
-    2018-01-01_00:00:00+0000
-    -lim
-    100
-    -a
-    test
-    -aa
-    operation
-    add
-    value
-    150.0
-    '''
+'''
+-l
+-lp
+logs
+-ll
+10
+-cps
+92.53.78.60
+-ks
+ems
+-p
+9042
+-un
+ems_user
+-pw
+All4OnS9daW!
+-ri
+00000000-0000-0000-0000-000000000011
+00000000-0000-0000-0000-000000000010
+-di
+00000000-0000-0000-0000-000000000000
+00000000-0000-0000-0000-000000000000
+-dsi
+108
+107
+-tu
+2017-02-01_00:00:00+0000
+2018-02-01_00:00:00+0000
+2017-01-01_00:00:00+0000
+2018-01-01_00:00:00+0000
+-lim
+100
+-a
+test
+-aa
+operation
+add
+value
+150.0
+'''

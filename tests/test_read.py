@@ -17,15 +17,18 @@ session.row_factory = dict_factory
 
 device_id = "00000000-0000-0000-0000-000000000000"
 data_source_id = 108
-date = ("2017-01-01", "2018-01-01")
+date = ("2011-01-01", "2020-01-01")
+result_id = "00000000-0000-0000-0000-000000000011"
 
-limit = "LIMIT 10000"
+limit = ""
 
 query = "SELECT * FROM data WHERE device_id={} and data_source_id={} and time_upload >= '{}' and time_upload < '{}' {} ALLOW FILTERING".format(device_id, data_source_id, date[0], date[1], limit)
 
-print(query)
+query2 = "SELECT * FROM data_result WHERE result_id={} and time_upload >= '{}' and time_upload < '{}' ALLOW FILTERING".format(result_id, date[0], date[1])
 
-rows = session.execute(query, timeout=10)
+print(query2)
+
+rows = session.execute(query2, timeout=10)
 
 r = []
 
