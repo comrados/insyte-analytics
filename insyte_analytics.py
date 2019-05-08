@@ -285,7 +285,7 @@ def main(arg):
         db_connection.connect(contact_points=arg.contact_points, keyspace=arg.keyspace, port=arg.port,
                               username=arg.username, password=arg.password)
         data = db_connection.read_data(device_id=arg.device_id, data_source_id=arg.data_source_id,
-                                       time_upload=arg.time_upload)
+                                       time_upload=arg.time_upload, limit=arg.limit)
         df = data_to_df(data)
         # Analyze data, write back and disconnect
         output_data = analytics.analyze(arg.analysis, arg.analysis_args, df)
