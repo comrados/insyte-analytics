@@ -292,7 +292,9 @@ def main(arg):
         result = db_connection.write_data(result_id=arg.result_id, output_data=output_data)
         db_connection.disconnect()
         logger.info("Session successfully ended")
+        print("DONE")
     except Exception as err:
+        print("ERROR")
         logger.error("Session ended with error: " + str(err))
 
 
@@ -305,7 +307,7 @@ if __name__ == "__main__":
 -lp
 logs
 -ll
-10
+20
 -cps
 92.53.78.60
 -ks
@@ -346,7 +348,7 @@ value
 --log-path
 logs
 --log-level
-10
+20
 --contact-points
 92.53.78.60
 --keyspace
