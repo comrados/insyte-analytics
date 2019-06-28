@@ -185,7 +185,7 @@ class InsyteCassandraIO:
         cls.logger.debug("Writing parameters successfully checked")
 
     @classmethod
-    def connect(cls, contact_points=None, keyspace=None, port=None, username=None, password=None):
+    async def connect(cls, contact_points=None, keyspace=None, port=None, username=None, password=None):
         """
         Set connection.
 
@@ -209,7 +209,7 @@ class InsyteCassandraIO:
             raise Exception("Connection failed: " + str(err))
 
     @classmethod
-    def disconnect(cls):
+    async def disconnect(cls):
         """
         Close connection.
         """
@@ -221,7 +221,7 @@ class InsyteCassandraIO:
         cls.logger.debug("Connection closed")
 
     @classmethod
-    def read_data(cls, device_id=None, data_source_id=None, time_upload=None, limit=None):
+    async def read_data(cls, device_id=None, data_source_id=None, time_upload=None, limit=None):
         """
         Read data from db according to object's parameters.
 
@@ -248,7 +248,7 @@ class InsyteCassandraIO:
                 query += "and data_source_id={dsi} ".format(**params)
                 query += "and time_upload >= '{from}' and time_upload < '{to}' ".format(**params)
                 query += "{limit} ALLOW FILTERING".format(**params)
-                result = cls._read(query)
+                result = await cls._read(query)
                 results.append(result)
         except Exception as err:
             cls.logger.error("Impossible to read: " + str(err))
@@ -257,7 +257,7 @@ class InsyteCassandraIO:
         return results
 
     @classmethod
-    def _read(cls, query):
+    async def _read(cls, query):
         """
         Executes query and return rows.
 
@@ -278,7 +278,7 @@ class InsyteCassandraIO:
         return results
 
     @classmethod
-    def write_data(cls, result_id=None, output_data=None, batch_size_limit=25000):
+    async def write_data(cls, result_id=None, output_data=None, batch_size_limit=25000):
         """
         Write data from this object to db.
 
@@ -292,7 +292,7 @@ class InsyteCassandraIO:
         cls._set_write_parameters(result_id, output_data)
         query = "INSERT INTO data_result (result_id, time_upload, value) VALUES (?, ?, ?) IF NOT EXISTS"
         try:
-            result = cls._write(query, batch_size_limit)
+            result = await cls._write_batchwise(query, batch_size_limit)
         except Exception as err:
             cls.logger.error("Writing failed: " + str(err))
             raise Exception("Writing failed " + str(err))
@@ -300,7 +300,7 @@ class InsyteCassandraIO:
         return result
 
     @classmethod
-    def _write(cls, query, batch_size_limit):
+    async def _write_batchwise(cls, query, batch_size_limit):
         """
         Insert data into db via batch statements.
 
@@ -323,7 +323,7 @@ class InsyteCassandraIO:
                     batch.add(prepared, (cls.result_id[i], d[0], str(d[i + 1])))
                     batch_size += 1
                     if batch_size >= batch_size_limit:
-                        cls.logger.debug("Writing batch of " + str(batch_size) + " rows in batch")
+                        cls.logger.debug("Writing batch of " + str(batch_size) + " rows")
                         res.append(cls.session.execute(batch))
                         batch.clear()
                         batch_size = 0

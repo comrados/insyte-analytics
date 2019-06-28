@@ -7,6 +7,7 @@ import uuid
 import pandas as pd
 import analytics
 import db
+import asyncio
 
 ANALYSIS = ['test']
 
@@ -88,27 +89,27 @@ def init_logger(log_flag, log_path, log_level, result_id):
     return logging.getLogger("insyte_analytics")
 
 
-def check_args(args):
+def check_args(arguments):
     """
     Checks arguments values and modifies data structures/types.
 
-    :param args: namespace of parsed arguments
+    :param arguments: namespace of parsed arguments
     :return: reformatted arguments
     """
     logger.debug("Checking parsed arguments")
     try:
-        args.time_upload = format_tu(args.time_upload)
-        args.device_id = format_di(args.device_id)
-        args.data_source_id = format_dsi(args.data_source_id)
-        check_reading_lengths(args.time_upload, args.device_id, args.data_source_id)
-        args.result_id = format_ri(args.result_id)
-        check_a(args.analysis)
-        args.analysis_args = format_aa(args.analysis_args)
+        arguments.time_upload = format_tu(arguments.time_upload)
+        arguments.device_id = format_di(arguments.device_id)
+        arguments.data_source_id = format_dsi(arguments.data_source_id)
+        check_reading_lengths(arguments.time_upload, arguments.device_id, arguments.data_source_id)
+        arguments.result_id = format_ri(arguments.result_id)
+        check_a(arguments.analysis)
+        arguments.analysis_args = format_aa(arguments.analysis_args)
     except Exception as err:
         logger.error("Parsed arguments check failed: " + str(err))
         raise Exception("Parsed arguments check failed: " + str(err))
     logger.debug("Parsed arguments successfully checked")
-    return args
+    return arguments
 
 
 def format_tu(time_upload):
@@ -272,25 +273,25 @@ def data_to_df(data):
     return df
 
 
-def main(arg):
+async def main(arg):
     global logger
     logger = init_logger(arg.log, arg.log_path, arg.log_level, arg.result_id)
     logger.info("Session started")
     try:
         # Check and modify args
-        check_args(arg)
+        await check_args(arg)
 
         # Connect to DB and read data
         db_connection = db.InsyteCassandraIO()
-        db_connection.connect(contact_points=arg.contact_points, keyspace=arg.keyspace, port=arg.port,
-                              username=arg.username, password=arg.password)
-        data = db_connection.read_data(device_id=arg.device_id, data_source_id=arg.data_source_id,
-                                       time_upload=arg.time_upload, limit=arg.limit)
-        df = data_to_df(data)
+        await db_connection.connect(contact_points=arg.contact_points, keyspace=arg.keyspace, port=arg.port,
+                                    username=arg.username, password=arg.password)
+        data = await db_connection.read_data(device_id=arg.device_id, data_source_id=arg.data_source_id,
+                                             time_upload=arg.time_upload, limit=arg.limit)
+        df = await data_to_df(data)
         # Analyze data, write back and disconnect
-        output_data = analytics.analyze(arg.analysis, arg.analysis_args, df)
-        result = db_connection.write_data(result_id=arg.result_id, output_data=output_data)
-        db_connection.disconnect()
+        output_data = await analytics.analyze(arg.analysis, arg.analysis_args, df)
+        _ = await db_connection.write_data(result_id=arg.result_id, output_data=output_data)
+        await db_connection.disconnect()
         logger.info("Session successfully ended")
         print("DONE")
     except Exception as err:
@@ -300,7 +301,7 @@ def main(arg):
 
 if __name__ == "__main__":
     args = parse_args(sys.argv[1:])
-    main(args)
+    asyncio.run(main(args))
 
 '''
 -l
