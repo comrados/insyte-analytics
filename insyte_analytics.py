@@ -9,7 +9,8 @@ import analytics
 import db
 import asyncio
 
-ANALYSIS = ['test']
+
+ANALYSIS = ('test')
 
 
 def parse_args(argv):
@@ -28,12 +29,13 @@ def parse_args(argv):
     parser.add_argument('-lp', '--log-path', dest='log_path', default="logs", help='log file output folder')
     parser.add_argument('-ll', '--log-level', dest='log_level', default=20, type=int, help='logging level')
     # DB Connection
-    parser.add_argument('-cps', '--contact-points', dest='contact_points', nargs='+', required=True,
-                        help='contact point addresses')
-    parser.add_argument('-ks', '--keyspace', dest='keyspace', required=True, help='keyspace name')
-    parser.add_argument('-p', '--port', dest='port', required=True, type=int, help='Port')
-    parser.add_argument('-un', '--username', dest='username', required=True, help='username')
-    parser.add_argument('-pw', '--password', dest='password', required=True, help='password')
+    parser.add_argument('-db', '--database', dest='database', required=True,
+                        help="database type ('influxdb' or 'cassandra')")
+    parser.add_argument('-cps', '--contact-points', dest='contact_points', nargs='+', help='contact point addresses')
+    parser.add_argument('-ks', '--keyspace', dest='keyspace', help='keyspace name')
+    parser.add_argument('-p', '--port', dest='port', type=int, help='Port')
+    parser.add_argument('-un', '--username', dest='username', help='username')
+    parser.add_argument('-pw', '--password', dest='password', help='password')
     # DB Reading
     parser.add_argument('-di', '--device-id', dest='device_id', nargs='+', required=True,
                         help='device UUIDs sequence of length N <uuid1 uuid2 ... uuidN>')
@@ -89,7 +91,7 @@ def init_logger(log_flag, log_path, log_level, result_id):
     return logging.getLogger("insyte_analytics")
 
 
-def check_args(arguments):
+async def check_args(arguments):
     """
     Checks arguments values and modifies data structures/types.
 
@@ -242,7 +244,6 @@ def data_to_df(data):
     Converts queries results to dataframe
 
     :param data:
-    :return:
     """
     logger.debug("Converting downloaded data to DataFrame")
     df = pd.DataFrame()
@@ -273,7 +274,40 @@ def data_to_df(data):
     return df
 
 
+async def cassandra(arg):
+    """
+    Read, analysis, write routine for Cassandra
+
+    :param arg: parsed arguments
+    """
+    logger.info("Cassandra routine")
+    # Connect to DB and read data
+    db_connection = db.InsyteCassandraIO()
+    await db_connection.connect(contact_points=arg.contact_points, keyspace=arg.keyspace, port=arg.port,
+                                username=arg.username, password=arg.password)
+    data = await db_connection.read_data(device_id=arg.device_id, data_source_id=arg.data_source_id,
+                                         time_upload=arg.time_upload, limit=arg.limit)
+    df = await data_to_df(data)
+    # Analyze data, write back and disconnect
+    output_data = await analytics.analyze(arg.analysis, arg.analysis_args, df)
+    _ = await db_connection.write_data(result_id=arg.result_id, output_data=output_data)
+    await db_connection.disconnect()
+
+
+async def influxdb(arg):
+    """
+    Read, analysis, write routine for InfluxDB
+
+    :param arg: parsed arguments
+    """
+    logger.info("InfluxDB routine")
+    pass
+
+
 async def main(arg):
+
+    database = {'influxdb': influxdb, 'cassandra': cassandra}
+
     global logger
     logger = init_logger(arg.log, arg.log_path, arg.log_level, arg.result_id)
     logger.info("Session started")
@@ -281,17 +315,9 @@ async def main(arg):
         # Check and modify args
         await check_args(arg)
 
-        # Connect to DB and read data
-        db_connection = db.InsyteCassandraIO()
-        await db_connection.connect(contact_points=arg.contact_points, keyspace=arg.keyspace, port=arg.port,
-                                    username=arg.username, password=arg.password)
-        data = await db_connection.read_data(device_id=arg.device_id, data_source_id=arg.data_source_id,
-                                             time_upload=arg.time_upload, limit=arg.limit)
-        df = await data_to_df(data)
-        # Analyze data, write back and disconnect
-        output_data = await analytics.analyze(arg.analysis, arg.analysis_args, df)
-        _ = await db_connection.write_data(result_id=arg.result_id, output_data=output_data)
-        await db_connection.disconnect()
+        # execute db read, analysis, db write routine fro specified database
+        await database[arg.database](arg)
+
         logger.info("Session successfully ended")
         print("DONE")
     except Exception as err:
@@ -309,6 +335,8 @@ if __name__ == "__main__":
 logs
 -ll
 20
+-db
+influxdb
 -cps
 92.53.78.60
 -ks
@@ -350,6 +378,8 @@ value
 logs
 --log-level
 20
+--database
+influxdb
 --contact-points
 92.53.78.60
 --keyspace
