@@ -9,7 +9,6 @@ import analytics
 import db
 import asyncio
 
-
 ANALYSIS = ('test')
 
 
@@ -24,35 +23,42 @@ def parse_args(argv):
     parser = argparse.ArgumentParser(description='''Reads data from DB, processes, puts back to DB''',
                                      prog='insyte_analytics.py')
     # Logger
-    parser.add_argument('-l', '--log', dest='log', default=False, action='store_true',
-                        help='enables logging to the file, filename=<result_id>.log')
-    parser.add_argument('-lp', '--log-path', dest='log_path', default="logs", help='log file output folder')
-    parser.add_argument('-ll', '--log-level', dest='log_level', default=20, type=int, help='logging level')
+    logger_group = parser.add_argument_group('logger', 'logger parameters')
+    logger_group.add_argument('-l', '--log', dest='log', default=False, action='store_true',
+                              help='enables file-logging, filename=<result_id>.log')
+    logger_group.add_argument('-lp', '--log-path', dest='log_path', default="logs", help='log file output folder')
+    logger_group.add_argument('-ll', '--log-level', dest='log_level', default=20, type=int, help='logging level')
     # DB Connection
-    parser.add_argument('-db', '--database', dest='database', required=True,
-                        help="database type ('influxdb' or 'cassandra')")
-    parser.add_argument('-cps', '--contact-points', dest='contact_points', nargs='+', help='contact point addresses')
-    parser.add_argument('-ks', '--keyspace', dest='keyspace', help='keyspace name')
-    parser.add_argument('-p', '--port', dest='port', type=int, help='Port')
-    parser.add_argument('-un', '--username', dest='username', help='username')
-    parser.add_argument('-pw', '--password', dest='password', help='password')
+    dbc_group = parser.add_argument_group('database connection', 'database connection parameters')
+    dbc_group.add_argument('-ct', '--connection-type', dest='connection_type', required=True,
+                           help="database type ('influxdb', 'cassandra' or 'none')")
+    dbc_group.add_argument('-ha', '--host-address', dest='host_address', nargs='+', help='host addresses')
+    dbc_group.add_argument('-db', '--database', dest='database', help='database name')
+    dbc_group.add_argument('-p', '--port', dest='port', type=int, help='Port')
+    dbc_group.add_argument('-un', '--username', dest='username', help='username')
+    dbc_group.add_argument('-pw', '--password', dest='password', help='password')
+    dbc_group.add_argument('-m', '--mode', dest='mode', default='rw', choices=['r', 'w', 'rw'],
+                           help="db access mode: 'r' - read, 'w' - write, 'rw' - read and write")
     # DB Reading
-    parser.add_argument('-di', '--device-id', dest='device_id', nargs='+', required=True,
-                        help='device UUIDs sequence of length N <uuid1 uuid2 ... uuidN>')
-    parser.add_argument('-dsi', '--data-source-id', dest='data_source_id', nargs='+', required=True,
-                        help='data source IDs sequence of length N <id1 id2 ... idN>')
-    parser.add_argument('-tu', '--time_upload', dest='time_upload', nargs='+', required=True,
-                        help='dates set of length 2N <d_min1 d_max1 d_min2 d_max2 ... d_minN d_maxN>' +
-                             ' in format YYYY-mm-dd_HH:MM:SS±ZZZZ')
-    parser.add_argument('-lim', '--limit', dest='limit', default=None, type=int,
-                        help='limit of retrieved DB entries per query')
+    dbr_group = parser.add_argument_group('database reading', 'database reading parameters')
+    dbr_group.add_argument('-di', '--device-id', dest='device_id', nargs='+', default=None,
+                           help='device UUIDs sequence of length N <uuid1 uuid2 ... uuidN>')
+    dbr_group.add_argument('-dsi', '--data-source-id', dest='data_source_id', nargs='+', default=None,
+                           help='data source IDs sequence of length N <id1 id2 ... idN>')
+    dbr_group.add_argument('-tu', '--time_upload', dest='time_upload', nargs='+', default=None,
+                           help='dates set of length 2N <d_min1 d_max1 d_min2 d_max2 ... d_minN d_maxN>' +
+                                ' in format YYYY-mm-ddTHH:MM:SSZ (2018-01-01T00:00:00Z)')
+    dbr_group.add_argument('-lim', '--limit', dest='limit', default=None, type=int,
+                           help='limit of retrieved DB entries per query')
     # DB Writing
-    parser.add_argument('-ri', '--result-id', dest='result_id', nargs='+', required=True,
-                        help='analysis result UUIDs sequence of length K <uuid1 uuid2 ... uuidK>')
+    dbw_group = parser.add_argument_group('database writing', 'database writing parameters')
+    dbw_group.add_argument('-ri', '--result-id', dest='result_id', nargs='+', default=None,
+                           help='analysis result UUIDs sequence of length K <uuid1 uuid2 ... uuidK>')
     # Analysis
-    parser.add_argument('-a', '--analysis', dest='analysis', required=True, help='analysis function name')
-    parser.add_argument('-aa', '--analysis-args', dest='analysis_args', nargs='*',
-                        help='analysis function arguments key-value pairs <key1 val1 key2 val2 ... keyN valN>')
+    analysis_group = parser.add_argument_group('analysis', 'analysis parameters')
+    analysis_group.add_argument('-a', '--analysis', dest='analysis', required=True, help='analysis function name')
+    analysis_group.add_argument('-aa', '--analysis-args', dest='analysis_args', nargs='*',
+                                help='analysis function arguments key-value pairs <key1 val1 key2 val2 ... keyN valN>')
     try:
         parsed_args = parser.parse_args(argv)
     except argparse.ArgumentError:
@@ -83,8 +89,11 @@ def init_logger(log_flag, log_path, log_level, result_id):
             os.makedirs(log_path)
         # logging to file additional config
         logname = ""
-        for ri in result_id:
-            logname += str(ri) + "_"
+        if result_id:
+            for ri in result_id:
+                logname += str(ri) + "_"
+        else:
+            logname = "error "
         logname = logname[0:len(logname) - 1]
         configs['filename'] = os.path.join(log_path, logname + '.log')
     logging.basicConfig(**configs)
@@ -100,11 +109,15 @@ async def check_args(arguments):
     """
     logger.debug("Checking parsed arguments")
     try:
-        arguments.time_upload = format_tu(arguments.time_upload)
-        arguments.device_id = format_di(arguments.device_id)
-        arguments.data_source_id = format_dsi(arguments.data_source_id)
-        check_reading_lengths(arguments.time_upload, arguments.device_id, arguments.data_source_id)
-        arguments.result_id = format_ri(arguments.result_id)
+        if arguments.log and arguments.result_id is None:
+            logger.error("File-logging is activated, filename is <result_id>.log, you must also specify 'result_id'")
+            raise Exception("File-logging is activated, filename is <result_id>.log, you must also specify 'result_id'")
+        if arguments.connection_type != 'none':
+            arguments.time_upload = format_tu(arguments.time_upload)
+            arguments.device_id = format_di(arguments.device_id)
+            arguments.data_source_id = format_dsi(arguments.data_source_id)
+            check_reading_lengths(arguments.time_upload, arguments.device_id, arguments.data_source_id)
+            arguments.result_id = format_ri(arguments.result_id)
         check_a(arguments.analysis)
         arguments.analysis_args = format_aa(arguments.analysis_args)
     except Exception as err:
@@ -283,14 +296,23 @@ async def cassandra(arg):
     logger.info("Cassandra routine")
     # Connect to DB and read data
     db_connection = db.InsyteCassandraIO()
-    await db_connection.connect(contact_points=arg.contact_points, keyspace=arg.keyspace, port=arg.port,
+    await db_connection.connect(contact_points=arg.host_address, keyspace=arg.database, port=arg.port,
                                 username=arg.username, password=arg.password)
-    data = await db_connection.read_data(device_id=arg.device_id, data_source_id=arg.data_source_id,
-                                         time_upload=arg.time_upload, limit=arg.limit)
-    df = await data_to_df(data)
+    # read if needed
+    if arg.mode in ['r', 'rw']:
+        data = await db_connection.read_data(device_id=arg.device_id, data_source_id=arg.data_source_id,
+                                             time_upload=arg.time_upload, limit=arg.limit)
+        df = await data_to_df(data)
+    else:
+        df = None
+
     # Analyze data, write back and disconnect
-    output_data = await analytics.analyze(arg.analysis, arg.analysis_args, df)
-    _ = await db_connection.write_data(result_id=arg.result_id, output_data=output_data)
+    output_data = await analytics.analyze_cassandra(arg.analysis, arg.analysis_args, df)
+
+    # write if needed
+    if arg.mode in ['w', 'rw']:
+        _ = await db_connection.write_data(result_id=arg.result_id, output_data=output_data)
+
     await db_connection.disconnect()
 
 
@@ -301,12 +323,38 @@ async def influxdb(arg):
     :param arg: parsed arguments
     """
     logger.info("InfluxDB routine")
+
+    influx = db.InsyteInfluxIO()
+    await influx.connect(arg.host_address, arg.port, arg.username, arg.password, arg.database)
+
+    # read if needed
+    if arg.mode in ['r', 'rw']:
+        df = await influx.read_data(device_id=arg.device_id, data_source_id=arg.data_source_id,
+                                    time_upload=arg.time_upload, limit=arg.limit)
+    else:
+        df = None
+
+    # Analyze data, write back and disconnect
+    output_data = analytics.analyze_influx(arg.analysis, arg.analysis_args, df)
+
+    # write if needed
+    if arg.mode in ['w', 'rw']:
+        _ = await influx.write_data(result_id=arg.result_id, output_data=output_data)
+
+
+
+async def none(arg):
+    """
+    analysis routine without database
+
+    :param arg: parsed arguments
+    """
+    logger.info("No database routine")
     pass
 
 
 async def main(arg):
-
-    database = {'influxdb': influxdb, 'cassandra': cassandra}
+    database = {'influxdb': influxdb, 'cassandra': cassandra, 'none': none}
 
     global logger
     logger = init_logger(arg.log, arg.log_path, arg.log_level, arg.result_id)
@@ -316,7 +364,7 @@ async def main(arg):
         await check_args(arg)
 
         # execute db read, analysis, db write routine fro specified database
-        await database[arg.database](arg)
+        await database[arg.connection_type](arg)
 
         logger.info("Session successfully ended")
         print("DONE")
@@ -329,83 +377,42 @@ if __name__ == "__main__":
     args = parse_args(sys.argv[1:])
     asyncio.run(main(args))
 
-'''
--l
--lp
-logs
--ll
-20
--db
-influxdb
--cps
-92.53.78.60
--ks
-ems
--p
-9042
--un
-ems_user
--pw
-All4OnS9daW!
--ri
-00000000-0000-0000-0000-000000000011
-00000000-0000-0000-0000-000000000010
--di
-00000000-0000-0000-0000-000000000000
-00000000-0000-0000-0000-000000000000
--dsi
-108
-107
--tu
-2017-02-01_00:00:00+0000
-2018-02-01_00:00:00+0000
-2017-01-01_00:00:00+0000
-2018-01-01_00:00:00+0000
--lim
-100
--a
-test
--aa
-operation
-add
-value
-150.0
-'''
-
-'''
+"""
 --log
 --log-path
 logs
 --log-level
 20
---database
+--connection-type
 influxdb
---contact-points
-92.53.78.60
---keyspace
+--host-address
+ems.insyte.ru
+--database
 ems
 --port
-9042
+8086
 --username
 ems_user
 --password
-All4OnS9daW!
+4rERYTPhfTtvU!99
+--mode
+rw
 --result-id
 00000000-0000-0000-0000-000000000011
 00000000-0000-0000-0000-000000000010
 --device-id
-00000000-0000-0000-0000-000000000000
-00000000-0000-0000-0000-000000000000
+c98fda23-9298-4521-af43-64eb46faf13b
+c98fda23-9298-4521-af43-64eb46faf13b
 --data-source-id
-108
-107
+160
+161
 --time_upload
-2017-02-01_00:00:00+0000
-2018-02-01_00:00:00+0000
-2017-01-01_00:00:00+0000
-2018-01-01_00:00:00+0000
+2018-11-01_00:00:00+0000
+2019-02-01_00:00:00+0000
+2018-11-01_00:00:00+0000
+2019-02-01_00:00:00+0000
 --limit
-100
+1000
 --analysis
 test
 --analysis-args
@@ -413,4 +420,4 @@ operation
 add
 value
 150.0
-'''
+"""

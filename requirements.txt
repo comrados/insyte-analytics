@@ -1,3 +1,4 @@
+influxdb
 cassandra-driver
 pandas
 numpy
