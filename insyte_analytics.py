@@ -46,7 +46,7 @@ def parse_args(argv):
                            help='data source IDs sequence of length N <id1 id2 ... idN>')
     dbr_group.add_argument('-tu', '--time_upload', dest='time_upload', nargs='+', default=None,
                            help='dates set of length 2N <d_min1 d_max1 d_min2 d_max2 ... d_minN d_maxN>' +
-                                ' in format YYYY-mm-ddTHH:MM:SSZ (2018-01-01T00:00:00Z)')
+                                ' in format YYYY-mm-dd_HH:MM:SS±ZZZZ (2018-11-01_00:00:00+0000)')
     dbr_group.add_argument('-lim', '--limit', dest='limit', default=None, type=int,
                            help='limit of retrieved DB entries per query')
     # DB Writing

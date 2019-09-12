@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="12f8726f-fb14-4ba6-9c8b-89c2ed12558e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/analytics/analysis.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/analytics/anylysis_demand_response.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/analytics/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/analysis_test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/insyte_analytics.py" beforeDir="false" afterPath="$PROJECT_DIR$/insyte_analytics.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,114 +10,6 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/db/insyte_influx_io.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="19" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
-              <folding>
-                <element signature="e#0#14#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/analytics/analysis_test.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="30" selection-start-line="2" selection-start-column="30" selection-end-line="2" selection-end-column="30" />
-              <folding>
-                <element signature="e#0#14#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/analytics/analysis.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="14" column="41" selection-start-line="14" selection-start-column="41" selection-end-line="14" selection-end-column="41" />
-              <folding>
-                <element signature="e#0#14#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/test_influx.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="88" selection-start-line="6" selection-start-column="88" selection-end-line="6" selection-end-column="88" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/db/insyte_cassandra_io.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3043">
-              <caret line="183" column="99" selection-start-line="179" selection-start-column="8" selection-end-line="183" selection-end-column="99" />
-              <folding>
-                <element signature="e#0#48#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/logs/00000000-0000-0000-0000-000000000012.log">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/analytics/anylysis_demand_response.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="87" column="90" selection-start-line="87" selection-start-column="90" selection-end-line="87" selection-end-column="90" />
-              <folding>
-                <element signature="e#0#14#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/insyte_analytics.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="334">
-              <caret line="147" column="32" selection-start-line="147" selection-start-column="32" selection-end-line="147" selection-end-column="32" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/analytics/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="438">
-              <caret line="84" column="37" selection-start-line="84" selection-start-column="22" selection-end-line="84" selection-end-column="37" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/analytics/utils.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="27" selection-start-line="3" selection-start-column="27" selection-end-line="3" selection-end-column="27" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -154,44 +41,6 @@
     <option name="CREATE_PULL_REQUEST_DEFAULT_REPO_USER" value="comrados" />
     <option name="CREATE_PULL_REQUEST_DEFAULT_REPO_NAME" value="insyte" />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/test.py" />
-        <option value="$PROJECT_DIR$/.pytest_cache/test_delete.py" />
-        <option value="$PROJECT_DIR$/test_insert.py" />
-        <option value="$PROJECT_DIR$/test_read.py" />
-        <option value="$PROJECT_DIR$/requirements.txt" />
-        <option value="$PROJECT_DIR$/tests/__init__.py" />
-        <option value="$PROJECT_DIR$/requirements.txt" />
-        <option value="$PROJECT_DIR$/tests/test_insert.py" />
-        <option value="$PROJECT_DIR$/db/cassandra_io.py" />
-        <option value="$PROJECT_DIR$/tests/log.log" />
-        <option value="$PROJECT_DIR$/db/cassandra_io.py" />
-        <option value="$PROJECT_DIR$/default.log" />
-        <option value="$PROJECT_DIR$/tests/test_db_module.py" />
-        <option value="$PROJECT_DIR$/logs/00000000-0000-0000-0000-000000000000.log" />
-        <option value="$PROJECT_DIR$/analytics/test.py" />
-        <option value="$PROJECT_DIR$/tests/test_read.py" />
-        <option value="$PROJECT_DIR$/db/insyte_cassandra_io.py" />
-        <option value="$PROJECT_DIR$/logs/00000000-0000-0000-0000-000000000111_00000000-0000-0000-0000-000000000011.log" />
-        <option value="$PROJECT_DIR$/db/influx_db_io.py" />
-        <option value="$PROJECT_DIR$/logs/asd-sdasd-sada3-21312323.log" />
-        <option value="$PROJECT_DIR$/db/__init__.py" />
-        <option value="$PROJECT_DIR$/logs/00000000-0000-0000-0000-000000000011_00000000-0000-0000-0000-000000000010.log" />
-        <option value="$PROJECT_DIR$/tests/test_influx.py" />
-        <option value="$PROJECT_DIR$/analytics/analysis.py" />
-        <option value="$PROJECT_DIR$/analytics/analysis_test.py" />
-        <option value="$PROJECT_DIR$/logs/00000000-0000-0000-0000-000000000010_00000000-0000-0000-0000-000000000011.log" />
-        <option value="$PROJECT_DIR$/analytics/__init__.py" />
-        <option value="$PROJECT_DIR$/logs/00000000-0000-0000-0000-000000000012.log" />
-        <option value="$PROJECT_DIR$/db/insyte_influx_io.py" />
-        <option value="$PROJECT_DIR$/insyte_analytics.py" />
-        <option value="$PROJECT_DIR$/analytics/utils.py" />
-        <option value="$PROJECT_DIR$/analytics/anylysis_demand_response.py" />
-      </list>
-    </option>
-  </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="23" />
     <option name="y" value="-21" />
@@ -199,35 +48,6 @@
     <option name="height" value="1056" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="insyte-analytics" type="b2602c69:ProjectViewProjectNode" />
-              <item name="insyte-analytics" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="insyte-analytics" type="b2602c69:ProjectViewProjectNode" />
-              <item name="insyte-analytics" type="462c0819:PsiDirectoryNode" />
-              <item name="analytics" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="insyte-analytics" type="b2602c69:ProjectViewProjectNode" />
-              <item name="insyte-analytics" type="462c0819:PsiDirectoryNode" />
-              <item name="logs" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
-  </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/insyte_analytics.py" />
@@ -258,7 +78,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.insyte_analytics demand response">
+  <component name="RunManager" selected="Python.insyte_analytics">
     <configuration name="insyte_analytics --help" type="PythonConfigurationType" factoryName="Python">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -280,41 +100,20 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="insyte_analytics demand response" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="insyte_analytics" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="C:\ProgramData\Anaconda3\python.exe" />
+      <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="false" />
+      <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
-      <option name="PARAMETERS" value="--log --log-path logs --log-level 20 --connection-type influxdb --host-address ems.insyte.ru --database ems --port 8086 --username ems_user --password 4rERYTPhfTtvU!99 --mode rw --result-id 00000000-0000-0000-0000-000000000012 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 --time_upload 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 --limit 300 --analysis demand-response --analysis-args target_day 1 2018-12-01_00:00:00+0000 exception_days 2 2018-11-05_00:00:00+0000 2018-11-06_00:00:00+0000 except_weekends 1 True" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="insyte_analytics test" type="PythonConfigurationType" factoryName="Python">
-      <module name="insyte-analytics" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="C:\ProgramData\Anaconda3\python.exe" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
-      <option name="PARAMETERS" value="--log --log-path logs --log-level 20 --connection-type influxdb --host-address ems.insyte.ru --database ems --port 8086 --username ems_user --password 4rERYTPhfTtvU!99 --mode rw --result-id 00000000-0000-0000-0000-000000000010 00000000-0000-0000-0000-000000000011 --device-id c98fda23-9298-4521-af43-64eb46faf13b c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 161 --time_upload 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 --limit 300 --analysis test --analysis-args operation 1 add value 1 150.0" />
+      <option name="PARAMETERS" value="--log --log-path logs --log-level 20 --connection-type influxdb --host-address ems.insyte.ru --database ems --port 8086 --username ems_user --password 4rERYTPhfTtvU!99 --mode rw --result-id 00000000-0000-0000-0000-000000000010 00000000-0000-0000-0000-000000000011 --device-id c98fda23-9298-4521-af43-64eb46faf13b c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 161 --time_upload 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 --limit 300 --analysis test --analysis-args operation add value 150.0" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -432,8 +231,7 @@
       <item itemvalue="Python.test_read" />
       <item itemvalue="Python.test_influx" />
       <item itemvalue="Python.insyte_analytics --help" />
-      <item itemvalue="Python.insyte_analytics test" />
-      <item itemvalue="Python.insyte_analytics demand response" />
+      <item itemvalue="Python.insyte_analytics" />
       <item itemvalue="Python.test_delete" />
       <item itemvalue="Python.test_insert" />
     </list>
@@ -444,6 +242,16 @@
         <item itemvalue="Python.test_delete" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="allServicesViewState">
+      <serviceView>
+        <treeState>
+          <expand />
+          <select />
+        </treeState>
+      </serviceView>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -526,87 +334,8 @@
       <option name="project" value="LOCAL" />
       <updated>1565613900075</updated>
     </task>
-    <task id="LOCAL-00011" summary="influx">
-      <created>1567783670182</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1567783670182</updated>
-    </task>
-    <task id="LOCAL-00012" summary="influx">
-      <created>1567783759573</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1567783759573</updated>
-    </task>
-    <option name="localTasksCounter" value="13" />
+    <option name="localTasksCounter" value="11" />
     <servers />
-  </component>
-  <component name="TestHistory">
-    <history-entry file="pytest_in_test_read_py - 2019.04.16 at 15h 11m 49s.xml">
-      <configuration name="pytest in test_read.py" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_in_test_read_py - 2019.04.16 at 15h 12m 24s.xml">
-      <configuration name="pytest in test_read.py" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_in_test_read_py - 2019.04.16 at 15h 12m 39s.xml">
-      <configuration name="pytest in test_read.py" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_in_test_read_py - 2019.05.01 at 14h 31m 33s.xml">
-      <configuration name="pytest in test_read.py" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_in_test_influx_py - 2019.09.05 at 14h 19m 42s.xml">
-      <configuration name="pytest in test_influx.py" configurationId="tests" />
-    </history-entry>
-  </component>
-  <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
-    <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.5164319" visible="true" weight="0.29768178" />
-      <window_info id="Structure" order="1" sideWeight="0.48356807" side_tool="true" visible="true" weight="0.29768178" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32777777" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.17666666" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.29" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49946696" weight="0.21675393" />
-      <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50053304" side_tool="true" weight="0.36444443" />
-      <window_info anchor="bottom" id="Python Console" order="10" />
-      <window_info anchor="bottom" id="GitHub Pull Requests" order="11" sideWeight="0.4997236" visible="true" weight="0.32914045" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="R Packages" order="3" weight="0.32982844" />
-      <window_info anchor="right" id="R Graphics" order="4" />
-    </layout>
-    <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4811321" visible="true" weight="0.28518122" />
-      <window_info id="Structure" order="1" sideWeight="0.5188679" side_tool="true" visible="true" weight="0.28518122" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32879582" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.29333332" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.43555555" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49946696" weight="0.21675393" />
-      <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50053304" side_tool="true" weight="0.36444443" />
-      <window_info anchor="bottom" id="Python Console" order="10" />
-      <window_info anchor="bottom" id="GitHub Pull Requests" order="11" sideWeight="0.4997236" visible="true" weight="0.32914045" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="R Packages" order="3" weight="0.32982844" />
-      <window_info anchor="right" id="R Graphics" order="4" />
-    </layout-to-restore>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -614,20 +343,7 @@
         <entry key="MAIN">
           <value>
             <State>
-              <option name="RECENTLY_FILTERED_USER_GROUPS">
-                <collection />
-              </option>
-              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
-                <collection />
-              </option>
-              <option name="COLUMN_ORDER">
-                <list>
-                  <option value="0" />
-                  <option value="1" />
-                  <option value="2" />
-                  <option value="3" />
-                </list>
-              </option>
+              <option name="COLUMN_ORDER" />
             </State>
           </value>
         </entry>
@@ -656,8 +372,7 @@
     <MESSAGE value="io fix" />
     <MESSAGE value="result output" />
     <MESSAGE value="dbs extension" />
-    <MESSAGE value="influx" />
-    <option name="LAST_COMMIT_MESSAGE" value="influx" />
+    <option name="LAST_COMMIT_MESSAGE" value="dbs extension" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -697,238 +412,8 @@
           <line>252</line>
           <option name="timeStamp" value="52" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics/analysis_test.py</url>
-          <line>75</line>
-          <option name="timeStamp" value="62" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics/anylysis_demand_response.py</url>
-          <line>64</line>
-          <option name="timeStamp" value="73" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics/anylysis_demand_response.py</url>
-          <line>87</line>
-          <option name="timeStamp" value="89" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics/anylysis_demand_response.py</url>
-          <line>89</line>
-          <option name="timeStamp" value="91" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/cassandra/query.py" />
-    <entry file="file://$USER_HOME$/.PyCharmCE2019.1/system/python_stubs/-313451744/builtins.py" />
-    <entry file="file://$PROJECT_DIR$/tests/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$USER_HOME$/.local/lib/python3.7/site-packages/cassandra/cluster.py" />
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/typeshed/stdlib/2and3/uuid.pyi">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://C:/ProgramData/Anaconda3/Lib/uuid.py" />
-    <entry file="file://$PROJECT_DIR$/requirements.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="5" selection-start-line="2" selection-start-column="5" selection-end-line="2" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_delete.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="21" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#48#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/cassandra/cluster.py" />
-    <entry file="file://C:/ProgramData/Anaconda3/Lib/argparse.py" />
-    <entry file="file://$USER_HOME$/anaconda3/lib/python3.7/logging/__init__.py" />
-    <entry file="file://$USER_HOME$/.PyCharmCE2019.1/system/python_stubs/-968531858/builtins.py" />
-    <entry file="file://$USER_HOME$/anaconda3/lib/python3.7/site-packages/pandas/core/frame.py" />
-    <entry file="file://$PROJECT_DIR$/logs/00000000-0000-0000-0000-000000000000.log" />
-    <entry file="file://$PROJECT_DIR$/default.log" />
-    <entry file="file://C:/ProgramData/Anaconda3/Lib/logging/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/tests/log.log" />
-    <entry file="file://$PROJECT_DIR$/logs/00000000-0000-0000-0000-000000000000_00000000-0000-0000-0000-000000000001.log" />
-    <entry file="file://$USER_HOME$/.local/lib/python3.7/site-packages/cassandra/query.py" />
-    <entry file="file://$PROJECT_DIR$/logs/00000000-0000-0000-0000-000000000111_00000000-0000-0000-0000-000000000011.log" />
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pycharm/_jb_pytest_runner.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_db_module.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="17" column="22" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_insert.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1275">
-          <caret line="81" selection-start-line="81" selection-end-line="81" />
-          <folding>
-            <element signature="e#0#48#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_read.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="37" selection-start-line="37" selection-end-line="37" />
-          <folding>
-            <element signature="e#0#48#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/pandas/core/internals/managers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="1718" selection-start-line="1718" selection-end-line="1718" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/logs/temp.lo.log" />
-    <entry file="file://$PROJECT_DIR$/logs/tem.log" />
-    <entry file="file://$PROJECT_DIR$/logs/temp.log" />
-    <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/influxdb/client.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-459">
-          <caret line="24" column="6" selection-start-line="24" selection-start-column="6" selection-end-line="24" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/influxdb/_dataframe_client.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-238">
-          <caret line="34" column="27" selection-start-line="34" selection-start-column="27" selection-end-line="34" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="44" selection-start-line="1" selection-start-column="44" selection-end-line="1" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#50#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/logs/asd-sdasd-sada3-21312323.log" />
-    <entry file="file://$PROJECT_DIR$/logs/00000000-0000-0000-0000-000000000011_00000000-0000-0000-0000-000000000010.log" />
-    <entry file="file://$PROJECT_DIR$/logs/00000000-0000-0000-0000-000000000010.log" />
-    <entry file="file://$PROJECT_DIR$/logs/error.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="160" selection-start-line="3" selection-start-column="154" selection-end-line="3" selection-end-column="160" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_influx.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="88" selection-start-line="6" selection-start-column="88" selection-end-line="6" selection-end-column="88" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db/insyte_cassandra_io.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3043">
-          <caret line="183" column="99" selection-start-line="179" selection-start-column="8" selection-end-line="183" selection-end-column="99" />
-          <folding>
-            <element signature="e#0#48#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/logs/00000000-0000-0000-0000-000000000010_00000000-0000-0000-0000-000000000011.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="163" selection-start-line="4" selection-start-column="163" selection-end-line="4" selection-end-column="163" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/analytics/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="438">
-          <caret line="84" column="37" selection-start-line="84" selection-start-column="22" selection-end-line="84" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/analytics/analysis_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="30" selection-start-line="2" selection-start-column="30" selection-end-line="2" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db/insyte_influx_io.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="19" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/insyte_analytics.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="147" column="32" selection-start-line="147" selection-start-column="32" selection-end-line="147" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/logs/00000000-0000-0000-0000-000000000012.log">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/analytics/analysis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="41" selection-start-line="14" selection-start-column="41" selection-end-line="14" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/analytics/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="27" selection-start-line="3" selection-start-column="27" selection-end-line="3" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/analytics/anylysis_demand_response.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="87" column="90" selection-start-line="87" selection-start-column="90" selection-end-line="87" selection-end-column="90" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
   </component>
   <component name="masterDetails">
     <states>
