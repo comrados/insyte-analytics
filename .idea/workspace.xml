@@ -205,7 +205,28 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.insyte_analytics --help">
+  <component name="RunManager" selected="Python.insyte-analytics demand-response">
+    <configuration name="insyte-analytics demand-response" type="PythonConfigurationType" factoryName="Python">
+      <module name="insyte-analytics" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\ProgramData\Anaconda3\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
+      <option name="PARAMETERS" value="--log --log-path logs --log-level 20 --connection-type influxdb --host-address ems.insyte.ru --database ems --port 8086 --username ems_user --password 4rERYTPhfTtvU!99 --mode rw --result-id 00000000-0000-0000-0000-000000000012 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 --time_upload 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 --limit 300 --analysis demand-response --analysis-args target_day 1 2018-12-01_00:00:00+0000 exception_days 2 2018-11-05_00:00:00+0000 2018-11-06_00:00:00+0000 except_weekends 1 True" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="insyte_analytics --help" type="PythonConfigurationType" factoryName="Python">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -227,7 +248,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="insyte_analytics" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+    <configuration name="insyte_analytics test" type="PythonConfigurationType" factoryName="Python">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -240,7 +261,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
-      <option name="PARAMETERS" value="--log --log-path logs --log-level 20 --connection-type influxdb --host-address ems.insyte.ru --database ems --port 8086 --username ems_user --password 4rERYTPhfTtvU!99 --mode rw --result-id 00000000-0000-0000-0000-000000000010 00000000-0000-0000-0000-000000000011 --device-id c98fda23-9298-4521-af43-64eb46faf13b c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 161 --time_upload 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 --limit 300 --analysis test --analysis-args operation add value 150.0" />
+      <option name="PARAMETERS" value="--log --log-path logs --log-level 20 --connection-type influxdb --host-address ems.insyte.ru --database ems --port 8086 --username ems_user --password 4rERYTPhfTtvU!99 --mode rw --result-id 00000000-0000-0000-0000-000000000010 00000000-0000-0000-0000-000000000011 --device-id c98fda23-9298-4521-af43-64eb46faf13b c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 161 --time_upload 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 --limit 300 --analysis test --analysis-args operation 1 add value 1 150.0" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -358,7 +379,8 @@
       <item itemvalue="Python.test_read" />
       <item itemvalue="Python.test_influx" />
       <item itemvalue="Python.insyte_analytics --help" />
-      <item itemvalue="Python.insyte_analytics" />
+      <item itemvalue="Python.insyte-analytics demand-response" />
+      <item itemvalue="Python.insyte_analytics test" />
       <item itemvalue="Python.test_delete" />
       <item itemvalue="Python.test_insert" />
     </list>
