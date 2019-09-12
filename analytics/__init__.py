@@ -1,10 +1,10 @@
-from .test import TestAnalysis
+from .analysis_test import TestAnalysis
+from.anylysis_demand_response import DemandResponseAnalysis
 import logging
-
 
 logger = logging.getLogger('insyte_analytics.analytics.__init__')
 # list of existing analysis functions
-ANALYSIS = ['test']
+ANALYSIS = ['test', 'demand-response']
 
 
 def check_analysis(analysis):
@@ -29,11 +29,7 @@ def analyze_cassandra(analysis, arguments, data_frame):
     """
     logger.debug("Starting '" + str(analysis) + "' Cassandra analysis, parameters: " + str(arguments))
     try:
-        if analysis == 'test':
-            result = TestAnalysis().analyze(arguments, data_frame)
-        else:
-            logger.error("Analysis function doesn't exist: " + analysis)
-            raise Exception("Analysis function doesn't exist: " + analysis)
+        result = _analysis_caller(analysis, arguments, data_frame)
     except Exception as err:
         logger.error("Analysis failed: " + str(err))
         raise Exception("Analysis failed: " + str(err))
@@ -50,17 +46,45 @@ def analyze_influx(analysis, arguments, data_frame):
     :param analysis: analysis function name
     :param arguments: dictonary of analysis function arguments
     :param data_frame: dataframe with data (time series)
-    :return: list of tuples for writing [(date1, value1), (date2, value2), ..., (dateN, valueN)]
+    :return: dataframe
     """
     logger.debug("Starting '" + str(analysis) + "' Influx analysis, parameters: " + str(arguments))
     try:
-        if analysis == 'test':
-            result = TestAnalysis().analyze(arguments, data_frame)
-        else:
-            logger.error("Analysis function doesn't exist: " + analysis)
-            raise Exception("Analysis function doesn't exist: " + analysis)
+        result = _analysis_caller(analysis, arguments, data_frame)
     except Exception as err:
         logger.error("Analysis failed: " + str(err))
         raise Exception("Analysis failed: " + str(err))
     logger.debug("Analysis successfully complete")
+    return result
+
+
+def analyze_none(analysis, arguments):
+    """
+    Calls analysis functions, returns analysis result.
+
+    :param analysis: analysis function name
+    :param arguments: dictonary of analysis function arguments
+    :return: None
+    """
+    logger.debug("Starting '" + str(analysis) + "' No-db analysis, parameters: " + str(arguments))
+    try:
+        result = _analysis_caller(analysis, arguments, None)
+    except Exception as err:
+        logger.error("Analysis failed: " + str(err))
+        raise Exception("Analysis failed: " + str(err))
+    logger.debug("Analysis successfully complete")
+    return result
+
+
+def _analysis_caller(analysis, arguments, data_frame):
+    """
+    Caller function
+    """
+    if analysis == 'test':
+        result = TestAnalysis(arguments, data_frame).analyze()
+    elif analysis == 'demand-response':
+        result = DemandResponseAnalysis(arguments, data_frame).analyze()
+    else:
+        logger.error("Analysis function doesn't exist: " + analysis)
+        raise Exception("Analysis function doesn't exist: " + analysis)
     return result

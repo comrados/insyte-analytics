@@ -8,8 +8,7 @@ import pandas as pd
 import analytics
 import db
 import asyncio
-
-ANALYSIS = ('test')
+from analytics import utils
 
 
 def parse_args(argv):
@@ -58,7 +57,9 @@ def parse_args(argv):
     analysis_group = parser.add_argument_group('analysis', 'analysis parameters')
     analysis_group.add_argument('-a', '--analysis', dest='analysis', required=True, help='analysis function name')
     analysis_group.add_argument('-aa', '--analysis-args', dest='analysis_args', nargs='*',
-                                help='analysis function arguments key-value pairs <key1 val1 key2 val2 ... keyN valN>')
+                                help='analysis function arguments key-count-value sequences <k1 n1 v11 v12 v13'
+                                     'k2 n2 v21 v22 v23 ... kN nN vN1 vN2 vN3>, where kN - Nth key, '
+                                     'nN - values count of Nth key, vNi - ith value of Nth key')
     try:
         parsed_args = parser.parse_args(argv)
     except argparse.ArgumentError:
@@ -93,7 +94,9 @@ def init_logger(log_flag, log_path, log_level, result_id):
             for ri in result_id:
                 logname += str(ri) + "_"
         else:
-            logname = "error "
+            from datetime import datetime
+            time = datetime.utcnow().strftime('%Y-%m-%d_%H:%M:%S.%f')[:-3]
+            logname = "error" + time + " "
         logname = logname[0:len(logname) - 1]
         configs['filename'] = os.path.join(log_path, logname + '.log')
     logging.basicConfig(**configs)
@@ -139,8 +142,8 @@ def format_tu(time_upload):
     if len(time_upload) % 2 == 0:
         try:
             for i in range(0, len(time_upload), 2):
-                d_min = datetime.datetime.strptime(time_upload[i], "%Y-%m-%d_%H:%M:%S%z")
-                d_max = datetime.datetime.strptime(time_upload[i + 1], "%Y-%m-%d_%H:%M:%S%z")
+                d_min = utils.string_to_date(time_upload[i])
+                d_max = utils.string_to_date(time_upload[i + 1])
                 output.append((d_min, d_max))
         except Exception as err:
             raise Exception("Impossible to convert to datetime: " + str(err))
@@ -238,16 +241,22 @@ def format_aa(analysis_args):
     """
     Checks and converts to dictionary analysis args argument.
 
-    :param analysis_args: list of key-value pairs [key1, val1, key2, val2, ..., keyN, valN]
-    :return: dictionary {'key1': val1, 'key2': val2, ..., 'keyN': valN}
+    :param analysis_args: list of key-value pairs [<k1 n1 v11 v12 v13 k2 n2 v21 v22 v23 ... kN nN vN1 vN2 vN3>']
+    :return: dictionary {'k1': [v11, v12, v13], 'k2': [v11, v12, v13], ..., 'kN': [vN1, vN2, vN3]}
     """
     output = {}
     logger.debug("Checking and reformatting 'analysis_args': " + str(analysis_args))
-    if len(analysis_args) % 2 == 0:
-        for i in range(0, len(analysis_args), 2):
-            output[analysis_args[i]] = analysis_args[i + 1]
-    else:
-        raise Exception("'analysis_args' length must be even number, current length = " + str(len(analysis_args)))
+
+    next_count = 0
+    for i in range(len(analysis_args)):
+        if next_count == i:
+            key = analysis_args[i]
+            count = int(analysis_args[i + 1])
+            temp = analysis_args[i + 2:i + 2 + count]
+            output[key] = temp
+            next_count = i + 2 + count
+            i = next_count - 1
+
     logger.debug("Modified 'analysis_args': " + str(output))
     return output
 
@@ -306,8 +315,8 @@ async def cassandra(arg):
     else:
         df = None
 
-    # Analyze data, write back and disconnect
-    output_data = await analytics.analyze_cassandra(arg.analysis, arg.analysis_args, df)
+    # Analyze data
+    output_data = analytics.analyze_cassandra(arg.analysis, arg.analysis_args, df)
 
     # write if needed
     if arg.mode in ['w', 'rw']:
@@ -334,13 +343,12 @@ async def influxdb(arg):
     else:
         df = None
 
-    # Analyze data, write back and disconnect
+    # Analyze data
     output_data = analytics.analyze_influx(arg.analysis, arg.analysis_args, df)
 
     # write if needed
     if arg.mode in ['w', 'rw']:
         _ = await influx.write_data(result_id=arg.result_id, output_data=output_data)
-
 
 
 async def none(arg):
@@ -350,7 +358,9 @@ async def none(arg):
     :param arg: parsed arguments
     """
     logger.info("No database routine")
-    pass
+
+    # Analyze data
+    output_data = analytics.analyze_none(arg.analysis, arg.analysis_args)
 
 
 async def main(arg):
