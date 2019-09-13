@@ -2,7 +2,6 @@ import argparse
 import sys
 import logging
 import os
-import datetime
 import uuid
 import pandas as pd
 import analytics
@@ -29,13 +28,15 @@ def parse_args(argv):
     logger_group.add_argument('-ll', '--log-level', dest='log_level', default=20, type=int, help='logging level')
     # DB Connection
     dbc_group = parser.add_argument_group('database connection', 'database connection parameters')
-    dbc_group.add_argument('-ct', '--connection-type', dest='connection_type', required=True,
+    dbc_group.add_argument('-ct', '--connection-type', dest='connection_type', default='influx',
+                           choices=['influx', 'cassandra', 'none'],
                            help="database type ('influxdb', 'cassandra' or 'none')")
-    dbc_group.add_argument('-ha', '--host-address', dest='host_address', nargs='+', help='host addresses')
-    dbc_group.add_argument('-db', '--database', dest='database', help='database name')
-    dbc_group.add_argument('-p', '--port', dest='port', type=int, help='Port')
-    dbc_group.add_argument('-un', '--username', dest='username', help='username')
-    dbc_group.add_argument('-pw', '--password', dest='password', help='password')
+    dbc_group.add_argument('-ha', '--host-address', dest='host_address', nargs='+', default=['ems.insyte.ru'],
+                           help='host addresses')
+    dbc_group.add_argument('-db', '--database', dest='database', default='ems', help='database name')
+    dbc_group.add_argument('-p', '--port', dest='port', type=int, default=8086, help='Port')
+    dbc_group.add_argument('-un', '--username', dest='username', default='ems_user', help='username')
+    dbc_group.add_argument('-pw', '--password', dest='password', default=r"4rERYTPhfTtvU!99", help='password')
     dbc_group.add_argument('-m', '--mode', dest='mode', default='rw', choices=['r', 'w', 'rw'],
                            help="db access mode: 'r' - read, 'w' - write, 'rw' - read and write")
     # DB Reading
@@ -55,7 +56,8 @@ def parse_args(argv):
                            help='analysis result UUIDs sequence of length K <uuid1 uuid2 ... uuidK>')
     # Analysis
     analysis_group = parser.add_argument_group('analysis', 'analysis parameters')
-    analysis_group.add_argument('-a', '--analysis', dest='analysis', required=True, help='analysis function name')
+    analysis_group.add_argument('-a', '--analysis', dest='analysis', required=True, choices=analytics.ANALYSIS,
+                                help='analysis function name')
     analysis_group.add_argument('-aa', '--analysis-args', dest='analysis_args', nargs='*',
                                 help='analysis function arguments key-count-value sequences <k1 n1 v11 v12 v13'
                                      'k2 n2 v21 v22 v23 ... kN nN vN1 vN2 vN3>, where kN - Nth key, '
@@ -116,11 +118,13 @@ async def check_args(arguments):
             logger.error("File-logging is activated, filename is <result_id>.log, you must also specify 'result_id'")
             raise Exception("File-logging is activated, filename is <result_id>.log, you must also specify 'result_id'")
         if arguments.connection_type != 'none':
-            arguments.time_upload = format_tu(arguments.time_upload)
-            arguments.device_id = format_di(arguments.device_id)
-            arguments.data_source_id = format_dsi(arguments.data_source_id)
-            check_reading_lengths(arguments.time_upload, arguments.device_id, arguments.data_source_id)
-            arguments.result_id = format_ri(arguments.result_id)
+            if arguments.mode in ['r', 'rw']:
+                arguments.time_upload = format_tu(arguments.time_upload)
+                arguments.device_id = format_di(arguments.device_id)
+                arguments.data_source_id = format_dsi(arguments.data_source_id)
+                check_reading_lengths(arguments.time_upload, arguments.device_id, arguments.data_source_id)
+            if arguments.mode in ['w', 'rw']:
+                arguments.result_id = format_ri(arguments.result_id)
         check_a(arguments.analysis)
         arguments.analysis_args = format_aa(arguments.analysis_args)
     except Exception as err:
@@ -139,6 +143,8 @@ def format_tu(time_upload):
     """
     output = []
     logger.debug("Checking and reformatting 'time_upload': " + str(time_upload))
+    if time_upload is None:
+        raise Exception("No 'time_upload' provided for 'r' or 'rw' mode")
     if len(time_upload) % 2 == 0:
         try:
             for i in range(0, len(time_upload), 2):
@@ -162,6 +168,8 @@ def format_di(device_id):
     """
     output = []
     logger.debug("Checking and reformatting 'device_id': " + str(device_id))
+    if device_id is None:
+        raise Exception("No 'device_id' provided for 'r' or 'rw' mode")
     try:
         for i in range(len(device_id)):
             output.append(uuid.UUID(device_id[i]))
@@ -180,6 +188,8 @@ def format_dsi(data_source_id):
     """
     output = []
     logger.debug("Checking and reformatting 'data_source_id': " + str(data_source_id))
+    if data_source_id is None:
+        raise Exception("No 'data_source_id' provided for 'r' or 'rw' mode")
     try:
         for i in range(len(data_source_id)):
             output.append(int(data_source_id[i]))
@@ -213,6 +223,8 @@ def format_ri(result_id):
     """
     output = []
     logger.debug("Checking and reformatting 'result_id': " + str(result_id))
+    if result_id is None:
+        raise Exception("No 'result_id' provided for 'w' or 'rw' mode")
     try:
         for i in range(len(result_id)):
             output.append(uuid.UUID(result_id[i]))
@@ -247,15 +259,16 @@ def format_aa(analysis_args):
     output = {}
     logger.debug("Checking and reformatting 'analysis_args': " + str(analysis_args))
 
-    next_count = 0
-    for i in range(len(analysis_args)):
-        if next_count == i:
-            key = analysis_args[i]
-            count = int(analysis_args[i + 1])
-            temp = analysis_args[i + 2:i + 2 + count]
-            output[key] = temp
-            next_count = i + 2 + count
-            i = next_count - 1
+    if analysis_args is not None:
+        next_count = 0
+        for i in range(len(analysis_args)):
+            if next_count == i:
+                key = analysis_args[i]
+                count = int(analysis_args[i + 1])
+                temp = analysis_args[i + 2:i + 2 + count]
+                output[key] = temp
+                next_count = i + 2 + count
+                i = next_count - 1
 
     logger.debug("Modified 'analysis_args': " + str(output))
     return output
@@ -325,7 +338,7 @@ async def cassandra(arg):
     await db_connection.disconnect()
 
 
-async def influxdb(arg):
+async def influx(arg):
     """
     Read, analysis, write routine for InfluxDB
 
@@ -364,7 +377,7 @@ async def none(arg):
 
 
 async def main(arg):
-    database = {'influxdb': influxdb, 'cassandra': cassandra, 'none': none}
+    database = {'influx': influx, 'cassandra': cassandra, 'none': none}
 
     global logger
     logger = init_logger(arg.log, arg.log_path, arg.log_level, arg.result_id)

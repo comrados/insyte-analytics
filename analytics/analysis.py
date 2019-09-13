@@ -25,7 +25,10 @@ class Analysis:
         self.logger.debug("Preprocessing DataFrame")
         try:
             # Fill NaNs
-            data = self.original_data.fillna(0.)
+            if self.original_data is not None:
+                data = self.original_data.fillna(0.)
+            else:
+                data = None
             self.logger.debug("DataFrame preprocessed")
             return data
         except Exception as err:
