@@ -148,8 +148,8 @@ def format_tu(time_upload):
     if len(time_upload) % 2 == 0:
         try:
             for i in range(0, len(time_upload), 2):
-                d_min = utils.string_to_date(time_upload[i])
-                d_max = utils.string_to_date(time_upload[i + 1])
+                d_min = utils.string_to_datetime(time_upload[i])
+                d_max = utils.string_to_datetime(time_upload[i + 1])
                 output.append((d_min, d_max))
         except Exception as err:
             raise Exception("Impossible to convert to datetime: " + str(err))

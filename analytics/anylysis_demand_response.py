@@ -85,7 +85,7 @@ class DemandResponseAnalysis(Analysis):
         Checks 'target_day' parameter
         """
         try:
-            self.target_day = utils.string_to_date(self.parameters['target_day'][0]).date()
+            self.target_day = utils.string_to_date(self.parameters['target_day'][0])
 
             self.logger.debug("Parsed parameter 'target_day': " + str(self.target_day))
         except Exception as err:
@@ -132,7 +132,7 @@ class DemandResponseAnalysis(Analysis):
         return False
 
     def _strings_to_dates(self, strings):
-        return [utils.string_to_date(s).date() for s in strings]
+        return [utils.string_to_date(s) for s in strings]
 
     # get fitting workdays, excludes weekends and exceptions
     # only_workdays - excludes weekends
