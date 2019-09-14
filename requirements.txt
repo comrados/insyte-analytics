@@ -1,3 +1,5 @@
+keras
+tensorflow
 influxdb
 cassandra-driver
 pandas

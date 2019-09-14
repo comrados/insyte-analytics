@@ -19,6 +19,7 @@ class PeakPredictionStatisticalAnalysis(Analysis):
         try:
             self._parse_parameters()
             df = self._get_probabs_for_month()
+            self.logger.debug("Predicted probabilities:\n\n" + str(df) + "\n")
             return df
         except Exception as err:
             self.logger.error("Impossible to analyze: " + str(err))

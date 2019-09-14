@@ -10,4 +10,4 @@ def string_to_date(string):
 
 
 def string_to_time(string):
-    return datetime.datetime.strptime(string, "%H:%M:%S%z").time()
+    return datetime.datetime.strptime(string, "%H:%M:%S").time()

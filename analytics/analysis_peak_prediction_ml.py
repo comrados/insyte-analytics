@@ -1,9 +1,10 @@
 import logging
 import pandas as pd
 from analytics.analysis import Analysis
-import datetime
-import calendar
 import numpy as np
+from . import utils
+import pickle
+from keras.models import load_model
 
 
 class PeakPredictionMLAnalysis(Analysis):
@@ -19,7 +20,10 @@ class PeakPredictionMLAnalysis(Analysis):
         super().analyze()
         try:
             self._parse_parameters()
-            df = self._get_probabs_for_month()
+            results = self._predict()
+            self.logger.debug("Predicted probabilities:\n\n" + str(results) + "\n")
+            df = self._format_results(results)
+            self.logger.debug("Predicted probabilities:\n\n" + str(df) + "\n")
             return df
         except Exception as err:
             self.logger.error("Impossible to analyze: " + str(err))
@@ -32,8 +36,9 @@ class PeakPredictionMLAnalysis(Analysis):
         self.logger.debug("Parsing parameters")
         try:
             self._load_model()
-            self._check_month()
-            self._check_year()
+            self._check_pred_parameters_lengths()
+            self._refactor_parameters()
+            self._normalize_parameters()
         except Exception as err:
             self.logger.error("Impossible to parse parameter: " + str(err))
             raise Exception("Impossible to parse parameter: " + str(err))
@@ -43,69 +48,105 @@ class PeakPredictionMLAnalysis(Analysis):
         Loads model
         """
         try:
-            if self.parameters['model'][0] is 'nn':
+            if self.parameters['model'][0] == 'nn':
                 model = self.model_nn
-            elif self.parameters['model'][0] is 'rf':
+                self.model_type = 'nn'
+                self.model = load_model(model)
+            elif self.parameters['model'][0] == 'rf':
                 model = self.model_rf
+                self.model_type = 'rf'
+                self.model = pickle.load(open(model, "rb"))
             else:
+                self.logger.error("No such model type: " + str(self.parameters['model'][0]))
                 raise Exception("No such model type: " + str(self.parameters['model'][0]))
-            self.probabs = self._load_probabs(model)
+            self.parameters.pop('model')
             self.logger.debug("Model loaded from: " + str(model))
         except Exception as err:
             self.logger.debug("Can't load model: " + str(self.parameters['model'][0]) + " " + str(err))
             raise Exception("Can't load model: " + str(self.parameters['model'][0]) + " " + str(err))
 
-    def _check_month(self):
+    def _check_pred_parameters_lengths(self):
         """
-        Checks 'month' parameter
+        Checks if parameter lengths are equal
         """
-        try:
-            self.month = int(self.parameters['month'][0])
+        lsd = {k: len(v) for k, v in self.parameters.items()}
+        ls = [len(v) for k, v in self.parameters.items()]
 
-            self.logger.debug("Parsed parameter 'month': " + str(self.month))
-        except Exception as err:
-            self.logger.debug("Wrong parameter 'month': " + str(self.month) + " " + str(err))
-            raise Exception("Wrong parameter 'month': " + str(self.month) + " " + str(err))
+        length = ls[0]
+        for i in ls:
+            if i != length:
+                self.logger.error('Parameters lengths must be equal: ' + str(lsd))
+                raise Exception('Parameters lengths must be equal: ' + str(lsd))
+        self.logger.debug("Parameters lengths: " + str(lsd))
 
-    def _check_year(self):
+    def _refactor_parameters(self):
         """
-        Checks 'year' parameter
+        Reformats 'date', 'sunrise', 'sunset', 'daylength', 'temperature', 'pressure', 'humidity', 'windspeed' parameters
         """
-        try:
-            self.year = int(self.parameters['year'][0])
+        self.refactored = pd.DataFrame()
 
-            self.logger.debug("Parsed parameter 'year': " + str(self.year))
-        except Exception as err:
-            self.logger.debug("Wrong parameter 'year': " + str(self.year) + " " + str(err))
-            raise Exception("Wrong parameter 'year': " + str(self.year) + " " + str(err))
+        self.date = [utils.string_to_date(i) for i in self.parameters['date']]
+        self.refactored['sunrise'] = [utils.string_to_time(i) for i in self.parameters['sunrise']]
+        self.refactored['sunset'] = [utils.string_to_time(i) for i in self.parameters['sunset']]
+        self.refactored['daylength'] = [utils.string_to_time(i) for i in self.parameters['daylength']]
+        self.refactored['temperature'] = [float(i) for i in self.parameters['temperature']]
+        self.refactored['pressure'] = [float(i) for i in self.parameters['pressure']]
+        self.refactored['humidity'] = [float(i) for i in self.parameters['humidity']]
+        self.refactored['windspeed'] = [float(i) for i in self.parameters['windspeed']]
 
-    def _load_probabs(self, path):
-        return pd.read_csv(path, index_col=(0, 1, 2))
+        self.refactored['weekday'] = [i.weekday() for i in self.date]
+        self.refactored['week'] = [i.isocalendar()[1] for i in self.date]
+        self.refactored['month'] = [i.month for i in self.date]
 
-    def _get_probabs_for_month(self, nullify_weekends=True):
+        self.logger.debug("Refactored data:\n\n" + str(self.refactored) + "\n")
+
+    def _normalize_parameters(self):
         """
-        Gets probabilities from the model for the whole month
-
-        :param nullify_weekends: nullifies all entries for Sat and Sun
-        :return: dataframe with probabilities for each day of the month
+        Normalizes 'date', 'sunrise', 'sunset', 'daylength', 'temperature', 'pressure', 'humidity', 'windspeed' parameters
         """
-        days_in_month = calendar.monthrange(self.year, self.month)[1]
-        hours = range(24)
+        self.normalized = pd.DataFrame()
 
-        entries = len(hours) * days_in_month
+        self.normalized['sunrise_norm'] = self.refactored['sunrise'].apply(
+            lambda x: (x.minute + x.hour * 60) / (60 * 24 - 1))
+        self.normalized['sunset_norm'] = self.refactored['sunset'].apply(
+            lambda x: (x.minute + x.hour * 60) / (60 * 24 - 1))
+        self.normalized['daylength_norm'] = self.refactored['daylength'].apply(
+            lambda x: (x.minute + x.hour * 60) / (60 * 24 - 1))
+        self.normalized["temp_norm_-50_50"] = self._norm_range(self.refactored["temperature"], -50, 50)
+        self.normalized["press_norm_700_800"] = self._norm_range(self.refactored["pressure"], 700, 800)
+        self.normalized["hum_norm_0_100"] = self._norm_range(self.refactored["humidity"], 0, 100)
+        self.normalized["wind_norm_0_25"] = self._norm_range(self.refactored["windspeed"], 0, 25)
+        self.normalized["weekday_norm"] = self._norm_range(self.refactored["weekday"], 0, 6)
+        self.normalized["week_norm"] = self._norm_range(self.refactored["week"], 1, 53)
+        self.normalized["month_norm"] = self._norm_range(self.refactored["month"], 1, 12)
 
-        p = np.zeros((entries, 1))
+        self.logger.debug("Normalized data:\n\n" + str(self.normalized) + "\n")
 
-        for hour in hours:
-            for day in range(1, days_in_month + 1):
-                _, week, weekday = datetime.date(self.year, self.month, day).isocalendar()
-                if nullify_weekends and weekday in [6, 7]:
-                    p[(day - 1) * 24 + hour] = 0
-                    continue
-                try:
-                    p[(day - 1) * 24 + hour] = self.probabs.loc[week].loc[weekday - 1].loc[hour]['prob']
-                except:
-                    p[(day - 1) * 24 + hour] = 0
+    def _norm_range(self, data, hi, lo):
+        data = data.where(data < lo, other=lo)
+        data = data.where(data > hi, other=hi)
+        r = hi - lo
+        return 1 - (data - lo) / r
 
-        return pd.DataFrame(p, index=pd.date_range(datetime.date(self.year, self.month, 1), periods=entries, freq='1H'),
-                            columns=['value'])
+    def _predict(self):
+        """
+        Gets probabilities from the model for given data
+
+        :return: numpy array with predictions
+        """
+        if self.model_type == 'nn':
+            return self.model.predict(np.array(self.normalized))
+        elif self.model_type == 'rf':
+            return self.model.predict_proba(np.array(self.normalized))
+        else:
+            self.logger.error("No such model type: " + str(self.model_type))
+            raise Exception("No such model type: " + str(self.model_type))
+
+    def _format_results(self, result):
+        idx = pd.date_range(self.date[0], freq='1H', periods=24)
+        for i in range(1, len(self.date)):
+            dr = pd.date_range(self.date[i], periods=24, freq='1H')
+            idx = idx.append(dr)
+
+        result = result.reshape(result.shape[0] * result.shape[1])
+        return pd.DataFrame(result, idx, ['value'])

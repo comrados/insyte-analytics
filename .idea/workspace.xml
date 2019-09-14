@@ -3,9 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="12f8726f-fb14-4ba6-9c8b-89c2ed12558e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/anylysis_demand_response.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/anylysis_demand_response.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/analysis_peak_prediction_ml.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/analysis_peak_prediction_ml.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/analysis_peak_prediction_statistical.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/analysis_peak_prediction_statistical.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/analytics/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/insyte_analytics.py" beforeDir="false" afterPath="$PROJECT_DIR$/insyte_analytics.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <list id="8f3402cf-8e05-46bd-8019-c70b228793b0" name="Revert: demand-response" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -13,6 +14,9 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="insyte-analytics" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -51,6 +55,7 @@
     <option name="width" value="1833" />
     <option name="height" value="1056" />
   </component>
+  <component name="ProjectId" id="1QqKXkohePZ1LxCnJ7FuDyPYJVH" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -86,7 +91,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.insyte-analytics demand-response">
+  <component name="RunManager" selected="Python.t">
     <configuration name="insyte-analytics demand-response" type="PythonConfigurationType" factoryName="Python">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -129,6 +134,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="insyte_analytics peak predict ml" type="PythonConfigurationType" factoryName="Python">
+      <module name="insyte-analytics" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
+      <option name="PARAMETERS" value="--log -ll 10 --mode w --result-id 00000000-0000-0000-0000-000000000014 --analysis peak-prediction-ml --analysis-args model 1 nn date 3 2019-06-26 2019-06-27 2019-06-28 sunrise 3 04:13:00 04:14:00 04:15:00 sunset 3 22:23:00 22:23:00 22:23:00 daylength 3 18:09:00 18:09:00 18:09:00 temperature 3 12.4 13.5375 15.2875 pressure 3 762.4125 759.8125 757.25 humidity 3 74.875 70.25 64.625 windspeed 3 1.25 1.375 3.125" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="insyte_analytics peak predict stat" type="PythonConfigurationType" factoryName="Python">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -164,6 +190,27 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
       <option name="PARAMETERS" value="--log --result-id 00000000-0000-0000-0000-000000000010 00000000-0000-0000-0000-000000000011 --device-id c98fda23-9298-4521-af43-64eb46faf13b c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 161 --time_upload 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 --limit 300 --analysis test --analysis-args operation 1 add value 1 150.0" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="t" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="insyte-analytics" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tests/t.py" />
+      <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -284,11 +331,14 @@
       <item itemvalue="Python.insyte-analytics demand-response" />
       <item itemvalue="Python.insyte_analytics test" />
       <item itemvalue="Python.insyte_analytics peak predict stat" />
+      <item itemvalue="Python.insyte_analytics peak predict ml" />
       <item itemvalue="Python.test_delete" />
       <item itemvalue="Python.test_insert" />
+      <item itemvalue="Python.t" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.t" />
         <item itemvalue="Python.test_delete" />
         <item itemvalue="Python.test_insert" />
         <item itemvalue="Python.test_delete" />
@@ -400,7 +450,14 @@
       <option name="project" value="LOCAL" />
       <updated>1568293992782</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="datetime, date, time formatting">
+      <created>1568475344910</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1568475344910</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -438,7 +495,8 @@
     <MESSAGE value="io fix" />
     <MESSAGE value="result output" />
     <MESSAGE value="dbs extension" />
-    <option name="LAST_COMMIT_MESSAGE" value="dbs extension" />
+    <MESSAGE value="datetime, date, time formatting" />
+    <option name="LAST_COMMIT_MESSAGE" value="datetime, date, time formatting" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -474,9 +532,9 @@
           <option name="timeStamp" value="54" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/insyte_analytics.py</url>
-          <line>363</line>
-          <option name="timeStamp" value="64" />
+          <url>file://$PROJECT_DIR$/tests/t.py</url>
+          <line>13</line>
+          <option name="timeStamp" value="55" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
