@@ -17,9 +17,8 @@ class PeakPredictionMLAnalysis(Analysis):
         self.model_rf = r"models/peak_stats_rf.pkl"
 
     def analyze(self):
-        super().analyze()
         try:
-            self._parse_parameters()
+            super().analyze()
             results = self._predict()
             self.logger.debug("Predicted probabilities:\n\n" + str(results) + "\n")
             df = self._format_results(results)
@@ -28,6 +27,23 @@ class PeakPredictionMLAnalysis(Analysis):
         except Exception as err:
             self.logger.error("Impossible to analyze: " + str(err))
             raise Exception("Impossible to analyze: " + str(err))
+
+    def _preprocess_df(self):
+        """
+        Preprocesses DataFrame
+        """
+        self.logger.debug("Preprocessing DataFrame")
+        try:
+            # Fill NaNs
+            if self.original_data is not None:
+                data = self.original_data.fillna(0.)
+            else:
+                data = None
+            self.logger.debug("DataFrame preprocessed")
+            return data
+        except Exception as err:
+            self.logger.error("Failed to preprocess DataFrame: " + str(err))
+            raise Exception("Failed to preprocess DataFrame: " + str(err))
 
     def _parse_parameters(self):
         """

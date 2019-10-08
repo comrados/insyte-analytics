@@ -2,6 +2,7 @@ import logging
 from influxdb import DataFrameClient
 import datetime
 import pandas as pd
+import numpy as np
 
 
 class InsyteInfluxIO:
@@ -180,12 +181,16 @@ class InsyteInfluxIO:
                 self.logger.debug("Executing query " + str(query))
 
                 result = self.client.query(query)
+                name = str(di) + '_' + str(dsi)
 
                 if len(result) != 0:
                     r = result['data']
-                    name = str(di) + '_' + str(dsi)
+                    self.logger.debug("Column " + name + " contains " + str(len(r)) + " rows")
                     r.rename(columns={"value": name}, inplace=True)
                     results = pd.merge(results, r, how='outer', left_index=True, right_index=True)
+                else:
+                    self.logger.debug("Column " + name + " contains " + str(0) + " rows")
+                    results[name] = np.nan
 
         except Exception as err:
             self.logger.error("Impossible to read: " + str(err))
