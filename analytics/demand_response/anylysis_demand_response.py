@@ -2,7 +2,7 @@ import logging
 import pandas as pd
 from analytics.analysis import Analysis
 import datetime
-from . import utils
+from analytics import utils
 
 
 class DemandResponseAnalysis(Analysis):
@@ -69,6 +69,8 @@ class DemandResponseAnalysis(Analysis):
     def _preprocess_df(self):
         """
         Preprocesses DataFrame
+
+        Fills NaN with 0s
         """
         self.logger.debug("Preprocessing DataFrame")
         try:
@@ -131,6 +133,13 @@ class DemandResponseAnalysis(Analysis):
             raise Exception("Wrong parameter 'except_weekends': " + str(self.except_weekends) + " " + str(err))
 
     def _n_previous_days(self, date, n):
+        """
+        Generator with n days previous to given one
+
+        :param date: given date
+        :param n: number of previous days
+        :return: n previous days (all of them)
+        """
         td = datetime.timedelta(days=1)
 
         for i in range(1, n + 1):
@@ -138,16 +147,36 @@ class DemandResponseAnalysis(Analysis):
             yield date
 
     def _is_weekend(self, day):
+        """
+        Checks if date is a weekend
+
+        :param day: date
+        :return: flag
+        """
         if day.weekday() > 4:
             return True
         return False
 
     def _is_exception(self, day):
+        """
+        Checks if date is contained in exceptions
+
+        :param day: date
+        :return: flag
+        """
+
         if day in self.exception_days:
             return True
         return False
 
     def _strings_to_dates(self, strings):
+        """
+        Converts datestring to dates
+
+        :param strings: array of datestings
+        :return: array of dates
+        """
+
         return [utils.string_to_date(s) for s in strings]
 
     # get fitting workdays, excludes weekends and exceptions
@@ -155,6 +184,13 @@ class DemandResponseAnalysis(Analysis):
     # exceptions - days to exclude (holidays, other days)
     # n - days to iterate through
     def _get_fitting_workdays(self, n=45):
+        """
+        Gets only fitting workdays (non-weekends and non-exceptions) from last n days
+
+        :param n: amount of last days taken into considerations
+        :return: working days, that fit conditions
+        """
+
         days = []
         for day in self._n_previous_days(self.target_day, n):
             if self._is_weekend(day) and self.except_weekends:
@@ -162,10 +198,17 @@ class DemandResponseAnalysis(Analysis):
             if self._is_exception(day):
                 continue
             days.append(day)
+
         return days
 
-    # calculates mean for last 10 working days
     def _get_last_10_days_mean(self, condition1, avg_day):
+        """
+        Calculates mean for last 10 working days
+
+        :param condition1: days that fit condition 1
+        :param avg_day: averages matrix
+        :return: mean of the last 10 days
+        """
         last_10_days = []
 
         for day in condition1:
@@ -176,8 +219,15 @@ class DemandResponseAnalysis(Analysis):
 
         return avg_day[avg_day.columns[0]][last_10_days].mean()
 
-    # get 10 (or less) days, fitting the condition 2
     def _get_10_fitting_days(self, last_10_days_mean, condition1, avg_day):
+        """
+        Get 10 (or less) days, fitting the condition 2
+
+        :param last_10_days_mean: mean for the last 10 days
+        :param condition1: days that fit condition 1
+        :param avg_day: averages matrix
+        :return: fitting 10 days
+        """
         fitting_days = []
         for day in condition1:
             if day in avg_day.index:
@@ -188,6 +238,13 @@ class DemandResponseAnalysis(Analysis):
         return fitting_days
 
     def _get_base_value(self, df, condition2):
+        """
+        Calculate base values
+
+        :param df: original dataframe with values
+        :param condition2: days that fit condition 2
+        :return: base values
+        """
         fitting_days_values = df[df['date'].isin(condition2)].copy()
 
         fitting_days_values['time'] = fitting_days_values['datetime'].dt.time
@@ -197,6 +254,13 @@ class DemandResponseAnalysis(Analysis):
         return aggr
 
     def _get_c(self, df, condition2):
+        """
+        Get cs
+
+        :param df: original dataframe with values
+        :param condition2: days that fit condition 2
+        :return: correction values
+        """
         # get only previous day values
         temp = pd.DataFrame()
         for i in range(len(condition2)):
@@ -209,11 +273,25 @@ class DemandResponseAnalysis(Analysis):
         return temp.groupby(['time']).mean()
 
     def _get_correction(self, b, c):
+        """
+        Calculates correction (a)
+
+        :param b: bases
+        :param c: correction
+        :return: corrected (not adjusted) values
+        """
         a16 = c.iloc[16] - b.iloc[16]
         a17 = c.iloc[17] - b.iloc[17]
         return (a16 + a17) / 2
 
     def _adjust(self, a, b):
+        """
+        Adjust according to the thresholds
+
+        :param a: correction
+        :param b: base
+        :return: adjusted values
+        """
         b_adj = b + a
 
         b_high = b * 1.2

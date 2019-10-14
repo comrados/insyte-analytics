@@ -2,13 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="12f8726f-fb14-4ba6-9c8b-89c2ed12558e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/analytics/correlation/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/analytics/correlation/analysis_autocorrelation.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/analytics/correlation/analysis_correlation.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/analytics/demand_response/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/analytics/peak_prediction/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/analytics/analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/analysis.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/analysis_peak_prediction_ml.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/analysis_peak_prediction_ml.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/analysis_peak_prediction_statistical.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/analysis_peak_prediction_statistical.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/analysis_peak_prediction_ml.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/peak_prediction/analysis_peak_prediction_ml.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/analysis_peak_prediction_statistical.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/peak_prediction/analysis_peak_prediction_statistical.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/analytics/analysis_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/analysis_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/anylysis_demand_response.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/anylysis_demand_response.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/insyte_influx_io.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/insyte_influx_io.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/anylysis_demand_response.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response.py" afterDir="false" />
     </list>
     <list id="8f3402cf-8e05-46bd-8019-c70b228793b0" name="Revert: demand-response" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,23 +26,11 @@
     <favorites_list name="insyte-analytics" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/analytics/analysis_peak_prediction_statistical.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="219">
-              <caret line="16" column="22" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
-              <folding>
-                <element signature="e#0#14#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/db/insyte_influx_io.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="547">
+            <state relative-caret-position="3179">
               <caret line="193" selection-start-line="193" selection-end-line="193" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
@@ -47,10 +40,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/analytics/anylysis_demand_response.py">
+        <entry file="file://$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="14" column="22" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
+            <state relative-caret-position="284">
+              <caret line="57" column="25" selection-start-line="57" selection-start-column="25" selection-end-line="57" selection-end-column="25" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -59,10 +52,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/analytics/analysis_test.py">
+        <entry file="file://$PROJECT_DIR$/analytics/correlation/analysis_correlation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="89" column="11" selection-start-line="89" selection-start-column="11" selection-end-line="89" selection-end-column="11" />
+            <state relative-caret-position="52">
+              <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -71,12 +64,12 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/analytics/analysis_peak_prediction_ml.py">
+        <entry file="file://$PROJECT_DIR$/analytics/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="18" column="22" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="22" />
+            <state relative-caret-position="1734">
+              <caret line="102" selection-start-line="102" selection-end-line="102" />
               <folding>
-                <element signature="e#0#14#0" expanded="true" />
+                <element signature="e#0#39#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -85,13 +78,51 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/analytics/analysis.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+            <state relative-caret-position="238">
+              <caret line="14" selection-start-line="14" selection-end-line="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/insyte_analytics.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="213">
+              <caret line="86" selection-start-line="86" selection-end-line="86" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/analytics/analysis_test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="24" selection-start-line="24" selection-end-line="24" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/analytics/peak_prediction/analysis_peak_prediction_ml.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="374">
+              <caret line="70" column="16" lean-forward="true" selection-start-line="70" selection-start-column="16" selection-end-line="70" selection-end-column="16" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/analytics/correlation/analysis_autocorrelation.py">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -131,11 +162,18 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/db/insyte_influx_io.py" />
-        <option value="$PROJECT_DIR$/analytics/analysis.py" />
         <option value="$PROJECT_DIR$/analytics/analysis_peak_prediction_ml.py" />
-        <option value="$PROJECT_DIR$/analytics/analysis_test.py" />
         <option value="$PROJECT_DIR$/analytics/anylysis_demand_response.py" />
         <option value="$PROJECT_DIR$/analytics/analysis_peak_prediction_statistical.py" />
+        <option value="$PROJECT_DIR$/analytics/correlation/analysis_autocorrelation.py" />
+        <option value="$PROJECT_DIR$/analytics/analysis_test.py" />
+        <option value="$PROJECT_DIR$/analytics/peak-prediction/analysis_peak_prediction_ml.py" />
+        <option value="$PROJECT_DIR$/analytics/demand-response/anylysis_demand_response.py" />
+        <option value="$PROJECT_DIR$/analytics/peak-prediction/analysis_peak_prediction_statistical.py" />
+        <option value="$PROJECT_DIR$/analytics/correlation/analysis_correlation.py" />
+        <option value="$PROJECT_DIR$/analytics/__init__.py" />
+        <option value="$PROJECT_DIR$/analytics/analysis.py" />
+        <option value="$PROJECT_DIR$/analytics/peak_prediction/analysis_peak_prediction_ml.py" />
       </list>
     </option>
   </component>
@@ -168,7 +206,13 @@
             <path>
               <item name="insyte-analytics" type="b2602c69:ProjectViewProjectNode" />
               <item name="insyte-analytics" type="462c0819:PsiDirectoryNode" />
-              <item name="db" type="462c0819:PsiDirectoryNode" />
+              <item name="analytics" type="462c0819:PsiDirectoryNode" />
+              <item name="peak_prediction" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="insyte-analytics" type="b2602c69:ProjectViewProjectNode" />
+              <item name="insyte-analytics" type="462c0819:PsiDirectoryNode" />
+              <item name="logs" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -178,7 +222,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/models" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/insyte_analytics.py" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="PyConsoleOptionsProvider">
@@ -189,13 +233,16 @@
     </option>
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\insyte-analytics\models" />
-      <recent name="D:\insyte-analytics\analytics" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\insyte-analytics\analytics\demand-response" />
+      <recent name="D:\insyte-analytics\analytics\peak-prediction" />
       <recent name="D:\insyte-analytics\tests" />
       <recent name="D:\insyte" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\insyte-analytics\analytics\correlation" />
+      <recent name="D:\insyte-analytics\models" />
+      <recent name="D:\insyte-analytics\analytics" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -210,7 +257,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.insyte_analytics test">
+  <component name="RunManager" selected="Python.insyte_analytics correlation">
     <configuration name="insyte-analytics demand-response" type="PythonConfigurationType" factoryName="Python">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -246,6 +293,27 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
       <option name="PARAMETERS" value="--help" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="insyte_analytics correlation" type="PythonConfigurationType" factoryName="Python">
+      <module name="insyte-analytics" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\ProgramData\Anaconda3\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
+      <option name="PARAMETERS" value="--log --log-level 10 --result-id 00000000-0000-0000-0000-000000000005 --device-id c98fda23-9298-4521-af43-64eb46faf13b c98fda23-9298-4521-af43-64eb46faf13b c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 161 159 --time_upload 2018-10-01_00:00:00+0000 2019-04-01_00:00:00+0000 2018-10-01_00:00:00+0000 2019-04-01_00:00:00+0000 2018-10-01_00:00:00+0000 2019-04-01_00:00:00+0000 --analysis correlation --analysis-args method 1 spearman" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -308,7 +376,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
-      <option name="PARAMETERS" value="--log --result-id 00000000-0000-0000-0000-000000000010 00000000-0000-0000-0000-000000000011 --device-id c98fda23-9298-4521-af43-64eb46faf13b c98fda23-9298-4521-af43-64eb46faf13b 0d318ce3-d8e6-425d-af0a-2f1e7de7acf5 --data-source-id 160 161 1 --time_upload 2018-10-01_00:00:00+0000 2019-04-01_00:00:00+0000 2018-10-01_00:00:00+0000 2019-04-01_00:00:00+0000 2018-10-01_00:00:00+0000 2019-04-01_00:00:00+0000 --limit 300 --analysis test --analysis-args operation 1 add value 1 150.0" />
+      <option name="PARAMETERS" value="--log --result-id 00000000-0000-0000-0000-000000000010 00000000-0000-0000-0000-000000000011 00000000-0000-0000-0000-000000000001 --device-id c98fda23-9298-4521-af43-64eb46faf13b c98fda23-9298-4521-af43-64eb46faf13b 0d318ce3-d8e6-425d-af0a-2f1e7de7acf5 --data-source-id 160 161 1 --time_upload 2018-10-01_00:00:00+0000 2019-04-01_00:00:00+0000 2018-10-01_00:00:00+0000 2019-04-01_00:00:00+0000 2018-10-01_00:00:00+0000 2019-04-01_00:00:00+0000 --limit 300 --analysis test --analysis-args operation 1 add value 1 150.0" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -449,6 +517,7 @@
       <item itemvalue="Python.insyte_analytics --help" />
       <item itemvalue="Python.insyte-analytics demand-response" />
       <item itemvalue="Python.insyte_analytics test" />
+      <item itemvalue="Python.insyte_analytics correlation" />
       <item itemvalue="Python.insyte_analytics peak predict stat" />
       <item itemvalue="Python.insyte_analytics peak predict ml" />
       <item itemvalue="Python.test_delete" />
@@ -576,27 +645,34 @@
       <option name="project" value="LOCAL" />
       <updated>1568475344910</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="reading and preprocessing fix">
+      <created>1570544411427</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1570544411427</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Favorites" sideWeight="0.5011111" side_tool="true" weight="0.24973656" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49932706" visible="true" weight="0.24973656" />
-      <window_info id="Structure" order="1" sideWeight="0.50067294" side_tool="true" visible="true" weight="0.24973656" />
-      <window_info anchor="bottom" id="Version Control" weight="0.20666666" />
-      <window_info anchor="bottom" id="Python Console" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49637157" visible="true" weight="0.24973656" />
+      <window_info id="Structure" order="1" sideWeight="0.50362843" side_tool="true" visible="true" weight="0.24973656" />
+      <window_info id="Favorites" order="2" sideWeight="0.5011111" side_tool="true" weight="0.24973656" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.17444444" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.27333334" />
+      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.23444444" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.20666666" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Python Console" order="10" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -651,7 +727,8 @@
     <MESSAGE value="result output" />
     <MESSAGE value="dbs extension" />
     <MESSAGE value="datetime, date, time formatting" />
-    <option name="LAST_COMMIT_MESSAGE" value="datetime, date, time formatting" />
+    <MESSAGE value="reading and preprocessing fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="reading and preprocessing fix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -683,7 +760,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/analytics/__init__.py</url>
-          <line>98</line>
+          <line>102</line>
           <option name="timeStamp" value="54" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -696,44 +773,53 @@
           <line>24</line>
           <option name="timeStamp" value="56" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/analytics/correlation/analysis_correlation.py</url>
+          <line>18</line>
+          <option name="timeStamp" value="57" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/analytics/correlation/analysis_correlation.py</url>
+          <line>16</line>
+          <option name="timeStamp" value="58" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/insyte_analytics.py</url>
+          <line>382</line>
+          <option name="timeStamp" value="59" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/insyte_analytics.py</url>
+          <line>86</line>
+          <option name="timeStamp" value="60" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/analytics/analysis.py">
+    <entry file="file://$PROJECT_DIR$/analytics/peak_prediction/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/analytics/correlation/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/analytics/peak_prediction/analysis_peak_prediction_statistical.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+        <state relative-caret-position="546">
+          <caret line="70" column="4" selection-start-line="70" selection-start-column="4" selection-end-line="80" selection-end-column="91" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/analytics/analysis_peak_prediction_ml.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="22" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/analytics/correlation/analysis_autocorrelation.py">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/analytics/analysis_test.py">
+    <entry file="file://$PROJECT_DIR$/analytics/correlation/analysis_correlation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="89" column="11" selection-start-line="89" selection-start-column="11" selection-end-line="89" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/analytics/anylysis_demand_response.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="22" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
+        <state relative-caret-position="52">
+          <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
@@ -742,7 +828,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/db/insyte_influx_io.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="547">
+        <state relative-caret-position="3179">
           <caret line="193" selection-start-line="193" selection-end-line="193" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
@@ -750,10 +836,60 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/analytics/analysis_peak_prediction_statistical.py">
+    <entry file="file://$PROJECT_DIR$/insyte_analytics.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="16" column="22" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
+        <state relative-caret-position="213">
+          <caret line="86" selection-start-line="86" selection-end-line="86" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logs/00000000-0000-0000-0000-000000000010_00000000-0000-0000-0000-000000000011_00000000-0000-0000-0000-000000000001.log">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/analytics/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1734">
+          <caret line="102" selection-start-line="102" selection-end-line="102" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/analytics/analysis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="284">
+          <caret line="57" column="25" selection-start-line="57" selection-start-column="25" selection-end-line="57" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/analytics/analysis_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/analytics/peak_prediction/analysis_peak_prediction_ml.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="70" column="16" lean-forward="true" selection-start-line="70" selection-start-column="16" selection-end-line="70" selection-end-column="16" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>

@@ -2,9 +2,8 @@ import logging
 import pandas as pd
 from analytics.analysis import Analysis
 import numpy as np
-from . import utils
+from analytics import utils
 import pickle
-from keras.models import load_model
 
 
 class PeakPredictionMLAnalysis(Analysis):
@@ -31,6 +30,8 @@ class PeakPredictionMLAnalysis(Analysis):
     def _preprocess_df(self):
         """
         Preprocesses DataFrame
+
+        Fills NaN with 0s
         """
         self.logger.debug("Preprocessing DataFrame")
         try:
@@ -65,6 +66,9 @@ class PeakPredictionMLAnalysis(Analysis):
         """
         try:
             if self.parameters['model'][0] == 'nn':
+                # keras init is here because it blocks file-logging otherwise
+                from keras.models import load_model
+
                 model = self.model_nn
                 self.model_type = 'nn'
                 self.model = load_model(model)
@@ -139,6 +143,14 @@ class PeakPredictionMLAnalysis(Analysis):
         self.logger.debug("Normalized data:\n\n" + str(self.normalized) + "\n")
 
     def _norm_range(self, data, hi, lo):
+        """
+        range normalization
+
+        :param data: data to normalize
+        :param hi: highest threshold value
+        :param lo: lowest threshold value
+        :return: normalized from 0 to 1 values
+        """
         data = data.where(data < lo, other=lo)
         data = data.where(data > hi, other=hi)
         r = hi - lo
@@ -159,6 +171,12 @@ class PeakPredictionMLAnalysis(Analysis):
             raise Exception("No such model type: " + str(self.model_type))
 
     def _format_results(self, result):
+        """
+        format results for output
+
+        :param result: unformatted results
+        :return: formatted results
+        """
         idx = pd.date_range(self.date[0], freq='1H', periods=24)
         for i in range(1, len(self.date)):
             dr = pd.date_range(self.date[i], periods=24, freq='1H')

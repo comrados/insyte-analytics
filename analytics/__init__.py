@@ -1,7 +1,8 @@
 from .analysis_test import TestAnalysis
-from .anylysis_demand_response import DemandResponseAnalysis
-from .analysis_peak_prediction_statistical import PeakPredictionStatisticalAnalysis
-from .analysis_peak_prediction_ml import PeakPredictionMLAnalysis
+from .demand_response.anylysis_demand_response import DemandResponseAnalysis
+from .peak_prediction.analysis_peak_prediction_statistical import PeakPredictionStatisticalAnalysis
+from .peak_prediction.analysis_peak_prediction_ml import PeakPredictionMLAnalysis
+from .correlation.analysis_correlation import CorrelationAnalysis
 import logging
 
 logger = logging.getLogger('insyte_analytics.analytics.__init__')
@@ -9,7 +10,8 @@ logger = logging.getLogger('insyte_analytics.analytics.__init__')
 ANALYSIS = ['test',
             'demand-response',
             'peak-prediction-statistical',
-            'peak-prediction-ml']
+            'peak-prediction-ml',
+            'correlation']
 
 
 def check_analysis(analysis):
@@ -93,6 +95,8 @@ def _analysis_caller(analysis, arguments, data_frame):
         result = PeakPredictionStatisticalAnalysis(arguments, data_frame).analyze()
     elif analysis == 'peak-prediction-ml':
         result = PeakPredictionMLAnalysis(arguments, data_frame).analyze()
+    elif analysis == 'correlation':
+        result = CorrelationAnalysis(arguments, data_frame).analyze()
     else:
         logger.error("Analysis function doesn't exist: " + analysis)
         raise Exception("Analysis function doesn't exist: " + analysis)

@@ -39,6 +39,8 @@ class TestAnalysis(Analysis):
     def _preprocess_df(self):
         """
         Preprocesses DataFrame
+
+        Fills NaN with 0s
         """
         self.logger.debug("Preprocessing DataFrame")
         try:

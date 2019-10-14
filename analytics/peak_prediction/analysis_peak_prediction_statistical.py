@@ -27,6 +27,8 @@ class PeakPredictionStatisticalAnalysis(Analysis):
     def _preprocess_df(self):
         """
         Preprocesses DataFrame
+
+        Fills NaN with 0s
         """
         self.logger.debug("Preprocessing DataFrame")
         try:
@@ -91,6 +93,12 @@ class PeakPredictionStatisticalAnalysis(Analysis):
             raise Exception("Wrong parameter 'year': " + str(self.year) + " " + str(err))
 
     def _load_probabs(self, path):
+        """
+        Read probabilistic model
+
+        :param path: path to model
+        :return: model
+        """
         return pd.read_csv(path, index_col=(0, 1, 2))
 
     def _get_probabs_for_month(self, nullify_weekends=True):
