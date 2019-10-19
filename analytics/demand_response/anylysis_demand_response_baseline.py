@@ -5,8 +5,8 @@ import datetime
 from analytics import utils
 
 
-class DemandResponseAnalysis(Analysis):
-    logger = logging.getLogger('insyte_analytics.analytics.analysis_demand_response')
+class DemandResponseAnalysisBaseline(Analysis):
+    logger = logging.getLogger('insyte_analytics.analytics.analysis_demand_response_baseline')
 
     def __init__(self, parameters, data):
         super().__init__(parameters, data)
