@@ -3,10 +3,11 @@ import pandas as pd
 from analytics.analysis import Analysis
 import datetime
 from analytics import utils
+import numpy as np
 
 
-class DemandResponseAnalysisDischarge(Analysis):
-    logger = logging.getLogger('insyte_analytics.analytics.analysis_demand_response_discharge')
+class DemandResponseAnalysisRRMSE(Analysis):
+    logger = logging.getLogger('insyte_analytics.analytics.analysis_demand_response_rrmse')
 
     def __init__(self, parameters, data):
         super().__init__(parameters, data)
@@ -60,14 +61,16 @@ class DemandResponseAnalysisDischarge(Analysis):
             # adjust (0.8*b < b_adj < 1.2*b)
             b_adj = self._adjust(a, b)
 
-            b_adj.set_index(pd.date_range(self.target_day, periods=24, freq='1H'), inplace=True)
-            b_adj.rename(columns={b_adj.columns[0]: 'value'}, inplace=True)
             self.logger.debug("Adjusted base values:\n\n" + str(b_adj) + "\n")
 
             # apply discharge
             b_discharged = self._discharge(b_adj)
 
-            return b_discharged
+            b_to_compare, c_date = self._get_day_to_compare_with_discharged(self.data, measurements_per_day, condition2)
+
+            rrmse = self._rrmse(b_discharged, b_to_compare, c_date)
+
+            return rrmse
         except Exception as err:
             self.logger.error("Impossible to analyze: " + str(err))
             raise Exception("Impossible to analyze: " + str(err))
@@ -385,3 +388,55 @@ class DemandResponseAnalysisDischarge(Analysis):
             self.logger.error("Impossible to discharge: " + str(err))
 
         return b_dc
+
+    def _get_day_to_compare_with_discharged(self, df, mpd, cond2):
+        """
+        Returns the day to compare with discharged line
+
+        :param df: data
+        :param mpd: measurements per day
+        :param cond2:
+        :return:
+        """
+        # if data for target day exists - use it, else - use the 1st working (discharged) day fitting condition2
+        if self.target_day in mpd.index and mpd[mpd.columns[0]][self.target_day] == 24:
+            target_day = df[df['date'].isin([self.target_day])].copy()
+            day_data = target_day.groupby(['time']).mean()
+            date = self.target_day
+        else:
+            target_day = df[df['date'].isin([cond2[0]])].copy()
+            working_last = target_day.groupby(['time']).mean()
+            day_data = self._discharge(working_last)
+            date = cond2[0]
+        return day_data, date
+
+    def _rrmse(self, b_d, b_c, c_date):
+        """
+        Calculates RRMSE
+
+        :param b_d: discharged data
+        :param b_c: discharged data to compare (fact or discharged last fitting day)
+        :param c_date: comparison date
+        :return:
+        """
+        try:
+            # rrmse = rmse / mean
+
+            # rmse
+            df = pd.DataFrame()
+            df['d'] = b_d[b_d.columns[0]]
+            df['c'] = b_c[b_c.columns[0]]
+            df['delta'] = df['c'] - df['d']
+            df['s'] = df['delta'] ** 2
+            rmse = np.sqrt(df['s'].sum() / df['s'].count())
+
+            # mean
+            mean = b_d.sum() / b_d.count()
+
+            # rrmse
+            rrmse = rmse / mean
+
+            # return as dataframe
+            return pd.DataFrame(np.array(rrmse), pd.date_range(c_date, periods=1), ['value'])
+        except Exception as err:
+            self.logger.error("Impossible calculate rrmse: " + str(err))
