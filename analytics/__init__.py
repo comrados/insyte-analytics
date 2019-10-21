@@ -4,6 +4,7 @@ from .demand_response.anylysis_demand_response_discharge import DemandResponseAn
 from .demand_response.anylysis_demand_response_rrmse import DemandResponseAnalysisRRMSE
 from .demand_response.anylysis_demand_response_deviation import DemandResponseAnalysisDeviation
 from .demand_response.anylysis_demand_response_booleans import DemandResponseAnalysisBooleans
+from .demand_response.anylysis_demand_response_check import DemandResponseAnalysisCheck
 from .peak_prediction.analysis_peak_prediction_statistical import PeakPredictionStatisticalAnalysis
 from .peak_prediction.analysis_peak_prediction_ml import PeakPredictionMLAnalysis
 from .correlation.analysis_correlation import CorrelationAnalysis
@@ -17,6 +18,7 @@ ANALYSIS = ['test',
             'demand-response-rrmse',
             'demand-response-deviation',
             'demand-response-booleans',
+            'demand-response-check',
             'peak-prediction-statistical',
             'peak-prediction-ml',
             'correlation']
@@ -107,6 +109,8 @@ def _analysis_caller(analysis, arguments, data_frame):
         result = DemandResponseAnalysisDeviation(arguments, data_frame).analyze()
     elif analysis == 'demand-response-booleans':
         result = DemandResponseAnalysisBooleans(arguments, data_frame).analyze()
+    elif analysis == 'demand-response-check':
+        result = DemandResponseAnalysisCheck(arguments, data_frame).analyze()
     elif analysis == 'peak-prediction-statistical':
         result = PeakPredictionStatisticalAnalysis(arguments, data_frame).analyze()
     elif analysis == 'peak-prediction-ml':
