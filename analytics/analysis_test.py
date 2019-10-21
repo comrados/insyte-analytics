@@ -1,13 +1,13 @@
 import logging
-import pandas as pd
 from .analysis import Analysis
 
 
-class TestAnalysis(Analysis):
-    """
-    Test analytics function
-    """
+"""
+Test analysis function.
+"""
 
+
+class TestAnalysis(Analysis):
     logger = logging.getLogger('insyte_analytics.analytics.analysis_test')
 
     # Input variables

@@ -6,6 +6,11 @@ from analytics import utils
 import numpy as np
 
 
+"""
+Demand-response. Deviation between baseline and prediction/fact
+"""
+
+
 class DemandResponseAnalysisDeviation(Analysis):
     logger = logging.getLogger('insyte_analytics.analytics.analysis_demand_response_deviation')
 

@@ -6,6 +6,11 @@ from analytics import utils
 import numpy as np
 
 
+"""
+Demand-response. Calculation of RRMSE between baseline and prediction/fact.
+"""
+
+
 class DemandResponseAnalysisRRMSE(Analysis):
     logger = logging.getLogger('insyte_analytics.analytics.analysis_demand_response_rrmse')
 

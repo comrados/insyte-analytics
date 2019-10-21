@@ -5,6 +5,11 @@ import datetime
 from analytics import utils
 
 
+"""
+Demand-response. Baseline calculation.
+"""
+
+
 class DemandResponseAnalysisBaseline(Analysis):
     logger = logging.getLogger('insyte_analytics.analytics.analysis_demand_response_baseline')
 

@@ -1,11 +1,12 @@
 import logging
 
 
-class Analysis:
-    """
-    Base analysis function.
-    """
+"""
+Base analysis function.
+"""
 
+
+class Analysis:
     logger = logging.getLogger('insyte_analytics.analytics.analysis')
 
     def __init__(self, parameters, data):

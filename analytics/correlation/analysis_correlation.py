@@ -3,6 +3,11 @@ import pandas as pd
 from analytics.analysis import Analysis
 
 
+"""
+Correlation. Covariation matrix calculation.
+"""
+
+
 class CorrelationAnalysis(Analysis):
     logger = logging.getLogger('insyte_analytics.analytics.analysis_correlation')
 
