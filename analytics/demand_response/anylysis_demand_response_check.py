@@ -119,6 +119,7 @@ class DemandResponseAnalysisCheck(Analysis):
             self._check_discharge_start_hour()
             self._check_discharge_duration()
             self._check_discharge()
+            self._check_mode()
         except Exception as err:
             self.logger.error("Impossible to parse parameter: " + str(err))
             raise Exception("Impossible to parse parameter: " + str(err))
@@ -156,6 +157,21 @@ class DemandResponseAnalysisCheck(Analysis):
         except Exception as err:
             self.logger.error("Wrong parameter 'except_weekends': " + str(self.except_weekends) + " " + str(err))
             raise Exception("Wrong parameter 'except_weekends': " + str(self.except_weekends) + " " + str(err))
+
+    def _check_mode(self):
+        """
+        Selects mode from: 'fact' and 'expected'
+
+        :return:
+        """
+        try:
+            self.mode = self.parameters['mode'][0]
+            if self.parameters['mode'][0] not in ['fact', 'expected']:
+                raise Exception("mode must be either 'fact' or 'expected', given value: " + self.mode)
+            self.logger.debug("Parsed parameter 'mode': " + str(self.mode))
+        except Exception as err:
+            self.logger.error("Wrong parameter 'mode': " + str(self.mode) + " " + str(err))
+            raise Exception("Wrong parameter 'mode': " + str(self.mode) + " " + str(err))
 
     def _n_previous_days(self, date, n):
         """
@@ -410,11 +426,15 @@ class DemandResponseAnalysisCheck(Analysis):
         :param cond2:
         :return:
         """
-        # if data for target day exists - use it, else - use the 1st working (discharged) day fitting condition2
-        if self.target_day in mpd.index and mpd[mpd.columns[0]][self.target_day] == 24:
-            target_day = df[df['date'].isin([self.target_day])].copy()
-            day_data = target_day.groupby(['time']).mean()
-            date = self.target_day
+        # fact data (with existance checks)
+        if self.mode == 'fact':
+            if self.target_day in mpd.index and mpd[mpd.columns[0]][self.target_day] == 24:
+                target_day = df[df['date'].isin([self.target_day])].copy()
+                day_data = target_day.groupby(['time']).mean()
+                date = self.target_day
+            else:
+                raise Exception("'fact'-mode selected, but target_day data is not full or not provided")
+        # expected data
         else:
             target_day = df[df['date'].isin([cond2[0]])].copy()
             working_last = target_day.groupby(['time']).mean()

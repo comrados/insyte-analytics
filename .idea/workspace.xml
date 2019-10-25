@@ -3,11 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="12f8726f-fb14-4ba6-9c8b-89c2ed12558e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_baseline.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_baseline.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_booleans.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_booleans.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_check.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_check.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_deviation.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_deviation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_discharge.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_discharge.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_rrmse.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_rrmse.py" afterDir="false" />
     </list>
     <list id="8f3402cf-8e05-46bd-8019-c70b228793b0" name="Revert: demand-response" comment="" />
@@ -97,7 +95,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.insyte-analytics demand-response-baseline">
+  <component name="RunManager" selected="Python.insyte-analytics demand-response-check">
     <configuration name="insyte-analytics demand-response-baseline" type="PythonConfigurationType" factoryName="Python">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -132,7 +130,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
-      <option name="PARAMETERS" value="--log --log-path logs --log-level 10 --result-id 00000000-0000-0000-0000-000000000012 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 --time_upload 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 --analysis demand-response-booleans --analysis-args target_day 1 2018-12-01 exception_days 2 2018-11-05 2018-11-06 except_weekends 1 True discharge_start_hour 1 12 discharge_value 1 1.0 discharge_duration 1 4" />
+      <option name="PARAMETERS" value="--log --log-path logs --log-level 10 --result-id 00000000-0000-0000-0000-000000000012 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 --time_upload 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 --analysis demand-response-booleans --analysis-args target_day 1 2018-12-01 exception_days 2 2018-11-05 2018-11-06 except_weekends 1 True discharge_start_hour 1 12 discharge_value 1 1.0 discharge_duration 1 4 mode 1 expected" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -153,7 +151,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
-      <option name="PARAMETERS" value="--log --log-path logs --log-level 10 --result-id 00000000-0000-0000-0000-000000000012 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 --time_upload 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 --analysis demand-response-check --analysis-args target_day 1 2018-12-01 exception_days 2 2018-11-05 2018-11-06 except_weekends 1 True discharge_start_hour 1 12 discharge_value 1 1.0 discharge_duration 1 4" />
+      <option name="PARAMETERS" value="--log --log-path logs --log-level 10 --result-id 00000000-0000-0000-0000-000000000012 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 --time_upload 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 --analysis demand-response-check --analysis-args target_day 1 2018-12-01 exception_days 2 2018-11-05 2018-11-06 except_weekends 1 True discharge_start_hour 1 12 discharge_value 1 1.0 discharge_duration 1 4 mode 1 expected" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -174,7 +172,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
-      <option name="PARAMETERS" value="--log --log-path logs --log-level 10 --result-id 00000000-0000-0000-0000-000000000012 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 --time_upload 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 --analysis demand-response-deviation --analysis-args target_day 1 2018-12-01 exception_days 2 2018-11-05 2018-11-06 except_weekends 1 True discharge_start_hour 1 12 discharge_value 1 1.0 discharge_duration 1 4" />
+      <option name="PARAMETERS" value="--log --log-path logs --log-level 10 --result-id 00000000-0000-0000-0000-000000000012 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 --time_upload 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 --analysis demand-response-deviation --analysis-args target_day 1 2018-12-01 exception_days 2 2018-11-05 2018-11-06 except_weekends 1 True discharge_start_hour 1 12 discharge_value 1 1.0 discharge_duration 1 4 mode 1 expected" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -195,7 +193,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
-      <option name="PARAMETERS" value="--log --log-path logs --log-level 10 --result-id 00000000-0000-0000-0000-000000000012 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 --time_upload 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 --analysis demand-response-discharge --analysis-args target_day 1 2018-11-29 exception_days 2 2018-11-05 2018-11-06 except_weekends 1 True discharge_start_hour 1 20 discharge_value 1 1.0 discharge_duration 1 4" />
+      <option name="PARAMETERS" value="--log --log-path logs --log-level 10 --result-id 00000000-0000-0000-0000-000000000012 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 --time_upload 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 --analysis demand-response-discharge --analysis-args target_day 1 2018-11-29 exception_days 2 2018-11-05 2018-11-06 except_weekends 1 True discharge_start_hour 1 16 discharge_value 1 4.0 discharge_duration 1 4" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -216,7 +214,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
-      <option name="PARAMETERS" value="--log --log-path logs --log-level 10 --result-id 00000000-0000-0000-0000-000000000012 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 --time_upload 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 --analysis demand-response-rrmse --analysis-args target_day 1 2018-12-01 exception_days 2 2018-11-05 2018-11-06 except_weekends 1 True discharge_start_hour 1 12 discharge_value 1 1.0 discharge_duration 1 4" />
+      <option name="PARAMETERS" value="--log --log-path logs --log-level 10 --result-id 00000000-0000-0000-0000-000000000012 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 --time_upload 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 --analysis demand-response-rrmse --analysis-args target_day 1 2018-12-01 exception_days 2 2018-11-05 2018-11-06 except_weekends 1 True discharge_start_hour 1 12 discharge_value 1 1.0 discharge_duration 1 4 mode 1 expected" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -637,7 +635,14 @@
       <option name="project" value="LOCAL" />
       <updated>1571672797715</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="demand response exception days fix">
+      <created>1571993820749</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1571993820750</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -682,7 +687,8 @@
     <MESSAGE value="demand response deviation" />
     <MESSAGE value="demand response booleans" />
     <MESSAGE value="demand response result check" />
-    <option name="LAST_COMMIT_MESSAGE" value="demand response result check" />
+    <MESSAGE value="demand response exception days fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="demand response exception days fix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -759,13 +765,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_check.py</url>
-          <line>490</line>
+          <line>510</line>
           <option name="timeStamp" value="83" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_baseline.py</url>
           <line>100</line>
           <option name="timeStamp" value="84" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_discharge.py</url>
+          <line>74</line>
+          <option name="timeStamp" value="88" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
