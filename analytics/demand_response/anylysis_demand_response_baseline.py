@@ -123,8 +123,8 @@ class DemandResponseAnalysisBaseline(Analysis):
             self.exception_days = self._strings_to_dates(self.parameters['exception_days'])
             self.logger.debug("Parsed parameter 'exception_days': " + str(self.exception_days))
         except Exception as err:
-            self.logger.debug("Wrong parameter 'exception_days': " + str(self.exception_days) + " " + str(err))
-            raise Exception("Wrong parameter 'exception_days': " + str(self.exception_days) + " " + str(err))
+            self.exception_days = []
+            self.logger.debug("Parameter 'exception_days': " + str(self.exception_days) + " is empty")
 
     def _check_except_weekends(self):
         """
