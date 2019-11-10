@@ -6,6 +6,11 @@ from analytics import utils
 import pickle
 
 
+"""
+Peak prediction. Machine learning method
+"""
+
+
 class PeakPredictionMLAnalysis(Analysis):
     logger = logging.getLogger('insyte_analytics.analytics.analysis_peak_prediction')
 

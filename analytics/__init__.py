@@ -8,6 +8,7 @@ from .demand_response.anylysis_demand_response_check import DemandResponseAnalys
 from .demand_response.anylysis_demand_response_expected import DemandResponseAnalysisExpected
 from .peak_prediction.analysis_peak_prediction_statistical import PeakPredictionStatisticalAnalysis
 from .peak_prediction.analysis_peak_prediction_ml import PeakPredictionMLAnalysis
+from .statistics.analysis_statistics_normalization import SatisticsNormalizationAnalysis
 from .correlation.analysis_correlation import CorrelationAnalysis
 import logging
 
@@ -23,7 +24,8 @@ ANALYSIS = ['test',
             'demand-response-expected',
             'peak-prediction-statistical',
             'peak-prediction-ml',
-            'correlation']
+            'correlation',
+            'normalization']
 
 
 def check_analysis(analysis):
@@ -121,6 +123,8 @@ def _analysis_caller(analysis, arguments, data_frame):
         result = PeakPredictionMLAnalysis(arguments, data_frame).analyze()
     elif analysis == 'correlation':
         result = CorrelationAnalysis(arguments, data_frame).analyze()
+    elif analysis == 'normalization':
+        result = SatisticsNormalizationAnalysis(arguments, data_frame).analyze()
     else:
         logger.error("Analysis function doesn't exist: " + analysis)
         raise Exception("Analysis function doesn't exist: " + analysis)

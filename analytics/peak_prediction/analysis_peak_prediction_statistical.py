@@ -6,6 +6,11 @@ import calendar
 import numpy as np
 
 
+"""
+Peak prediction. Statistical method
+"""
+
+
 class PeakPredictionStatisticalAnalysis(Analysis):
     logger = logging.getLogger('insyte_analytics.analytics.analysis_peak_prediction')
 
