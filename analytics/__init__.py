@@ -10,6 +10,8 @@ from .peak_prediction.analysis_peak_prediction_statistical import PeakPrediction
 from .peak_prediction.analysis_peak_prediction_ml import PeakPredictionMLAnalysis
 from .statistics.analysis_statistics_normalization import SatisticsNormalizationAnalysis
 from .correlation.analysis_correlation import CorrelationAnalysis
+from .prediction.analysis_prediction_holt_winters import PredictionHoltWintersAnalysis
+from .prediction.analysis_prediction_holt_winters_brutlag import PredictionHoltWintersBrutlagAnalysis
 import logging
 
 logger = logging.getLogger('insyte_analytics.analytics.__init__')
@@ -25,7 +27,9 @@ ANALYSIS = ['test',
             'peak-prediction-statistical',
             'peak-prediction-ml',
             'correlation',
-            'normalization']
+            'normalization',
+            'prediction-holt-winters',
+            'prediction-holt-winters-brutlag']
 
 
 def check_analysis(analysis):
@@ -125,6 +129,10 @@ def _analysis_caller(analysis, arguments, data_frame):
         result = CorrelationAnalysis(arguments, data_frame).analyze()
     elif analysis == 'normalization':
         result = SatisticsNormalizationAnalysis(arguments, data_frame).analyze()
+    elif analysis == 'prediction-holt-winters':
+        result = PredictionHoltWintersAnalysis(arguments, data_frame).analyze()
+    elif analysis == 'prediction-holt-winters-brutlag':
+        result = PredictionHoltWintersBrutlagAnalysis(arguments, data_frame).analyze()
     else:
         logger.error("Analysis function doesn't exist: " + analysis)
         raise Exception("Analysis function doesn't exist: " + analysis)
