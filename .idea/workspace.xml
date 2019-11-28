@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="12f8726f-fb14-4ba6-9c8b-89c2ed12558e" name="Default Changelist" comment="">
+    <list default="true" id="12f8726f-fb14-4ba6-9c8b-89c2ed12558e" name="Default Changelist" comment="new output">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/analytics/analysis_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/analysis_test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/analytics/correlation/analysis_correlation.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/correlation/analysis_correlation.py" afterDir="false" />
@@ -106,7 +106,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.insyte_analytics prediction holt winters brutlag">
+  <component name="RunManager" selected="Python.insyte_analytics test">
     <configuration name="insyte-analytics demand-response-baseline" type="PythonConfigurationType" factoryName="Python">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -827,7 +827,8 @@
     <MESSAGE value="demand response expected data calculation" />
     <MESSAGE value="prediction holt-winters/brutlag" />
     <MESSAGE value="output fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="output fix" />
+    <MESSAGE value="new output" />
+    <option name="LAST_COMMIT_MESSAGE" value="new output" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
