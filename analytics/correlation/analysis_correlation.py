@@ -83,4 +83,4 @@ class CorrelationAnalysis(Analysis):
         idx = pd.date_range('2000-01-01', periods=new_shape)
 
         result = result.reshape(new_shape)
-        return pd.DataFrame(result, idx, ['value'])
+        return pd.DataFrame(result, idx, ['correlation'])

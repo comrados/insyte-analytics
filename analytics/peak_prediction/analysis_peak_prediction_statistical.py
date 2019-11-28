@@ -132,4 +132,4 @@ class PeakPredictionStatisticalAnalysis(Analysis):
                     p[(day - 1) * 24 + hour] = 0
 
         return pd.DataFrame(p, index=pd.date_range(datetime.date(self.year, self.month, 1), periods=entries, freq='1H'),
-                            columns=['value'])
+                            columns=['peak_pred'])

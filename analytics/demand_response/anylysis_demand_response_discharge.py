@@ -66,7 +66,7 @@ class DemandResponseAnalysisDischarge(Analysis):
             b_adj = self._adjust(a, b)
 
             b_adj.set_index(pd.date_range(self.target_day, periods=24, freq='1H'), inplace=True)
-            b_adj.rename(columns={b_adj.columns[0]: 'value'}, inplace=True)
+            b_adj.rename(columns={b_adj.columns[0]: 'discharge'}, inplace=True)
             self.logger.debug("Adjusted base values:\n\n" + str(b_adj) + "\n")
 
             # apply discharge

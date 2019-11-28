@@ -230,17 +230,17 @@ class InsyteInfluxIO:
             self.logger.warning("'output_data' is empty")
             raise Exception("'output_data' is empty")
 
-        if self.output_data.shape[1] != len(self.result_id):
-            self.logger.warning("'output_data' and 'result_id' have different lengths: "
-                                + str(self.output_data.shape[1]) + " and " + str(len(self.result_id)))
-            raise Exception("'output_data' and 'result_id' have different lengths: "
-                            + str(self.output_data.shape[1]) + " and " + str(len(self.result_id)))
+        #if self.output_data.shape[1] != len(self.result_id):
+        #    self.logger.warning("'output_data' and 'result_id' have different lengths: "
+        #                        + str(self.output_data.shape[1]) + " and " + str(len(self.result_id)))
+        #    raise Exception("'output_data' and 'result_id' have different lengths: "
+        #                    + str(self.output_data.shape[1]) + " and " + str(len(self.result_id)))
 
         self.logger.debug("Writing parameters successfully checked")
 
-    async def write_data(self, result_id=None, output_data=None):
+    async def write_data_old(self, result_id=None, output_data=None):
         """
-        Write data from this object to db.
+        Depricated. Write data from this object to db.
 
         :param result_id: list of ids [uuid1, uuid2, ..., uuidK]
         :param output_data: DataFrame
@@ -257,6 +257,28 @@ class InsyteInfluxIO:
                 df.rename(columns={col: 'value'}, inplace=True)
                 _ = self.client.write_points(df, 'data_result', {'result_id': str(ri)})
                 results.append(str(ri))
+        except Exception as err:
+            self.logger.error("Writing failed: " + str(err))
+            raise Exception("Writing failed " + str(err))
+        self.logger.debug("Writing complete " + str(results))
+        return results
+
+    async def write_data(self, result_id=None, output_data=None):
+        """
+        Write data from this object to db.
+
+        :param result_id: list of ids [uuid1, uuid2, ..., uuidK]
+        :param output_data: DataFrame
+
+        :return: list of result objects
+        """
+        self.logger.debug("Writing data")
+        self._set_write_parameters(result_id, output_data)
+        results = []
+        try:
+            self._check_write_parameters()
+            _ = self.client.write_points(self.output_data, 'data_result', {'result_id': str(self.result_id[0])})
+            results.append(str(self.result_id[0]))
         except Exception as err:
             self.logger.error("Writing failed: " + str(err))
             raise Exception("Writing failed " + str(err))

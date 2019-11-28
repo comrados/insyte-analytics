@@ -20,6 +20,8 @@ class SatisticsNormalizationAnalysis(Analysis):
             super().analyze()
             results = self._normalize()
             self.logger.debug("Normalized data:\n\n" + str(results) + "\n")
+            new_names = {col: ('val' + str(i)) for (col, i) in zip(results.columns, range(len(results.columns)))}
+            results.rename(columns=new_names, inplace=True)
             return results
         except Exception as err:
             self.logger.error("Impossible to analyze: " + str(err))

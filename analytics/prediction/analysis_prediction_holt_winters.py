@@ -243,4 +243,4 @@ class PredictionHoltWintersAnalysis(Analysis):
 
         idx = dr1.append(dr2)
 
-        return pd.DataFrame(result, idx, ['value'])
+        return pd.DataFrame(result, idx, ['pred'])

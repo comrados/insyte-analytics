@@ -462,6 +462,6 @@ class DemandResponseAnalysisRRMSE(Analysis):
             rrmse = rmse / mean
 
             # return as dataframe
-            return pd.DataFrame(np.array(rrmse), pd.date_range(c_date, periods=1), ['value'])
+            return pd.DataFrame(np.array(rrmse), pd.date_range(c_date, periods=1), ['rrmse'])
         except Exception as err:
             self.logger.error("Impossible calculate rrmse: " + str(err))

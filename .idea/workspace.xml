@@ -3,7 +3,20 @@
   <component name="ChangeListManager">
     <list default="true" id="12f8726f-fb14-4ba6-9c8b-89c2ed12558e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/analysis_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/analysis_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/correlation/analysis_correlation.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/correlation/analysis_correlation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_baseline.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_baseline.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_booleans.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_booleans.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_check.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_check.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_deviation.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_deviation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_discharge.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_discharge.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_expected.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_expected.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_rrmse.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_rrmse.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/peak_prediction/analysis_peak_prediction_ml.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/peak_prediction/analysis_peak_prediction_ml.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/peak_prediction/analysis_peak_prediction_statistical.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/peak_prediction/analysis_peak_prediction_statistical.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/prediction/analysis_prediction_holt_winters.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/prediction/analysis_prediction_holt_winters.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/statistics/analysis_statistics_normalization.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/statistics/analysis_statistics_normalization.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/insyte_influx_io.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/insyte_influx_io.py" afterDir="false" />
     </list>
     <list id="8f3402cf-8e05-46bd-8019-c70b228793b0" name="Revert: demand-response" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -34,12 +47,12 @@
     </findStrings>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GithubProjectSettings">
     <option name="CREATE_PULL_REQUEST_DEFAULT_BRANCH" value="master" />
@@ -57,7 +70,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/analytics/prediction" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="preferences.general" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -93,7 +106,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.insyte-analytics demand-response-booleans">
+  <component name="RunManager" selected="Python.insyte_analytics prediction holt winters brutlag">
     <configuration name="insyte-analytics demand-response-baseline" type="PythonConfigurationType" factoryName="Python">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -269,7 +282,7 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="C:\ProgramData\Anaconda3\python.exe" />
+      <option name="SDK_HOME" value="/opt/anaconda3/bin/python3" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -401,7 +414,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
-      <option name="PARAMETERS" value="--log --result-id 00000000-0000-0000-0000-000000000010 00000000-0000-0000-0000-000000000011 00000000-0000-0000-0000-000000000001 --device-id c98fda23-9298-4521-af43-64eb46faf13b c98fda23-9298-4521-af43-64eb46faf13b 0d318ce3-d8e6-425d-af0a-2f1e7de7acf5 --data-source-id 160 161 1 --time_upload 2018-10-01_00:00:00+0000 2019-04-01_00:00:00+0000 2018-10-01_00:00:00+0000 2019-04-01_00:00:00+0000 2018-10-01_00:00:00+0000 2019-04-01_00:00:00+0000 --limit 300 --analysis test --analysis-args operation 1 add value 1 150.0" />
+      <option name="PARAMETERS" value="--log --result-id 00000000-0000-0000-0000-000000000010 --device-id c98fda23-9298-4521-af43-64eb46faf13b c98fda23-9298-4521-af43-64eb46faf13b 0d318ce3-d8e6-425d-af0a-2f1e7de7acf5 --data-source-id 160 161 1 --time_upload 2018-10-01_00:00:00+0000 2019-04-01_00:00:00+0000 2018-10-01_00:00:00+0000 2019-04-01_00:00:00+0000 2018-10-01_00:00:00+0000 2019-04-01_00:00:00+0000 --limit 300 --analysis test --analysis-args operation 1 add value 1 150.0" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -560,8 +573,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.t" />
+        <item itemvalue="Python.test_insert" />
         <item itemvalue="Python.test_delete" />
+        <item itemvalue="Python.t" />
         <item itemvalue="Python.test_insert" />
         <item itemvalue="Python.test_delete" />
       </list>
@@ -756,7 +770,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574619126869</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="output fix">
+      <created>1574940235633</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1574940235633</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -805,7 +826,8 @@
     <MESSAGE value="demand response manual mode selection added" />
     <MESSAGE value="demand response expected data calculation" />
     <MESSAGE value="prediction holt-winters/brutlag" />
-    <option name="LAST_COMMIT_MESSAGE" value="prediction holt-winters/brutlag" />
+    <MESSAGE value="output fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="output fix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -844,11 +866,6 @@
           <url>file://$PROJECT_DIR$/tests/t.py</url>
           <line>13</line>
           <option name="timeStamp" value="55" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics/analysis_test.py</url>
-          <line>24</line>
-          <option name="timeStamp" value="56" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/analytics/correlation/analysis_correlation.py</url>
@@ -897,7 +914,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/analytics/statistics/analysis_statistics_normalization.py</url>
-          <line>22</line>
+          <line>24</line>
           <option name="timeStamp" value="92" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -914,6 +931,26 @@
           <url>file://$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_check.py</url>
           <line>84</line>
           <option name="timeStamp" value="101" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/analytics/analysis_test.py</url>
+          <line>111</line>
+          <option name="timeStamp" value="104" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/analytics/analysis_test.py</url>
+          <line>110</line>
+          <option name="timeStamp" value="105" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/db/insyte_influx_io.py</url>
+          <line>279</line>
+          <option name="timeStamp" value="106" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/analytics/correlation/analysis_correlation.py</url>
+          <line>80</line>
+          <option name="timeStamp" value="107" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

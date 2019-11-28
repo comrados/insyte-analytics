@@ -454,6 +454,6 @@ class DemandResponseAnalysisDeviation(Analysis):
             df['delta'] = df['d'] - df['c']
 
             # return as dataframe
-            return pd.DataFrame(np.array(df['delta']), pd.date_range(c_date, periods=24, freq='1H'), ['value'])
+            return pd.DataFrame(np.array(df['delta']), pd.date_range(c_date, periods=24, freq='1H'), ['deviation'])
         except Exception as err:
             self.logger.error("Impossible calculate rrmse: " + str(err))

@@ -106,7 +106,9 @@ class TestAnalysis(Analysis):
                 self.data = self.data.div(self.value)
             else:
                 raise Exception("Unknown operation: " + str(self.operation))
-            self._preprocess_df()
+            self._postprocess_df()
+            new_names = {col: ('val' + str(i)) for (col, i) in zip(self.data.columns, range(len(self.data.columns)))}
+            self.data.rename(columns=new_names, inplace=True)
             return self.data
         except Exception as err:
             self.logger.error("Impossible to analyze: " + str(err))

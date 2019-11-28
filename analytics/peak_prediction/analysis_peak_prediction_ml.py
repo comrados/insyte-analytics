@@ -188,4 +188,4 @@ class PeakPredictionMLAnalysis(Analysis):
             idx = idx.append(dr)
 
         result = result.reshape(result.shape[0] * result.shape[1])
-        return pd.DataFrame(result, idx, ['value'])
+        return pd.DataFrame(result, idx, ['peak_pred'])

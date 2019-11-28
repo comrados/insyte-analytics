@@ -454,6 +454,6 @@ class DemandResponseAnalysisBooleans(Analysis):
             time_start = datetime.datetime.combine(c_date, df.index[0])
 
             # return as dataframe
-            return pd.DataFrame(np.array(df['bool']), pd.date_range(time_start, periods=len(df), freq='1H'), ['value'])
+            return pd.DataFrame(np.array(df['bool']), pd.date_range(time_start, periods=len(df), freq='1H'), ['booleans'])
         except Exception as err:
             self.logger.error("Impossible calculate rrmse: " + str(err))

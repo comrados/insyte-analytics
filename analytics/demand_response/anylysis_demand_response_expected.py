@@ -315,4 +315,4 @@ class DemandResponseAnalysisExpected(Analysis):
         target_day = df[df['date'].isin([cond2[0]])].copy()
         working_last = target_day.groupby(['time']).mean()
         day_data = self._discharge(working_last)
-        return pd.DataFrame(np.array(day_data), pd.date_range(self.target_day, periods=24, freq='1H'), ['value'])
+        return pd.DataFrame(np.array(day_data), pd.date_range(self.target_day, periods=24, freq='1H'), ['expected'])
