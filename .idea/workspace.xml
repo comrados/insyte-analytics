@@ -4,11 +4,6 @@
     <list default="true" id="12f8726f-fb14-4ba6-9c8b-89c2ed12558e" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/analytics/prediction/analysis_prediction_holt_winters_auto.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_booleans.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_booleans.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_check.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_check.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/prediction/analysis_prediction_holt_winters.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/prediction/analysis_prediction_holt_winters.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/insyte_influx_io.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/insyte_influx_io.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/insyte_analytics.py" beforeDir="false" afterPath="$PROJECT_DIR$/insyte_analytics.py" afterDir="false" />
     </list>
     <list id="8f3402cf-8e05-46bd-8019-c70b228793b0" name="Revert: demand-response" comment="" />
@@ -85,7 +80,7 @@
       <recent name="D:\insyte" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.insyte_analytics normalization">
+  <component name="RunManager" selected="Python.ab">
     <configuration name="ab" type="PythonConfigurationType" factoryName="Python">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -809,7 +804,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574953087623</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="back to the old output, tags: 'value', 'boolean'">
+      <created>1575545567325</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1575545567325</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -860,33 +862,38 @@
     <MESSAGE value="prediction holt-winters/brutlag" />
     <MESSAGE value="output fix" />
     <MESSAGE value="new output" />
-    <option name="LAST_COMMIT_MESSAGE" value="new output" />
+    <MESSAGE value="back to the old output, tags: 'value', 'boolean'" />
+    <option name="LAST_COMMIT_MESSAGE" value="back to the old output, tags: 'value', 'boolean'" />
   </component>
   <component name="WindowStateProjectService">
     <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1575545469855">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1575545469855" />
+    <state x="580" y="147" width="816" height="810" key="CommitChangelistDialog2" timestamp="1575545567052">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="580" y="147" width="816" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1575545567052" />
     <state x="167" y="125" width="1653" height="855" key="DiffContextDialog" timestamp="1575544834799">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="167" y="125" width="1653" height="855" key="DiffContextDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1575544834799" />
-    <state width="1807" height="164" key="GridCell.Tab.0.bottom" timestamp="1575545471031">
+    <state width="1807" height="164" key="GridCell.Tab.0.bottom" timestamp="1575545626039">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="164" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1575545471031" />
-    <state width="1807" height="164" key="GridCell.Tab.0.center" timestamp="1575545471030">
+    <state width="1807" height="164" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1575545626039" />
+    <state width="1807" height="164" key="GridCell.Tab.0.center" timestamp="1575545626038">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="164" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1575545471030" />
-    <state width="1807" height="164" key="GridCell.Tab.0.left" timestamp="1575545471030">
+    <state width="1807" height="164" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1575545626038" />
+    <state width="1807" height="164" key="GridCell.Tab.0.left" timestamp="1575545626038">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="164" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1575545471030" />
-    <state width="1807" height="164" key="GridCell.Tab.0.right" timestamp="1575545471030">
+    <state width="1807" height="164" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1575545626038" />
+    <state width="1807" height="164" key="GridCell.Tab.0.right" timestamp="1575545626039">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="164" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1575545471030" />
+    <state width="1807" height="164" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1575545626039" />
     <state width="1807" height="241" key="GridCell.Tab.1.bottom" timestamp="1575540805554">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -903,6 +910,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state width="1807" height="241" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1575540805553" />
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1575545569751">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1575545569751" />
     <state x="649" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1575541613031">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>

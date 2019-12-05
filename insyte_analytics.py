@@ -392,6 +392,7 @@ async def main(arg):
         logger.info("Session successfully ended")
         print("DONE")
     except Exception as err:
+        print(err)
         print("ERROR")
         logger.error("Session ended with error: " + str(err))
 
