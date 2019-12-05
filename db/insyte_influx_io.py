@@ -238,7 +238,7 @@ class InsyteInfluxIO:
 
         self.logger.debug("Writing parameters successfully checked")
 
-    async def write_data_old(self, result_id=None, output_data=None):
+    async def write_data(self, result_id=None, output_data=None):
         """
         Depricated. Write data from this object to db.
 
@@ -254,7 +254,10 @@ class InsyteInfluxIO:
             self._check_write_parameters()
             for col, ri in zip(self.output_data.columns, self.result_id):
                 df = pd.DataFrame(output_data[col])
-                df.rename(columns={col: 'value'}, inplace=True)
+                if col.startswith('boolean'):
+                    df.rename(columns={col: 'boolean'}, inplace=True)
+                else:
+                    df.rename(columns={col: 'value'}, inplace=True)
                 _ = self.client.write_points(df, 'data_result', {'result_id': str(ri)})
                 results.append(str(ri))
         except Exception as err:
@@ -263,7 +266,7 @@ class InsyteInfluxIO:
         self.logger.debug("Writing complete " + str(results))
         return results
 
-    async def write_data(self, result_id=None, output_data=None):
+    async def write_data_new(self, result_id=None, output_data=None):
         """
         Write data from this object to db.
 

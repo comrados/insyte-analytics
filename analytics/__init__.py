@@ -11,6 +11,7 @@ from .peak_prediction.analysis_peak_prediction_ml import PeakPredictionMLAnalysi
 from .statistics.analysis_statistics_normalization import SatisticsNormalizationAnalysis
 from .correlation.analysis_correlation import CorrelationAnalysis
 from .prediction.analysis_prediction_holt_winters import PredictionHoltWintersAnalysis
+from .prediction.analysis_prediction_holt_winters_auto import PredictionHoltWintersAutoAnalysis
 from .prediction.analysis_prediction_holt_winters_brutlag import PredictionHoltWintersBrutlagAnalysis
 import logging
 
@@ -29,6 +30,7 @@ ANALYSIS = ['test',
             'correlation',
             'normalization',
             'prediction-holt-winters',
+            'prediction-holt-winters-auto',
             'prediction-holt-winters-brutlag']
 
 
@@ -131,6 +133,8 @@ def _analysis_caller(analysis, arguments, data_frame):
         result = SatisticsNormalizationAnalysis(arguments, data_frame).analyze()
     elif analysis == 'prediction-holt-winters':
         result = PredictionHoltWintersAnalysis(arguments, data_frame).analyze()
+    elif analysis == 'prediction-holt-winters-auto':
+        result = PredictionHoltWintersAutoAnalysis(arguments, data_frame).analyze()
     elif analysis == 'prediction-holt-winters-brutlag':
         result = PredictionHoltWintersBrutlagAnalysis(arguments, data_frame).analyze()
     else:

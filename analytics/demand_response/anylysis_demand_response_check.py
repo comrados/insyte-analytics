@@ -508,4 +508,4 @@ class DemandResponseAnalysisCheck(Analysis):
         rrmse_check = rrmse.values[0][0] <= 0.25
         booleans_check = all(bool.values.flatten())
         result = rrmse_check and booleans_check
-        return pd.DataFrame(result, pd.date_range(c_date, periods=1), ['check'])
+        return pd.DataFrame(result, pd.date_range(c_date, periods=1), ['boolean'])
