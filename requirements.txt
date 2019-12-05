@@ -4,3 +4,5 @@ influxdb
 cassandra-driver
 pandas
 numpy
+scipy
+scikit-learn

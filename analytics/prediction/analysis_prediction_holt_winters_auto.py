@@ -199,6 +199,9 @@ class PredictionHoltWintersAutoAnalysis(Analysis):
         return pd.DataFrame(result, idx, ['pred'])
 
     def _timeseriesCVscore(self, x):
+        # TODO
+        pass
+        """
         # вектор ошибок
         errors = []
 
@@ -221,9 +224,14 @@ class PredictionHoltWintersAutoAnalysis(Analysis):
 
         # Возвращаем средний квадрат ошибки по вектору ошибок
         return np.mean(np.array(errors))
+        """
 
     def _optimize(self):
+        # TODO
+        pass
+        """
         opt = minimize(self._timeseriesCVscore, x0=x, method="TNC", bounds=((0, 1), (0, 1), (0, 1)), tol=1e-3)
 
         # Из оптимизатора берем оптимальное значение параметров
         alpha_final, beta_final, gamma_final = opt.x
+        """

@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="12f8726f-fb14-4ba6-9c8b-89c2ed12558e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/analytics/prediction/analysis_prediction_holt_winters_auto.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/prediction/analysis_prediction_holt_winters_auto.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/prediction/analysis_prediction_holt_winters_auto.py" afterDir="false" />
     </list>
     <list id="8f3402cf-8e05-46bd-8019-c70b228793b0" name="Revert: demand-response" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -79,7 +79,7 @@
       <recent name="D:\insyte" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.ab">
+  <component name="RunManager" selected="Python.insyte-analytics demand-response-check">
     <configuration name="ab" type="PythonConfigurationType" factoryName="Python">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -564,29 +564,29 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.ab" />
       <item itemvalue="Python.insyte-analytics demand-response-baseline" />
-      <item itemvalue="Python.insyte-analytics demand-response-booleans" />
-      <item itemvalue="Python.insyte-analytics demand-response-check" />
-      <item itemvalue="Python.insyte-analytics demand-response-deviation" />
+      <item itemvalue="Python.ab" />
       <item itemvalue="Python.insyte-analytics demand-response-discharge" />
       <item itemvalue="Python.insyte-analytics demand-response-expected" />
       <item itemvalue="Python.insyte-analytics demand-response-rrmse" />
+      <item itemvalue="Python.insyte-analytics demand-response-deviation" />
+      <item itemvalue="Python.insyte-analytics demand-response-booleans" />
+      <item itemvalue="Python.insyte-analytics demand-response-check" />
       <item itemvalue="Python.insyte_analytics --help" />
       <item itemvalue="Python.insyte_analytics correlation" />
       <item itemvalue="Python.insyte_analytics normalization" />
-      <item itemvalue="Python.insyte_analytics peak predict ml" />
-      <item itemvalue="Python.insyte_analytics peak predict stat" />
+      <item itemvalue="Python.insyte_analytics prediction holt winters" />
       <item itemvalue="Python.insyte_analytics prediction holt winters auto" />
       <item itemvalue="Python.insyte_analytics prediction holt winters brutlag" />
-      <item itemvalue="Python.insyte_analytics prediction holt winters" />
+      <item itemvalue="Python.insyte_analytics peak predict ml" />
+      <item itemvalue="Python.insyte_analytics peak predict stat" />
       <item itemvalue="Python.insyte_analytics test" />
-      <item itemvalue="Python.t" />
       <item itemvalue="Python.test_db_module" />
-      <item itemvalue="Python.test_delete" />
       <item itemvalue="Python.test_influx" />
-      <item itemvalue="Python.test_insert" />
       <item itemvalue="Python.test_read" />
+      <item itemvalue="Python.t" />
+      <item itemvalue="Python.test_delete" />
+      <item itemvalue="Python.test_insert" />
     </list>
     <recent_temporary>
       <list>
@@ -824,7 +824,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575545776231</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="fix">
+      <created>1575548092145</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1575548092146</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -877,37 +884,38 @@
     <MESSAGE value="new output" />
     <MESSAGE value="back to the old output, tags: 'value', 'boolean'" />
     <MESSAGE value="last error console output" />
-    <option name="LAST_COMMIT_MESSAGE" value="last error console output" />
+    <MESSAGE value="fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix" />
   </component>
   <component name="WindowStateProjectService">
     <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1575545469855">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1575545469855" />
-    <state x="580" y="147" width="816" height="810" key="CommitChangelistDialog2" timestamp="1575545776146">
+    <state x="580" y="147" width="816" height="810" key="CommitChangelistDialog2" timestamp="1575548091814">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="580" y="147" width="816" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1575545776146" />
+    <state x="580" y="147" width="816" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1575548091814" />
     <state x="167" y="125" width="1653" height="855" key="DiffContextDialog" timestamp="1575544834799">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="167" y="125" width="1653" height="855" key="DiffContextDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1575544834799" />
-    <state width="1807" height="164" key="GridCell.Tab.0.bottom" timestamp="1575545925376">
+    <state width="1807" height="164" key="GridCell.Tab.0.bottom" timestamp="1575548158198">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="164" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1575545925376" />
-    <state width="1807" height="164" key="GridCell.Tab.0.center" timestamp="1575545925376">
+    <state width="1807" height="164" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1575548158198" />
+    <state width="1807" height="164" key="GridCell.Tab.0.center" timestamp="1575548158198">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="164" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1575545925376" />
-    <state width="1807" height="164" key="GridCell.Tab.0.left" timestamp="1575545925375">
+    <state width="1807" height="164" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1575548158198" />
+    <state width="1807" height="164" key="GridCell.Tab.0.left" timestamp="1575548158198">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="164" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1575545925375" />
-    <state width="1807" height="164" key="GridCell.Tab.0.right" timestamp="1575545925376">
+    <state width="1807" height="164" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1575548158198" />
+    <state width="1807" height="164" key="GridCell.Tab.0.right" timestamp="1575548158198">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="164" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1575545925376" />
+    <state width="1807" height="164" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1575548158198" />
     <state width="1807" height="241" key="GridCell.Tab.1.bottom" timestamp="1575540805554">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -924,14 +932,18 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state width="1807" height="241" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1575540805553" />
-    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1575545777882">
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1575548094801">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1575545777882" />
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1575548094801" />
     <state x="649" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1575548077665">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="649" y="380" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1575548077665" />
+    <state x="761" y="472" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1575548362532">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="761" y="472" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/67.27.1853.1053@67.27.1853.1053" timestamp="1575548362532" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
