@@ -3,7 +3,7 @@ from .demand_response.anylysis_demand_response_baseline import DemandResponseAna
 from .demand_response.anylysis_demand_response_discharge import DemandResponseAnalysisDischarge
 from .demand_response.anylysis_demand_response_rrmse import DemandResponseAnalysisRRMSE
 from .demand_response.anylysis_demand_response_deviation import DemandResponseAnalysisDeviation
-from .demand_response.anylysis_demand_response_booleans import DemandResponseAnalysisBooleans
+from .demand_response.anylysis_demand_response_boolean import DemandResponseAnalysisBoolean
 from .demand_response.anylysis_demand_response_check import DemandResponseAnalysisCheck
 from .demand_response.anylysis_demand_response_expected import DemandResponseAnalysisExpected
 from .peak_prediction.analysis_peak_prediction_statistical import PeakPredictionStatisticalAnalysis
@@ -22,7 +22,7 @@ ANALYSIS = ['test',
             'demand-response-discharge',
             'demand-response-rrmse',
             'demand-response-deviation',
-            'demand-response-booleans',
+            'demand-response-boolean',
             'demand-response-check',
             'demand-response-expected',
             'peak-prediction-statistical',
@@ -117,8 +117,8 @@ def _analysis_caller(analysis, arguments, data_frame):
         result = DemandResponseAnalysisRRMSE(arguments, data_frame).analyze()
     elif analysis == 'demand-response-deviation':
         result = DemandResponseAnalysisDeviation(arguments, data_frame).analyze()
-    elif analysis == 'demand-response-booleans':
-        result = DemandResponseAnalysisBooleans(arguments, data_frame).analyze()
+    elif analysis == 'demand-response-boolean':
+        result = DemandResponseAnalysisBoolean(arguments, data_frame).analyze()
     elif analysis == 'demand-response-check':
         result = DemandResponseAnalysisCheck(arguments, data_frame).analyze()
     elif analysis == 'demand-response-expected':

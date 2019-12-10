@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="12f8726f-fb14-4ba6-9c8b-89c2ed12558e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/rSettings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_booleans.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_booleans.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_check.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_check.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_booleans.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_boolean.py" afterDir="false" />
     </list>
     <list id="8f3402cf-8e05-46bd-8019-c70b228793b0" name="Revert: demand-response" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -81,7 +80,7 @@
       <recent name="D:\insyte" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.insyte-analytics demand-response-check">
+  <component name="RunManager" selected="Python.insyte-analytics demand-response-boolean">
     <configuration name="ab" type="PythonConfigurationType" factoryName="Python">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -124,7 +123,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="insyte-analytics demand-response-booleans" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="insyte-analytics demand-response-boolean" type="PythonConfigurationType" factoryName="Python">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -137,7 +136,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
-      <option name="PARAMETERS" value="--log --log-path logs --log-level 10 --result-id 00000000-0000-0000-0000-000000044412 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 --time_upload 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 --analysis demand-response-booleans --analysis-args target_day 1 2018-12-01 exception_days 2 2018-11-05 2018-11-06 except_weekends 1 True discharge_start_hour 1 12 discharge_value 1 1.0 discharge_duration 1 4 mode 1 expected" />
+      <option name="PARAMETERS" value="--log --log-path logs --log-level 10 --result-id 00000000-0000-0000-0000-000000544412 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 --time_upload 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 --analysis demand-response-boolean --analysis-args target_day 1 2018-12-01 exception_days 2 2018-11-05 2018-11-06 except_weekends 1 True discharge_start_hour 1 12 discharge_value 1 1.0 discharge_duration 1 4 mode 1 expected" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -158,7 +157,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
-      <option name="PARAMETERS" value="--log --log-path logs --log-level 10 --result-id 00000000-0000-0000-0000-000000183271 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 --time_upload 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 --analysis demand-response-check --analysis-args target_day 1 2018-12-01 exception_days 2 2018-11-05 2018-11-06 except_weekends 1 True discharge_start_hour 1 12 discharge_value 1 1.0 discharge_duration 1 4 mode 1 expected" />
+      <option name="PARAMETERS" value="--log --log-path logs --log-level 10 --result-id 00000000-0000-0000-0000-000000183272 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 --time_upload 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 --analysis demand-response-check --analysis-args target_day 1 2018-12-01 exception_days 2 2018-11-05 2018-11-06 except_weekends 1 True discharge_start_hour 1 12 discharge_value 1 1.0 discharge_duration 1 4 mode 1 expected" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -568,7 +567,7 @@
     <list>
       <item itemvalue="Python.ab" />
       <item itemvalue="Python.insyte-analytics demand-response-baseline" />
-      <item itemvalue="Python.insyte-analytics demand-response-booleans" />
+      <item itemvalue="Python.insyte-analytics demand-response-boolean" />
       <item itemvalue="Python.insyte-analytics demand-response-check" />
       <item itemvalue="Python.insyte-analytics demand-response-deviation" />
       <item itemvalue="Python.insyte-analytics demand-response-discharge" />
@@ -840,7 +839,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575548377388</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="booleans to float">
+      <created>1575969380492</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1575969380492</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -895,65 +901,66 @@
     <MESSAGE value="last error console output" />
     <MESSAGE value="fix" />
     <MESSAGE value="requirements update" />
-    <option name="LAST_COMMIT_MESSAGE" value="requirements update" />
+    <MESSAGE value="booleans to float" />
+    <option name="LAST_COMMIT_MESSAGE" value="booleans to float" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1575886953652">
+    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1575973600511">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1575886953652" />
+    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1575973600511" />
     <state x="676" y="280" width="624" height="544" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1575563356617">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="676" y="280" width="624" height="544" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1575563356617" />
-    <state x="580" y="147" width="816" height="810" key="CommitChangelistDialog2" timestamp="1575548377259">
+    <state x="432" y="102" width="1146" height="810" key="CommitChangelistDialog2" timestamp="1575969380251">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="580" y="147" width="816" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1575548377259" />
+    <state x="432" y="102" width="1146" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1575969380251" />
     <state x="167" y="125" width="1653" height="855" key="DiffContextDialog" timestamp="1575544834799">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="167" y="125" width="1653" height="855" key="DiffContextDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1575544834799" />
-    <state width="1830" height="164" key="GridCell.Tab.0.bottom" timestamp="1575969305160">
+    <state width="1830" height="164" key="GridCell.Tab.0.bottom" timestamp="1575973602008">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="164" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1575969305160" />
-    <state width="1830" height="164" key="GridCell.Tab.0.center" timestamp="1575969305160">
+    <state width="1830" height="164" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1575973602008" />
+    <state width="1830" height="164" key="GridCell.Tab.0.center" timestamp="1575973602008">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="164" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1575969305160" />
-    <state width="1830" height="164" key="GridCell.Tab.0.left" timestamp="1575969305159">
+    <state width="1830" height="164" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1575973602008" />
+    <state width="1830" height="164" key="GridCell.Tab.0.left" timestamp="1575973602007">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="164" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1575969305159" />
-    <state width="1830" height="164" key="GridCell.Tab.0.right" timestamp="1575969305160">
+    <state width="1830" height="164" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1575973602007" />
+    <state width="1830" height="164" key="GridCell.Tab.0.right" timestamp="1575973602008">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="164" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1575969305160" />
-    <state width="1830" height="241" key="GridCell.Tab.1.bottom" timestamp="1575969257927">
+    <state width="1830" height="164" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1575973602008" />
+    <state width="1830" height="241" key="GridCell.Tab.1.bottom" timestamp="1575969549017">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="241" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1575969257927" />
-    <state width="1830" height="241" key="GridCell.Tab.1.center" timestamp="1575969257927">
+    <state width="1830" height="241" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1575969549017" />
+    <state width="1830" height="241" key="GridCell.Tab.1.center" timestamp="1575969549016">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="241" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1575969257927" />
-    <state width="1830" height="241" key="GridCell.Tab.1.left" timestamp="1575969257927">
+    <state width="1830" height="241" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1575969549016" />
+    <state width="1830" height="241" key="GridCell.Tab.1.left" timestamp="1575969549016">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="241" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1575969257927" />
-    <state width="1830" height="241" key="GridCell.Tab.1.right" timestamp="1575969257927">
+    <state width="1830" height="241" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1575969549016" />
+    <state width="1830" height="241" key="GridCell.Tab.1.right" timestamp="1575969549017">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="241" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1575969257927" />
-    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1575548379223">
+    <state width="1830" height="241" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1575969549017" />
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1575969384366">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1575548379223" />
-    <state x="649" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1575968427778">
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1575969384366" />
+    <state x="649" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1575973511517">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="649" y="380" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1575968427778" />
+    <state x="649" y="380" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1575973511517" />
     <state x="761" y="472" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1575548362532">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -1023,7 +1030,7 @@
           <option name="timeStamp" value="78" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_booleans.py</url>
+          <url>file://$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_boolean.py</url>
           <line>77</line>
           <option name="timeStamp" value="80" />
         </line-breakpoint>
@@ -1078,9 +1085,19 @@
           <option name="timeStamp" value="109" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_booleans.py</url>
+          <url>file://$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_boolean.py</url>
           <line>457</line>
           <option name="timeStamp" value="110" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_boolean.py</url>
+          <line>451</line>
+          <option name="timeStamp" value="111" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_boolean.py</url>
+          <line>452</line>
+          <option name="timeStamp" value="112" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

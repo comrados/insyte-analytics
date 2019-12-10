@@ -11,7 +11,7 @@ Demand-response. Calculation of booleans for discharge hours
 """
 
 
-class DemandResponseAnalysisBooleans(Analysis):
+class DemandResponseAnalysisBoolean(Analysis):
     logger = logging.getLogger('insyte_analytics.analytics.analysis_demand_response_booleans')
 
     def __init__(self, parameters, data):
