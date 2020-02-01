@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="12f8726f-fb14-4ba6-9c8b-89c2ed12558e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/analytics/evaluation/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/analytics/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_booleans.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_boolean.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/prediction/analysis_prediction_holt_winters_brutlag.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/evaluation/analysis_evaluation_brutlag.py" afterDir="false" />
     </list>
     <list id="8f3402cf-8e05-46bd-8019-c70b228793b0" name="Revert: demand-response" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -66,6 +68,13 @@
     </option>
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/analytics/evaluation" />
+      <recent name="D:\insyte-analytics\analytics\demand-response" />
+      <recent name="D:\insyte-analytics\analytics\peak-prediction" />
+      <recent name="D:\insyte-analytics\tests" />
+      <recent name="D:\insyte" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/analytics/prediction" />
       <recent name="$PROJECT_DIR$/analytics/demand_response" />
@@ -73,14 +82,8 @@
       <recent name="D:\insyte-analytics\models" />
       <recent name="D:\insyte-analytics\analytics" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\insyte-analytics\analytics\demand-response" />
-      <recent name="D:\insyte-analytics\analytics\peak-prediction" />
-      <recent name="D:\insyte-analytics\tests" />
-      <recent name="D:\insyte" />
-    </key>
   </component>
-  <component name="RunManager" selected="Python.insyte-analytics demand-response-boolean">
+  <component name="RunManager" selected="Python.insyte_analytics evaluation brutlag">
     <configuration name="ab" type="PythonConfigurationType" factoryName="Python">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -291,6 +294,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="insyte_analytics evaluation brutlag" type="PythonConfigurationType" factoryName="Python">
+      <module name="insyte-analytics" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
+      <option name="PARAMETERS" value="--log --log-level 10 --result-id 00000000-0000-0000-0000-000000000041 00000000-0000-0000-0000-000000000042 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 --time_upload 2018-10-01_00:00:00+0000 2019-04-01_00:00:00+0000 --analysis evaluation-brutlag --analysis-args alpha 1 1.0 beta 1 1.0 gamma 1 1.0 season_length 1 24 scaling_factor 1 2.0 n_predictions 1 100" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="insyte_analytics normalization" type="PythonConfigurationType" factoryName="Python">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -325,7 +349,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
-      <option name="PARAMETERS" value="--log -ll 10 --mode w --result-id 00000000-0000-0000-0000-000000000014 --analysis peak-prediction-ml --analysis-args model 1 nn date 3 2019-06-26 2019-06-27 2019-06-28 sunrise 3 04:13:00 04:14:00 04:15:00 sunset 3 22:23:00 22:23:00 22:23:00 daylength 3 18:09:00 18:09:00 18:09:00 temperature 3 12.4 13.5375 15.2875 pressure 3 762.4125 759.8125 757.25 humidity 3 74.875 70.25 64.625 windspeed 3 1.25 1.375 3.125" />
+      <option name="PARAMETERS" value="--log -ll 10 --mode w --result-id 00000000-0000-0000-0000-000000022815 --analysis peak-prediction-ml --analysis-args model 1 nn date 3 2019-06-26 2019-06-27 2019-06-28 sunrise 3 04:13:00 04:14:00 04:15:00 sunset 3 22:23:00 22:23:00 22:23:00 daylength 3 18:09:00 18:09:00 18:09:00 temperature 3 12.4 13.5375 15.2875 pressure 3 762.4125 759.8125 757.25 humidity 3 74.875 70.25 64.625 windspeed 3 1.25 1.375 3.125" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -346,7 +370,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
-      <option name="PARAMETERS" value="--log --mode w --result-id 00000000-0000-0000-0000-000000000013 --analysis peak-prediction-statistical --analysis-args year 1 2019 month 1 2" />
+      <option name="PARAMETERS" value="--log --mode w --result-id 00000000-0000-0000-0000-000000022813 --analysis peak-prediction-statistical --analysis-args year 1 2019 month 1 8" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -368,27 +392,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
       <option name="PARAMETERS" value="--log --log-level 10 --result-id 00000000-0000-0000-0000-000000000391 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 --time_upload 2018-10-01_00:00:00+0000 2019-04-01_00:00:00+0000 --analysis prediction-holt-winters-auto --analysis-args season_length 1 24 n_predictions 1 100 tolerance 1 6" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="insyte_analytics prediction holt winters brutlag" type="PythonConfigurationType" factoryName="Python">
-      <module name="insyte-analytics" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
-      <option name="PARAMETERS" value="--log --log-level 10 --result-id 00000000-0000-0000-0000-000000000041 00000000-0000-0000-0000-000000000042 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 --time_upload 2018-10-01_00:00:00+0000 2019-04-01_00:00:00+0000 --analysis prediction-holt-winters-brutlag --analysis-args alpha 1 1.0 beta 1 1.0 gamma 1 1.0 season_length 1 24 scaling_factor 1 2.0 n_predictions 1 100" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -579,7 +582,7 @@
       <item itemvalue="Python.insyte_analytics peak predict ml" />
       <item itemvalue="Python.insyte_analytics peak predict stat" />
       <item itemvalue="Python.insyte_analytics prediction holt winters auto" />
-      <item itemvalue="Python.insyte_analytics prediction holt winters brutlag" />
+      <item itemvalue="Python.insyte_analytics evaluation brutlag" />
       <item itemvalue="Python.insyte_analytics prediction holt winters" />
       <item itemvalue="Python.insyte_analytics test" />
       <item itemvalue="Python.test_db_module" />
@@ -846,7 +849,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575969380492</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="booleans">
+      <created>1575973621608</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1575973621608</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -877,7 +887,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="commit" />
     <MESSAGE value="main script" />
     <MESSAGE value="test analysis" />
     <MESSAGE value="io dix" />
@@ -902,69 +911,74 @@
     <MESSAGE value="fix" />
     <MESSAGE value="requirements update" />
     <MESSAGE value="booleans to float" />
-    <option name="LAST_COMMIT_MESSAGE" value="booleans to float" />
+    <MESSAGE value="booleans" />
+    <option name="LAST_COMMIT_MESSAGE" value="booleans" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1575973600511">
+    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1578845659931">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1575973600511" />
+    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1578845659931" />
     <state x="676" y="280" width="624" height="544" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1575563356617">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="676" y="280" width="624" height="544" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1575563356617" />
-    <state x="432" y="102" width="1146" height="810" key="CommitChangelistDialog2" timestamp="1575969380251">
+    <state x="432" y="102" width="1146" height="810" key="CommitChangelistDialog2" timestamp="1575973621319">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="432" y="102" width="1146" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1575969380251" />
+    <state x="432" y="102" width="1146" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1575973621319" />
     <state x="167" y="125" width="1653" height="855" key="DiffContextDialog" timestamp="1575544834799">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="167" y="125" width="1653" height="855" key="DiffContextDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1575544834799" />
-    <state width="1830" height="164" key="GridCell.Tab.0.bottom" timestamp="1575973602008">
+    <state width="1830" height="240" key="GridCell.Tab.0.bottom" timestamp="1578846273747">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="164" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1575973602008" />
-    <state width="1830" height="164" key="GridCell.Tab.0.center" timestamp="1575973602008">
+    <state width="1830" height="240" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1578846273747" />
+    <state width="1830" height="240" key="GridCell.Tab.0.center" timestamp="1578846273746">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="164" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1575973602008" />
-    <state width="1830" height="164" key="GridCell.Tab.0.left" timestamp="1575973602007">
+    <state width="1830" height="240" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1578846273746" />
+    <state width="1830" height="240" key="GridCell.Tab.0.left" timestamp="1578846273746">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="164" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1575973602007" />
-    <state width="1830" height="164" key="GridCell.Tab.0.right" timestamp="1575973602008">
+    <state width="1830" height="240" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1578846273746" />
+    <state width="1830" height="240" key="GridCell.Tab.0.right" timestamp="1578846273746">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="164" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1575973602008" />
-    <state width="1830" height="241" key="GridCell.Tab.1.bottom" timestamp="1575969549017">
+    <state width="1830" height="240" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1578846273746" />
+    <state width="1830" height="240" key="GridCell.Tab.1.bottom" timestamp="1578846273748">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="241" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1575969549017" />
-    <state width="1830" height="241" key="GridCell.Tab.1.center" timestamp="1575969549016">
+    <state width="1830" height="240" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1578846273748" />
+    <state width="1830" height="240" key="GridCell.Tab.1.center" timestamp="1578846273747">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="241" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1575969549016" />
-    <state width="1830" height="241" key="GridCell.Tab.1.left" timestamp="1575969549016">
+    <state width="1830" height="240" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1578846273747" />
+    <state width="1830" height="240" key="GridCell.Tab.1.left" timestamp="1578846273747">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="241" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1575969549016" />
-    <state width="1830" height="241" key="GridCell.Tab.1.right" timestamp="1575969549017">
+    <state width="1830" height="240" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1578846273747" />
+    <state width="1830" height="240" key="GridCell.Tab.1.right" timestamp="1578846273747">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="241" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1575969549017" />
-    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1575969384366">
+    <state width="1830" height="240" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1578846273747" />
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1575973623846">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1575969384366" />
-    <state x="649" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1575973511517">
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1575973623846" />
+    <state width="926" height="527" key="XDebugger.FullValuePopup" timestamp="1578844683385">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="649" y="380" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1575973511517" />
-    <state x="761" y="472" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1575548362532">
+    <state width="926" height="527" key="XDebugger.FullValuePopup/67.27.1853.1053@67.27.1853.1053" timestamp="1578844683385" />
+    <state x="649" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1580567233626">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="761" y="472" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/67.27.1853.1053@67.27.1853.1053" timestamp="1575548362532" />
+    <state x="649" y="380" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1580567233626" />
+    <state x="761" y="472" width="454" height="160" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1578843782549">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="761" y="472" width="454" height="160" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/67.27.1853.1053@67.27.1853.1053" timestamp="1578843782549" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1055,11 +1069,6 @@
           <option name="timeStamp" value="98" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics/prediction/analysis_prediction_holt_winters_brutlag.py</url>
-          <line>24</line>
-          <option name="timeStamp" value="100" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_check.py</url>
           <line>84</line>
           <option name="timeStamp" value="101" />
@@ -1098,6 +1107,21 @@
           <url>file://$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_boolean.py</url>
           <line>452</line>
           <option name="timeStamp" value="112" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/analytics/peak_prediction/analysis_peak_prediction_statistical.py</url>
+          <line>26</line>
+          <option name="timeStamp" value="113" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/analytics/prediction/analysis_prediction_holt_winters.py</url>
+          <line>194</line>
+          <option name="timeStamp" value="114" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/analytics/evaluation/analysis_evaluation_brutlag.py</url>
+          <line>230</line>
+          <option name="timeStamp" value="115" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

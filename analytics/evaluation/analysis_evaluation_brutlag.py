@@ -6,12 +6,13 @@ import calendar
 import numpy as np
 
 """
-Brutlag evaluation. Holt-Winters method (triple exponential smoothing)
+Brutlag intervals evaluation.
 """
 
+import matplotlib.pyplot as plt
 
-class PredictionHoltWintersBrutlagAnalysis(Analysis):
-    logger = logging.getLogger('insyte_analytics.analytics.analysis_prediction_holt_winters_brutlag')
+class EvaluationBrutlagAnalysis(Analysis):
+    logger = logging.getLogger('insyte_analytics.analytics.analysis_evaluation_brutlag')
 
     def __init__(self, parameters, data):
         super().__init__(parameters, data)
@@ -207,7 +208,7 @@ class PredictionHoltWintersBrutlagAnalysis(Analysis):
                 result.append((sm + m * tr) + seasonals[i % self.slength])
 
                 # во время прогноза с каждым шагом увеличиваем неопределенность
-                pred_dev.append(pred_dev[-1] * 1.01)
+                pred_dev.append(pred_dev[-1] * 1.05)
 
             else:
                 val = self.series[i]
@@ -227,6 +228,11 @@ class PredictionHoltWintersBrutlagAnalysis(Analysis):
             smooth.append(sm)
             trend.append(tr)
             season.append(seasonals[i % self.slength])
+
+        plt.plot(result)
+        plt.plot(lower_bond)
+        plt.plot(upper_bond)
+        plt.show()
 
         return lower_bond, upper_bond
 
