@@ -12,33 +12,33 @@
 ## Demand-response
 - baseline
     - [x] python
-    - [ ] web
+    - [x] web
 - boolean
     - [x] python
-    - [ ] web
+    - [x] web
 - check
     - [x] python
-    - [ ] web
+    - [x] web
 - deviation
     - [x] python
-    - [ ] web
+    - [x] web
 - discharge
     - [x] python
-    - [ ] web
+    - [x] web
 - expected
     - [x] python
-    - [ ] web
+    - [x] web
 - rrmse
     - [x] python
-    - [ ] web
+    - [x] web
 
 ## Peak prediction
 - ml
     - [x] python
-    - [ ] web
+    - [x] web
 - statistical
     - [x] python
-    - [ ] web
+    - [x] web
     
 ## Prediction
 - holt-winters
