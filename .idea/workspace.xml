@@ -861,7 +861,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580568001957</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="requirements.txt versions change">
+      <created>1581331179513</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1581331179513</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -892,7 +899,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="test analysis" />
     <MESSAGE value="io dix" />
     <MESSAGE value="io fix" />
     <MESSAGE value="result output" />
@@ -917,7 +923,8 @@
     <MESSAGE value="booleans to float" />
     <MESSAGE value="booleans" />
     <MESSAGE value="checklist" />
-    <option name="LAST_COMMIT_MESSAGE" value="checklist" />
+    <MESSAGE value="requirements.txt versions change" />
+    <option name="LAST_COMMIT_MESSAGE" value="requirements.txt versions change" />
   </component>
   <component name="WindowStateProjectService">
     <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1578845659931">
@@ -928,10 +935,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="676" y="280" width="624" height="544" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1575563356617" />
-    <state x="432" y="102" width="1146" height="810" key="CommitChangelistDialog2" timestamp="1580568001741">
+    <state x="432" y="102" width="1146" height="810" key="CommitChangelistDialog2" timestamp="1581331179320">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="432" y="102" width="1146" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1580568001741" />
+    <state x="432" y="102" width="1146" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1581331179320" />
     <state x="167" y="125" width="1653" height="855" key="DiffContextDialog" timestamp="1581331132856">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -968,10 +975,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state width="1830" height="240" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1578846273747" />
-    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1580568007152">
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1581331185213">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1580568007152" />
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1581331185213" />
     <state width="926" height="527" key="XDebugger.FullValuePopup" timestamp="1578844683385">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
