@@ -6,7 +6,7 @@
     - [ ] web
   
 - autocorrelation
-    - [ ] python
+    - [x] python
     - [ ] web
   
 ## Demand-response
@@ -42,7 +42,7 @@
     
 ## Prediction
 - holt-winters
-    - [ ] python
+    - [x] python
     - [ ] web
 - holt-winters-auto
     - [ ] python
