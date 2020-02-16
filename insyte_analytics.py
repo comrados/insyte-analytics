@@ -373,7 +373,7 @@ async def none(arg):
     logger.info("No database routine")
 
     # Analyze data
-    output_data = analytics.analyze_none(arg.analysis, arg.analysis_args)
+    output_data = analytics.analyze_no_db(arg.analysis, arg.analysis_args)
 
 
 async def main(arg):
