@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="12f8726f-fb14-4ba6-9c8b-89c2ed12558e" name="Default Changelist" comment="analysis caller fix">
+    <list default="true" id="12f8726f-fb14-4ba6-9c8b-89c2ed12558e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/_in_development/analysis_autocorrelation.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/_in_development/analysis_autocorrelation.py" afterDir="false" />
     </list>
     <list id="8f3402cf-8e05-46bd-8019-c70b228793b0" name="Revert: demand-response" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -81,7 +81,7 @@
       <recent name="D:\insyte-analytics\analytics\peak-prediction" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.insyte_analytics test">
+  <component name="RunManager" selected="Python.insyte_analytics autocorrelation">
     <configuration name="ab" type="PythonConfigurationType" factoryName="Python">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -284,7 +284,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
-      <option name="PARAMETERS" value="--log --log-level 10 --result-id 00000000-0000-0000-0000-000000000055 --device-id c98fda23-9298-4521-af43-64eb46faf13b c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 161 159 --time_upload 2018-12-01_00:00:00+0000 2019-04-01_00:00:00+0000 2018-10-01_00:00:00+0000 2019-11-01_00:00:00+0000 --analysis autocorrelation --analysis-args method 1 spearman" />
+      <option name="PARAMETERS" value="--log --log-level 10 --result-id 00000000-0000-0000-0000-000000000055 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 161 --time_upload 2018-10-01_00:00:00+0000 2019-11-01_00:00:00+0000 --analysis autocorrelation --analysis-args step 1 2" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -904,7 +904,14 @@
       <option name="project" value="LOCAL" />
       <updated>1581867603448</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="analysis caller fix">
+      <created>1581868435465</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1581868435465</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -963,10 +970,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="analysis caller fix" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1581866539076">
+    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1581874095770">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1581866539076" />
+    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1581874095770" />
     <state x="676" y="280" width="624" height="544" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1575563356617">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -979,58 +986,58 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="751" y="205" key="#xdebugger.evaluate/67.27.1853.1053@67.27.1853.1053" timestamp="1581859115500" />
-    <state x="432" y="102" width="1146" height="810" key="CommitChangelistDialog2" timestamp="1581867983906">
+    <state x="432" y="102" width="1146" height="810" key="CommitChangelistDialog2" timestamp="1581868435348">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="432" y="102" width="1146" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1581867983906" />
+    <state x="432" y="102" width="1146" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1581868435348" />
     <state x="167" y="125" width="1653" height="855" key="DiffContextDialog" timestamp="1581867690687">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="167" y="125" width="1653" height="855" key="DiffContextDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1581867690687" />
-    <state width="1830" height="202" key="GridCell.Tab.0.bottom" timestamp="1581868402872">
+    <state width="1830" height="236" key="GridCell.Tab.0.bottom" timestamp="1581874261363">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="202" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1581868402872" />
-    <state width="1830" height="202" key="GridCell.Tab.0.center" timestamp="1581868402872">
+    <state width="1830" height="236" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1581874261363" />
+    <state width="1830" height="236" key="GridCell.Tab.0.center" timestamp="1581874261363">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="202" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1581868402872" />
-    <state width="1830" height="202" key="GridCell.Tab.0.left" timestamp="1581868402871">
+    <state width="1830" height="236" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1581874261363" />
+    <state width="1830" height="236" key="GridCell.Tab.0.left" timestamp="1581874261362">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="202" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1581868402871" />
-    <state width="1830" height="202" key="GridCell.Tab.0.right" timestamp="1581868402872">
+    <state width="1830" height="236" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1581874261362" />
+    <state width="1830" height="236" key="GridCell.Tab.0.right" timestamp="1581874261363">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="202" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1581868402872" />
-    <state width="1830" height="166" key="GridCell.Tab.1.bottom" timestamp="1581867576724">
+    <state width="1830" height="236" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1581874261363" />
+    <state width="1830" height="236" key="GridCell.Tab.1.bottom" timestamp="1581874261364">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="166" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1581867576724" />
-    <state width="1830" height="166" key="GridCell.Tab.1.center" timestamp="1581867576724">
+    <state width="1830" height="236" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1581874261364" />
+    <state width="1830" height="236" key="GridCell.Tab.1.center" timestamp="1581874261364">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="166" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1581867576724" />
-    <state width="1830" height="166" key="GridCell.Tab.1.left" timestamp="1581867576724">
+    <state width="1830" height="236" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1581874261364" />
+    <state width="1830" height="236" key="GridCell.Tab.1.left" timestamp="1581874261363">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="166" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1581867576724" />
-    <state width="1830" height="166" key="GridCell.Tab.1.right" timestamp="1581867576724">
+    <state width="1830" height="236" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1581874261363" />
+    <state width="1830" height="236" key="GridCell.Tab.1.right" timestamp="1581874261364">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="166" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1581867576724" />
+    <state width="1830" height="236" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1581874261364" />
     <state x="629" y="228" key="SettingsEditor" timestamp="1581414971946">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="629" y="228" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1581414971946" />
-    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1581867605150">
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1581868437070">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1581867605150" />
-    <state width="926" height="527" key="XDebugger.FullValuePopup" timestamp="1581859048017">
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1581868437070" />
+    <state width="926" height="527" key="XDebugger.FullValuePopup" timestamp="1581872889315">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="926" height="527" key="XDebugger.FullValuePopup/67.27.1853.1053@67.27.1853.1053" timestamp="1581859048017" />
+    <state width="926" height="527" key="XDebugger.FullValuePopup/67.27.1853.1053@67.27.1853.1053" timestamp="1581872889315" />
     <state x="649" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1581597000196">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -1180,8 +1187,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/analytics/_in_development/analysis_autocorrelation.py</url>
-          <line>20</line>
-          <option name="timeStamp" value="125" />
+          <line>23</line>
+          <option name="timeStamp" value="128" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/analytics/_in_development/analysis_autocorrelation.py</url>
+          <line>84</line>
+          <option name="timeStamp" value="129" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/analytics/_in_development/analysis_autocorrelation.py</url>
+          <line>22</line>
+          <option name="timeStamp" value="130" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -18,9 +18,9 @@ class AutocorrelationAnalysis(Analysis):
     def analyze(self):
         try:
             super().analyze()
-            corr_matrix = self.data.corr(method=self.method)
-            self.logger.debug("Correlation matrix:\n\n" + str(corr_matrix.values) + "\n")
-            results = self._format_results(corr_matrix.values)
+            autocorr = [self.data.autocorr(i) for i in range(0, len(self.data) - 1, self.step)]
+            self.logger.debug("Autocorrelation values count: " + str(len(autocorr)) + "\n")
+            results = self._format_results(autocorr)
             return results
         except Exception as err:
             self.logger.error("Impossible to analyze: " + str(err))
@@ -37,6 +37,7 @@ class AutocorrelationAnalysis(Analysis):
             # Fill NaNs
             if self.original_data is not None:
                 data = self.original_data.dropna(how='any')
+                data = data[data.columns[0]]
             else:
                 data = None
             self.logger.debug("DataFrame preprocessed")
@@ -51,36 +52,34 @@ class AutocorrelationAnalysis(Analysis):
         """
         self.logger.debug("Parsing parameters")
         try:
-            self._check_method()
+            self._check_step()
         except Exception as err:
             self.logger.error("Impossible to parse parameter: " + str(err))
             raise Exception("Impossible to parse parameter: " + str(err))
 
-    def _check_method(self):
+    def _check_step(self):
         """
-        Checks 'method' parameter
+        Checks 'step' parameter
         """
         try:
-            self.method = self.parameters['method'][0]
-            if self.method not in ['pearson', 'kendall', 'spearman']:
-                raise Exception
+            self.step = int(self.parameters['step'][0])
+            if self.step < 1:
+                raise Exception("'step' should be positive integer")
 
-            self.logger.debug("Parsed parameter 'method': " + str(self.method))
+            self.logger.debug("Parsed parameter 'step': " + str(self.step))
         except Exception as err:
-            self.logger.debug("Wrong parameter 'method': " + str(self.method) + " " + str(err))
-            raise Exception("Wrong parameter 'method': " + str(self.method) + " " + str(err))
+            self.logger.debug("Wrong parameter 'step': " + str(self.step) + " " + str(err))
+            raise Exception("Wrong parameter 'step': " + str(self.step) + " " + str(err))
 
-    def _format_results(self, result):
+    def _format_results(self, autocorr):
         """
         format results for output, converts matrix to series
         stacks values in top-down left-right order
 
-        :param result: unformatted results
+        :param autocorr: unformatted results
         :return: formatted results
         """
-        new_shape = result.shape[0] * result.shape[1]
 
-        idx = pd.date_range('2000-01-01', periods=new_shape)
+        idx = self.data.index[:len(self.data) - 1:self.step]
 
-        result = result.reshape(new_shape)
-        return pd.DataFrame(result, idx, ['correlation'])
+        return pd.DataFrame(autocorr, idx, ['autocorrelation'])
