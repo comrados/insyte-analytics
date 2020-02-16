@@ -11,27 +11,32 @@ from .peak_prediction.analysis_peak_prediction_ml import PeakPredictionMLAnalysi
 from .statistics.analysis_statistics_normalization import SatisticsNormalizationAnalysis
 from .correlation.analysis_correlation import CorrelationAnalysis
 from .prediction.analysis_prediction_holt_winters import PredictionHoltWintersAnalysis
-from analytics.in_development.analysis_prediction_holt_winters_auto import PredictionHoltWintersAutoAnalysis
+from analytics._in_development.analysis_prediction_holt_winters_auto import PredictionHoltWintersAutoAnalysis
 from analytics._in_development.analysis_evaluation_brutlag import EvaluationBrutlagAnalysis
+from analytics._in_development.analysis_autocorrelation import AutocorrelationAnalysis
 import logging
 
 logger = logging.getLogger('insyte_analytics.analytics.__init__')
 # list of existing analysis functions
-ANALYSIS = ['test',
-            'demand-response-baseline',
-            'demand-response-discharge',
-            'demand-response-rrmse',
-            'demand-response-deviation',
-            'demand-response-boolean',
-            'demand-response-check',
-            'demand-response-expected',
-            'peak-prediction-statistical',
-            'peak-prediction-ml',
-            'correlation',
-            'normalization',
-            'prediction-holt-winters',
-            'prediction-holt-winters-auto',
-            'evaluation-brutlag']
+ANALYSIS = {
+        'test': TestAnalysis,
+        'demand-response-baseline': DemandResponseAnalysisBaseline,
+        'demand-response-discharge': DemandResponseAnalysisDischarge,
+        'demand-response-rrmse': DemandResponseAnalysisRRMSE,
+        'demand-response-deviation': DemandResponseAnalysisDeviation,
+        'demand-response-boolean': DemandResponseAnalysisBoolean,
+        'demand-response-check': DemandResponseAnalysisCheck,
+        'demand-response-expected': DemandResponseAnalysisExpected,
+        'peak-prediction-statistical': PeakPredictionStatisticalAnalysis,
+        'peak-prediction-ml': PeakPredictionMLAnalysis,
+        'correlation': CorrelationAnalysis,
+        'normalization': SatisticsNormalizationAnalysis,
+        'prediction-holt-winters': PredictionHoltWintersAnalysis,
+        # in development
+        'autocorrelation': AutocorrelationAnalysis,
+        'prediction-holt-winters-auto': PredictionHoltWintersAutoAnalysis,
+        'evaluation-brutlag': EvaluationBrutlagAnalysis
+    }
 
 
 def check_analysis(analysis):
@@ -107,37 +112,10 @@ def _analysis_caller(analysis, arguments, data_frame):
     """
     Caller function
     """
-    if analysis == 'test':
-        result = TestAnalysis(arguments, data_frame).analyze()
-    elif analysis == 'demand-response-baseline':
-        result = DemandResponseAnalysisBaseline(arguments, data_frame).analyze()
-    elif analysis == 'demand-response-discharge':
-        result = DemandResponseAnalysisDischarge(arguments, data_frame).analyze()
-    elif analysis == 'demand-response-rrmse':
-        result = DemandResponseAnalysisRRMSE(arguments, data_frame).analyze()
-    elif analysis == 'demand-response-deviation':
-        result = DemandResponseAnalysisDeviation(arguments, data_frame).analyze()
-    elif analysis == 'demand-response-boolean':
-        result = DemandResponseAnalysisBoolean(arguments, data_frame).analyze()
-    elif analysis == 'demand-response-check':
-        result = DemandResponseAnalysisCheck(arguments, data_frame).analyze()
-    elif analysis == 'demand-response-expected':
-        result = DemandResponseAnalysisExpected(arguments, data_frame).analyze()
-    elif analysis == 'peak-prediction-statistical':
-        result = PeakPredictionStatisticalAnalysis(arguments, data_frame).analyze()
-    elif analysis == 'peak-prediction-ml':
-        result = PeakPredictionMLAnalysis(arguments, data_frame).analyze()
-    elif analysis == 'correlation':
-        result = CorrelationAnalysis(arguments, data_frame).analyze()
-    elif analysis == 'normalization':
-        result = SatisticsNormalizationAnalysis(arguments, data_frame).analyze()
-    elif analysis == 'prediction-holt-winters':
-        result = PredictionHoltWintersAnalysis(arguments, data_frame).analyze()
-    elif analysis == 'prediction-holt-winters-auto':
-        result = PredictionHoltWintersAutoAnalysis(arguments, data_frame).analyze()
-    elif analysis == 'evaluation-brutlag':
-        result = EvaluationBrutlagAnalysis(arguments, data_frame).analyze()
+    if analysis in ANALYSIS:
+        result = ANALYSIS[analysis](arguments, data_frame).analyze()
     else:
         logger.error("Analysis function doesn't exist: " + analysis)
         raise Exception("Analysis function doesn't exist: " + analysis)
+
     return result
