@@ -11,8 +11,8 @@ from .peak_prediction.analysis_peak_prediction_ml import PeakPredictionMLAnalysi
 from .statistics.analysis_statistics_normalization import SatisticsNormalizationAnalysis
 from .correlation.analysis_correlation import CorrelationAnalysis
 from .prediction.analysis_prediction_holt_winters import PredictionHoltWintersAnalysis
-from .prediction.analysis_prediction_holt_winters_auto import PredictionHoltWintersAutoAnalysis
-from analytics.evaluation.analysis_evaluation_brutlag import EvaluationBrutlagAnalysis
+from analytics.in_development.analysis_prediction_holt_winters_auto import PredictionHoltWintersAutoAnalysis
+from analytics._in_development.analysis_evaluation_brutlag import EvaluationBrutlagAnalysis
 import logging
 
 logger = logging.getLogger('insyte_analytics.analytics.__init__')

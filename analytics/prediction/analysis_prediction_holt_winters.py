@@ -57,6 +57,7 @@ class PredictionHoltWintersAnalysis(Analysis):
             self._check_beta()
             self._check_gamma()
             self._check_n_predictions()
+            self._check_scaling_factor()
         except Exception as err:
             self.logger.error("Impossible to parse parameter: " + str(err))
             raise Exception("Impossible to parse parameter: " + str(err))
@@ -133,6 +134,22 @@ class PredictionHoltWintersAnalysis(Analysis):
             raise Exception(
                 "Wrong parameter 'n_predictions': " + str(self.parameters['n_predictions'][0]) + " " + str(err))
 
+    def _check_scaling_factor(self):
+        """
+        Checks 'scaling_factor' parameter
+        """
+        try:
+            self.scaling_factor = float(self.parameters['scaling_factor'][0])
+            if self.scaling_factor < 0:
+                raise Exception('Must be grater than 0')
+
+            self.logger.debug("Parsed parameter 'scaling_factor': " + str(self.scaling_factor))
+        except Exception as err:
+            self.logger.debug(
+                "Wrong parameter 'scaling_factor': " + str(self.parameters['scaling_factor'][0]) + " " + str(err))
+            raise Exception(
+                "Wrong parameter 'scaling_factor': " + str(self.parameters['scaling_factor'][0]) + " " + str(err))
+
     def _initial_trend(self):
         sum = 0.0
         for i in range(self.slength):
@@ -145,7 +162,8 @@ class PredictionHoltWintersAnalysis(Analysis):
         n_seasons = int(len(self.series) / self.slength)
         # вычисляем сезонные средние
         for j in range(n_seasons):
-            season_averages.append(sum(self.series[self.slength * j:self.slength * j + self.slength]) / float(self.slength))
+            season_averages.append(
+                sum(self.series[self.slength * j:self.slength * j + self.slength]) / float(self.slength))
         # вычисляем начальные значения
         for i in range(self.slength):
             sum_of_vals_over_avg = 0.0
@@ -159,6 +177,9 @@ class PredictionHoltWintersAnalysis(Analysis):
         smooth = []
         season = []
         trend = []
+        pred_dev = []
+        upper_bond = []
+        lower_bond = []
 
         self.series = np.array(self.data[self.data.columns[0]])
 
@@ -175,10 +196,17 @@ class PredictionHoltWintersAnalysis(Analysis):
                 trend.append(tr)
                 season.append(seasonals[i % self.slength])
 
+                pred_dev.append(0)
+                upper_bond.append(result[0] + self.scaling_factor * pred_dev[0])
+                lower_bond.append(result[0] - self.scaling_factor * pred_dev[0])
+
                 continue
             if i >= len(self.series):  # прогнозируем
                 m = i - len(self.series) + 1
                 result.append((sm + m * tr) + seasonals[i % self.slength])
+
+                # во время прогноза с каждым шагом увеличиваем неопределенность
+                pred_dev.append(pred_dev[-1] * 1.01)
 
             else:
                 val = self.series[i]
@@ -188,11 +216,18 @@ class PredictionHoltWintersAnalysis(Analysis):
                 seasonals[i % self.slength] = self.gamma * (val - sm) + (1 - self.gamma) * seasonals[i % self.slength]
                 result.append(sm + tr + seasonals[i % self.slength])
 
+                # Отклонение рассчитывается в соответствии с алгоритмом Брутлага
+                pred_dev.append(self.gamma * np.abs(self.series[i] - result[i]) + (1 - self.gamma) * pred_dev[-1])
+
+            upper_bond.append(result[-1] + self.scaling_factor * pred_dev[-1])
+
+            lower_bond.append(result[-1] - self.scaling_factor * pred_dev[-1])
+
             smooth.append(sm)
             trend.append(tr)
             season.append(seasonals[i % self.slength])
 
-        return result
+        return result, lower_bond, upper_bond
 
     def _format_results(self, result):
         """
@@ -207,4 +242,9 @@ class PredictionHoltWintersAnalysis(Analysis):
 
         idx = dr1.append(dr2)
 
-        return pd.DataFrame(result, idx, ['pred'])
+        res = pd.DataFrame(result[0], idx, ['pred'])
+
+        res['low'] = result[1]
+        res['up'] = result[2]
+
+        return res
