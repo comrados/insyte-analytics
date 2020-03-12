@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="12f8726f-fb14-4ba6-9c8b-89c2ed12558e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/tests/ifluxdb.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/t.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/analytics_server.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/ifluxdb.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/t.py" beforeDir="false" />
     </list>
     <list id="8f3402cf-8e05-46bd-8019-c70b228793b0" name="Revert: demand-response" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -82,8 +83,8 @@
       <recent name="D:\insyte-analytics\analytics\peak-prediction" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.insyte_analytics autocorrelation">
-    <configuration name="ab" type="PythonConfigurationType" factoryName="Python">
+  <component name="RunManager" selected="Python.analytics_server">
+    <configuration name="ab" type="PythonConfigurationType" factoryName="Python" folderName="v0.1">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -104,7 +105,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="insyte-analytics demand-response-baseline" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="analytics_server" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="insyte-analytics" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/analytics_server.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="insyte-analytics demand-response-baseline" type="PythonConfigurationType" factoryName="Python" folderName="v0.1">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -125,7 +147,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="insyte-analytics demand-response-boolean" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="insyte-analytics demand-response-boolean" type="PythonConfigurationType" factoryName="Python" folderName="v0.1">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -146,7 +168,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="insyte-analytics demand-response-check" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="insyte-analytics demand-response-check" type="PythonConfigurationType" factoryName="Python" folderName="v0.1">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -167,7 +189,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="insyte-analytics demand-response-deviation" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="insyte-analytics demand-response-deviation" type="PythonConfigurationType" factoryName="Python" folderName="v0.1">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -188,7 +210,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="insyte-analytics demand-response-discharge" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="insyte-analytics demand-response-discharge" type="PythonConfigurationType" factoryName="Python" folderName="v0.1">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -209,7 +231,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="insyte-analytics demand-response-expected" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="insyte-analytics demand-response-expected" type="PythonConfigurationType" factoryName="Python" folderName="v0.1">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -230,7 +252,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="insyte-analytics demand-response-rrmse" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="insyte-analytics demand-response-rrmse" type="PythonConfigurationType" factoryName="Python" folderName="v0.1">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -251,16 +273,16 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="insyte_analytics --help" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="insyte_analytics --help" type="PythonConfigurationType" factoryName="Python" folderName="v0.1">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="C:\ProgramData\Anaconda3\python.exe" />
+      <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="false" />
+      <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
@@ -272,7 +294,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="insyte_analytics autocorrelation" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="insyte_analytics autocorrelation" type="PythonConfigurationType" factoryName="Python" folderName="v0.1">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -293,7 +315,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="insyte_analytics correlation" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="insyte_analytics correlation" type="PythonConfigurationType" factoryName="Python" folderName="v0.1">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -314,7 +336,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="insyte_analytics evaluation brutlag" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="insyte_analytics evaluation brutlag" type="PythonConfigurationType" factoryName="Python" folderName="v0.1">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -335,7 +357,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="insyte_analytics normalization" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="insyte_analytics normalization" type="PythonConfigurationType" factoryName="Python" folderName="v0.1">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -356,7 +378,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="insyte_analytics peak predict ml" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="insyte_analytics peak predict ml" type="PythonConfigurationType" factoryName="Python" folderName="v0.1">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -377,7 +399,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="insyte_analytics peak predict stat" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="insyte_analytics peak predict stat" type="PythonConfigurationType" factoryName="Python" folderName="v0.1">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -398,7 +420,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="insyte_analytics prediction holt winters auto" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="insyte_analytics prediction holt winters auto" type="PythonConfigurationType" factoryName="Python" folderName="v0.1">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -419,7 +441,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="insyte_analytics prediction holt winters" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="insyte_analytics prediction holt winters" type="PythonConfigurationType" factoryName="Python" folderName="v0.1">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -440,7 +462,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="insyte_analytics test" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="insyte_analytics test" type="PythonConfigurationType" factoryName="Python" folderName="v0.1">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -461,7 +483,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="t" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="t" type="PythonConfigurationType" factoryName="Python" folderName="v0.1" temporary="true">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -482,7 +504,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test_db_module" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+    <configuration name="test_db_module" type="PythonConfigurationType" factoryName="Python" folderName="v0.1" nameIsGenerated="true">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -503,7 +525,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test_delete" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="test_delete" type="PythonConfigurationType" factoryName="Python" folderName="v0.1" temporary="true">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -515,7 +537,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="D:\insyte\test_delete.py" />
+      <option name="SCRIPT_NAME" value="D:/insyte/test_delete.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -524,16 +546,16 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test_influx" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+    <configuration name="test_influx" type="PythonConfigurationType" factoryName="Python" folderName="v0.1" nameIsGenerated="true">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="C:\ProgramData\Anaconda3\python.exe" />
+      <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
-      <option name="IS_MODULE_SDK" value="false" />
+      <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tests/test_influx.py" />
@@ -545,7 +567,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test_insert" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="test_insert" type="PythonConfigurationType" factoryName="Python" folderName="v0.1" temporary="true">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -566,7 +588,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test_read" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+    <configuration name="test_read" type="PythonConfigurationType" factoryName="Python" folderName="v0.1" nameIsGenerated="true">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -612,14 +634,15 @@
       <item itemvalue="Python.t" />
       <item itemvalue="Python.test_delete" />
       <item itemvalue="Python.test_insert" />
+      <item itemvalue="Python.analytics_server" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.analytics_server" />
         <item itemvalue="Python.test_insert" />
         <item itemvalue="Python.test_delete" />
         <item itemvalue="Python.t" />
         <item itemvalue="Python.test_insert" />
-        <item itemvalue="Python.test_delete" />
       </list>
     </recent_temporary>
   </component>
@@ -978,10 +1001,11 @@
     <option name="LAST_COMMIT_MESSAGE" value="autocorellation" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1581874095770">
-      <screen x="67" y="27" width="1853" height="1053" />
+    <state x="451" y="231" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1584030247280">
+      <screen x="67" y="27" width="1853" height="1173" />
     </state>
     <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1581874095770" />
+    <state x="451" y="231" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1173@67.27.1853.1173" timestamp="1584030247280" />
     <state x="676" y="280" width="624" height="544" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1584016649868">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -994,54 +1018,63 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="751" y="205" key="#xdebugger.evaluate/67.27.1853.1053@67.27.1853.1053" timestamp="1581859115500" />
-    <state x="432" y="102" width="1146" height="810" key="CommitChangelistDialog2" timestamp="1584017040136">
+    <state x="432" y="102" width="1146" height="810" key="CommitChangelistDialog2" timestamp="1581874275314">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="432" y="102" width="1146" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1584017040136" />
-    <state x="167" y="125" width="1653" height="855" key="DiffContextDialog" timestamp="1581874619421">
+    <state x="432" y="102" width="1146" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1581874275314" />
+    <state x="167" y="125" width="1653" height="855" key="DiffContextDialog" timestamp="1584018309854">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="167" y="125" width="1653" height="855" key="DiffContextDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1581874619421" />
-    <state width="1830" height="236" key="GridCell.Tab.0.bottom" timestamp="1581874619340">
-      <screen x="67" y="27" width="1853" height="1053" />
+    <state x="167" y="125" width="1653" height="855" key="DiffContextDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1584018309854" />
+    <state width="1830" height="205" key="GridCell.Tab.0.bottom" timestamp="1584032186785">
+      <screen x="67" y="27" width="1853" height="1173" />
     </state>
     <state width="1830" height="236" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1581874619340" />
-    <state width="1830" height="236" key="GridCell.Tab.0.center" timestamp="1581874619339">
-      <screen x="67" y="27" width="1853" height="1053" />
+    <state width="1830" height="205" key="GridCell.Tab.0.bottom/67.27.1853.1173@67.27.1853.1173" timestamp="1584032186785" />
+    <state width="1830" height="205" key="GridCell.Tab.0.center" timestamp="1584032186785">
+      <screen x="67" y="27" width="1853" height="1173" />
     </state>
     <state width="1830" height="236" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1581874619339" />
-    <state width="1830" height="236" key="GridCell.Tab.0.left" timestamp="1581874619339">
-      <screen x="67" y="27" width="1853" height="1053" />
+    <state width="1830" height="205" key="GridCell.Tab.0.center/67.27.1853.1173@67.27.1853.1173" timestamp="1584032186785" />
+    <state width="1830" height="205" key="GridCell.Tab.0.left" timestamp="1584032186785">
+      <screen x="67" y="27" width="1853" height="1173" />
     </state>
     <state width="1830" height="236" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1581874619339" />
-    <state width="1830" height="236" key="GridCell.Tab.0.right" timestamp="1581874619340">
-      <screen x="67" y="27" width="1853" height="1053" />
+    <state width="1830" height="205" key="GridCell.Tab.0.left/67.27.1853.1173@67.27.1853.1173" timestamp="1584032186785" />
+    <state width="1830" height="205" key="GridCell.Tab.0.right" timestamp="1584032186785">
+      <screen x="67" y="27" width="1853" height="1173" />
     </state>
     <state width="1830" height="236" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1581874619340" />
-    <state width="1830" height="236" key="GridCell.Tab.1.bottom" timestamp="1581874619341">
-      <screen x="67" y="27" width="1853" height="1053" />
+    <state width="1830" height="205" key="GridCell.Tab.0.right/67.27.1853.1173@67.27.1853.1173" timestamp="1584032186785" />
+    <state width="1830" height="205" key="GridCell.Tab.1.bottom" timestamp="1584032187470">
+      <screen x="67" y="27" width="1853" height="1173" />
     </state>
     <state width="1830" height="236" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1581874619341" />
-    <state width="1830" height="236" key="GridCell.Tab.1.center" timestamp="1581874619340">
-      <screen x="67" y="27" width="1853" height="1053" />
+    <state width="1830" height="205" key="GridCell.Tab.1.bottom/67.27.1853.1173@67.27.1853.1173" timestamp="1584032187470" />
+    <state width="1830" height="205" key="GridCell.Tab.1.center" timestamp="1584032187470">
+      <screen x="67" y="27" width="1853" height="1173" />
     </state>
     <state width="1830" height="236" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1581874619340" />
-    <state width="1830" height="236" key="GridCell.Tab.1.left" timestamp="1581874619340">
-      <screen x="67" y="27" width="1853" height="1053" />
+    <state width="1830" height="205" key="GridCell.Tab.1.center/67.27.1853.1173@67.27.1853.1173" timestamp="1584032187470" />
+    <state width="1830" height="205" key="GridCell.Tab.1.left" timestamp="1584032187469">
+      <screen x="67" y="27" width="1853" height="1173" />
     </state>
     <state width="1830" height="236" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1581874619340" />
-    <state width="1830" height="236" key="GridCell.Tab.1.right" timestamp="1581874619340">
-      <screen x="67" y="27" width="1853" height="1053" />
+    <state width="1830" height="205" key="GridCell.Tab.1.left/67.27.1853.1173@67.27.1853.1173" timestamp="1584032187469" />
+    <state width="1830" height="205" key="GridCell.Tab.1.right" timestamp="1584032187470">
+      <screen x="67" y="27" width="1853" height="1173" />
     </state>
     <state width="1830" height="236" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1581874619340" />
+    <state width="1830" height="205" key="GridCell.Tab.1.right/67.27.1853.1173@67.27.1853.1173" timestamp="1584032187470" />
     <state x="629" y="228" key="SettingsEditor" timestamp="1581414971946">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="629" y="228" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1581414971946" />
-    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1584017046442">
-      <screen x="67" y="27" width="1853" height="1053" />
+    <state x="588" y="318" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1584026879403">
+      <screen x="67" y="27" width="1853" height="1173" />
     </state>
-    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1584017046442" />
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1581874278823" />
+    <state x="588" y="318" key="Vcs.Push.Dialog.v2/67.27.1853.1173@67.27.1853.1173" timestamp="1584026879403" />
     <state width="926" height="527" key="XDebugger.FullValuePopup" timestamp="1581872889315">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -1202,6 +1235,16 @@
           <url>file://$PROJECT_DIR$/analytics/_in_development/analysis_autocorrelation.py</url>
           <line>84</line>
           <option name="timeStamp" value="129" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/analytics/analysis_test.py</url>
+          <line>23</line>
+          <option name="timeStamp" value="130" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/analytics_server.py</url>
+          <line>48</line>
+          <option name="timeStamp" value="132" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
