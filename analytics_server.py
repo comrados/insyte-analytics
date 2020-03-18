@@ -62,7 +62,7 @@ def init_logger(log_file, log_level, log_gmt):
     :return: Logger object
     """
     configs = {'filemode': 'a', 'format': '%(asctime)s.%(msecs)d %(levelname)s %(module)s.%(funcName)s %(message)s',
-               'datefmt': '%Y-%m-%d %H:%M:%S', 'level': log_level, 'filename': os.path.join('logs', log_file + '.log')}
+               'datefmt': '%Y-%m-%d %H:%M:%S', 'level': log_level, 'filename': os.path.join('logs', log_file)}
     if not os.path.exists('logs'):
         os.makedirs('logs')
     logging.basicConfig(**configs)
