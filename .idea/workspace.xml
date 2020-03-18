@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="12f8726f-fb14-4ba6-9c8b-89c2ed12558e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/logs/analytics_server.log.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics_server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/_in_development/analysis_evaluation_brutlag.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/_in_development/analysis_evaluation_brutlag.py" afterDir="false" />
     </list>
     <list id="8f3402cf-8e05-46bd-8019-c70b228793b0" name="Revert: demand-response" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -86,7 +84,7 @@
       <recent name="D:\insyte-analytics\analytics\peak-prediction" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.analytics_server">
+  <component name="RunManager" selected="Python.insyte_analytics evaluation brutlag">
     <configuration name="ab" type="PythonConfigurationType" factoryName="Python" folderName="v0.1">
       <module name="insyte-analytics" />
       <option name="INTERPRETER_OPTIONS" value="" />
