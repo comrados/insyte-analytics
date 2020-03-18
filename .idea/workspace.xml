@@ -606,12 +606,12 @@
       <item itemvalue="Python.insyte_analytics prediction holt winters auto" />
       <item itemvalue="Python.insyte_analytics prediction holt winters" />
       <item itemvalue="Python.insyte_analytics test" />
-      <item itemvalue="Python.test_db_module" />
-      <item itemvalue="Python.test_influx" />
-      <item itemvalue="Python.test_read" />
       <item itemvalue="Python.t" />
+      <item itemvalue="Python.test_db_module" />
       <item itemvalue="Python.test_delete" />
+      <item itemvalue="Python.test_influx" />
       <item itemvalue="Python.test_insert" />
+      <item itemvalue="Python.test_read" />
     </list>
     <recent_temporary>
       <list>
@@ -994,10 +994,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="751" y="205" key="#xdebugger.evaluate/67.27.1853.1053@67.27.1853.1053" timestamp="1581859115500" />
-    <state x="432" y="102" width="1146" height="810" key="CommitChangelistDialog2" timestamp="1584017040136">
+    <state x="432" y="102" width="1146" height="810" key="CommitChangelistDialog2" timestamp="1584525501086">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="432" y="102" width="1146" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1584017040136" />
+    <state x="432" y="102" width="1146" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1584525501086" />
     <state x="167" y="125" width="1653" height="855" key="DiffContextDialog" timestamp="1581874619421">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>

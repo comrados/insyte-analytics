@@ -1,15 +1,12 @@
 import logging
 import pandas as pd
 from analytics.analysis import Analysis
-import datetime
-import calendar
 import numpy as np
 
 """
 Brutlag intervals evaluation.
 """
 
-import matplotlib.pyplot as plt
 
 class EvaluationBrutlagAnalysis(Analysis):
     logger = logging.getLogger('insyte_analytics.analytics.analysis_evaluation_brutlag')
@@ -163,7 +160,8 @@ class EvaluationBrutlagAnalysis(Analysis):
         n_seasons = int(len(self.series) / self.slength)
         # вычисляем сезонные средние
         for j in range(n_seasons):
-            season_averages.append(sum(self.series[self.slength * j:self.slength * j + self.slength]) / float(self.slength))
+            season_averages.append(
+                sum(self.series[self.slength * j:self.slength * j + self.slength]) / float(self.slength))
         # вычисляем начальные значения
         for i in range(self.slength):
             sum_of_vals_over_avg = 0.0
