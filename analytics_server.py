@@ -7,6 +7,8 @@ import threading
 import datetime
 import logging
 import time
+import json
+from db import InfluxServerIO
 
 import analytics.utils as u
 
@@ -104,6 +106,7 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
         self.s = server.s
         self.ctn = threading.current_thread()
         self.time = datetime.datetime.utcnow()
+        self.json = None
 
         super().__init__(request, client_address, server)
 
@@ -113,7 +116,22 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
         self.wfile.write(b"Service alive! Active threads: " + bytes(str(threading.active_count()), 'utf-8'))
 
     def do_POST(self):
-        pass
+        cl = int(self.headers['Content-Length'])
+        content = self.rfile.read(cl)
+        logger.info(u.log_msg(str(cl) + " bytes from " + self.client_address[0] + ':' + str(self.client_address[1])))
+
+        try:
+            self.json = json.loads(content)
+        except:
+            self.send_response(400)
+            s = 'Impossible to process sent data (not a JSON)'
+            print(s)
+            logger.error(s)
+
+        db = InfluxServerIO(self.s.db_host, self.s.db_name, self.s.db_port, self.s.db_user, self.s.db_password)
+
+        self.end_headers()
+        self.wfile.flush()
 
     def log_message(self, format, *args):
         pass
