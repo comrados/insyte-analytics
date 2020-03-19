@@ -63,8 +63,9 @@ def init_logger(log_file, log_level, log_gmt):
     :param log_gmt: set timezone to GMT
     :return: Logger object
     """
-    configs = {'filemode': 'a', 'format': '%(asctime)s.%(msecs)d %(levelname)s %(module)s.%(funcName)s %(message)s',
-               'datefmt': '%Y-%m-%d %H:%M:%S', 'level': log_level, 'filename': os.path.join('logs', log_file)}
+    f = '%(asctime)s.%(msecs)d %(levelname)s %(module)s.%(funcName)s %(threadName)s (%(thread)d) %(message)s'
+    configs = {'filemode': 'a', 'format': f, 'datefmt': '%Y-%m-%d %H:%M:%S', 'level': log_level,
+               'filename': os.path.join('logs', log_file)}
     if not os.path.exists('logs'):
         os.makedirs('logs')
     logging.basicConfig(**configs)
@@ -106,7 +107,8 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
         self.s = server.s
         self.ctn = threading.current_thread()
         self.time = datetime.datetime.utcnow()
-        self.json = None
+        self.json = None  # analysis request
+        self.influx = InfluxServerIO(self.s.db_host, self.s.db_name, self.s.db_port, self.s.db_user, self.s.db_password)
 
         super().__init__(request, client_address, server)
 
@@ -116,25 +118,67 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
         self.wfile.write(b"Service alive! Active threads: " + bytes(str(threading.active_count()), 'utf-8'))
 
     def do_POST(self):
-        cl = int(self.headers['Content-Length'])
-        content = self.rfile.read(cl)
-        logger.info(u.log_msg(str(cl) + " bytes from " + self.client_address[0] + ':' + str(self.client_address[1])))
-
         try:
-            self.json = json.loads(content)
-        except:
+            # read POST-request's content
+            cl = int(self.headers['Content-Length'])
+            content = self.rfile.read(cl)
+            logger.info(str(cl) + " bytes from " + self.client_address[0] + ':' + str(self.client_address[1]))
+
+            # analysis parameters
+            self._content_to_json(content)
+
+            # analyse
+            self._read_data()
+            self._call_analysis()
+            self._write_results()
+
+            # send response
+            self.send_response(200)
+            # self.end_headers()
+            # self.wfile.flush()
+        except Exception as err:
             self.send_response(400)
-            s = 'Impossible to process sent data (not a JSON)'
-            print(s)
-            logger.error(s)
-
-        db = InfluxServerIO(self.s.db_host, self.s.db_name, self.s.db_port, self.s.db_user, self.s.db_password)
-
-        self.end_headers()
-        self.wfile.flush()
+            self.influx.disconnect()
+            logger.error("Something went wrong: " + str(err))
 
     def log_message(self, format, *args):
         pass
+
+    def _content_to_json(self, content):
+        try:
+            self.json = json.loads(content)
+            logger.info("JSON content: " + str(self.json))
+        except Exception as err:
+            logger.error("Impossible to process sent data (not a JSON): " + str(content))
+            raise Exception(err)
+
+    def _read_data(self):
+        try:
+            # TODO check parameters
+            self.influx.connect()
+            # TODO read
+            self.influx.disconnect()
+        except Exception as err:
+            logger.error("Failed to read the data: " + str(err))
+            raise Exception(err)
+
+    def _call_analysis(self):
+        try:
+            # TODO call analysis
+            pass
+        except Exception as err:
+            logger.error("Failed to analyze the data: " + str(err))
+            raise Exception(err)
+
+    def _write_results(self):
+        try:
+            # TODO check parameters
+            self.influx.connect()
+            # TODO write
+            self.influx.disconnect()
+        except Exception as err:
+            logger.error("Failed to write the data: " + str(err))
+            raise Exception(err)
 
 
 if __name__ == "__main__":
@@ -143,7 +187,7 @@ if __name__ == "__main__":
 
     logger = init_logger(a.log_file, a.log_level, a.log_gmt)
 
-    logger.info(u.log_msg("Server started: " + str(vars(a))))
+    logger.info("Server started: " + str(vars(a)))
 
     srv = AnalyticsServerThreaded(AnalyticsRequestHandler, a)
     srv_thread = threading.Thread(target=srv.start, daemon=True)
@@ -152,7 +196,7 @@ if __name__ == "__main__":
         while True:
             continue
     except KeyboardInterrupt:
-        logger.info(u.log_msg("Server stopped by user\n\n"))
+        logger.info("Server stopped by user\n\n")
         print('Server stopped by user')
         try:
             logging.shutdown()
@@ -160,5 +204,5 @@ if __name__ == "__main__":
             srv.server_close()
             sys.exit(1)
         except Exception as err:
-            print("Interruption error: ", err)
+            logger.critical("Interruption error, program was closed with error: ", err)
             os._exit(1)

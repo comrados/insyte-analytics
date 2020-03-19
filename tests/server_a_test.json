@@ -25,13 +25,15 @@
       "2019-04-01_00:00:00+0000"
     ]
   },
-  "analysis": "test",
   "analysis_parameters": {
-    "operation": [
-      "add"
-    ],
-    "value": [
-      150.0
-    ]
+    "analysis": "test",
+    "analysis_arguments": {
+      "operation": [
+        "add"
+      ],
+      "value": [
+        150.0
+      ]
+    }
   }
 }
