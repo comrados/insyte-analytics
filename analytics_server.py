@@ -154,10 +154,13 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
 
     def _read_data(self):
         try:
-            # TODO check parameters
-            self.influx.connect()
-            # TODO read
-            self.influx.disconnect()
+            db_io = self.json["db_io_parameters"]
+            tu, di, dsi = self._check_reading_lengths(db_io['time_upload'], db_io['device_id'], db_io['data_source_id'])
+            if 'r' in db_io['mode']:
+                self.influx.connect()
+                self.input = self.influx.read_data(di, dsi, tu, db_io['limit'])
+                self.influx.disconnect()
+                logger.info("Data has been successfully read from DB: " + str(self.input.shape) + " (data shape)")
         except Exception as err:
             logger.error("Failed to read the data: " + str(err))
             raise Exception(err)
@@ -165,6 +168,7 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
     def _call_analysis(self):
         try:
             # TODO call analysis
+            self.output = self.input
             pass
         except Exception as err:
             logger.error("Failed to analyze the data: " + str(err))
@@ -172,13 +176,78 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
 
     def _write_results(self):
         try:
-            # TODO check parameters
-            self.influx.connect()
-            # TODO write
-            self.influx.disconnect()
+            db_io = self.json["db_io_parameters"]
+            self._check_write_parameters(db_io['result_id'], self.output)
+            if 'w' in db_io['mode']:
+                self.influx.connect()
+                output_results = self.influx.write_data(db_io['result_id'], self.output)
+                self.influx.disconnect()
+                logger.info("Data has been saved into DB: " + str(output_results))
         except Exception as err:
             logger.error("Failed to write the data: " + str(err))
             raise Exception(err)
+
+    def _check_reading_lengths(self, time_upload, device_id, data_source_id):
+        """
+        Checks if lengths of reading parameters equal
+
+        :param time_upload: list of tuples of datetimes [(d_min1 d_max1), (d_min2 d_max2), ..., (d_minN d_maxN)]
+        :param device_id: list of uuid objects [uuid1, uuid2, ..., uuidN]
+        :param data_source_id: list of integers [id1, id2, ..., idN]
+        """
+        time_upload = self._format_tu(time_upload)
+        lengths = [len(time_upload), len(device_id), len(data_source_id)]
+        logger.debug("Lengths of 'time_upload', 'device_id', 'data_source_id': " + str(lengths))
+        if len(device_id) != len(data_source_id) or len(device_id) != len(time_upload):
+            logger.error("'time_upload', 'device_id', 'data_source_id' have different lengths: " + str(lengths))
+            raise Exception("'time_upload', 'device_id', 'data_source_id' have different lengths: " + str(lengths))
+        else:
+            return time_upload, device_id, data_source_id
+
+    @staticmethod
+    def _format_tu(time_upload):
+        """
+        Checks and reformats time upload argument.
+
+        :param time_upload: list of upload times (strings) [d_min1, d_max1, d_min2, d_max2, ..., d_minN, d_maxN]
+        :return: list of tuples of upload times (datetimes) [(d_min1 d_max1), (d_min2 d_max2), ..., (d_minN d_maxN)]
+        """
+        output = []
+        logger.debug("Checking and reformatting 'time_upload': " + str(time_upload))
+        if time_upload is None:
+            raise Exception("No 'time_upload' provided for 'r' or 'rw' mode")
+        if len(time_upload) % 2 == 0:
+            try:
+                for i in range(0, len(time_upload), 2):
+                    d_min = u.string_to_datetime(time_upload[i])
+                    d_max = u.string_to_datetime(time_upload[i + 1])
+                    output.append((d_min, d_max))
+            except Exception as err:
+                raise Exception("Impossible to convert to datetime: " + str(err))
+        else:
+            raise Exception("length of 'time_upload' must be even, current length = " + str(len(time_upload)))
+        logger.debug("Modified 'time_upload': " + str(output))
+        return output
+
+    @staticmethod
+    def _check_write_parameters(result_id, output_data):
+        """
+        Check writing parameters
+        """
+        logger.debug("Checking writing parameters")
+        if result_id is None:
+            logger.warning("Writing parameter 'result_id' not set")
+            raise Exception("Writing parameter 'result_id' not set")
+
+        if output_data is None:
+            logger.warning("Writing parameter 'output_data' not set")
+            raise Exception("Writing parameter 'output_data' not set")
+
+        if output_data.empty:
+            logger.warning("'output_data' is empty")
+            raise Exception("'output_data' is empty")
+
+        logger.debug("Writing parameters successfully checked")
 
 
 if __name__ == "__main__":
