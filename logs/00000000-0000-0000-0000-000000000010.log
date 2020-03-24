@@ -1,0 +1,3 @@
+2020-03-24 12:04:51.462 INFO insyte_analytics.main Session started
+2020-03-24 12:04:51.471 INFO insyte_analytics.influx InfluxDB routine
+2020-03-24 12:04:51.472 ERROR insyte_influx_io.connect Connecting to DB

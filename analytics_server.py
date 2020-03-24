@@ -11,6 +11,7 @@ import json
 from db import InfluxServerIO
 
 import analytics.utils as u
+import analytics
 
 
 def parse_args(args):
@@ -167,9 +168,8 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
 
     def _call_analysis(self):
         try:
-            # TODO call analysis
-            self.output = self.input
-            pass
+            ap = self.json["analysis_parameters"]
+            self.output = analytics.analyze_influx(ap['analysis'], ap['analysis_arguments'], self.input)
         except Exception as err:
             logger.error("Failed to analyze the data: " + str(err))
             raise Exception(err)
