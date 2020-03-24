@@ -114,9 +114,21 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
         super().__init__(request, client_address, server)
 
     def do_GET(self):
-        self.send_response(200)
-        self.end_headers()
-        self.wfile.write(b"Service alive! Active threads: " + bytes(str(threading.active_count()), 'utf-8'))
+
+        try:
+            if self.path in ["/status/", "/status"]:
+                self.send_response(200)
+                self.send_header('Content-type', 'text/json')
+                self.end_headers()
+                self.wfile.write(bytes(self._get_status(), 'utf-8'))
+            elif self.path in ["/functions/", "/functions"]:
+                # TODO return list of analysis functions
+                pass
+            else:
+                self.send_error(404, 'Unknown resource: %s' % self.path)
+        except Exception as err:
+            self.send_response(400)
+            logger.error("Something went wrong: " + str(err))
 
     def do_POST(self):
         try:
@@ -248,6 +260,11 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
             raise Exception("'output_data' is empty")
 
         logger.debug("Writing parameters successfully checked")
+
+    @staticmethod
+    def _get_status():
+        status = {"active_threads": threading.active_count()}
+        return json.dumps(status)
 
 
 if __name__ == "__main__":
