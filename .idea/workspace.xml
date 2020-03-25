@@ -1,27 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="12f8726f-fb14-4ba6-9c8b-89c2ed12558e" name="Default Changelist" comment="server influx GET request">
+    <list default="true" id="12f8726f-fb14-4ba6-9c8b-89c2ed12558e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/_in_development/analysis_autocorrelation.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/correlation/analysis_autocorrelation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/_in_development/analysis_evaluation_brutlag.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/_in_development/analysis_evaluation_brutlag.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/_in_development/analysis_prediction_holt_winters_auto.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/_in_development/analysis_prediction_holt_winters_auto.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/analysis_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/analysis_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/correlation/analysis_correlation.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/correlation/analysis_correlation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_baseline.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_baseline.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_boolean.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_boolean.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_check.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_check.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_deviation.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_deviation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_discharge.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_discharge.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_expected.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_expected.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_rrmse.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_rrmse.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/peak_prediction/analysis_peak_prediction_ml.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/peak_prediction/analysis_peak_prediction_ml.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/peak_prediction/analysis_peak_prediction_statistical.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/peak_prediction/analysis_peak_prediction_statistical.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/prediction/analysis_prediction_holt_winters.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/prediction/analysis_prediction_holt_winters.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/statistics/analysis_statistics_normalization.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/statistics/analysis_statistics_normalization.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/analytics_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics_server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/analytics_server.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/analytics_server.log" afterDir="false" />
     </list>
     <list id="8f3402cf-8e05-46bd-8019-c70b228793b0" name="Revert: demand-response" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -1010,7 +992,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585056638469</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="server influx GET request">
+      <created>1585143368408</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1585143368408</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -1087,34 +1076,34 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="751" y="205" key="#xdebugger.evaluate/67.27.1853.1053@67.27.1853.1053" timestamp="1581859115500" />
-    <state x="432" y="102" width="1146" height="810" key="CommitChangelistDialog2" timestamp="1585143334183">
+    <state x="432" y="102" width="1146" height="810" key="CommitChangelistDialog2" timestamp="1585143605882">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="432" y="102" width="1146" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1585143334183" />
+    <state x="432" y="102" width="1146" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1585143605882" />
     <state x="432" y="111" key="CommitChangelistDialog2/67.27.1853.1173@67.27.1853.1173" timestamp="1584032375344" />
     <state x="167" y="125" width="1653" height="855" key="DiffContextDialog" timestamp="1584018309854">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="167" y="125" width="1653" height="855" key="DiffContextDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1584018309854" />
-    <state width="1830" height="106" key="GridCell.Tab.0.bottom" timestamp="1585143269547">
+    <state width="1830" height="106" key="GridCell.Tab.0.bottom" timestamp="1585143549837">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="106" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1585143269547" />
+    <state width="1830" height="106" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1585143549837" />
     <state width="1830" height="134" key="GridCell.Tab.0.bottom/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579755" />
-    <state width="1830" height="106" key="GridCell.Tab.0.center" timestamp="1585143269546">
+    <state width="1830" height="106" key="GridCell.Tab.0.center" timestamp="1585143549837">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="106" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1585143269546" />
+    <state width="1830" height="106" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1585143549837" />
     <state width="1830" height="134" key="GridCell.Tab.0.center/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579754" />
-    <state width="1830" height="106" key="GridCell.Tab.0.left" timestamp="1585143269546">
+    <state width="1830" height="106" key="GridCell.Tab.0.left" timestamp="1585143549836">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="106" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1585143269546" />
+    <state width="1830" height="106" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1585143549836" />
     <state width="1830" height="134" key="GridCell.Tab.0.left/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579754" />
-    <state width="1830" height="106" key="GridCell.Tab.0.right" timestamp="1585143269547">
+    <state width="1830" height="106" key="GridCell.Tab.0.right" timestamp="1585143549837">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="106" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1585143269547" />
+    <state width="1830" height="106" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1585143549837" />
     <state width="1830" height="134" key="GridCell.Tab.0.right/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579755" />
     <state width="1830" height="233" key="GridCell.Tab.1.bottom" timestamp="1585143057686">
       <screen x="67" y="27" width="1853" height="1053" />
@@ -1140,10 +1129,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="629" y="228" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1581414971946" />
-    <state x="588" y="288" width="800" height="551" key="Vcs.Push.Dialog.v2" timestamp="1585056644479">
+    <state x="588" y="288" width="800" height="551" key="Vcs.Push.Dialog.v2" timestamp="1585143372906">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1585056644479" />
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1585143372906" />
     <state x="588" y="318" width="800" height="551" key="Vcs.Push.Dialog.v2/67.27.1853.1173@67.27.1853.1173" timestamp="1584032377142" />
     <state width="926" height="527" key="XDebugger.FullValuePopup" timestamp="1581872889315">
       <screen x="67" y="27" width="1853" height="1053" />

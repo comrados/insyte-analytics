@@ -116,13 +116,13 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
 
         try:
-            if self.path in ["/status/", "/status"]:
+            if self.path in ["/status/", "/status", "/status.json"]:
                 logger.info("GET-request: status")
                 self.send_response(200)
                 self.send_header('Content-type', 'text/json')
                 self.end_headers()
-                self.wfile.write(bytes(self._get_status(), 'utf-8'))
-            elif self.path in ["/functions/", "/functions"]:
+                self.wfile.write(bytes(json.dumps(self._get_status(), indent=4), 'utf-8'))
+            elif self.path in ["/functions/", "/functions", "/functions.json"]:
                 logger.info("GET-request: functions")
                 self.send_response(200)
                 self.send_header('Content-type', 'text/json')
@@ -267,8 +267,7 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
 
     @staticmethod
     def _get_status():
-        status = {"active_threads": threading.active_count()}
-        return json.dumps(status, indent=4)
+        return {"active_threads": threading.active_count()}
 
 
 if __name__ == "__main__":
