@@ -11,6 +11,19 @@ Time series prediction. Holt-Winters method (triple exponential smoothing)
 
 
 class PredictionHoltWintersAnalysis(Analysis):
+    A_ARGS = {"analysis_code": "PREDICTION-HOLT-WINTERS",
+              "analysis_name": "prediction-holt-winters",
+              "input": "1 time series",
+              "action": "Predicts future values and builds confidence interval",
+              "output": "3 time series with predictions and 2 confidence intervals (lower and upper bonds)",
+              "parameters": [
+                  {"name": "alpha", "count": 1, "type": "FLOAT", "info": "smoothing hyperparameter"},
+                  {"name": "beta", "count": 1, "type": "FLOAT", "info": "trend hyperparameter"},
+                  {"name": "gamma", "count": 1, "type": "FLOAT", "info": "seasonality hyperparameter"},
+                  {"name": "season_length", "count": 1, "type": "INTEGER", "info": "season length"},
+                  {"name": "n_predictions", "count": 1, "type": "INTEGER", "info": "number of predictions"}
+              ]}
+
     logger = logging.getLogger('insyte_analytics.analytics.analysis_prediction_holt_winters')
 
     def __init__(self, parameters, data):

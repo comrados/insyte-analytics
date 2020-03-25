@@ -1,19 +1,19 @@
-from .analysis_test import TestAnalysis
-from .demand_response.anylysis_demand_response_baseline import DemandResponseAnalysisBaseline
-from .demand_response.anylysis_demand_response_discharge import DemandResponseAnalysisDischarge
-from .demand_response.anylysis_demand_response_rrmse import DemandResponseAnalysisRRMSE
-from .demand_response.anylysis_demand_response_deviation import DemandResponseAnalysisDeviation
-from .demand_response.anylysis_demand_response_boolean import DemandResponseAnalysisBoolean
-from .demand_response.anylysis_demand_response_check import DemandResponseAnalysisCheck
-from .demand_response.anylysis_demand_response_expected import DemandResponseAnalysisExpected
-from .peak_prediction.analysis_peak_prediction_statistical import PeakPredictionStatisticalAnalysis
-from .peak_prediction.analysis_peak_prediction_ml import PeakPredictionMLAnalysis
-from .statistics.analysis_statistics_normalization import SatisticsNormalizationAnalysis
-from .correlation.analysis_correlation import CorrelationAnalysis
-from .prediction.analysis_prediction_holt_winters import PredictionHoltWintersAnalysis
+from analytics.analysis_test import TestAnalysis
+from analytics.demand_response.anylysis_demand_response_baseline import DemandResponseAnalysisBaseline
+from analytics.demand_response.anylysis_demand_response_discharge import DemandResponseAnalysisDischarge
+from analytics.demand_response.anylysis_demand_response_rrmse import DemandResponseAnalysisRRMSE
+from analytics.demand_response.anylysis_demand_response_deviation import DemandResponseAnalysisDeviation
+from analytics.demand_response.anylysis_demand_response_boolean import DemandResponseAnalysisBoolean
+from analytics.demand_response.anylysis_demand_response_check import DemandResponseAnalysisCheck
+from analytics.demand_response.anylysis_demand_response_expected import DemandResponseAnalysisExpected
+from analytics.peak_prediction.analysis_peak_prediction_statistical import PeakPredictionStatisticalAnalysis
+from analytics.peak_prediction.analysis_peak_prediction_ml import PeakPredictionMLAnalysis
+from analytics.statistics.analysis_statistics_normalization import SatisticsNormalizationAnalysis
+from analytics.correlation.analysis_correlation import CorrelationAnalysis
+from analytics.prediction.analysis_prediction_holt_winters import PredictionHoltWintersAnalysis
+from analytics.correlation.analysis_autocorrelation import AutocorrelationAnalysis
 from analytics._in_development.analysis_prediction_holt_winters_auto import PredictionHoltWintersAutoAnalysis
 from analytics._in_development.analysis_evaluation_brutlag import EvaluationBrutlagAnalysis
-from analytics._in_development.analysis_autocorrelation import AutocorrelationAnalysis
 import logging
 
 logger = logging.getLogger('insyte_analytics.analytics.__init__')
@@ -32,8 +32,8 @@ ANALYSIS = {
     'correlation': CorrelationAnalysis,
     'normalization': SatisticsNormalizationAnalysis,
     'prediction-holt-winters': PredictionHoltWintersAnalysis,
-    # in development
     'autocorrelation': AutocorrelationAnalysis,
+    # in development
     'prediction-holt-winters-auto': PredictionHoltWintersAutoAnalysis,
     'evaluation-brutlag': EvaluationBrutlagAnalysis
 }
@@ -119,3 +119,7 @@ def _analysis_caller(analysis_name, analysis_arguments, loaded_data):
         raise Exception("Analysis function doesn't exist: " + analysis_name)
 
     return result
+
+
+def get_analysis_arguments_list():
+    return {"available_functions": [a.A_ARGS for a in ANALYSIS.values()]}

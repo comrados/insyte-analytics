@@ -5,13 +5,22 @@ import datetime
 import calendar
 import numpy as np
 
-
 """
 Peak prediction. Statistical method
 """
 
 
 class PeakPredictionStatisticalAnalysis(Analysis):
+    A_ARGS = {"analysis_code": "PEAK_PREDICTION_STATISTICAL",
+              "analysis_name": "peak-prediction-statistical",
+              "input": "None",
+              "action": "Returns the probability of peak consumption hour for each given day (statistics based)",
+              "output": "1 time series with predictions for given month",
+              "parameters": [
+                  {"name": "month", "count": 1, "type": "INTEGER", "info": "prediction month"},
+                  {"name": "year", "count": 1, "type": "INTEGER", "info": "prediction year"}
+              ]}
+
     logger = logging.getLogger('insyte_analytics.analytics.analysis_peak_prediction')
 
     def __init__(self, parameters, data):

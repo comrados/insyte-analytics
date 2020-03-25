@@ -117,13 +117,17 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
 
         try:
             if self.path in ["/status/", "/status"]:
+                logger.info("GET-request: status")
                 self.send_response(200)
                 self.send_header('Content-type', 'text/json')
                 self.end_headers()
                 self.wfile.write(bytes(self._get_status(), 'utf-8'))
             elif self.path in ["/functions/", "/functions"]:
-                # TODO return list of analysis functions
-                pass
+                logger.info("GET-request: functions")
+                self.send_response(200)
+                self.send_header('Content-type', 'text/json')
+                self.end_headers()
+                self.wfile.write(bytes(json.dumps(analytics.get_analysis_arguments_list(), indent=4), 'utf-8'))
             else:
                 self.send_error(404, 'Unknown resource: %s' % self.path)
         except Exception as err:
@@ -264,7 +268,7 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
     @staticmethod
     def _get_status():
         status = {"active_threads": threading.active_count()}
-        return json.dumps(status)
+        return json.dumps(status, indent=4)
 
 
 if __name__ == "__main__":

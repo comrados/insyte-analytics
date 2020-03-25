@@ -1,13 +1,23 @@
 import logging
 from .analysis import Analysis
 
-
 """
 Test analysis function.
 """
 
 
 class TestAnalysis(Analysis):
+    A_ARGS = {"analysis_code": "TEST",
+              "analysis_name": "test",
+              "input": "Data of arbitrary dimensionality (N time series)",
+              "action": "Increases/decreases/multiplies/divides all input data by specified 'value'",
+              "output": "Data of the dimensionality similar to the input one (N modified time series)",
+              "parameters": [
+                  {"name": "operation", "count": 1, "type": "SELECT", "options": ["add", "sub", "mul", "div"],
+                   "info": "operation to execute: add, subtract, multiply or divide"},
+                  {"name": "value", "count": 1, "type": "FLOAT", "info": "value of alteration"}
+              ]}
+
     logger = logging.getLogger('insyte_analytics.analytics.analysis_test')
 
     # Input variables

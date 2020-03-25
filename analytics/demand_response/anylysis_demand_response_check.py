@@ -5,13 +5,28 @@ import datetime
 from analytics import utils
 import numpy as np
 
-
 """
 Demand-response. Checks the discharge possiblity (RRMSE must be < 0.25, all booleans must be True).
 """
 
 
 class DemandResponseAnalysisCheck(Analysis):
+    A_ARGS = {"analysis_code": "DEMAND_RESPONSE_CHECK",
+              "analysis_name": "demand-response-check",
+              "input": "1 time series",
+              "action": "Calculates the possibility of discharge of demand-response",
+              "output": "1 time series (only 1 boolean value)",
+              "parameters": [
+                  {"name": "target_day", "count": 1, "type": "DATE", "info": "target day for analysis"},
+                  {"name": "exception_days", "count": -1, "type": "DATE", "info": "days to exclude from analysis"},
+                  {"name": "except_weekends", "count": 1, "type": "BOOLEAN", "info": "except weekends from analysis"},
+                  {"name": "discharge_start_hour", "count": 1, "type": "INTEGER", "info": "discharge start hour"},
+                  {"name": "discharge_duration", "count": 1, "type": "INTEGER", "info": "discharge duration (hours)"},
+                  {"name": "discharge_value", "count": 1, "type": "FLOAT", "info": "discharge value"},
+                  {"name": "mode", "count": 1, "type": "SELECT", "options": ["fact", "expected"],
+                   "info": "comparison mode: fact - with real data, expected - with previous day"}
+              ]}
+
     logger = logging.getLogger('insyte_analytics.analytics.analysis_demand_response_check')
 
     def __init__(self, parameters, data):
@@ -455,7 +470,7 @@ class DemandResponseAnalysisCheck(Analysis):
             df = pd.DataFrame()
             df['d'] = b_d[b_d.columns[0]]
             df['c'] = b_c[b_c.columns[0]]
-            df = df[self.discharge_start_hour:self.discharge_start_hour+self.discharge_duration]
+            df = df[self.discharge_start_hour:self.discharge_start_hour + self.discharge_duration]
             df['bool'] = df['d'] >= df['c']
 
             time_start = datetime.datetime.combine(c_date, df.index[0])

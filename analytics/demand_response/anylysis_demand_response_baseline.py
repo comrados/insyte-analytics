@@ -4,13 +4,23 @@ from analytics.analysis import Analysis
 import datetime
 from analytics import utils
 
-
 """
 Demand-response. Baseline calculation.
 """
 
 
 class DemandResponseAnalysisBaseline(Analysis):
+    A_ARGS = {"analysis_code": "DEMAND_RESPONSE_BASELINE",
+              "analysis_name": "demand-response-baseline",
+              "input": "1 time series",
+              "action": "Calculates the baseline of demand-response",
+              "output": "1 time series",
+              "parameters": [
+                  {"name": "target_day", "count": 1, "type": "DATE", "info": "target day for analysis"},
+                  {"name": "exception_days", "count": -1, "type": "DATE", "info": "days to exclude from analysis"},
+                  {"name": "except_weekends", "count": 1, "type": "BOOLEAN", "info": "except weekends from analysis"}
+              ]}
+
     logger = logging.getLogger('insyte_analytics.analytics.analysis_demand_response_baseline')
 
     def __init__(self, parameters, data):
@@ -131,7 +141,7 @@ class DemandResponseAnalysisBaseline(Analysis):
         Checks 'except_weekends' parameter
         """
         try:
-            self.except_weekends = self.parameters['except_weekends'][0] in ['True', 'true']
+            self.except_weekends = self.parameters['except_weekends'][0] in ['True', 'true', True]
             self.logger.debug("Parsed parameter 'except_weekends': " + str(self.except_weekends))
         except Exception as err:
             self.logger.debug("Wrong parameter 'except_weekends': " + str(self.except_weekends) + " " + str(err))

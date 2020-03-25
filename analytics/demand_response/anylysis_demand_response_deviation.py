@@ -5,13 +5,28 @@ import datetime
 from analytics import utils
 import numpy as np
 
-
 """
 Demand-response. Deviation between baseline and prediction/fact
 """
 
 
 class DemandResponseAnalysisDeviation(Analysis):
+    A_ARGS = {"analysis_code": "DEMAND_RESPONSE_DEVIATION",
+              "analysis_name": "demand-response-deviation",
+              "input": "1 time series",
+              "action": "Calculates the deviation of demand-response",
+              "output": "1 time series",
+              "parameters": [
+                  {"name": "target_day", "count": 1, "type": "DATE", "info": "target day for analysis"},
+                  {"name": "exception_days", "count": -1, "type": "DATE", "info": "days to exclude from analysis"},
+                  {"name": "except_weekends", "count": 1, "type": "BOOLEAN", "info": "except weekends from analysis"},
+                  {"name": "discharge_start_hour", "count": 1, "type": "INTEGER", "info": "discharge start hour"},
+                  {"name": "discharge_duration", "count": 1, "type": "INTEGER", "info": "discharge duration (hours)"},
+                  {"name": "discharge_value", "count": 1, "type": "FLOAT", "info": "discharge value"},
+                  {"name": "mode", "count": 1, "type": "SELECT", "options": ["fact", "expected"],
+                   "info": "comparison mode: fact - with real data, expected - with previous day"}
+              ]}
+
     logger = logging.getLogger('insyte_analytics.analytics.analysis_demand_response_deviation')
 
     def __init__(self, parameters, data):

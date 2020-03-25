@@ -14,6 +14,8 @@ Time series prediction. Holt-Winters method (triple exponential smoothing)
 
 
 class PredictionHoltWintersAutoAnalysis(Analysis):
+    A_ARGS = {"placeholder": None}
+
     logger = logging.getLogger('insyte_analytics.analytics.analysis_prediction_holt_winters_auto')
 
     def __init__(self, parameters, data):

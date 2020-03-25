@@ -4,13 +4,26 @@ from analytics.analysis import Analysis
 import datetime
 from analytics import utils
 
-
 """
 Demand-response. Calculation of discharged baseline.
 """
 
 
 class DemandResponseAnalysisDischarge(Analysis):
+    A_ARGS = {"analysis_code": "DEMAND_RESPONSE_DISCHARGE",
+              "analysis_name": "demand-response-discharge",
+              "input": "1 time series",
+              "action": "Calculates the discharge of demand-response",
+              "output": "1 time series",
+              "parameters": [
+                  {"name": "target_day", "count": 1, "type": "DATE", "info": "target day for analysis"},
+                  {"name": "exception_days", "count": -1, "type": "DATE", "info": "days to exclude from analysis"},
+                  {"name": "except_weekends", "count": 1, "type": "BOOLEAN", "info": "except weekends from analysis"},
+                  {"name": "discharge_start_hour", "count": 1, "type": "INTEGER", "info": "discharge start hour"},
+                  {"name": "discharge_duration", "count": 1, "type": "INTEGER", "info": "discharge duration (hours)"},
+                  {"name": "discharge_value", "count": 1, "type": "FLOAT", "info": "discharge value"}
+              ]}
+
     logger = logging.getLogger('insyte_analytics.analytics.analysis_demand_response_discharge')
 
     def __init__(self, parameters, data):

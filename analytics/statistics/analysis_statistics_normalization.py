@@ -2,13 +2,22 @@ import logging
 import pandas as pd
 from analytics.analysis import Analysis
 
-
 """
 Normalization
 """
 
 
 class SatisticsNormalizationAnalysis(Analysis):
+    A_ARGS = {"analysis_code": "NORMALIZATION",
+              "analysis_name": "normalization",
+              "input": "N time series",
+              "action": "Normalizes the data (linear normalization)",
+              "output": "N normalized time series",
+              "parameters": [
+                  {"name": "min_value", "count": 1, "type": "FLOAT", "info": "lower bond"},
+                  {"max_value": "beta", "count": 1, "type": "FLOAT", "info": "upper bond"}
+              ]}
+
     logger = logging.getLogger('insyte_analytics.analytics.analysis_normalization')
 
     def __init__(self, parameters, data):
@@ -91,7 +100,7 @@ class SatisticsNormalizationAnalysis(Analysis):
 
         for col in self.data.columns:
             normalized[col] = self._norm_range(self.data[col], self.data[col].min(), self.data[col].max())
-            normalized[col] = normalized[col] * (self.max_value-self.min_value) + self.min_value
+            normalized[col] = normalized[col] * (self.max_value - self.min_value) + self.min_value
 
         return normalized
 
