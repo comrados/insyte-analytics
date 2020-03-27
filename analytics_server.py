@@ -86,6 +86,9 @@ class AnalyticsServer(HTTPServer):
         super().__init__((self.s.srv_host, self.s.srv_port), request_handler_class)
 
     def start(self):
+        """
+        Start server.
+        """
         s = "Analytics Server's address: " + 'http://' + self.s.srv_host + ':' + str(self.s.srv_port)
         print(s)
         logger.info(s)
@@ -104,6 +107,8 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
     Request handler.
     """
 
+    server_version = "InsyteAnalyticsServer(" + BaseHTTPRequestHandler.server_version + ")"
+
     def __init__(self, request, client_address, server):
         self.s = server.s
         self.ctn = threading.current_thread()
@@ -116,16 +121,19 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
         super().__init__(request, client_address, server)
 
     def do_GET(self):
-
+        """
+        GET-request processor
+        """
         try:
+            client = self.client_address[0] + ':' + str(self.client_address[1])
             if self.path in ["/status/", "/status", "/status.json"]:
-                logger.info("GET-request: status")
+                logger.info("GET 'status' request from " + client)
                 self.send_response(200)
                 self.send_header('Content-type', 'text/json')
                 self.end_headers()
                 self.wfile.write(bytes(json.dumps(self._get_status(), indent=4), 'utf-8'))
             elif self.path in ["/functions/", "/functions", "/functions.json"]:
-                logger.info("GET-request: functions")
+                logger.info("GET 'functions' request from " + client)
                 self.send_response(200)
                 self.send_header('Content-type', 'text/json')
                 self.end_headers()
@@ -137,6 +145,9 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
             logger.error("Something went wrong: " + str(err))
 
     def do_POST(self):
+        """
+        POST-request processor
+        """
         try:
             # read POST-request's content
             cl = int(self.headers['Content-Length'])
@@ -153,17 +164,27 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
 
             # send response
             self.send_response(200)
-            # self.end_headers()
-            # self.wfile.flush()
+            self.send_header('Content-type', 'text/plain')
+            self.end_headers()
+            self.wfile.write(bytes('DONE\n', 'utf-8'))
         except Exception as err:
             self.send_response(400)
             self.influx.disconnect()
             logger.error("Something went wrong: " + str(err))
+            self.send_header('Content-type', 'text/plain')
+            self.end_headers()
+            self.wfile.write(bytes('ERROR\n', 'utf-8'))
 
     def log_message(self, format, *args):
+        """
+        Disables default logging
+        """
         pass
 
     def _content_to_json(self, content):
+        """
+        Converts POST-request's content into proper json
+        """
         try:
             self.json = json.loads(content)
             logger.info("JSON content: " + str(self.json))
@@ -172,10 +193,14 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
             raise Exception(err)
 
     def _read_data(self):
+        """
+        Read data for processing
+        """
         try:
             db_io = self.json["db_io_parameters"]
             if 'r' in db_io['mode']:
-                tu, di, dsi = self._check_reading_lengths(db_io['time_upload'], db_io['device_id'], db_io['data_source_id'])
+                tu, di, dsi = self._check_reading_lengths(db_io['time_upload'], db_io['device_id'],
+                                                          db_io['data_source_id'])
                 self.influx.connect()
                 self.input = self.influx.read_data(di, dsi, tu, db_io['limit'])
                 self.influx.disconnect()
@@ -185,6 +210,9 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
             raise Exception(err)
 
     def _call_analysis(self):
+        """
+        Analysis caller
+        """
         try:
             ap = self.json["analysis_parameters"]
             self.output = analytics.analyze_influx(ap['analysis'], ap['analysis_arguments'], self.input)
@@ -193,6 +221,9 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
             raise Exception(err)
 
     def _write_results(self):
+        """
+        Write analysis results to DB
+        """
         try:
             db_io = self.json["db_io_parameters"]
             if 'w' in db_io['mode']:
@@ -251,6 +282,10 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
     def _check_write_parameters(result_id, output_data):
         """
         Check writing parameters
+
+        :param result_id:
+        :param output_data:
+        :return:
         """
         logger.debug("Checking writing parameters")
         if result_id is None:
@@ -269,6 +304,11 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
 
     @staticmethod
     def _get_status():
+        """
+        Server's status wrapper
+
+        :return: dictionary with status variables
+        """
         return {"active_threads": threading.active_count()}
 
 
@@ -294,6 +334,6 @@ if __name__ == "__main__":
             srv.shutdown()
             srv.server_close()
             sys.exit(1)
-        except Exception as err:
-            logger.critical("Interruption error, program was closed with error: ", err)
+        except Exception as e:
+            logger.critical("Interruption error, program was closed with error: ", e)
             os._exit(1)

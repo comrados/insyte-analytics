@@ -104,7 +104,7 @@ class InfluxServerIO:
 
     def write_data(self, result_id=None, output_data=None):
         """
-        Depricated. Write data from this object to db.
+        Write data from this object to db.
 
         :param result_id: list of ids [uuid1, uuid2, ..., uuidK]
         :param output_data: DataFrame
