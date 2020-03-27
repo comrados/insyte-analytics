@@ -1,0 +1,46 @@
+{
+  "db_io_parameters": {
+    "mode": "rw",
+    "result_id": [
+      "00000000-0000-0000-0000-000000000012"
+    ],
+    "device_id": [
+      "c98fda23-9298-4521-af43-64eb46faf13b"
+    ],
+    "data_source_id": [
+      160
+    ],
+    "time_upload": [
+      "2018-11-01_00:00:00+0000",
+      "2019-02-01_00:00:00+0000"
+    ],
+    "limit": null
+  },
+  "analysis_parameters": {
+    "analysis": "demand-response-boolean",
+    "analysis_arguments": {
+      "target_day": [
+        "2018-12-01"
+      ],
+      "exception_days": [
+        "2018-11-05",
+        "2018-11-06"
+      ],
+      "except_weekends": [
+        true
+      ],
+      "discharge_start_hour": [
+        12
+      ],
+      "discharge_value": [
+        1.0
+      ],
+      "discharge_duration": [
+        4
+      ],
+      "mode": [
+        "expected"
+      ]
+    }
+  }
+}

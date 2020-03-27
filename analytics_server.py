@@ -110,6 +110,8 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
         self.time = datetime.datetime.utcnow()
         self.json = None  # analysis request
         self.influx = InfluxServerIO(self.s.db_host, self.s.db_name, self.s.db_port, self.s.db_user, self.s.db_password)
+        self.input = None
+        self.output = None
 
         super().__init__(request, client_address, server)
 
@@ -172,8 +174,8 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
     def _read_data(self):
         try:
             db_io = self.json["db_io_parameters"]
-            tu, di, dsi = self._check_reading_lengths(db_io['time_upload'], db_io['device_id'], db_io['data_source_id'])
             if 'r' in db_io['mode']:
+                tu, di, dsi = self._check_reading_lengths(db_io['time_upload'], db_io['device_id'], db_io['data_source_id'])
                 self.influx.connect()
                 self.input = self.influx.read_data(di, dsi, tu, db_io['limit'])
                 self.influx.disconnect()
@@ -193,8 +195,8 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
     def _write_results(self):
         try:
             db_io = self.json["db_io_parameters"]
-            self._check_write_parameters(db_io['result_id'], self.output)
             if 'w' in db_io['mode']:
+                self._check_write_parameters(db_io['result_id'], self.output)
                 self.influx.connect()
                 output_results = self.influx.write_data(db_io['result_id'], self.output)
                 self.influx.disconnect()

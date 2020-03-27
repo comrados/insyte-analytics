@@ -1,0 +1,23 @@
+{
+  "db_io_parameters": {
+    "mode": "w",
+    "result_id": [
+      "00000000-0000-0000-0000-000000000013"
+    ],
+    "device_id": null,
+    "data_source_id": null,
+    "time_upload": null,
+    "limit": null
+  },
+  "analysis_parameters": {
+    "analysis": "peak-prediction-statistical",
+    "analysis_arguments": {
+      "month": [
+        2
+      ],
+      "year": [
+        2019
+      ]
+    }
+  }
+}

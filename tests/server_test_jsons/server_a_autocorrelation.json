@@ -1,0 +1,27 @@
+{
+  "db_io_parameters": {
+    "mode": "rw",
+    "result_id": [
+      "00000000-0000-0000-0000-000000000055"
+    ],
+    "device_id": [
+      "c98fda23-9298-4521-af43-64eb46faf13b"
+    ],
+    "data_source_id": [
+      161
+    ],
+    "time_upload": [
+      "2018-10-01_00:00:00+0000",
+      "2019-11-01_00:00:00+0000"
+    ],
+    "limit": null
+  },
+  "analysis_parameters": {
+    "analysis": "autocorrelation",
+    "analysis_arguments": {
+      "step": [
+        2
+      ]
+    }
+  }
+}
