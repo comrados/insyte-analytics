@@ -43,7 +43,7 @@ def parse_args(args):
 
     log_group.add_argument('-lf', '--log-file', dest='log_file', default="analytics_server.log", help='Log file')
     log_group.add_argument('-ll', '--log-level', dest='log_level', default=20, type=int, help='Logging level')
-    log_group.add_argument('-lgmt', '--log-gmt', dest='log_gmt', default=True, action='store_true',
+    log_group.add_argument('-lgmt', '--log-gmt', dest='log_gmt', default=False, action='store_true',
                            help='Toggle GMT logging time')
 
     try:
