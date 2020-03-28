@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="12f8726f-fb14-4ba6-9c8b-89c2ed12558e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics_server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/analytics_server.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/analytics_server.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/server_test_jsons/server_a_test.json" beforeDir="false" afterPath="$PROJECT_DIR$/tests/server_test_jsons/server_a_test.json" afterDir="false" />
     </list>
     <list id="8f3402cf-8e05-46bd-8019-c70b228793b0" name="Revert: demand-response" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -100,7 +97,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/analytics_server.py" />
-      <option name="PARAMETERS" value="-lgmt" />
+      <option name="PARAMETERS" value="-sh localhost -sp 65000 -lf analytics_server.log -ll 20 -lgmt -dbh ems.insyte.ru -dbn ems -dbp 8086 -dbu ems_user -dbpw 4rERYTPhfTtvU!99" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -672,13 +669,6 @@
       <option name="presentableId" value="Default" />
       <updated>1555416435785</updated>
     </task>
-    <task id="LOCAL-00003" summary="main script">
-      <created>1556467053197</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1556467053198</updated>
-    </task>
     <task id="LOCAL-00004" summary="test analysis">
       <created>1556575059164</created>
       <option name="number" value="00004" />
@@ -1015,7 +1005,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585344200359</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="server influx micro fixes">
+      <created>1585413315285</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1585413315286</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -1075,10 +1072,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="server influx micro fixes" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585405305876">
+    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585413742756">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1585405305876" />
+    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1585413742756" />
     <state x="451" y="231" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1173@67.27.1853.1173" timestamp="1584030247280" />
     <state x="676" y="280" width="624" height="544" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1584016649868">
       <screen x="67" y="27" width="1853" height="1053" />
@@ -1092,34 +1089,34 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="751" y="205" key="#xdebugger.evaluate/67.27.1853.1053@67.27.1853.1053" timestamp="1581859115500" />
-    <state x="506" y="92" width="1146" height="810" key="CommitChangelistDialog2" timestamp="1585344200289">
+    <state x="506" y="92" width="1146" height="810" key="CommitChangelistDialog2" timestamp="1585413315058">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="506" y="92" width="1146" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1585344200289" />
+    <state x="506" y="92" width="1146" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1585413315058" />
     <state x="432" y="111" key="CommitChangelistDialog2/67.27.1853.1173@67.27.1853.1173" timestamp="1584032375344" />
     <state x="167" y="125" width="1653" height="855" key="DiffContextDialog" timestamp="1584018309854">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="167" y="125" width="1653" height="855" key="DiffContextDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1584018309854" />
-    <state width="1830" height="223" key="GridCell.Tab.0.bottom" timestamp="1585404181606">
+    <state width="1830" height="223" key="GridCell.Tab.0.bottom" timestamp="1585413716207">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="223" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1585404181606" />
+    <state width="1830" height="223" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1585413716207" />
     <state width="1830" height="134" key="GridCell.Tab.0.bottom/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579755" />
-    <state width="1830" height="223" key="GridCell.Tab.0.center" timestamp="1585404181606">
+    <state width="1830" height="223" key="GridCell.Tab.0.center" timestamp="1585413716207">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="223" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1585404181606" />
+    <state width="1830" height="223" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1585413716207" />
     <state width="1830" height="134" key="GridCell.Tab.0.center/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579754" />
-    <state width="1830" height="223" key="GridCell.Tab.0.left" timestamp="1585404181605">
+    <state width="1830" height="223" key="GridCell.Tab.0.left" timestamp="1585413716207">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="223" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1585404181605" />
+    <state width="1830" height="223" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1585413716207" />
     <state width="1830" height="134" key="GridCell.Tab.0.left/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579754" />
-    <state width="1830" height="223" key="GridCell.Tab.0.right" timestamp="1585404181606">
+    <state width="1830" height="223" key="GridCell.Tab.0.right" timestamp="1585413716207">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="223" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1585404181606" />
+    <state width="1830" height="223" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1585413716207" />
     <state width="1830" height="134" key="GridCell.Tab.0.right/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579755" />
     <state width="1830" height="259" key="GridCell.Tab.1.bottom" timestamp="1585349833401">
       <screen x="67" y="27" width="1853" height="1053" />
@@ -1145,10 +1142,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="629" y="228" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1581414971946" />
-    <state x="588" y="288" width="800" height="551" key="Vcs.Push.Dialog.v2" timestamp="1585344015099">
+    <state x="588" y="288" width="800" height="551" key="Vcs.Push.Dialog.v2" timestamp="1585413321163">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1585344015099" />
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1585413321163" />
     <state x="588" y="318" width="800" height="551" key="Vcs.Push.Dialog.v2/67.27.1853.1173@67.27.1853.1173" timestamp="1584032377142" />
     <state width="926" height="527" key="XDebugger.FullValuePopup" timestamp="1581872889315">
       <screen x="67" y="27" width="1853" height="1053" />
