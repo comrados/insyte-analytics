@@ -27,13 +27,31 @@ A_ARGS = {"analysis_code": "DEMAND_RESPONSE_EXPECTED",
 
 class DemandResponseExpectedAnalysis(Analysis):
 
-    def __init__(self, parameters, data):
-        super().__init__(parameters, data)
+    def __init__(self):
+        super().__init__()
         self.logger.debug("Initialization")
+        self.parameters = None
+        self.data = None
 
-    def analyze(self):
+    def analyze(self, parameters, data):
+        """
+        This function was modified for this particular special case only (to much to rewrite)
+
+        :return: analysis result represented as DF
+        """
         try:
-            super().analyze()
+            self.parameters = parameters
+            self._parse_parameters(None)
+            self.data = self._preprocess_df(data)
+            res = self._analyze(None, None)
+            out = self._prepare_for_output(None, None, res)
+            return out
+        except Exception as err:
+            self.logger.error(err)
+
+    def _analyze(self, p, d):
+        try:
+            super()._analyze(p, d)
 
             # additional parameters
             self.data['datetime'] = self.data.index
@@ -72,7 +90,7 @@ class DemandResponseExpectedAnalysis(Analysis):
             self.logger.error("Impossible to analyze: " + str(err))
             raise Exception("Impossible to analyze: " + str(err))
 
-    def _preprocess_df(self):
+    def _preprocess_df(self, data):
         """
         Preprocesses DataFrame
 
@@ -81,17 +99,17 @@ class DemandResponseExpectedAnalysis(Analysis):
         self.logger.debug("Preprocessing DataFrame")
         try:
             # Fill NaNs
-            if self.original_data is not None:
-                data = self.original_data.fillna(0.)
+            if data is not None:
+                dat = data.fillna(0.)
             else:
-                data = None
+                dat = None
             self.logger.debug("DataFrame preprocessed")
-            return data
+            return dat
         except Exception as err:
             self.logger.error("Failed to preprocess DataFrame: " + str(err))
             raise Exception("Failed to preprocess DataFrame: " + str(err))
 
-    def _parse_parameters(self):
+    def _parse_parameters(self, parameters):
         """
         Parameters parsing (type conversion, modification, etc).
         """
@@ -142,7 +160,8 @@ class DemandResponseExpectedAnalysis(Analysis):
             self.logger.error("Wrong parameter 'except_weekends': " + str(self.except_weekends) + " " + str(err))
             raise Exception("Wrong parameter 'except_weekends': " + str(self.except_weekends) + " " + str(err))
 
-    def _n_previous_days(self, date, n):
+    @staticmethod
+    def _n_previous_days(date, n):
         """
         Generator with n days previous to given one
 
@@ -156,7 +175,8 @@ class DemandResponseExpectedAnalysis(Analysis):
             date = date - td
             yield date
 
-    def _is_weekend(self, day):
+    @staticmethod
+    def _is_weekend(day):
         """
         Checks if date is a weekend
 
@@ -179,7 +199,8 @@ class DemandResponseExpectedAnalysis(Analysis):
             return True
         return False
 
-    def _strings_to_dates(self, strings):
+    @staticmethod
+    def _strings_to_dates(strings):
         """
         Converts datestring to dates
 
@@ -211,7 +232,8 @@ class DemandResponseExpectedAnalysis(Analysis):
 
         return days
 
-    def _get_last_10_days_mean(self, condition1, avg_day):
+    @staticmethod
+    def _get_last_10_days_mean(condition1, avg_day):
         """
         Calculates mean for last 10 working days
 
@@ -229,7 +251,8 @@ class DemandResponseExpectedAnalysis(Analysis):
 
         return avg_day[avg_day.columns[0]][last_10_days].mean()
 
-    def _get_10_fitting_days(self, last_10_days_mean, condition1, avg_day, mpd):
+    @staticmethod
+    def _get_10_fitting_days(last_10_days_mean, condition1, avg_day, mpd):
         """
         Get 10 (or less) days, fitting the condition 2, and these days have 24 measumenets
 
@@ -328,4 +351,14 @@ class DemandResponseExpectedAnalysis(Analysis):
         target_day = df[df['date'].isin([cond2[0]])].copy()
         working_last = target_day.groupby(['time']).mean()
         day_data = self._discharge(working_last)
-        return pd.DataFrame(np.array(day_data), pd.date_range(self.target_day, periods=24, freq='1H'), ['expected'])
+        return pd.DataFrame(np.array(day_data), pd.date_range(self.target_day, periods=24, freq='1H'), ['value'])
+
+    def _prepare_for_output(self, p, d, res):
+        """
+        format results for output
+
+        :param res: unformatted results
+        :return: formatted results
+        """
+
+        return res

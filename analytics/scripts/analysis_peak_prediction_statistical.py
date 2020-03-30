@@ -23,14 +23,29 @@ A_ARGS = {"analysis_code": "PEAK_PREDICTION_STATISTICAL",
 
 class PeakPredictionStatisticalAnalysis(Analysis):
 
-    def __init__(self, parameters, data):
-        super().__init__(parameters, data)
+    def __init__(self):
+        super().__init__()
         self.logger.debug("Initialization")
         self.model = r"models/peaks_stats_reduced_weekly.csv"
+        self.parameters = None
 
-    def analyze(self):
+    def analyze(self, parameters, data):
+        """
+        This function was modified for this particular special case only
+
+        :return: analysis result represented as DF
+        """
         try:
-            super().analyze()
+            self.parameters = parameters
+            self._parse_parameters(None)
+            res = self._analyze(None, None)
+            out = self._prepare_for_output(None, None, res)
+            return out
+        except Exception as err:
+            self.logger.error(err)
+
+    def _analyze(self, p, d):
+        try:
             df = self._get_probabs_for_month()
             self.logger.debug("Predicted probabilities:\n\n" + str(df) + "\n")
             return df
@@ -38,26 +53,7 @@ class PeakPredictionStatisticalAnalysis(Analysis):
             self.logger.error("Impossible to analyze: " + str(err))
             raise Exception("Impossible to analyze: " + str(err))
 
-    def _preprocess_df(self):
-        """
-        Preprocesses DataFrame
-
-        Fills NaN with 0s
-        """
-        self.logger.debug("Preprocessing DataFrame")
-        try:
-            # Fill NaNs
-            if self.original_data is not None:
-                data = self.original_data.fillna(0.)
-            else:
-                data = None
-            self.logger.debug("DataFrame preprocessed")
-            return data
-        except Exception as err:
-            self.logger.error("Failed to preprocess DataFrame: " + str(err))
-            raise Exception("Failed to preprocess DataFrame: " + str(err))
-
-    def _parse_parameters(self):
+    def _parse_parameters(self, parameters):
         """
         Parameters parsing (type conversion, modification, etc).
         """
@@ -75,7 +71,6 @@ class PeakPredictionStatisticalAnalysis(Analysis):
         Loads model
         """
         try:
-
             self.probabs = self._load_probabs(self.model)
             self.logger.debug("Model loaded from: " + str(self.model))
         except Exception as err:
@@ -106,7 +101,8 @@ class PeakPredictionStatisticalAnalysis(Analysis):
             self.logger.debug("Wrong parameter 'year': " + str(self.year) + " " + str(err))
             raise Exception("Wrong parameter 'year': " + str(self.year) + " " + str(err))
 
-    def _load_probabs(self, path):
+    @staticmethod
+    def _load_probabs(path):
         """
         Read probabilistic model
 
@@ -141,4 +137,12 @@ class PeakPredictionStatisticalAnalysis(Analysis):
                     p[(day - 1) * 24 + hour] = 0
 
         return pd.DataFrame(p, index=pd.date_range(datetime.date(self.year, self.month, 1), periods=entries, freq='1H'),
-                            columns=['peak_pred'])
+                            columns=['value_peak_pred'])
+
+    def _prepare_for_output(self, p, d, res):
+        """
+        Postprocesses DataFrame
+        """
+        new_names = {col: ('val' + str(i)) for i, col in enumerate(res.columns)}
+        res.rename(columns=new_names, inplace=True)
+        return res

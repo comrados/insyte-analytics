@@ -22,9 +22,9 @@ class PredictionHoltWintersAutoAnalysis(Analysis):
         super().__init__(parameters, data)
         self.logger.debug("Initialization")
 
-    def analyze(self):
+    def _analyze(self):
         try:
-            super().analyze()
+            super()._analyze()
             predicted = self._triple_exponential_smoothing()
             res = self._format_results(predicted)
             return res

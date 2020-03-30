@@ -2,33 +2,29 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="12f8726f-fb14-4ba6-9c8b-89c2ed12558e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/analytics/test_import.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/analytics/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/analytics/_in_development/analysis_evaluation_brutlag.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/_in_development/analysis_evaluation_brutlag.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/analytics/_in_development/analysis_prediction_holt_winters_auto.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/_in_development/analysis_prediction_holt_winters_auto.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/analytics/analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/analysis.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/analysis_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/correlation/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/correlation/analysis_autocorrelation.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_autocorrelation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/correlation/analysis_correlation.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_correlation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/demand_response/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_baseline.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_baseline.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_boolean.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_boolean.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_check.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_check.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_deviation.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_deviation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_discharge.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_discharge.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_expected.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_expected.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/demand_response/anylysis_demand_response_rrmse.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_rrmse.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/peak_prediction/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/peak_prediction/analysis_peak_prediction_ml.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_peak_prediction_ml.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/peak_prediction/analysis_peak_prediction_statistical.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_peak_prediction_statistical.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/prediction/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/prediction/analysis_prediction_holt_winters.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_prediction_holt_winters.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/statistics/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/statistics/analysis_statistics_normalization.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_statistics_normalization.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_autocorrelation.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_autocorrelation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_correlation.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_correlation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_baseline.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_baseline.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_boolean.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_boolean.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_check.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_check.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_deviation.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_deviation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_discharge.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_discharge.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_expected.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_expected.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_rrmse.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_rrmse.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_peak_prediction_ml.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_peak_prediction_ml.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_peak_prediction_statistical.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_peak_prediction_statistical.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_prediction_holt_winters.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_prediction_holt_winters.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_statistics_normalization.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_statistics_normalization.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/analytics_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics_server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/influx_server_io.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/influx_server_io.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/analytics_server.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/analytics_server.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/server_test_jsons/server_a_demand_response_check.json" beforeDir="false" afterPath="$PROJECT_DIR$/tests/server_test_jsons/server_a_demand_response_check.json" afterDir="false" />
     </list>
     <list id="8f3402cf-8e05-46bd-8019-c70b228793b0" name="Revert: demand-response" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -45,17 +41,6 @@
         <option value="Python Script" />
       </list>
     </option>
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>keyspace_</find>
-      <find>keyspace_name</find>
-      <find>requi</find>
-      <find>handle</find>
-      <find>class handler</find>
-      <find>you m</find>
-      <find>date_r</find>
-    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -694,13 +679,6 @@
       <option name="presentableId" value="Default" />
       <updated>1555416435785</updated>
     </task>
-    <task id="LOCAL-00006" summary="test analysis">
-      <created>1557220944512</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1557220944512</updated>
-    </task>
     <task id="LOCAL-00007" summary="io dix">
       <created>1557221111826</created>
       <option name="number" value="00007" />
@@ -1037,7 +1015,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585413885073</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="server influx scripts import">
+      <created>1585526466598</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1585526466599</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -1069,7 +1054,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="demand response manual mode selection added" />
     <MESSAGE value="demand response expected data calculation" />
     <MESSAGE value="prediction holt-winters/brutlag" />
     <MESSAGE value="output fix" />
@@ -1094,30 +1078,31 @@
     <MESSAGE value="server influx GET request" />
     <MESSAGE value="server influx test JSONs" />
     <MESSAGE value="server influx micro fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="server influx micro fixes" />
+    <MESSAGE value="server influx scripts import" />
+    <option name="LAST_COMMIT_MESSAGE" value="server influx scripts import" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585524406259">
+    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585563988819">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1585524406259" />
+    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1585563988819" />
     <state x="451" y="231" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1173@67.27.1853.1173" timestamp="1584030247280" />
     <state x="676" y="280" width="624" height="544" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1584016649868">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="676" y="280" width="624" height="544" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1584016649868" />
-    <state x="478" y="249" width="1373" height="590" key="#xdebugger.XInspectDialog" timestamp="1581859116672">
+    <state x="478" y="249" width="1373" height="590" key="#xdebugger.XInspectDialog" timestamp="1585577701392">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="478" y="249" width="1373" height="590" key="#xdebugger.XInspectDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1581859116672" />
+    <state x="478" y="249" width="1373" height="590" key="#xdebugger.XInspectDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1585577701392" />
     <state x="751" y="205" key="#xdebugger.evaluate" timestamp="1581859115500">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="751" y="205" key="#xdebugger.evaluate/67.27.1853.1053@67.27.1853.1053" timestamp="1581859115500" />
-    <state x="506" y="92" width="1146" height="810" key="CommitChangelistDialog2" timestamp="1585413884969">
+    <state x="506" y="92" width="1146" height="810" key="CommitChangelistDialog2" timestamp="1585526466424">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="506" y="92" width="1146" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1585413884969" />
+    <state x="506" y="92" width="1146" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1585526466424" />
     <state x="432" y="111" key="CommitChangelistDialog2/67.27.1853.1173@67.27.1853.1173" timestamp="1584032375344" />
     <state x="167" y="125" width="1653" height="855" key="DiffContextDialog" timestamp="1584018309854">
       <screen x="67" y="27" width="1853" height="1053" />
@@ -1127,67 +1112,75 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1585521504642" />
-    <state width="1830" height="182" key="GridCell.Tab.0.bottom" timestamp="1585526417117">
+    <state x="67" y="27" width="1843" height="1053" key="FileDocumentManager.FileCacheConflict" timestamp="1585576756747">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="182" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1585526417117" />
+    <state x="67" y="27" width="1843" height="1053" key="FileDocumentManager.FileCacheConflict/67.27.1853.1053@67.27.1853.1053" timestamp="1585576756747" />
+    <state width="1830" height="190" key="GridCell.Tab.0.bottom" timestamp="1585600741808">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1830" height="190" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1585600741808" />
     <state width="1830" height="134" key="GridCell.Tab.0.bottom/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579755" />
-    <state width="1830" height="182" key="GridCell.Tab.0.center" timestamp="1585526417116">
+    <state width="1830" height="190" key="GridCell.Tab.0.center" timestamp="1585600741808">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="182" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1585526417116" />
+    <state width="1830" height="190" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1585600741808" />
     <state width="1830" height="134" key="GridCell.Tab.0.center/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579754" />
-    <state width="1830" height="182" key="GridCell.Tab.0.left" timestamp="1585526417116">
+    <state width="1830" height="190" key="GridCell.Tab.0.left" timestamp="1585600741807">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="182" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1585526417116" />
+    <state width="1830" height="190" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1585600741807" />
     <state width="1830" height="134" key="GridCell.Tab.0.left/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579754" />
-    <state width="1830" height="182" key="GridCell.Tab.0.right" timestamp="1585526417116">
+    <state width="1830" height="190" key="GridCell.Tab.0.right" timestamp="1585600741808">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="182" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1585526417116" />
+    <state width="1830" height="190" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1585600741808" />
     <state width="1830" height="134" key="GridCell.Tab.0.right/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579755" />
-    <state width="1830" height="182" key="GridCell.Tab.1.bottom" timestamp="1585526419023">
+    <state width="1830" height="190" key="GridCell.Tab.1.bottom" timestamp="1585600745628">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="182" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1585526419023" />
+    <state width="1830" height="190" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1585600745628" />
     <state width="1830" height="406" key="GridCell.Tab.1.bottom/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579750" />
-    <state width="1830" height="182" key="GridCell.Tab.1.center" timestamp="1585526419023">
+    <state width="1830" height="190" key="GridCell.Tab.1.center" timestamp="1585600745628">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="182" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1585526419023" />
+    <state width="1830" height="190" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1585600745628" />
     <state width="1830" height="406" key="GridCell.Tab.1.center/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579749" />
-    <state width="1830" height="182" key="GridCell.Tab.1.left" timestamp="1585526419022">
+    <state width="1830" height="190" key="GridCell.Tab.1.left" timestamp="1585600745628">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="182" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1585526419022" />
+    <state width="1830" height="190" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1585600745628" />
     <state width="1830" height="406" key="GridCell.Tab.1.left/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579749" />
-    <state width="1830" height="182" key="GridCell.Tab.1.right" timestamp="1585526419023">
+    <state width="1830" height="190" key="GridCell.Tab.1.right" timestamp="1585600745628">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="182" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1585526419023" />
+    <state width="1830" height="190" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1585600745628" />
     <state width="1830" height="406" key="GridCell.Tab.1.right/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579749" />
     <state x="629" y="228" key="SettingsEditor" timestamp="1581414971946">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="629" y="228" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1581414971946" />
-    <state x="588" y="288" width="800" height="551" key="Vcs.Push.Dialog.v2" timestamp="1585413886586">
+    <state x="588" y="288" width="800" height="551" key="Vcs.Push.Dialog.v2" timestamp="1585526468509">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1585413886586" />
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1585526468509" />
     <state x="588" y="318" width="800" height="551" key="Vcs.Push.Dialog.v2/67.27.1853.1173@67.27.1853.1173" timestamp="1584032377142" />
-    <state width="926" height="527" key="XDebugger.FullValuePopup" timestamp="1581872889315">
+    <state width="926" height="527" key="XDebugger.FullValuePopup" timestamp="1585594664870">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="926" height="527" key="XDebugger.FullValuePopup/67.27.1853.1053@67.27.1853.1053" timestamp="1581872889315" />
-    <state x="649" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1585517724323">
+    <state width="926" height="527" key="XDebugger.FullValuePopup/67.27.1853.1053@67.27.1853.1053" timestamp="1585594664870" />
+    <state x="649" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1585562579704">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="649" y="380" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1585517724323" />
+    <state x="649" y="380" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1585562579704" />
     <state x="761" y="472" width="464" height="160" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1581874594034">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="761" y="472" width="464" height="160" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/67.27.1853.1053@67.27.1853.1053" timestamp="1581874594034" />
+    <state x="738" y="196" width="501" height="713" key="refactoring.ChangeSignatureDialog" timestamp="1585562806585">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="738" y="196" width="501" height="713" key="refactoring.ChangeSignatureDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1585562806585" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1218,64 +1211,9 @@
           <option name="timeStamp" value="19" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_correlation.py</url>
-          <line>34</line>
-          <option name="timeStamp" value="57" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_correlation.py</url>
-          <line>32</line>
-          <option name="timeStamp" value="58" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_demand_response_rrmse.py</url>
-          <line>92</line>
-          <option name="timeStamp" value="68" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_demand_response_deviation.py</url>
-          <line>92</line>
-          <option name="timeStamp" value="78" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_demand_response_boolean.py</url>
-          <line>92</line>
-          <option name="timeStamp" value="80" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_demand_response_discharge.py</url>
-          <line>87</line>
-          <option name="timeStamp" value="88" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_demand_response_expected.py</url>
-          <line>69</line>
-          <option name="timeStamp" value="91" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_statistics_normalization.py</url>
-          <line>33</line>
-          <option name="timeStamp" value="92" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_prediction_holt_winters.py</url>
-          <line>35</line>
-          <option name="timeStamp" value="98" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_demand_response_check.py</url>
-          <line>99</line>
-          <option name="timeStamp" value="101" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/db/insyte_influx_io.py</url>
           <line>282</line>
           <option name="timeStamp" value="106" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_correlation.py</url>
-          <line>91</line>
-          <option name="timeStamp" value="107" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/analytics/_in_development/analysis_prediction_holt_winters_auto.py</url>
@@ -1283,44 +1221,9 @@
           <option name="timeStamp" value="108" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_demand_response_boolean.py</url>
-          <line>472</line>
-          <option name="timeStamp" value="110" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_demand_response_boolean.py</url>
-          <line>466</line>
-          <option name="timeStamp" value="111" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_demand_response_boolean.py</url>
-          <line>467</line>
-          <option name="timeStamp" value="112" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_peak_prediction_statistical.py</url>
-          <line>35</line>
-          <option name="timeStamp" value="113" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/analytics/_in_development/analysis_evaluation_brutlag.py</url>
           <line>232</line>
           <option name="timeStamp" value="115" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_prediction_holt_winters.py</url>
-          <line>260</line>
-          <option name="timeStamp" value="124" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_autocorrelation.py</url>
-          <line>31</line>
-          <option name="timeStamp" value="128" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_autocorrelation.py</url>
-          <line>92</line>
-          <option name="timeStamp" value="129" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/insyte_analytics.py</url>
@@ -1338,11 +1241,6 @@
           <option name="timeStamp" value="152" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics_server.py</url>
-          <line>160</line>
-          <option name="timeStamp" value="153" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/analytics/test_import.py</url>
           <line>32</line>
           <option name="timeStamp" value="161" />
@@ -1353,9 +1251,69 @@
           <option name="timeStamp" value="162" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics/__init__.py</url>
-          <line>32</line>
-          <option name="timeStamp" value="176" />
+          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_autocorrelation.py</url>
+          <line>37</line>
+          <option name="timeStamp" value="167" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_correlation.py</url>
+          <line>40</line>
+          <option name="timeStamp" value="169" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_statistics_normalization.py</url>
+          <line>38</line>
+          <option name="timeStamp" value="170" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_peak_prediction_ml.py</url>
+          <line>51</line>
+          <option name="timeStamp" value="171" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_peak_prediction_statistical.py</url>
+          <line>42</line>
+          <option name="timeStamp" value="172" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_prediction_holt_winters.py</url>
+          <line>44</line>
+          <option name="timeStamp" value="173" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_demand_response_baseline.py</url>
+          <line>43</line>
+          <option name="timeStamp" value="179" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_demand_response_boolean.py</url>
+          <line>49</line>
+          <option name="timeStamp" value="180" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_demand_response_check.py</url>
+          <line>49</line>
+          <option name="timeStamp" value="181" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_demand_response_deviation.py</url>
+          <line>49</line>
+          <option name="timeStamp" value="182" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_demand_response_discharge.py</url>
+          <line>46</line>
+          <option name="timeStamp" value="183" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_demand_response_expected.py</url>
+          <line>47</line>
+          <option name="timeStamp" value="184" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_demand_response_rrmse.py</url>
+          <line>49</line>
+          <option name="timeStamp" value="185" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -29,13 +29,31 @@ A_ARGS = {"analysis_code": "DEMAND_RESPONSE_BOOLEAN",
 
 class DemandResponseBooleanAnalysis(Analysis):
 
-    def __init__(self, parameters, data):
-        super().__init__(parameters, data)
+    def __init__(self):
+        super().__init__()
         self.logger.debug("Initialization")
+        self.parameters = None
+        self.data = None
 
-    def analyze(self):
+    def analyze(self, parameters, data):
+        """
+        This function was modified for this particular special case only (to much to rewrite)
+
+        :return: analysis result represented as DF
+        """
         try:
-            super().analyze()
+            self.parameters = parameters
+            self._parse_parameters(None)
+            self.data = self._preprocess_df(data)
+            res = self._analyze(None, None)
+            out = self._prepare_for_output(None, None, res)
+            return out
+        except Exception as err:
+            self.logger.error(err)
+
+    def _analyze(self, p, b):
+        try:
+            super()._analyze(p, b)
 
             # additional parameters
             self.data['datetime'] = self.data.index
@@ -95,7 +113,7 @@ class DemandResponseBooleanAnalysis(Analysis):
             self.logger.error("Impossible to analyze: " + str(err))
             raise Exception("Impossible to analyze: " + str(err))
 
-    def _preprocess_df(self):
+    def _preprocess_df(self, data):
         """
         Preprocesses DataFrame
 
@@ -104,17 +122,17 @@ class DemandResponseBooleanAnalysis(Analysis):
         self.logger.debug("Preprocessing DataFrame")
         try:
             # Fill NaNs
-            if self.original_data is not None:
-                data = self.original_data.fillna(0.)
+            if data is not None:
+                dat = data.fillna(0.)
             else:
-                data = None
+                dat = None
             self.logger.debug("DataFrame preprocessed")
-            return data
+            return dat
         except Exception as err:
             self.logger.error("Failed to preprocess DataFrame: " + str(err))
             raise Exception("Failed to preprocess DataFrame: " + str(err))
 
-    def _parse_parameters(self):
+    def _parse_parameters(self, parameters):
         """
         Parameters parsing (type conversion, modification, etc).
         """
@@ -181,7 +199,8 @@ class DemandResponseBooleanAnalysis(Analysis):
             self.logger.error("Wrong parameter 'mode': " + str(self.mode) + " " + str(err))
             raise Exception("Wrong parameter 'mode': " + str(self.mode) + " " + str(err))
 
-    def _n_previous_days(self, date, n):
+    @staticmethod
+    def _n_previous_days(date, n):
         """
         Generator with n days previous to given one
 
@@ -195,7 +214,8 @@ class DemandResponseBooleanAnalysis(Analysis):
             date = date - td
             yield date
 
-    def _is_weekend(self, day):
+    @staticmethod
+    def _is_weekend(day):
         """
         Checks if date is a weekend
 
@@ -218,7 +238,8 @@ class DemandResponseBooleanAnalysis(Analysis):
             return True
         return False
 
-    def _strings_to_dates(self, strings):
+    @staticmethod
+    def _strings_to_dates(strings):
         """
         Converts datestring to dates
 
@@ -250,7 +271,8 @@ class DemandResponseBooleanAnalysis(Analysis):
 
         return days
 
-    def _get_last_10_days_mean(self, condition1, avg_day):
+    @staticmethod
+    def _get_last_10_days_mean(condition1, avg_day):
         """
         Calculates mean for last 10 working days
 
@@ -268,7 +290,8 @@ class DemandResponseBooleanAnalysis(Analysis):
 
         return avg_day[avg_day.columns[0]][last_10_days].mean()
 
-    def _get_10_fitting_days(self, last_10_days_mean, condition1, avg_day, mpd):
+    @staticmethod
+    def _get_10_fitting_days(last_10_days_mean, condition1, avg_day, mpd):
         """
         Get 10 (or less) days, fitting the condition 2, and these days have 24 measumenets
 
@@ -287,7 +310,8 @@ class DemandResponseBooleanAnalysis(Analysis):
                 return fitting_days
         return fitting_days
 
-    def _get_base_value(self, df, condition2):
+    @staticmethod
+    def _get_base_value(df, condition2):
         """
         Calculate base values
 
@@ -303,7 +327,8 @@ class DemandResponseBooleanAnalysis(Analysis):
 
         return aggr
 
-    def _get_c(self, df, condition2):
+    @staticmethod
+    def _get_c(df, condition2):
         """
         Get cs
 
@@ -322,7 +347,8 @@ class DemandResponseBooleanAnalysis(Analysis):
         # this is unnecessary, but is done to remove spare columns (make data look alike b)
         return temp.groupby(['time']).mean()
 
-    def _get_correction(self, b, c):
+    @staticmethod
+    def _get_correction(b, c):
         """
         Calculates correction (a)
 
@@ -334,7 +360,8 @@ class DemandResponseBooleanAnalysis(Analysis):
         a17 = c.iloc[17] - b.iloc[17]
         return (a16 + a17) / 2
 
-    def _adjust(self, a, b):
+    @staticmethod
+    def _adjust(a, b):
         """
         Adjust according to the thresholds
 
@@ -473,3 +500,13 @@ class DemandResponseBooleanAnalysis(Analysis):
             return pd.DataFrame(np.array(df['int']), pd.date_range(time_start, periods=len(df), freq='1H'), ['value'])
         except Exception as err:
             self.logger.error("Impossible calculate rrmse: " + str(err))
+
+    def _prepare_for_output(self, p, d, res):
+        """
+        format results for output
+
+        :param res: unformatted results
+        :return: formatted results
+        """
+
+        return res

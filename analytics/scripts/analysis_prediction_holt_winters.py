@@ -24,21 +24,38 @@ A_ARGS = {"analysis_code": "PREDICTION-HOLT-WINTERS",
 
 class PredictionHoltWintersAnalysis(Analysis):
 
-    def __init__(self, parameters, data):
-        super().__init__(parameters, data)
+    def __init__(self):
+        super().__init__()
         self.logger.debug("Initialization")
+        self.parameters = None
+        self.data = None
 
-    def analyze(self):
+    def analyze(self, parameters, data):
+        """
+        This function was modified for this particular special case only (to much to rewrite)
+
+        :return: analysis result represented as DF
+        """
         try:
-            super().analyze()
+            self.parameters = parameters
+            self._parse_parameters(None)
+            self.data = self._preprocess_df(data)
+            res = self._analyze(None, None)
+            out = self._prepare_for_output(None, None, res)
+            return out
+        except Exception as err:
+            self.logger.error(err)
+
+    def _analyze(self, p, d):
+        try:
+            super()._analyze(p, d)
             predicted = self._triple_exponential_smoothing()
-            res = self._format_results(predicted)
-            return res
+            return predicted
         except Exception as err:
             self.logger.error("Impossible to analyze: " + str(err))
             raise Exception("Impossible to analyze: " + str(err))
 
-    def _preprocess_df(self):
+    def _preprocess_df(self, data):
         """
         Preprocesses DataFrame
 
@@ -47,17 +64,17 @@ class PredictionHoltWintersAnalysis(Analysis):
         self.logger.debug("Preprocessing DataFrame")
         try:
             # Fill NaNs
-            if self.original_data is not None:
-                data = self.original_data.fillna(0.)
+            if data is not None:
+                dat = data.fillna(0.)
             else:
-                data = None
+                dat = None
             self.logger.debug("DataFrame preprocessed")
-            return data
+            return dat
         except Exception as err:
             self.logger.error("Failed to preprocess DataFrame: " + str(err))
             raise Exception("Failed to preprocess DataFrame: " + str(err))
 
-    def _parse_parameters(self):
+    def _parse_parameters(self, parameters):
         """
         Parameters parsing (type conversion, modification, etc).
         """
@@ -240,11 +257,11 @@ class PredictionHoltWintersAnalysis(Analysis):
 
         return result, lower_bond, upper_bond
 
-    def _format_results(self, result):
+    def _prepare_for_output(self, p, d, res):
         """
         format results for output
 
-        :param result: unformatted results
+        :param res: unformatted results
         :return: formatted results
         """
 
@@ -253,9 +270,9 @@ class PredictionHoltWintersAnalysis(Analysis):
 
         idx = dr1.append(dr2)
 
-        res = pd.DataFrame(result[0], idx, ['pred'])
+        out = pd.DataFrame(res[0], idx, ['val_pred'])
 
-        res['low'] = result[1]
-        res['up'] = result[2]
+        out['val_low'] = res[1]
+        out['val_up'] = res[2]
 
-        return res
+        return out

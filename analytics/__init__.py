@@ -58,9 +58,9 @@ def analyze_cassandra(analysis_name, analysis_arguments, loaded_data):
     logger.debug("Starting '" + str(analysis_name) + "' Cassandra analysis, parameters: " + str(analysis_arguments))
     try:
         result = _analysis_caller(analysis_name, analysis_arguments, loaded_data)
-    except Exception as err:
-        logger.error("Analysis failed: " + str(err))
-        raise Exception("Analysis failed: " + str(err))
+    except Exception as exc:
+        logger.error("Analysis failed: " + str(exc))
+        raise Exception("Analysis failed: " + str(exc))
     logger.debug("Analysis successfully complete")
     # Reset index
     result.reset_index(inplace=True)
@@ -79,9 +79,9 @@ def analyze_influx(analysis_name, analysis_arguments, loaded_data):
     logger.debug("Starting '" + str(analysis_name) + "' Influx analysis, parameters: " + str(analysis_arguments))
     try:
         result = _analysis_caller(analysis_name, analysis_arguments, loaded_data)
-    except Exception as err:
-        logger.error("Analysis failed: " + str(err))
-        raise Exception("Analysis failed: " + str(err))
+    except Exception as exc:
+        logger.error("Analysis failed: " + str(exc))
+        raise Exception("Analysis failed: " + str(exc))
     logger.debug("Analysis successfully complete")
     return result
 
@@ -97,9 +97,9 @@ def analyze_no_db(analysis_name, analysis_arguments):
     logger.debug("Starting '" + str(analysis_name) + "' No-db analysis, parameters: " + str(analysis_arguments))
     try:
         result = _analysis_caller(analysis_name, analysis_arguments, None)
-    except Exception as err:
-        logger.error("Analysis failed: " + str(err))
-        raise Exception("Analysis failed: " + str(err))
+    except Exception as exc:
+        logger.error("Analysis failed: " + str(exc))
+        raise Exception("Analysis failed: " + str(exc))
     logger.debug("Analysis successfully complete")
     return result
 
@@ -109,7 +109,7 @@ def _analysis_caller(analysis_name, analysis_arguments, loaded_data):
     Caller function
     """
     if analysis_name in ANALYSIS:
-        result = ANALYSIS[analysis_name](analysis_arguments, loaded_data).analyze()
+        result = ANALYSIS[analysis_name]().analyze(analysis_arguments, loaded_data)
     else:
         logger.error("Analysis function doesn't exist: " + analysis_name)
         raise Exception("Analysis function doesn't exist: " + analysis_name)

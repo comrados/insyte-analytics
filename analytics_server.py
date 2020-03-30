@@ -204,7 +204,7 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
                 self.influx.connect()
                 self.input = self.influx.read_data(di, dsi, tu, db_io['limit'])
                 self.influx.disconnect()
-                logger.info("Data has been successfully read from DB: " + str(self.input.shape) + " (data shape)")
+                logger.info("Data has been successfully read from DB: " + str(self.input.shape) + " (rows, columns)")
         except Exception as err:
             logger.error("Failed to read the data: " + str(err))
             raise Exception(err)
@@ -231,7 +231,7 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
                 self.influx.connect()
                 output_results = self.influx.write_data(db_io['result_id'], self.output)
                 self.influx.disconnect()
-                logger.info("Data has been saved into DB: " + str(output_results))
+                logger.info("Data has been saved into DB: " + str(self.output.shape) + " " + str(output_results))
         except Exception as err:
             logger.error("Failed to write the data: " + str(err))
             raise Exception(err)

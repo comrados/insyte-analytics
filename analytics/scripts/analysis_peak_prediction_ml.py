@@ -31,44 +31,38 @@ A_ARGS = {"analysis_code": "PEAK_PREDICTION_ML",
 
 class PeakPredictionMLAnalysis(Analysis):
 
-    def __init__(self, parameters, data):
-        super().__init__(parameters, data)
+    def __init__(self):
+        super().__init__()
         self.logger.debug("Initialization")
         self.model_nn = r"models/peak_stats_nn.hdf5"
         self.model_rf = r"models/peak_stats_rf.pkl"
+        self.parameters = None
 
-    def analyze(self):
+    def analyze(self, parameters, data):
+        """
+        This function was modified for this particular special case only (too much to rewrite)
+
+        :return: analysis result represented as DF
+        """
         try:
-            super().analyze()
+            self.parameters = parameters
+            self._parse_parameters(None)
+            res = self._analyze(None, None)
+            out = self._prepare_for_output(None, None, res)
+            return out
+        except Exception as err:
+            self.logger.error(err)
+
+    def _analyze(self, p, d):
+        try:
             results = self._predict()
             self.logger.debug("Predicted probabilities:\n\n" + str(results) + "\n")
-            df = self._format_results(results)
-            self.logger.debug("Predicted probabilities:\n\n" + str(df) + "\n")
-            return df
+            return results
         except Exception as err:
             self.logger.error("Impossible to analyze: " + str(err))
             raise Exception("Impossible to analyze: " + str(err))
 
-    def _preprocess_df(self):
-        """
-        Preprocesses DataFrame
-
-        Fills NaN with 0s
-        """
-        self.logger.debug("Preprocessing DataFrame")
-        try:
-            # Fill NaNs
-            if self.original_data is not None:
-                data = self.original_data.fillna(0.)
-            else:
-                data = None
-            self.logger.debug("DataFrame preprocessed")
-            return data
-        except Exception as err:
-            self.logger.error("Failed to preprocess DataFrame: " + str(err))
-            raise Exception("Failed to preprocess DataFrame: " + str(err))
-
-    def _parse_parameters(self):
+    def _parse_parameters(self, parameters):
         """
         Parameters parsing (type conversion, modification, etc).
         """
@@ -192,11 +186,11 @@ class PeakPredictionMLAnalysis(Analysis):
             self.logger.error("No such model type: " + str(self.model_type))
             raise Exception("No such model type: " + str(self.model_type))
 
-    def _format_results(self, result):
+    def _prepare_for_output(self, p, d, res):
         """
         format results for output
 
-        :param result: unformatted results
+        :param res: unformatted results
         :return: formatted results
         """
         idx = pd.date_range(self.date[0], freq='1H', periods=24)
@@ -204,5 +198,5 @@ class PeakPredictionMLAnalysis(Analysis):
             dr = pd.date_range(self.date[i], periods=24, freq='1H')
             idx = idx.append(dr)
 
-        result = result.reshape(result.shape[0] * result.shape[1])
-        return pd.DataFrame(result, idx, ['peak_pred'])
+        result = res.reshape(res.shape[0] * res.shape[1])
+        return pd.DataFrame(result, idx, ['value_peak_pred'])

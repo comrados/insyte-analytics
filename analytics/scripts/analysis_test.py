@@ -20,33 +20,39 @@ A_ARGS = {"analysis_code": "TEST",
 
 class TestAnalysis(Analysis):
 
-    # Input variables
-    parameters = None  # analysis function parameters
-    data = None  # DataFrame with data
-
-    # Parsed parameters
-    operation = None
-    value = None
-
-    # Output variables
-
-    def __init__(self, parameters, data):
-        super().__init__(parameters, data)
+    def __init__(self):
+        super().__init__()
         self.logger.debug("Initialization")
 
-    def _parse_parameters(self):
+    def analyze(self, parameters, data):
+        """
+        Do not modify this.
+        This method implements analysis cycle.
+
+        :return: analysis result represented as DF
+        """
+        try:
+            p = self._parse_parameters(parameters)
+            d = self._preprocess_df(data)
+            res = self._analyze(p, d)
+            out = self._prepare_for_output(p, d, res)
+            return out
+        except Exception as err:
+            self.logger.error(err)
+
+    def _parse_parameters(self, parameters):
         """
         Parameters parsing (type conversion, modification, etc).
         """
         self.logger.debug("Parsing parameters")
         try:
-            self._check_operation()
-            self._check_value()
+            return {'operation': self._check_operation(parameters),
+                    'value': self._check_value(parameters)}
         except Exception as err:
             self.logger.error("Impossible to parse parameter: " + str(err))
             raise Exception("Impossible to parse parameter: " + str(err))
 
-    def _preprocess_df(self):
+    def _preprocess_df(self, data):
         """
         Preprocesses DataFrame
 
@@ -55,45 +61,47 @@ class TestAnalysis(Analysis):
         self.logger.debug("Preprocessing DataFrame")
         try:
             # Fill NaNs
-            if self.original_data is not None:
-                data = self.original_data.fillna(0.)
+            if data is not None:
+                dat = data.fillna(0.)
             else:
-                data = None
+                dat = None
             self.logger.debug("DataFrame preprocessed")
-            return data
+            return dat
         except Exception as err:
             self.logger.error("Failed to preprocess DataFrame: " + str(err))
             raise Exception("Failed to preprocess DataFrame: " + str(err))
 
-    def _check_operation(self):
+    def _check_operation(self, parameters):
         """
         Checks 'operation' parameter
         """
-        if self.parameters['operation'][0] in ['sub', 'add', 'div', 'mul']:
-            self.operation = self.parameters['operation'][0]
-            self.logger.debug("Parsed parameter 'operation': " + str(self.operation))
+        if parameters['operation'][0] in ['sub', 'add', 'div', 'mul']:
+            self.logger.debug("Parsed parameter 'operation': " + str(parameters['operation'][0]))
+            return parameters['operation'][0]
         else:
-            self.logger.debug("Wrong parameter 'operation': " + str(self.operation))
-            raise Exception("Wrong parameter 'operation': " + str(self.operation))
+            self.logger.debug("Wrong parameter 'operation': " + str(parameters['operation']))
+            raise Exception("Wrong parameter 'operation': " + str(parameters['operation']))
 
-    def _check_value(self):
+    def _check_value(self, parameters):
         """
         Checks 'value' parameter
         """
         try:
-            self.value = float(self.parameters['value'][0])
-            self.logger.debug("Parsed parameter 'value': " + str(self.value))
+            self.logger.debug("Parsed parameter 'value': " + str(float(parameters['value'][0])))
+            return float(parameters['value'][0])
         except Exception as err:
-            self.logger.debug("Wrong parameter 'value': " + str(self.value) + " " + str(err))
-            raise Exception("Wrong parameter 'value': " + str(self.value) + " " + str(err))
+            self.logger.debug("Wrong parameter 'value': " + str(parameters['value']) + " " + str(err))
+            raise Exception("Wrong parameter 'value': " + str(parameters['value']) + " " + str(err))
 
-    def _postprocess_df(self):
+    def _prepare_for_output(self, p, d, res):
         """
         Postprocesses DataFrame
         """
-        pass
+        new_names = {col: ('val' + str(i)) for i, col in enumerate(res.columns)}
+        res.rename(columns=new_names, inplace=True)
+        return res
 
-    def analyze(self):
+    def _analyze(self, p, d):
         """
         Run analysis.
         This test function adds, subtracts, multiplies or divides by value all elements of DataFrame
@@ -101,25 +109,21 @@ class TestAnalysis(Analysis):
         :return: output DataFrame
         """
         try:
-            super().analyze()
-            if self.operation == 'sub':
-                self.logger.debug("Subtracting: " + str(self.value))
-                self.data = self.data.sub(self.value)
-            elif self.operation == 'add':
-                self.logger.debug("Adding: " + str(self.value))
-                self.data = self.data.add(self.value)
-            elif self.operation == 'mul':
-                self.logger.debug("Multiplying by: " + str(self.value))
-                self.data = self.data.mul(self.value)
-            elif self.operation == 'div':
-                self.logger.debug("Dividing by: " + str(self.value))
-                self.data = self.data.div(self.value)
+            if p['operation'] == 'sub':
+                self.logger.debug("Subtracting: " + str(p['value']))
+                d = d.sub(p['value'])
+            elif p['operation'] == 'add':
+                self.logger.debug("Adding: " + str(p['value']))
+                d = d.add(p['value'])
+            elif p['operation'] == 'mul':
+                self.logger.debug("Multiplying by: " + str(p['value']))
+                d = d.mul(p['value'])
+            elif p['operation'] == 'div':
+                self.logger.debug("Dividing by: " + str(p['value']))
+                d = d.div(p['value'])
             else:
-                raise Exception("Unknown operation: " + str(self.operation))
-            self._postprocess_df()
-            new_names = {col: ('val' + str(i)) for (col, i) in zip(self.data.columns, range(len(self.data.columns)))}
-            self.data.rename(columns=new_names, inplace=True)
-            return self.data
+                raise Exception("Unknown operation: " + str(p['operation']))
+            return d
         except Exception as err:
             self.logger.error("Impossible to analyze: " + str(err))
             raise Exception("Impossible to analyze: " + str(err))

@@ -116,15 +116,18 @@ class InfluxServerIO:
         try:
             for col, ri in zip(output_data.columns, result_id):
                 df = pd.DataFrame(output_data[col])
-                if col.startswith('boolean'):
+                if col.startswith('bool'):
                     df.rename(columns={col: 'boolean'}, inplace=True)
+                elif col.startswith('val'):
+                    df.rename(columns={col: 'value'}, inplace=True)
                 else:
+                    self.logger.warning(
+                        "Column name: " + str(col) + " (doesnt's start with 'val' or 'bool', renaming to 'val')")
                     df.rename(columns={col: 'value'}, inplace=True)
                 v = self.client.write_points(df, 'data_result', {'result_id': str(ri)})
                 results.append(str(ri))
         except Exception as err:
-            self.logger.error("Writing failed: " + str(err))
-            raise Exception("Writing failed " + str(err))
-        self.logger.debug("Writing complete " + str(results))
+            self.logger.error("Writing to DB failed: " + str(err))
+            raise Exception("Writing to DB failed " + str(err))
+        self.logger.debug("Writing to DB complete " + str(results))
         return results
-
