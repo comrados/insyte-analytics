@@ -1,4 +1,3 @@
-import logging
 import pandas as pd
 from analytics.analysis import Analysis
 import numpy as np
@@ -7,11 +6,12 @@ import numpy as np
 Brutlag intervals evaluation.
 """
 
+CLASS_NAME = "EvaluationBrutlagAnalysis"
+ANALYSIS_NAME = "evaluation-brutlag"
+A_ARGS = {"placeholder": None}
+
 
 class EvaluationBrutlagAnalysis(Analysis):
-    A_ARGS = {"placeholder": None}
-
-    logger = logging.getLogger('insyte_analytics.analytics.analysis_evaluation_brutlag')
 
     def __init__(self, parameters, data):
         super().__init__(parameters, data)

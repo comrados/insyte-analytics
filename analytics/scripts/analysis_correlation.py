@@ -1,4 +1,3 @@
-import logging
 import pandas as pd
 from analytics.analysis import Analysis
 
@@ -6,21 +5,22 @@ from analytics.analysis import Analysis
 Correlation. Covariation matrix calculation.
 """
 
+CLASS_NAME = "CorrelationAnalysis"
+ANALYSIS_NAME = "correlation"
+A_ARGS = {"analysis_code": "CORRELATION",
+          "analysis_name": ANALYSIS_NAME,
+          "input": "Data of arbitrary dimensionality (N time series)",
+          "action": "Calculates NxN correlation matrix based on the selected calculation method",
+          "output": "NxN covariation matrix represented as 1 time series of NxN length",
+          "parameters": [
+              {"name": "method", "count": 1, "type": "SELECT", "options": ["pearson", "kendall", "spearman"],
+               "info": "pearson - Pearson correlation coefficient, "
+                       "kendall - Kendall rank correlation coefficient, "
+                       "spearman - Spearman's rank correlation coefficient"}
+          ]}
+
 
 class CorrelationAnalysis(Analysis):
-    A_ARGS = {"analysis_code": "CORRELATION",
-              "analysis_name": "correlation",
-              "input": "Data of arbitrary dimensionality (N time series)",
-              "action": "Calculates NxN correlation matrix based on the selected calculation method",
-              "output": "NxN covariation matrix represented as 1 time series of NxN length",
-              "parameters": [
-                  {"name": "method", "count": 1, "type": "SELECT", "options": ["pearson", "kendall", "spearman"],
-                   "info": "pearson - Pearson correlation coefficient, "
-                           "kendall - Kendall rank correlation coefficient, "
-                           "spearman - Spearman's rank correlation coefficient"}
-              ]}
-
-    logger = logging.getLogger('insyte_analytics.analytics.analysis_correlation')
 
     def __init__(self, parameters, data):
         super().__init__(parameters, data)

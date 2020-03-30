@@ -1,4 +1,3 @@
-import logging
 import pandas as pd
 from analytics.analysis import Analysis
 import datetime
@@ -6,28 +5,29 @@ from analytics import utils
 import numpy as np
 
 """
-Demand-response. Calculation of booleans for discharge hours
+Demand-response. Checks the discharge possiblity (RRMSE must be < 0.25, all booleans must be True).
 """
 
+CLASS_NAME = "DemandResponseCheckAnalysis"
+ANALYSIS_NAME = "demand-response-check"
+A_ARGS = {"analysis_code": "DEMAND_RESPONSE_CHECK",
+          "analysis_name": ANALYSIS_NAME,
+          "input": "1 time series",
+          "action": "Calculates the possibility of discharge of demand-response",
+          "output": "1 time series (only 1 boolean value)",
+          "parameters": [
+              {"name": "target_day", "count": 1, "type": "DATE", "info": "target day for analysis"},
+              {"name": "exception_days", "count": -1, "type": "DATE", "info": "days to exclude from analysis"},
+              {"name": "except_weekends", "count": 1, "type": "BOOLEAN", "info": "except weekends from analysis"},
+              {"name": "discharge_start_hour", "count": 1, "type": "INTEGER", "info": "discharge start hour"},
+              {"name": "discharge_duration", "count": 1, "type": "INTEGER", "info": "discharge duration (hours)"},
+              {"name": "discharge_value", "count": 1, "type": "FLOAT", "info": "discharge value"},
+              {"name": "mode", "count": 1, "type": "SELECT", "options": ["fact", "expected"],
+               "info": "comparison mode: fact - with real data, expected - with previous day"}
+          ]}
 
-class DemandResponseAnalysisBoolean(Analysis):
-    A_ARGS = {"analysis_code": "DEMAND_RESPONSE_BOOLEAN",
-              "analysis_name": "demand-response-boolean",
-              "input": "1 time series",
-              "action": "Calculates the RRMSE of demand-response",
-              "output": "1 time series (of boolean values)",
-              "parameters": [
-                  {"name": "target_day", "count": 1, "type": "DATE", "info": "target day for analysis"},
-                  {"name": "exception_days", "count": -1, "type": "DATE", "info": "days to exclude from analysis"},
-                  {"name": "except_weekends", "count": 1, "type": "BOOLEAN", "info": "except weekends from analysis"},
-                  {"name": "discharge_start_hour", "count": 1, "type": "INTEGER", "info": "discharge start hour"},
-                  {"name": "discharge_duration", "count": 1, "type": "INTEGER", "info": "discharge duration (hours)"},
-                  {"name": "discharge_value", "count": 1, "type": "FLOAT", "info": "discharge value"},
-                  {"name": "mode", "count": 1, "type": "SELECT", "options": ["fact", "expected"],
-                   "info": "comparison mode: fact - with real data, expected - with previous day"}
-              ]}
 
-    logger = logging.getLogger('insyte_analytics.analytics.analysis_demand_response_booleans')
+class DemandResponseCheckAnalysis(Analysis):
 
     def __init__(self, parameters, data):
         super().__init__(parameters, data)
@@ -88,9 +88,16 @@ class DemandResponseAnalysisBoolean(Analysis):
 
             b_to_compare, c_date = self._get_day_to_compare_with_discharged(self.data, measurements_per_day, condition2)
 
+            # rrmse
+            rrmse = self._rrmse(b_discharged, b_to_compare, self.target_day)
+
+            # booleans
             bool = self._booleans(b_discharged, b_to_compare, self.target_day)
 
-            return bool
+            # combine criterion to get the final result
+            result = self._check_result(rrmse, bool, self.target_day)
+
+            return result
         except Exception as err:
             self.logger.error("Impossible to analyze: " + str(err))
             raise Exception("Impossible to analyze: " + str(err))
@@ -465,11 +472,55 @@ class DemandResponseAnalysisBoolean(Analysis):
             df['c'] = b_c[b_c.columns[0]]
             df = df[self.discharge_start_hour:self.discharge_start_hour + self.discharge_duration]
             df['bool'] = df['d'] >= df['c']
-            df['int'] = df['bool'].astype(float)
 
             time_start = datetime.datetime.combine(c_date, df.index[0])
 
             # return as dataframe
-            return pd.DataFrame(np.array(df['int']), pd.date_range(time_start, periods=len(df), freq='1H'), ['value'])
+            return pd.DataFrame(np.array(df['bool']), pd.date_range(time_start, periods=len(df), freq='1H'), ['value'])
         except Exception as err:
             self.logger.error("Impossible calculate rrmse: " + str(err))
+
+    def _rrmse(self, b_d, b_c, c_date):
+        """
+        Calculates RRMSE
+
+        :param b_d: discharged data
+        :param b_c: discharged data to compare (fact or discharged last fitting day)
+        :param c_date: comparison date
+        :return:
+        """
+        try:
+            # rrmse = rmse / mean
+
+            # rmse
+            df = pd.DataFrame()
+            df['d'] = b_d[b_d.columns[0]]
+            df['c'] = b_c[b_c.columns[0]]
+            df['delta'] = df['c'] - df['d']
+            df['s'] = df['delta'] ** 2
+            rmse = np.sqrt(df['s'].sum() / df['s'].count())
+
+            # mean
+            mean = b_d.sum() / b_d.count()
+
+            # rrmse
+            rrmse = rmse / mean
+
+            # return as dataframe
+            return pd.DataFrame(np.array(rrmse), pd.date_range(c_date, periods=1), ['value'])
+        except Exception as err:
+            self.logger.error("Impossible calculate rrmse: " + str(err))
+
+    def _check_result(self, rrmse, bool, c_date):
+        """
+        Final check. both criterion (booleans and RRMSE) must be true
+
+        :param rrmse: result of RRMSE, must be greater than 0.25
+        :param bool: all buleans must be true
+        :param c_date: date of the check
+        :return:
+        """
+        rrmse_check = rrmse.values[0][0] <= 0.25
+        booleans_check = all(bool.values.flatten())
+        result = rrmse_check and booleans_check
+        return pd.DataFrame(float(result), pd.date_range(c_date, periods=1), ['value'])

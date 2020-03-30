@@ -1,4 +1,3 @@
-import logging
 import pandas as pd
 from scipy.optimize import minimize
 from sklearn.metrics import mean_squared_error
@@ -12,11 +11,12 @@ from sklearn.model_selection import TimeSeriesSplit
 Time series prediction. Holt-Winters method (triple exponential smoothing)
 """
 
+CLASS_NAME = "PredictionHoltWintersAutoAnalysis"
+ANALYSIS_NAME = "prediction-holt-winters-auto"
+A_ARGS = {"placeholder": None}
+
 
 class PredictionHoltWintersAutoAnalysis(Analysis):
-    A_ARGS = {"placeholder": None}
-
-    logger = logging.getLogger('insyte_analytics.analytics.analysis_prediction_holt_winters_auto')
 
     def __init__(self, parameters, data):
         super().__init__(parameters, data)

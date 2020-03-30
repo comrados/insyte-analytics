@@ -1,42 +1,38 @@
-from analytics.analysis_test import TestAnalysis
-from analytics.demand_response.anylysis_demand_response_baseline import DemandResponseAnalysisBaseline
-from analytics.demand_response.anylysis_demand_response_discharge import DemandResponseAnalysisDischarge
-from analytics.demand_response.anylysis_demand_response_rrmse import DemandResponseAnalysisRRMSE
-from analytics.demand_response.anylysis_demand_response_deviation import DemandResponseAnalysisDeviation
-from analytics.demand_response.anylysis_demand_response_boolean import DemandResponseAnalysisBoolean
-from analytics.demand_response.anylysis_demand_response_check import DemandResponseAnalysisCheck
-from analytics.demand_response.anylysis_demand_response_expected import DemandResponseAnalysisExpected
-from analytics.peak_prediction.analysis_peak_prediction_statistical import PeakPredictionStatisticalAnalysis
-from analytics.peak_prediction.analysis_peak_prediction_ml import PeakPredictionMLAnalysis
-from analytics.statistics.analysis_statistics_normalization import SatisticsNormalizationAnalysis
-from analytics.correlation.analysis_correlation import CorrelationAnalysis
-from analytics.prediction.analysis_prediction_holt_winters import PredictionHoltWintersAnalysis
-from analytics.correlation.analysis_autocorrelation import AutocorrelationAnalysis
-from analytics._in_development.analysis_prediction_holt_winters_auto import PredictionHoltWintersAutoAnalysis
-from analytics._in_development.analysis_evaluation_brutlag import EvaluationBrutlagAnalysis
 import logging
+import os
+import importlib
 
-logger = logging.getLogger('insyte_analytics.analytics.__init__')
-# dict of existing analysis functions
-ANALYSIS = {
-    'test': TestAnalysis,
-    'demand-response-baseline': DemandResponseAnalysisBaseline,
-    'demand-response-discharge': DemandResponseAnalysisDischarge,
-    'demand-response-rrmse': DemandResponseAnalysisRRMSE,
-    'demand-response-deviation': DemandResponseAnalysisDeviation,
-    'demand-response-boolean': DemandResponseAnalysisBoolean,
-    'demand-response-check': DemandResponseAnalysisCheck,
-    'demand-response-expected': DemandResponseAnalysisExpected,
-    'peak-prediction-statistical': PeakPredictionStatisticalAnalysis,
-    'peak-prediction-ml': PeakPredictionMLAnalysis,
-    'correlation': CorrelationAnalysis,
-    'normalization': SatisticsNormalizationAnalysis,
-    'prediction-holt-winters': PredictionHoltWintersAnalysis,
-    'autocorrelation': AutocorrelationAnalysis,
-    # in development
-    'prediction-holt-winters-auto': PredictionHoltWintersAutoAnalysis,
-    'evaluation-brutlag': EvaluationBrutlagAnalysis
-}
+logger = logging.getLogger('analytics')
+
+# import all scripts from 'analytics/scripts' and 'analytics/_in_development' folders
+analytics_dir = "analytics"
+analysis_scripts_dir = "scripts"
+in_development_scripts_dir = "_in_development"
+
+ANALYSIS = {}  # name : class
+ANALYSIS_ARGS = {}  # name : analysis arguments
+
+# loop through directories with scripts
+for scripts_dir in [analysis_scripts_dir, in_development_scripts_dir]:
+    scripts_list = os.listdir(os.path.join(analytics_dir, scripts_dir))
+    for script in scripts_list:
+        name, ext = os.path.splitext(script)
+        if name.startswith("analysis_"):
+            # try to import and update dictionaries
+            try:
+                i = importlib.import_module(analytics_dir + "." + scripts_dir + "." + name)
+                # imported module constants
+                a_name = getattr(i, "ANALYSIS_NAME")
+                a_class_name = getattr(i, "CLASS_NAME")
+                a_class = getattr(i, a_class_name)
+                a_args = getattr(i, "A_ARGS")
+                a_args["folder"] = scripts_dir
+                # update dictionaries
+                ANALYSIS[a_name] = a_class
+                ANALYSIS_ARGS[a_name] = a_args
+                logger.debug("Module imported: " + name)
+            except Exception as err:
+                logger.error("Failed to import module: " + name + ", " + str(err))
 
 
 def check_analysis(analysis_name):
@@ -119,7 +115,3 @@ def _analysis_caller(analysis_name, analysis_arguments, loaded_data):
         raise Exception("Analysis function doesn't exist: " + analysis_name)
 
     return result
-
-
-def get_analysis_arguments_list():
-    return {"available_functions": [a.A_ARGS for a in ANALYSIS.values()]}

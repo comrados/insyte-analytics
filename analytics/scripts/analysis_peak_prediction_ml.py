@@ -1,4 +1,3 @@
-import logging
 import pandas as pd
 from analytics.analysis import Analysis
 import numpy as np
@@ -9,27 +8,28 @@ import pickle
 Peak prediction. Machine learning method
 """
 
+CLASS_NAME = "PeakPredictionMLAnalysis"
+ANALYSIS_NAME = "peak-prediction-ml"
+A_ARGS = {"analysis_code": "PEAK_PREDICTION_ML",
+          "analysis_name": ANALYSIS_NAME,
+          "input": "None",
+          "action": "Returns the probability of peak consumption hour for each given day (weather forecast based)",
+          "output": "1 time series with predictions based on input data",
+          "parameters": [
+              {"name": "model", "count": 1, "type": "SELECT", "options": ["nn", "rf"],
+               "info": "model selection: nn - neural net, rf - random forest"},
+              {"name": "date", "count": -1, "type": "DATE", "info": "dates: one entry for each day"},
+              {"name": "sunrise", "count": -1, "type": "TIME", "info": "sunrise time: one entry for each day"},
+              {"name": "sunset", "count": -1, "type": "TIME", "info": "sunset time: one entry for each day"},
+              {"name": "daylength", "count": -1, "type": "TIME", "info": "daylength: one entry for each day"},
+              {"name": "temperature", "count": -1, "type": "FLOAT", "info": "temperature: one entry for each day"},
+              {"name": "pressure", "count": -1, "type": "FLOAT", "info": "pressure: one entry for each day"},
+              {"name": "humidity", "count": -1, "type": "FLOAT", "info": "humidity: one entry for each day"},
+              {"name": "windspeed", "count": -1, "type": "FLOAT", "info": "windspeed: one entry for each day"},
+          ]}
+
 
 class PeakPredictionMLAnalysis(Analysis):
-    A_ARGS = {"analysis_code": "PEAK_PREDICTION_ML",
-              "analysis_name": "peak-prediction-ml",
-              "input": "None",
-              "action": "Returns the probability of peak consumption hour for each given day (weather forecast based)",
-              "output": "1 time series with predictions based on input data",
-              "parameters": [
-                  {"name": "model", "count": 1, "type": "SELECT", "options": ["nn", "rf"],
-                   "info": "model selection: nn - neural net, rf - random forest"},
-                  {"name": "date", "count": -1, "type": "DATE", "info": "dates: one entry for each day"},
-                  {"name": "sunrise", "count": -1, "type": "TIME", "info": "sunrise time: one entry for each day"},
-                  {"name": "sunset", "count": -1, "type": "TIME", "info": "sunset time: one entry for each day"},
-                  {"name": "daylength", "count": -1, "type": "TIME", "info": "daylength: one entry for each day"},
-                  {"name": "temperature", "count": -1, "type": "FLOAT", "info": "temperature: one entry for each day"},
-                  {"name": "pressure", "count": -1, "type": "FLOAT", "info": "pressure: one entry for each day"},
-                  {"name": "humidity", "count": -1, "type": "FLOAT", "info": "humidity: one entry for each day"},
-                  {"name": "windspeed", "count": -1, "type": "FLOAT", "info": "windspeed: one entry for each day"},
-              ]}
-
-    logger = logging.getLogger('insyte_analytics.analytics.analysis_peak_prediction')
 
     def __init__(self, parameters, data):
         super().__init__(parameters, data)

@@ -1,4 +1,3 @@
-import logging
 import pandas as pd
 from analytics.analysis import Analysis
 import datetime
@@ -6,26 +5,29 @@ from analytics import utils
 import numpy as np
 
 """
-Demand-response. Expected data (if actual 'fact'-line is unknown): last working day (+ discharge), fitting condition 2
+Demand-response. Calculation of booleans for discharge hours
 """
 
+CLASS_NAME = "DemandResponseBooleanAnalysis"
+ANALYSIS_NAME = "demand-response-boolean"
+A_ARGS = {"analysis_code": "DEMAND_RESPONSE_BOOLEAN",
+          "analysis_name": ANALYSIS_NAME,
+          "input": "1 time series",
+          "action": "Calculates the RRMSE of demand-response",
+          "output": "1 time series (of boolean values)",
+          "parameters": [
+              {"name": "target_day", "count": 1, "type": "DATE", "info": "target day for analysis"},
+              {"name": "exception_days", "count": -1, "type": "DATE", "info": "days to exclude from analysis"},
+              {"name": "except_weekends", "count": 1, "type": "BOOLEAN", "info": "except weekends from analysis"},
+              {"name": "discharge_start_hour", "count": 1, "type": "INTEGER", "info": "discharge start hour"},
+              {"name": "discharge_duration", "count": 1, "type": "INTEGER", "info": "discharge duration (hours)"},
+              {"name": "discharge_value", "count": 1, "type": "FLOAT", "info": "discharge value"},
+              {"name": "mode", "count": 1, "type": "SELECT", "options": ["fact", "expected"],
+               "info": "comparison mode: fact - with real data, expected - with previous day"}
+          ]}
 
-class DemandResponseAnalysisExpected(Analysis):
-    A_ARGS = {"analysis_code": "DEMAND_RESPONSE_EXPECTED",
-              "analysis_name": "demand-response-expected",
-              "input": "1 time series",
-              "action": "Calculates the expected line of demand-response",
-              "output": "1 time series",
-              "parameters": [
-                  {"name": "target_day", "count": 1, "type": "DATE", "info": "target day for analysis"},
-                  {"name": "exception_days", "count": -1, "type": "DATE", "info": "days to exclude from analysis"},
-                  {"name": "except_weekends", "count": 1, "type": "BOOLEAN", "info": "except weekends from analysis"},
-                  {"name": "discharge_start_hour", "count": 1, "type": "INTEGER", "info": "discharge start hour"},
-                  {"name": "discharge_duration", "count": 1, "type": "INTEGER", "info": "discharge duration (hours)"},
-                  {"name": "discharge_value", "count": 1, "type": "FLOAT", "info": "discharge value"}
-              ]}
 
-    logger = logging.getLogger('insyte_analytics.analytics.analysis_demand_response_expected')
+class DemandResponseBooleanAnalysis(Analysis):
 
     def __init__(self, parameters, data):
         super().__init__(parameters, data)
@@ -65,9 +67,30 @@ class DemandResponseAnalysisExpected(Analysis):
             if len(condition2) == 0:
                 raise Exception("Condition 2 has no data. Check the input data")
 
-            b_expected = self._get_expected_data(self.data, condition2)
+            # base values
+            b = self._get_base_value(self.data, condition2)
+            self.logger.debug("Base values:\n\n" + str(b) + "\n")
 
-            return b_expected
+            # last day values
+            c = self._get_c(self.data, condition2)
+            self.logger.debug("Last day:\n\n" + str(c) + "\n")
+
+            a = self._get_correction(b, c)
+            self.logger.debug("Correction: " + str(a))
+
+            # adjust (0.8*b < b_adj < 1.2*b)
+            b_adj = self._adjust(a, b)
+
+            self.logger.debug("Adjusted base values:\n\n" + str(b_adj) + "\n")
+
+            # apply discharge
+            b_discharged = self._discharge(b_adj)
+
+            b_to_compare, c_date = self._get_day_to_compare_with_discharged(self.data, measurements_per_day, condition2)
+
+            bool = self._booleans(b_discharged, b_to_compare, self.target_day)
+
+            return bool
         except Exception as err:
             self.logger.error("Impossible to analyze: " + str(err))
             raise Exception("Impossible to analyze: " + str(err))
@@ -104,6 +127,7 @@ class DemandResponseAnalysisExpected(Analysis):
             self._check_discharge_start_hour()
             self._check_discharge_duration()
             self._check_discharge()
+            self._check_mode()
         except Exception as err:
             self.logger.error("Impossible to parse parameter: " + str(err))
             raise Exception("Impossible to parse parameter: " + str(err))
@@ -141,6 +165,21 @@ class DemandResponseAnalysisExpected(Analysis):
         except Exception as err:
             self.logger.error("Wrong parameter 'except_weekends': " + str(self.except_weekends) + " " + str(err))
             raise Exception("Wrong parameter 'except_weekends': " + str(self.except_weekends) + " " + str(err))
+
+    def _check_mode(self):
+        """
+        Selects mode from: 'fact' and 'expected'
+
+        :return:
+        """
+        try:
+            self.mode = self.parameters['mode'][0]
+            if self.parameters['mode'][0] not in ['fact', 'expected']:
+                raise Exception("mode must be either 'fact' or 'expected', given value: " + self.mode)
+            self.logger.debug("Parsed parameter 'mode': " + str(self.mode))
+        except Exception as err:
+            self.logger.error("Wrong parameter 'mode': " + str(self.mode) + " " + str(err))
+            raise Exception("Wrong parameter 'mode': " + str(self.mode) + " " + str(err))
 
     def _n_previous_days(self, date, n):
         """
@@ -248,6 +287,76 @@ class DemandResponseAnalysisExpected(Analysis):
                 return fitting_days
         return fitting_days
 
+    def _get_base_value(self, df, condition2):
+        """
+        Calculate base values
+
+        :param df: original dataframe with values
+        :param condition2: days that fit condition 2
+        :return: base values
+        """
+        fitting_days_values = df[df['date'].isin(condition2)].copy()
+
+        fitting_days_values['time'] = fitting_days_values['datetime'].dt.time
+
+        aggr = fitting_days_values.groupby(['time']).mean()
+
+        return aggr
+
+    def _get_c(self, df, condition2):
+        """
+        Get cs
+
+        :param df: original dataframe with values
+        :param condition2: days that fit condition 2
+        :return: correction values
+        """
+        # get only previous day values
+        temp = pd.DataFrame()
+        for i in range(len(condition2)):
+            temp = df[df['date'].isin([condition2[i]])].copy()
+            if len(temp) == 24:
+                break
+        if len(temp) != 24:
+            raise Exception("All previous days have missing data, impossible to select one to calculate correction")
+        # this is unnecessary, but is done to remove spare columns (make data look alike b)
+        return temp.groupby(['time']).mean()
+
+    def _get_correction(self, b, c):
+        """
+        Calculates correction (a)
+
+        :param b: bases
+        :param c: correction
+        :return: corrected (not adjusted) values
+        """
+        a16 = c.iloc[16] - b.iloc[16]
+        a17 = c.iloc[17] - b.iloc[17]
+        return (a16 + a17) / 2
+
+    def _adjust(self, a, b):
+        """
+        Adjust according to the thresholds
+
+        :param a: correction
+        :param b: base
+        :return: adjusted values
+        """
+        b_adj = b + a
+
+        b_high = b * 1.2
+        b_low = b * 0.8
+
+        flag = b_adj > b_high
+
+        b_adj[flag] = b_high[flag]
+
+        flag = b_adj < b_low
+
+        b_adj[flag] = b_low[flag]
+
+        return b_adj
+
     def _check_discharge_value(self):
         """
         Checks 'discharge_value' parameter
@@ -316,16 +425,51 @@ class DemandResponseAnalysisExpected(Analysis):
 
         return b_dc
 
-    def _get_expected_data(self, df, cond2):
+    def _get_day_to_compare_with_discharged(self, df, mpd, cond2):
         """
         Returns the day to compare with discharged line
 
         :param df: data
+        :param mpd: measurements per day
         :param cond2:
         :return:
         """
+        # fact data (with existance checks)
+        if self.mode == 'fact':
+            if self.target_day in mpd.index and mpd[mpd.columns[0]][self.target_day] == 24:
+                target_day = df[df['date'].isin([self.target_day])].copy()
+                day_data = target_day.groupby(['time']).mean()
+                date = self.target_day
+            else:
+                raise Exception("'fact'-mode selected, but target_day data is not full or not provided")
+        # expected data
+        else:
+            target_day = df[df['date'].isin([cond2[0]])].copy()
+            working_last = target_day.groupby(['time']).mean()
+            day_data = self._discharge(working_last)
+            date = cond2[0]
+        return day_data, date
 
-        target_day = df[df['date'].isin([cond2[0]])].copy()
-        working_last = target_day.groupby(['time']).mean()
-        day_data = self._discharge(working_last)
-        return pd.DataFrame(np.array(day_data), pd.date_range(self.target_day, periods=24, freq='1H'), ['expected'])
+    def _booleans(self, b_d, b_c, c_date):
+        """
+        Calculates booleans
+
+        :param b_d: discharged data
+        :param b_c: discharged data to compare (fact or discharged last fitting day)
+        :param c_date: comparison date
+        :return:
+        """
+        try:
+            df = pd.DataFrame()
+            df['d'] = b_d[b_d.columns[0]]
+            df['c'] = b_c[b_c.columns[0]]
+            df = df[self.discharge_start_hour:self.discharge_start_hour + self.discharge_duration]
+            df['bool'] = df['d'] >= df['c']
+            df['int'] = df['bool'].astype(float)
+
+            time_start = datetime.datetime.combine(c_date, df.index[0])
+
+            # return as dataframe
+            return pd.DataFrame(np.array(df['int']), pd.date_range(time_start, periods=len(df), freq='1H'), ['value'])
+        except Exception as err:
+            self.logger.error("Impossible calculate rrmse: " + str(err))

@@ -1,4 +1,3 @@
-import logging
 import pandas as pd
 from analytics.analysis import Analysis
 
@@ -6,19 +5,20 @@ from analytics.analysis import Analysis
 Normalization
 """
 
+CLASS_NAME = "SatisticsNormalizationAnalysis"
+ANALYSIS_NAME = "normalization"
+A_ARGS = {"analysis_code": "NORMALIZATION",
+          "analysis_name": ANALYSIS_NAME,
+          "input": "N time series",
+          "action": "Normalizes the data (linear normalization)",
+          "output": "N normalized time series",
+          "parameters": [
+              {"name": "min_value", "count": 1, "type": "FLOAT", "info": "lower bond"},
+              {"max_value": "beta", "count": 1, "type": "FLOAT", "info": "upper bond"}
+          ]}
+
 
 class SatisticsNormalizationAnalysis(Analysis):
-    A_ARGS = {"analysis_code": "NORMALIZATION",
-              "analysis_name": "normalization",
-              "input": "N time series",
-              "action": "Normalizes the data (linear normalization)",
-              "output": "N normalized time series",
-              "parameters": [
-                  {"name": "min_value", "count": 1, "type": "FLOAT", "info": "lower bond"},
-                  {"max_value": "beta", "count": 1, "type": "FLOAT", "info": "upper bond"}
-              ]}
-
-    logger = logging.getLogger('insyte_analytics.analytics.analysis_normalization')
 
     def __init__(self, parameters, data):
         super().__init__(parameters, data)

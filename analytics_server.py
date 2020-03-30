@@ -31,7 +31,7 @@ def parse_args(args):
     # database
     dbc_group = parser.add_argument_group("Database", "Database's settings")
 
-    dbc_group.add_argument('-dbh', '--db-host', dest='db_host', nargs='+', default='ems.insyte.ru', help='DB host')
+    dbc_group.add_argument('-dbh', '--db-host', dest='db_host', default='ems.insyte.ru', help='DB host')
     dbc_group.add_argument('-dbp', '--db-port', dest='db_port', type=int, default=8086, help='DB port')
     dbc_group.add_argument('-dbn', '--db-name', dest='db_name', default='ems', help='DB name')
     dbc_group.add_argument('-dbu', '--db-user', dest='db_user', default='ems_user', help='DB username')
@@ -131,13 +131,13 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
                 self.send_response(200)
                 self.send_header('Content-type', 'text/json')
                 self.end_headers()
-                self.wfile.write(bytes(json.dumps(self._get_status(), indent=4), 'utf-8'))
+                self.wfile.write(bytes(json.dumps(self._get_status(), indent=4, sort_keys=True), 'utf-8'))
             elif self.path in ["/functions/", "/functions", "/functions.json"]:
                 logger.info("GET 'functions' request from " + client)
                 self.send_response(200)
                 self.send_header('Content-type', 'text/json')
                 self.end_headers()
-                self.wfile.write(bytes(json.dumps(analytics.get_analysis_arguments_list(), indent=4), 'utf-8'))
+                self.wfile.write(bytes(json.dumps(analytics.ANALYSIS_ARGS, indent=4, sort_keys=True), 'utf-8'))
             else:
                 self.send_error(404, 'Unknown resource: %s' % self.path)
         except Exception as err:

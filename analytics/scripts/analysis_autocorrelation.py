@@ -1,4 +1,3 @@
-import logging
 import pandas as pd
 from analytics.analysis import Analysis
 
@@ -6,18 +5,19 @@ from analytics.analysis import Analysis
 Correlation. Covariation matrix calculation.
 """
 
+CLASS_NAME = "AutocorrelationAnalysis"
+ANALYSIS_NAME = "autocorrelation"
+A_ARGS = {"analysis_code": "AUTOCORRELATION",
+          "analysis_name": ANALYSIS_NAME,
+          "input": "1 time series",
+          "action": "Calculates autocorellation series for input data",
+          "output": "1 time series (shorter length)",
+          "parameters": [
+              {"name": "step", "count": 1, "type": "INTEGER", "info": "autocorrelation shifting step"}
+          ]}
+
 
 class AutocorrelationAnalysis(Analysis):
-    A_ARGS = {"analysis_code": "AUTOCORRELATION",
-              "analysis_name": "autocorrelation",
-              "input": "1 time series",
-              "action": "Calculates autocorellation series for input data",
-              "output": "1 time series (shorter length)",
-              "parameters": [
-                  {"name": "step", "count": 1, "type": "INTEGER", "info": "autocorrelation shifting step"}
-              ]}
-
-    logger = logging.getLogger('insyte_analytics.analytics.analysis_autocorrelation')
 
     def __init__(self, parameters, data):
         super().__init__(parameters, data)
