@@ -34,7 +34,7 @@ class InfluxServerIO:
             self.logger.debug("DB Connection set")
         except Exception as err:
             self.logger.error("DB Connection failed: " + str(err))
-            raise Exception("DB Connection failed")
+            raise Exception("DB Connection failed: " + str(err))
 
     def disconnect(self):
         """
@@ -48,7 +48,7 @@ class InfluxServerIO:
             self.logger.debug("DB Connection closed")
         except Exception as err:
             self.logger.error("Can't disconnect from DB: " + str(err))
-            raise Exception("Can't disconnect from DB")
+            raise Exception("Can't disconnect from DB: " + str(err))
 
     def read_data(self, device_id=None, data_source_id=None, time_upload=None, limit=None):
         """

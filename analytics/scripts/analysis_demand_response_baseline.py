@@ -45,6 +45,7 @@ class DemandResponseBaselineAnalysis(Analysis):
             return out
         except Exception as err:
             self.logger.error(err)
+            raise Exception(str(err))
 
     def _analyze(self, p, d):
         try:
@@ -110,9 +111,11 @@ class DemandResponseBaselineAnalysis(Analysis):
         try:
             # Fill NaNs
             if data is not None:
+                if data.empty:
+                    raise Exception("Empty DataFrame")
                 dat = data.fillna(0.)
             else:
-                dat = None
+                raise Exception("DataFrame is None")
             self.logger.debug("DataFrame preprocessed")
             return dat
         except Exception as err:
@@ -141,7 +144,7 @@ class DemandResponseBaselineAnalysis(Analysis):
 
             self.logger.debug("Parsed parameter 'target_day': " + str(self.target_day))
         except Exception as err:
-            self.logger.debug("Wrong parameter 'target_day': " + str(self.target_day) + " " + str(err))
+            self.logger.error("Wrong parameter 'target_day': " + str(self.target_day) + " " + str(err))
             raise Exception("Wrong parameter 'target_day': " + str(self.target_day) + " " + str(err))
 
     def _check_exception_days(self):
@@ -163,7 +166,7 @@ class DemandResponseBaselineAnalysis(Analysis):
             self.except_weekends = self.parameters['except_weekends'][0] in ['True', 'true', True]
             self.logger.debug("Parsed parameter 'except_weekends': " + str(self.except_weekends))
         except Exception as err:
-            self.logger.debug("Wrong parameter 'except_weekends': " + str(self.except_weekends) + " " + str(err))
+            self.logger.error("Wrong parameter 'except_weekends': " + str(self.except_weekends) + " " + str(err))
             raise Exception("Wrong parameter 'except_weekends': " + str(self.except_weekends) + " " + str(err))
 
     @staticmethod

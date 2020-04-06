@@ -1,0 +1,31 @@
+{
+  "db_io_parameters": {
+    "mode": "rw",
+    "result_id": [
+      "1a54a0e8-6fb0-4fed-a762-e30fa882fa3b"
+    ],
+    "device_id": [
+      "dd2af57e-fb5f-4852-a947-61524470b6f1"
+    ],
+    "data_source_id": [
+      "166"
+    ],
+    "time_upload": [
+      "2019-12-10_00:00:00+0000",
+      "2020-01-24_23:59:59+0000"
+    ],
+    "limit": "null"
+  },
+  "analysis_parameters": {
+    "analysis": "demand-response-baseline",
+    "analysis_arguments": {
+      "target_day": [
+        "2020-01-24"
+      ],
+      "exception_days": [],
+      "except_weekends": [
+        "false"
+      ]
+    }
+  }
+}

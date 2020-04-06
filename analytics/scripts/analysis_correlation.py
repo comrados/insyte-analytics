@@ -42,6 +42,7 @@ class CorrelationAnalysis(Analysis):
             return out
         except Exception as err:
             self.logger.error(err)
+            raise Exception(str(err))
 
     def _analyze(self, p, d):
         try:
@@ -63,9 +64,13 @@ class CorrelationAnalysis(Analysis):
         try:
             # Fill NaNs
             if data is not None:
+                if data.empty:
+                    raise Exception("Empty DataFrame")
                 dat = data.dropna(how='any')
+                if data.empty:
+                    raise Exception("Empty DataFrame after preprocessing")
             else:
-                dat = None
+                raise Exception("DataFrame is None")
             self.logger.debug("DataFrame preprocessed")
             return dat
         except Exception as err:
@@ -94,7 +99,7 @@ class CorrelationAnalysis(Analysis):
             self.logger.debug("Parsed parameter 'method': " + str(method))
             return method
         except Exception as err:
-            self.logger.debug("Wrong parameter 'method': " + str(parameters['method']) + " " + str(err))
+            self.logger.error("Wrong parameter 'method': " + str(parameters['method']) + " " + str(err))
             raise Exception("Wrong parameter 'method': " + str(parameters['method']) + " " + str(err))
 
     def _prepare_for_output(self, p, d, res):
@@ -104,10 +109,14 @@ class CorrelationAnalysis(Analysis):
 
         :return: formatted results
         """
-        result = res.values  # get numpy array
-        new_shape = result.shape[0] * result.shape[1]
+        try:
+            result = res.values  # get numpy array
+            new_shape = result.shape[0] * result.shape[1]
 
-        idx = pd.date_range('2000-01-01', periods=new_shape)  # dummy index
+            idx = pd.date_range('2000-01-01', periods=new_shape)  # dummy index
 
-        result = result.reshape(new_shape)
-        return pd.DataFrame(result, idx, ['value_correlation'])
+            result = result.reshape(new_shape)
+            return pd.DataFrame(result, idx, ['value_correlation'])
+        except Exception as err:
+            self.logger.error("Output preparation: " + str(err))
+            raise Exception("Output preparation: " + str(err))

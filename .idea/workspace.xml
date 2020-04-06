@@ -2,8 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="12f8726f-fb14-4ba6-9c8b-89c2ed12558e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/tests/server_test_jsons/a.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/server_test_jsons/b.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_autocorrelation.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_autocorrelation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_correlation.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_correlation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_baseline.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_baseline.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_boolean.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_boolean.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_check.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_check.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_deviation.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_deviation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_discharge.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_discharge.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_expected.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_expected.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_rrmse.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_rrmse.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_peak_prediction_ml.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_peak_prediction_ml.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_peak_prediction_statistical.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_peak_prediction_statistical.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_prediction_holt_winters.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_prediction_holt_winters.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_statistics_normalization.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_statistics_normalization.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/analytics_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics_server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/influx_server_io.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/influx_server_io.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/analytics_server.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/analytics_server.log" afterDir="false" />
     </list>
     <list id="8f3402cf-8e05-46bd-8019-c70b228793b0" name="Revert: demand-response" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -47,7 +67,7 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/analytics" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/tests/server_test_jsons" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="PyConsoleOptionsProvider">
@@ -58,19 +78,19 @@
     </option>
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/analytics/prediction" />
-      <recent name="$PROJECT_DIR$/analytics/demand_response" />
-      <recent name="D:\insyte-analytics\analytics\correlation" />
-      <recent name="D:\insyte-analytics\models" />
-      <recent name="D:\insyte-analytics\analytics" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/analytics/scripts" />
       <recent name="$PROJECT_DIR$/analytics" />
       <recent name="$PROJECT_DIR$/analytics/demand_response" />
       <recent name="$PROJECT_DIR$/tests/server_test_jsons" />
       <recent name="$PROJECT_DIR$/analytics/correlation" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tests/server_test_jsons" />
+      <recent name="$PROJECT_DIR$/analytics/prediction" />
+      <recent name="$PROJECT_DIR$/analytics/demand_response" />
+      <recent name="D:\insyte-analytics\analytics\correlation" />
+      <recent name="D:\insyte-analytics\models" />
     </key>
   </component>
   <component name="RunManager" selected="Python.analytics_server">
@@ -658,13 +678,6 @@
       <option name="presentableId" value="Default" />
       <updated>1555416435785</updated>
     </task>
-    <task id="LOCAL-00009" summary="result output">
-      <created>1557319576445</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1557319576445</updated>
-    </task>
     <task id="LOCAL-00010" summary="dbs extension">
       <created>1565613900075</created>
       <option name="number" value="00010" />
@@ -1001,7 +1014,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586184780286</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="server influx read limit check">
+      <created>1586185693954</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1586185693955</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -1033,7 +1053,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="output fix" />
     <MESSAGE value="new output" />
     <MESSAGE value="back to the old output, tags: 'value', 'boolean'" />
     <MESSAGE value="last error console output" />
@@ -1058,7 +1077,8 @@
     <MESSAGE value="server influx scripts import" />
     <MESSAGE value="server influx scripts new scheme" />
     <MESSAGE value="server influx MIME &amp; a_args fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="server influx MIME &amp; a_args fixes" />
+    <MESSAGE value="server influx read limit check" />
+    <option name="LAST_COMMIT_MESSAGE" value="server influx read limit check" />
   </component>
   <component name="WindowStateProjectService">
     <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585602066540">
@@ -1078,10 +1098,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="751" y="205" key="#xdebugger.evaluate/67.27.1853.1053@67.27.1853.1053" timestamp="1581859115500" />
-    <state x="506" y="92" width="1146" height="810" key="CommitChangelistDialog2" timestamp="1586184780078">
+    <state x="506" y="92" width="1146" height="810" key="CommitChangelistDialog2" timestamp="1586185693807">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="506" y="92" width="1146" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1586184780078" />
+    <state x="506" y="92" width="1146" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1586185693807" />
     <state x="432" y="111" key="CommitChangelistDialog2/67.27.1853.1173@67.27.1853.1173" timestamp="1584032375344" />
     <state x="167" y="125" width="1653" height="855" key="DiffContextDialog" timestamp="1584018309854">
       <screen x="67" y="27" width="1853" height="1053" />
@@ -1095,63 +1115,63 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="67" y="27" width="1843" height="1053" key="FileDocumentManager.FileCacheConflict/67.27.1853.1053@67.27.1853.1053" timestamp="1585576756747" />
-    <state width="1830" height="241" key="GridCell.Tab.0.bottom" timestamp="1585692569470">
+    <state width="1830" height="235" key="GridCell.Tab.0.bottom" timestamp="1586202376749">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="241" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1585692569470" />
+    <state width="1830" height="235" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1586202376749" />
     <state width="1830" height="134" key="GridCell.Tab.0.bottom/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579755" />
-    <state width="1830" height="241" key="GridCell.Tab.0.center" timestamp="1585692569469">
+    <state width="1830" height="235" key="GridCell.Tab.0.center" timestamp="1586202376749">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="241" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1585692569469" />
+    <state width="1830" height="235" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1586202376749" />
     <state width="1830" height="134" key="GridCell.Tab.0.center/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579754" />
-    <state width="1830" height="241" key="GridCell.Tab.0.left" timestamp="1585692569469">
+    <state width="1830" height="235" key="GridCell.Tab.0.left" timestamp="1586202376748">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="241" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1585692569469" />
+    <state width="1830" height="235" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1586202376748" />
     <state width="1830" height="134" key="GridCell.Tab.0.left/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579754" />
-    <state width="1830" height="241" key="GridCell.Tab.0.right" timestamp="1585692569470">
+    <state width="1830" height="235" key="GridCell.Tab.0.right" timestamp="1586202376749">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="241" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1585692569470" />
+    <state width="1830" height="235" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1586202376749" />
     <state width="1830" height="134" key="GridCell.Tab.0.right/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579755" />
-    <state width="1830" height="241" key="GridCell.Tab.1.bottom" timestamp="1585692569470">
+    <state width="1830" height="148" key="GridCell.Tab.1.bottom" timestamp="1586202374994">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="241" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1585692569470" />
+    <state width="1830" height="148" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1586202374994" />
     <state width="1830" height="406" key="GridCell.Tab.1.bottom/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579750" />
-    <state width="1830" height="241" key="GridCell.Tab.1.center" timestamp="1585692569470">
+    <state width="1830" height="148" key="GridCell.Tab.1.center" timestamp="1586202374993">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="241" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1585692569470" />
+    <state width="1830" height="148" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1586202374993" />
     <state width="1830" height="406" key="GridCell.Tab.1.center/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579749" />
-    <state width="1830" height="241" key="GridCell.Tab.1.left" timestamp="1585692569470">
+    <state width="1830" height="148" key="GridCell.Tab.1.left" timestamp="1586202374993">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="241" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1585692569470" />
+    <state width="1830" height="148" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1586202374993" />
     <state width="1830" height="406" key="GridCell.Tab.1.left/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579749" />
-    <state width="1830" height="241" key="GridCell.Tab.1.right" timestamp="1585692569470">
+    <state width="1830" height="148" key="GridCell.Tab.1.right" timestamp="1586202374994">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="241" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1585692569470" />
+    <state width="1830" height="148" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1586202374994" />
     <state width="1830" height="406" key="GridCell.Tab.1.right/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579749" />
     <state x="629" y="228" key="SettingsEditor" timestamp="1581414971946">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="629" y="228" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1581414971946" />
-    <state x="588" y="288" width="800" height="551" key="Vcs.Push.Dialog.v2" timestamp="1586184786818">
+    <state x="588" y="288" width="800" height="551" key="Vcs.Push.Dialog.v2" timestamp="1586185696716">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1586184786818" />
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1586185696716" />
     <state x="588" y="318" width="800" height="551" key="Vcs.Push.Dialog.v2/67.27.1853.1173@67.27.1853.1173" timestamp="1584032377142" />
-    <state width="926" height="527" key="XDebugger.FullValuePopup" timestamp="1585594664870">
+    <state width="926" height="527" key="XDebugger.FullValuePopup" timestamp="1586202329346">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="926" height="527" key="XDebugger.FullValuePopup/67.27.1853.1053@67.27.1853.1053" timestamp="1585594664870" />
-    <state x="649" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1586184948046">
+    <state width="926" height="527" key="XDebugger.FullValuePopup/67.27.1853.1053@67.27.1853.1053" timestamp="1586202329346" />
+    <state x="649" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1586194740011">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="649" y="380" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1586184948046" />
+    <state x="649" y="380" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1586194740011" />
     <state x="761" y="472" width="464" height="160" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1581874594034">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -1260,11 +1280,6 @@
           <option name="timeStamp" value="173" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics/scripts/analysis_demand_response_baseline.py</url>
-          <line>44</line>
-          <option name="timeStamp" value="179" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/analytics/scripts/analysis_demand_response_boolean.py</url>
           <line>50</line>
           <option name="timeStamp" value="180" />
@@ -1293,6 +1308,21 @@
           <url>file://$PROJECT_DIR$/analytics/scripts/analysis_demand_response_rrmse.py</url>
           <line>50</line>
           <option name="timeStamp" value="185" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/analytics/__init__.py</url>
+          <line>119</line>
+          <option name="timeStamp" value="188" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/analytics_server.py</url>
+          <line>161</line>
+          <option name="timeStamp" value="189" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/analytics/__init__.py</url>
+          <line>41</line>
+          <option name="timeStamp" value="190" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

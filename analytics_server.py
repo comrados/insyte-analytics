@@ -164,16 +164,18 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
 
             # send response
             self.send_response(200)
-            self.send_header('Content-type', 'text/plain')
+            self.send_header('Content-type', 'application/json')
             self.end_headers()
-            self.wfile.write(bytes('DONE\n', 'utf-8'))
+            msg = {'result': 'DONE'}
+            self.wfile.write(bytes(json.dumps(msg, indent=4, sort_keys=True), 'utf-8'))
         except Exception as err:
             self.send_response(400)
             self.influx.disconnect()
             logger.error("Something went wrong: " + str(err))
-            self.send_header('Content-type', 'text/plain')
+            self.send_header('Content-type', 'application/json')
             self.end_headers()
-            self.wfile.write(bytes('ERROR\n', 'utf-8'))
+            msg = {'result': 'ERROR', 'error_message': str(err)}
+            self.wfile.write(bytes(json.dumps(msg, indent=4, sort_keys=True), 'utf-8'))
 
     def log_message(self, format, *args):
         """
@@ -189,8 +191,8 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
             self.json = json.loads(content)
             logger.info("JSON content: " + str(self.json))
         except Exception as err:
-            logger.error("Impossible to process sent data (not a JSON): " + str(content))
-            raise Exception(err)
+            logger.error("Impossible to process sent data (not a JSON): " + str(err))
+            raise Exception("Impossible to process sent data (not a JSON): " + str(err))
 
     def _read_data(self):
         """
@@ -209,7 +211,7 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
                 logger.info("Data has been successfully read from DB: " + str(self.input.shape) + " (rows, columns)")
         except Exception as err:
             logger.error("Failed to read the data: " + str(err))
-            raise Exception(err)
+            raise Exception("Failed to read the data: " + str(err))
 
     def _call_analysis(self):
         """
@@ -220,7 +222,7 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
             self.output = analytics.analyze_influx(ap['analysis'], ap['analysis_arguments'], self.input)
         except Exception as err:
             logger.error("Failed to analyze the data: " + str(err))
-            raise Exception(err)
+            raise Exception("Failed to analyze the data: " + str(err))
 
     def _write_results(self):
         """
@@ -236,7 +238,7 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
                 logger.info("Data has been saved into DB: " + str(self.output.shape) + " " + str(output_results))
         except Exception as err:
             logger.error("Failed to write the data: " + str(err))
-            raise Exception(err)
+            raise Exception("Failed to write the data: " + str(err))
 
     def _check_reading_lengths(self, time_upload, device_id, data_source_id):
         """

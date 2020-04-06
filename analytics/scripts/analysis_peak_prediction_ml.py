@@ -53,6 +53,7 @@ class PeakPredictionMLAnalysis(Analysis):
             return out
         except Exception as err:
             self.logger.error(err)
+            raise Exception(str(err))
 
     def _analyze(self, p, d):
         try:
@@ -99,7 +100,7 @@ class PeakPredictionMLAnalysis(Analysis):
             self.parameters.pop('model')
             self.logger.debug("Model loaded from: " + str(model))
         except Exception as err:
-            self.logger.debug("Can't load model: " + str(self.parameters['model'][0]) + " " + str(err))
+            self.logger.error("Can't load model: " + str(self.parameters['model'][0]) + " " + str(err))
             raise Exception("Can't load model: " + str(self.parameters['model'][0]) + " " + str(err))
 
     def _check_pred_parameters_lengths(self):
@@ -194,10 +195,14 @@ class PeakPredictionMLAnalysis(Analysis):
         :param res: unformatted results
         :return: formatted results
         """
-        idx = pd.date_range(self.date[0], freq='1H', periods=24)
-        for i in range(1, len(self.date)):
-            dr = pd.date_range(self.date[i], periods=24, freq='1H')
-            idx = idx.append(dr)
+        try:
+            idx = pd.date_range(self.date[0], freq='1H', periods=24)
+            for i in range(1, len(self.date)):
+                dr = pd.date_range(self.date[i], periods=24, freq='1H')
+                idx = idx.append(dr)
 
-        result = res.reshape(res.shape[0] * res.shape[1])
-        return pd.DataFrame(result, idx, ['value_peak_pred'])
+            result = res.reshape(res.shape[0] * res.shape[1])
+            return pd.DataFrame(result, idx, ['value_peak_pred'])
+        except Exception as err:
+            self.logger.error("Output preparation: " + str(err))
+            raise Exception("Output preparation: " + str(err))

@@ -46,6 +46,7 @@ class PredictionHoltWintersAnalysis(Analysis):
             return out
         except Exception as err:
             self.logger.error(err)
+            raise Exception(str(err))
 
     def _analyze(self, p, d):
         try:
@@ -66,9 +67,11 @@ class PredictionHoltWintersAnalysis(Analysis):
         try:
             # Fill NaNs
             if data is not None:
+                if data.empty:
+                    raise Exception("Empty DataFrame")
                 dat = data.fillna(0.)
             else:
-                dat = None
+                raise Exception("DataFrame is None")
             self.logger.debug("DataFrame preprocessed")
             return dat
         except Exception as err:
@@ -100,7 +103,7 @@ class PredictionHoltWintersAnalysis(Analysis):
 
             self.logger.debug("Parsed parameter 'slength': " + str(self.slength))
         except Exception as err:
-            self.logger.debug(
+            self.logger.error(
                 "Wrong parameter 'slength': " + str(self.parameters['season_length'][0]) + " " + str(err))
             raise Exception(
                 "Wrong parameter 'slength': " + str(self.parameters['season_length'][0]) + " " + str(err))
@@ -116,7 +119,7 @@ class PredictionHoltWintersAnalysis(Analysis):
 
             self.logger.debug("Parsed parameter 'alpha': " + str(self.alpha))
         except Exception as err:
-            self.logger.debug("Wrong parameter 'alpha': " + str(self.parameters['alpha'][0]) + " " + str(err))
+            self.logger.error("Wrong parameter 'alpha': " + str(self.parameters['alpha'][0]) + " " + str(err))
             raise Exception("Wrong parameter 'alpha': " + str(self.parameters['alpha'][0]) + " " + str(err))
 
     def _check_beta(self):
@@ -130,7 +133,7 @@ class PredictionHoltWintersAnalysis(Analysis):
 
             self.logger.debug("Parsed parameter 'beta': " + str(self.beta))
         except Exception as err:
-            self.logger.debug("Wrong parameter 'beta': " + str(self.parameters['beta'][0]) + " " + str(err))
+            self.logger.error("Wrong parameter 'beta': " + str(self.parameters['beta'][0]) + " " + str(err))
             raise Exception("Wrong parameter 'beta': " + str(self.parameters['beta'][0]) + " " + str(err))
 
     def _check_gamma(self):
@@ -144,7 +147,7 @@ class PredictionHoltWintersAnalysis(Analysis):
 
             self.logger.debug("Parsed parameter 'gamma': " + str(self.gamma))
         except Exception as err:
-            self.logger.debug("Wrong parameter 'gamma': " + str(self.parameters['gamma'][0]) + " " + str(err))
+            self.logger.error("Wrong parameter 'gamma': " + str(self.parameters['gamma'][0]) + " " + str(err))
             raise Exception("Wrong parameter 'gamma': " + str(self.parameters['gamma'][0]) + " " + str(err))
 
     def _check_n_predictions(self):
@@ -158,7 +161,7 @@ class PredictionHoltWintersAnalysis(Analysis):
 
             self.logger.debug("Parsed parameter 'n_predictions': " + str(self.n_predictions))
         except Exception as err:
-            self.logger.debug(
+            self.logger.error(
                 "Wrong parameter 'n_predictions': " + str(self.parameters['n_predictions'][0]) + " " + str(err))
             raise Exception(
                 "Wrong parameter 'n_predictions': " + str(self.parameters['n_predictions'][0]) + " " + str(err))
@@ -174,7 +177,7 @@ class PredictionHoltWintersAnalysis(Analysis):
 
             self.logger.debug("Parsed parameter 'scaling_factor': " + str(self.scaling_factor))
         except Exception as err:
-            self.logger.debug(
+            self.logger.error(
                 "Wrong parameter 'scaling_factor': " + str(self.parameters['scaling_factor'][0]) + " " + str(err))
             raise Exception(
                 "Wrong parameter 'scaling_factor': " + str(self.parameters['scaling_factor'][0]) + " " + str(err))
@@ -265,15 +268,18 @@ class PredictionHoltWintersAnalysis(Analysis):
         :param res: unformatted results
         :return: formatted results
         """
+        try:
+            dr1 = self.data.index
+            dr2 = pd.date_range(dr1[-1] + (dr1[-1] - dr1[-2]), periods=self.n_predictions)
 
-        dr1 = self.data.index
-        dr2 = pd.date_range(dr1[-1] + (dr1[-1] - dr1[-2]), periods=self.n_predictions)
+            idx = dr1.append(dr2)
 
-        idx = dr1.append(dr2)
+            out = pd.DataFrame(res[0], idx, ['val_pred'])
 
-        out = pd.DataFrame(res[0], idx, ['val_pred'])
+            out['val_low'] = res[1]
+            out['val_up'] = res[2]
 
-        out['val_low'] = res[1]
-        out['val_up'] = res[2]
-
-        return out
+            return out
+        except Exception as err:
+            self.logger.error("Output preparation: " + str(err))
+            raise Exception("Output preparation: " + str(err))

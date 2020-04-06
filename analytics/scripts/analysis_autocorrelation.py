@@ -39,6 +39,7 @@ class AutocorrelationAnalysis(Analysis):
             return out
         except Exception as err:
             self.logger.error(err)
+            raise Exception(str(err))
 
     def _analyze(self, p, d):
         try:
@@ -60,10 +61,14 @@ class AutocorrelationAnalysis(Analysis):
         try:
             # Fill NaNs and select only 1st column
             if data is not None:
+                if data.empty:
+                    raise Exception("Empty DataFrame")
                 dat = data.dropna(how='any')
                 dat = dat[dat.columns[0]]
+                if data.empty:
+                    raise Exception("Empty DataFrame after preprocessing")
             else:
-                dat = None
+                raise Exception("DataFrame is None")
             self.logger.debug("DataFrame preprocessed")
             return dat
         except Exception as err:
@@ -92,7 +97,7 @@ class AutocorrelationAnalysis(Analysis):
             self.logger.debug("Parsed parameter 'step': " + str(step))
             return step
         except Exception as err:
-            self.logger.debug("Wrong parameter 'step': " + str(parameters['step']) + " " + str(err))
+            self.logger.error("Wrong parameter 'step': " + str(parameters['step']) + " " + str(err))
             raise Exception("Wrong parameter 'step': " + str(parameters['step']) + " " + str(err))
 
     def _prepare_for_output(self, p, d, res):
@@ -102,7 +107,10 @@ class AutocorrelationAnalysis(Analysis):
 
         :return: formatted results
         """
-
-        idx = d.index[:len(d) - 1:p['step']]  # dummy index
-        o = pd.DataFrame(res, idx, ['value_autocorrelation'])
-        return o.fillna(0.)
+        try:
+            idx = d.index[:len(d) - 1:p['step']]  # dummy index
+            o = pd.DataFrame(res, idx, ['value_autocorrelation'])
+            return o.fillna(0.)
+        except Exception as err:
+            self.logger.error("Output preparation: " + str(err))
+            raise Exception("Output preparation: " + str(err))

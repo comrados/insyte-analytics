@@ -44,6 +44,7 @@ class PeakPredictionStatisticalAnalysis(Analysis):
             return out
         except Exception as err:
             self.logger.error(err)
+            raise Exception(str(err))
 
     def _analyze(self, p, d):
         try:
@@ -75,7 +76,7 @@ class PeakPredictionStatisticalAnalysis(Analysis):
             self.probabs = self._load_probabs(self.model)
             self.logger.debug("Model loaded from: " + str(self.model))
         except Exception as err:
-            self.logger.debug("Can't load model: " + str(self.model) + " " + str(err))
+            self.logger.error("Can't load model: " + str(self.model) + " " + str(err))
             raise Exception("Can't load model: " + str(self.model) + " " + str(err))
 
     def _check_month(self):
@@ -87,7 +88,7 @@ class PeakPredictionStatisticalAnalysis(Analysis):
 
             self.logger.debug("Parsed parameter 'month': " + str(self.month))
         except Exception as err:
-            self.logger.debug("Wrong parameter 'month': " + str(self.month) + " " + str(err))
+            self.logger.error("Wrong parameter 'month': " + str(self.month) + " " + str(err))
             raise Exception("Wrong parameter 'month': " + str(self.month) + " " + str(err))
 
     def _check_year(self):
@@ -99,7 +100,7 @@ class PeakPredictionStatisticalAnalysis(Analysis):
 
             self.logger.debug("Parsed parameter 'year': " + str(self.year))
         except Exception as err:
-            self.logger.debug("Wrong parameter 'year': " + str(self.year) + " " + str(err))
+            self.logger.error("Wrong parameter 'year': " + str(self.year) + " " + str(err))
             raise Exception("Wrong parameter 'year': " + str(self.year) + " " + str(err))
 
     @staticmethod
@@ -144,6 +145,10 @@ class PeakPredictionStatisticalAnalysis(Analysis):
         """
         Postprocesses DataFrame
         """
-        new_names = {col: ('val' + str(i)) for i, col in enumerate(res.columns)}
-        res.rename(columns=new_names, inplace=True)
-        return res
+        try:
+            new_names = {col: ('val' + str(i)) for i, col in enumerate(res.columns)}
+            res.rename(columns=new_names, inplace=True)
+            return res
+        except Exception as err:
+            self.logger.error("Output preparation: " + str(err))
+            raise Exception("Output preparation: " + str(err))

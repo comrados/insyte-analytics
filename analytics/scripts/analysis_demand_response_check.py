@@ -51,6 +51,7 @@ class DemandResponseCheckAnalysis(Analysis):
             return out
         except Exception as err:
             self.logger.error(err)
+            raise Exception(str(err))
 
     def _analyze(self, p, d):
         try:
@@ -131,9 +132,11 @@ class DemandResponseCheckAnalysis(Analysis):
         try:
             # Fill NaNs
             if data is not None:
+                if data.empty:
+                    raise Exception("Empty DataFrame")
                 dat = data.fillna(0.)
             else:
-                dat = None
+                raise Exception("DataFrame is None")
             self.logger.debug("DataFrame preprocessed")
             return dat
         except Exception as err:

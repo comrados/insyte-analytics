@@ -40,6 +40,7 @@ class SatisticsNormalizationAnalysis(Analysis):
             return out
         except Exception as err:
             self.logger.error(err)
+            raise Exception(str(err))
 
     def _analyze(self, p, d):
         try:
@@ -59,11 +60,15 @@ class SatisticsNormalizationAnalysis(Analysis):
         """
         self.logger.debug("Preprocessing DataFrame")
         try:
-            # Fill NaNs
+            # Fill NaNs and select only 1st column
             if data is not None:
+                if data.empty:
+                    raise Exception("Empty DataFrame")
                 dat = data.dropna(how='any')
+                if data.empty:
+                    raise Exception("Empty DataFrame after preprocessing")
             else:
-                dat = None
+                raise Exception("DataFrame is None")
             self.logger.debug("DataFrame preprocessed")
             return dat
         except Exception as err:
@@ -79,7 +84,7 @@ class SatisticsNormalizationAnalysis(Analysis):
             min_val = self._check_min_value(parameters)
             max_val = self._check_max_value(parameters)
             if min_val >= max_val:
-                raise Exception("'min_value' is greater or equal to 'max_value'")
+                raise Exception("'min_value' >= 'max_value': " + str(min_val) + ' >= ' + str(max_val))
             else:
                 return {'min_value': min_val, 'max_value': max_val}
         except Exception as err:
@@ -95,7 +100,8 @@ class SatisticsNormalizationAnalysis(Analysis):
             self.logger.debug("Parsed parameter 'min_value': " + str(min_value))
             return min_value
         except Exception as err:
-            self.logger.debug("Parameter 'min_value' can't be parsed: " + str(parameters['min_value']) + ' ' + str(err))
+            self.logger.error("Parameter 'min_value' can't be parsed: " + str(parameters['min_value']) + ' ' + str(err))
+            raise Exception("Parameter 'min_value' can't be parsed: " + str(parameters['min_value']) + ' ' + str(err))
 
     def _check_max_value(self, parameters):
         """
@@ -106,7 +112,8 @@ class SatisticsNormalizationAnalysis(Analysis):
             self.logger.debug("Parsed parameter 'max_value': " + str(max_value))
             return max_value
         except Exception as err:
-            self.logger.debug("Parameter 'max_value' can't be parsed: " + str(parameters['max_value']) + ' ' + str(err))
+            self.logger.error("Parameter 'max_value' can't be parsed: " + str(parameters['max_value']) + ' ' + str(err))
+            raise Exception("Parameter 'max_value' can't be parsed: " + str(parameters['max_value']) + ' ' + str(err))
 
     def _normalize(self, p, d):
         """
@@ -139,6 +146,10 @@ class SatisticsNormalizationAnalysis(Analysis):
         """
         Postprocesses DataFrame
         """
-        new_names = {col: ('val' + str(i)) for i, col in enumerate(res.columns)}
-        res.rename(columns=new_names, inplace=True)
-        return res
+        try:
+            new_names = {col: ('val' + str(i)) for i, col in enumerate(res.columns)}
+            res.rename(columns=new_names, inplace=True)
+            return res
+        except Exception as err:
+            self.logger.error("Output preparation: " + str(err))
+            raise Exception("Output preparation: " + str(err))

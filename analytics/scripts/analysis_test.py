@@ -40,6 +40,7 @@ class TestAnalysis(Analysis):
             return out
         except Exception as err:
             self.logger.error(err)
+            raise Exception(str(err))
 
     def _parse_parameters(self, parameters):
         """
@@ -63,9 +64,11 @@ class TestAnalysis(Analysis):
         try:
             # Fill NaNs
             if data is not None:
+                if data.empty:
+                    raise Exception("Empty DataFrame")
                 dat = data.fillna(0.)
             else:
-                dat = None
+                raise Exception("DataFrame is None")
             self.logger.debug("DataFrame preprocessed")
             return dat
         except Exception as err:
@@ -80,7 +83,7 @@ class TestAnalysis(Analysis):
             self.logger.debug("Parsed parameter 'operation': " + str(parameters['operation'][0]))
             return parameters['operation'][0]
         else:
-            self.logger.debug("Wrong parameter 'operation': " + str(parameters['operation']))
+            self.logger.error("Wrong parameter 'operation': " + str(parameters['operation']))
             raise Exception("Wrong parameter 'operation': " + str(parameters['operation']))
 
     def _check_value(self, parameters):
@@ -91,16 +94,20 @@ class TestAnalysis(Analysis):
             self.logger.debug("Parsed parameter 'value': " + str(float(parameters['value'][0])))
             return float(parameters['value'][0])
         except Exception as err:
-            self.logger.debug("Wrong parameter 'value': " + str(parameters['value']) + " " + str(err))
+            self.logger.error("Wrong parameter 'value': " + str(parameters['value']) + " " + str(err))
             raise Exception("Wrong parameter 'value': " + str(parameters['value']) + " " + str(err))
 
     def _prepare_for_output(self, p, d, res):
         """
         Postprocesses DataFrame
         """
-        new_names = {col: ('val' + str(i)) for i, col in enumerate(res.columns)}
-        res.rename(columns=new_names, inplace=True)
-        return res
+        try:
+            new_names = {col: ('val' + str(i)) for i, col in enumerate(res.columns)}
+            res.rename(columns=new_names, inplace=True)
+            return res
+        except Exception as err:
+            self.logger.error("Output preparation: " + str(err))
+            raise Exception("Output preparation: " + str(err))
 
     def _analyze(self, p, d):
         """

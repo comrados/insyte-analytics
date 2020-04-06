@@ -4,35 +4,42 @@ import importlib
 
 logger = logging.getLogger('analytics')
 
-# import all scripts from 'analytics/scripts' and 'analytics/_in_development' folders
-analytics_dir = "analytics"
-analysis_scripts_dir = "scripts"
-in_development_scripts_dir = "_in_development"
 
-ANALYSIS = {}  # name : class
-ANALYSIS_ARGS = {}  # name : analysis arguments
+def import_functions():
+    # import all scripts from 'analytics/scripts' and 'analytics/_in_development' folders
+    analytics_dir = "analytics"
+    analysis_scripts_dir = "scripts"
+    in_development_scripts_dir = "_in_development"
 
-# loop through directories with scripts
-for scripts_dir in [analysis_scripts_dir, in_development_scripts_dir]:
-    scripts_list = os.listdir(os.path.join(analytics_dir, scripts_dir))
-    for script in scripts_list:
-        name, ext = os.path.splitext(script)
-        if name.startswith("analysis_"):
-            # try to import and update dictionaries
-            try:
-                i = importlib.import_module(analytics_dir + "." + scripts_dir + "." + name)
-                # imported module constants
-                a_name = getattr(i, "ANALYSIS_NAME")
-                a_class_name = getattr(i, "CLASS_NAME")
-                a_class = getattr(i, a_class_name)
-                a_args = getattr(i, "A_ARGS")
-                a_args["folder"] = scripts_dir
-                # update dictionaries
-                ANALYSIS[a_name] = a_class
-                ANALYSIS_ARGS[a_name] = a_args
-                logger.debug("Module imported: " + name)
-            except Exception as err:
-                logger.error("Failed to import module: " + name + ", " + str(err))
+    analysis = {}  # name : class
+    analysis_args = {}  # name : analysis arguments
+
+    # loop through directories with scripts
+    for scripts_dir in [analysis_scripts_dir, in_development_scripts_dir]:
+        scripts_list = os.listdir(os.path.join(analytics_dir, scripts_dir))
+        for script in scripts_list:
+            name, ext = os.path.splitext(script)
+            if name.startswith("analysis_"):
+                # try to import and update dictionaries
+                try:
+                    i = importlib.import_module(analytics_dir + "." + scripts_dir + "." + name)
+                    # imported module constants
+                    a_name = getattr(i, "ANALYSIS_NAME")
+                    a_class_name = getattr(i, "CLASS_NAME")
+                    a_class = getattr(i, a_class_name)
+                    a_args = getattr(i, "A_ARGS")
+                    a_args["folder"] = scripts_dir
+                    # update dictionaries
+                    analysis[a_name] = a_class
+                    analysis_args[a_name] = a_args
+                    logger.debug("Module imported: " + name)
+                except Exception as err:
+                    logger.error("Failed to import module: " + name + ", " + str(err))
+    return analysis, analysis_args
+
+
+ANALYSIS, ANALYSIS_ARGS = import_functions()
+print()
 
 
 def check_analysis(analysis_name):
@@ -108,10 +115,14 @@ def _analysis_caller(analysis_name, analysis_arguments, loaded_data):
     """
     Caller function
     """
-    if analysis_name in ANALYSIS:
-        result = ANALYSIS[analysis_name]().analyze(analysis_arguments, loaded_data)
-    else:
-        logger.error("Analysis function doesn't exist: " + analysis_name)
-        raise Exception("Analysis function doesn't exist: " + analysis_name)
+    try:
+        if analysis_name in ANALYSIS:
+            result = ANALYSIS[analysis_name]().analyze(analysis_arguments, loaded_data)
+        else:
+            logger.error("Analysis function doesn't exist: " + analysis_name)
+            raise Exception("Analysis function doesn't exist: " + analysis_name)
+    except Exception as exc:
+        logger.error(str(exc))
+        raise Exception(str(exc))
 
     return result

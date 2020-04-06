@@ -43,6 +43,7 @@ class Analysis:
             return out
         except Exception as err:
             self.logger.error(err)
+            raise Exception(str(err))
 
     def _parse_parameters(self, parameters):
         """
