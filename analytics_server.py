@@ -198,6 +198,8 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
         """
         try:
             db_io = self.json["db_io_parameters"]
+            if db_io['limit'] == 'null':
+                db_io['limit'] = None
             if 'r' in db_io['mode']:
                 tu, di, dsi = self._check_reading_lengths(db_io['time_upload'], db_io['device_id'],
                                                           db_io['data_source_id'])
