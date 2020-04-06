@@ -12,6 +12,7 @@ A_ARGS = {"analysis_code": "CORRELATION",
           "input": "Data of arbitrary dimensionality (N time series)",
           "action": "Calculates NxN correlation matrix based on the selected calculation method",
           "output": "NxN covariation matrix represented as 1 time series of NxN length",
+          "mode": "rw",
           "parameters": [
               {"name": "method", "count": 1, "type": "SELECT", "options": ["pearson", "kendall", "spearman"],
                "info": "pearson - Pearson correlation coefficient, "

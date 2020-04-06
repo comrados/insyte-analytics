@@ -15,6 +15,7 @@ A_ARGS = {"analysis_code": "PEAK_PREDICTION_ML",
           "input": "None",
           "action": "Returns the probability of peak consumption hour for each given day (weather forecast based)",
           "output": "1 time series with predictions based on input data",
+          "mode": "w",
           "parameters": [
               {"name": "model", "count": 1, "type": "SELECT", "options": ["nn", "rf"],
                "info": "model selection: nn - neural net, rf - random forest"},

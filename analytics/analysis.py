@@ -12,6 +12,7 @@ A_ARGS = {"analysis_code": "ANALYSIS",
           "input": "input data description",
           "action": "analysis action description",
           "output": "output data description",
+          "mode": "rw",
           "parameters": [
               {"name": "p1", "count": 1, "type": "SELECT", "options": ["o1", "o2", "o3"], "info": "p1 description"},
               {"name": "p2", "count": 1, "type": "INTEGER", "info": "p2 description"},

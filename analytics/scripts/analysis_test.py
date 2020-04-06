@@ -11,6 +11,7 @@ A_ARGS = {"analysis_code": "TEST",
           "input": "Data of arbitrary dimensionality (N time series)",
           "action": "Increases/decreases/multiplies/divides all input data by specified 'value'",
           "output": "Data of the dimensionality similar to the input one (N modified time series)",
+          "mode": "rw",
           "parameters": [
               {"name": "operation", "count": 1, "type": "SELECT", "options": ["add", "sub", "mul", "div"],
                "info": "operation to execute: add, subtract, multiply or divide"},

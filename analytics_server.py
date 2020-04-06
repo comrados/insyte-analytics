@@ -25,7 +25,7 @@ def parse_args(args):
 
     # server
     server_group = parser.add_argument_group('Server', "Server's settings")
-    server_group.add_argument("-sh", "--srv-host", dest="srv_host", default="localhost", help="server's host address")
+    server_group.add_argument("-sh", "--srv-host", dest="srv_host", default="92.53.78.60", help="server's host address")
     server_group.add_argument("-sp", "--srv-port", dest="srv_port", default=65000, type=int, help="server's port")
 
     # database
@@ -129,13 +129,13 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
             if self.path in ["/status/", "/status", "/status.json"]:
                 logger.info("GET 'status' request from " + client)
                 self.send_response(200)
-                self.send_header('Content-type', 'text/json')
+                self.send_header('Content-type', 'application/json')
                 self.end_headers()
                 self.wfile.write(bytes(json.dumps(self._get_status(), indent=4, sort_keys=True), 'utf-8'))
             elif self.path in ["/functions/", "/functions", "/functions.json"]:
                 logger.info("GET 'functions' request from " + client)
                 self.send_response(200)
-                self.send_header('Content-type', 'text/json')
+                self.send_header('Content-type', 'application/json')
                 self.end_headers()
                 self.wfile.write(bytes(json.dumps(analytics.ANALYSIS_ARGS, indent=4, sort_keys=True), 'utf-8'))
             else:

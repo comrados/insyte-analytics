@@ -12,6 +12,7 @@ A_ARGS = {"analysis_code": "NORMALIZATION",
           "input": "N time series",
           "action": "Normalizes the data (linear normalization)",
           "output": "N normalized time series",
+          "mode": "rw",
           "parameters": [
               {"name": "min_value", "count": 1, "type": "FLOAT", "info": "lower bond"},
               {"max_value": "beta", "count": 1, "type": "FLOAT", "info": "upper bond"}

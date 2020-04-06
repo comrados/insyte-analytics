@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="12f8726f-fb14-4ba6-9c8b-89c2ed12558e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/_in_development/analysis_evaluation_brutlag.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/_in_development/analysis_evaluation_brutlag.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/_in_development/analysis_prediction_holt_winters_auto.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/_in_development/analysis_prediction_holt_winters_auto.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/analytics/analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/analysis.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_autocorrelation.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_autocorrelation.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_correlation.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_correlation.py" afterDir="false" />
@@ -22,9 +19,7 @@
       <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_statistics_normalization.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_statistics_normalization.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/analytics_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics_server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/influx_server_io.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/influx_server_io.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/analytics_server.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/analytics_server.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/server_test_jsons/server_a_demand_response_check.json" beforeDir="false" afterPath="$PROJECT_DIR$/tests/server_test_jsons/server_a_demand_response_check.json" afterDir="false" />
     </list>
     <list id="8f3402cf-8e05-46bd-8019-c70b228793b0" name="Revert: demand-response" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -621,12 +616,8 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.test_read" />
-      <item itemvalue="Python.test_influx" />
-      <item itemvalue="Python.test_db_module" />
+      <item itemvalue="Python.analytics_server" />
       <item itemvalue="Python.args_to_json" />
-      <item itemvalue="Python.test_insert" />
-      <item itemvalue="Python.test_delete" />
       <item itemvalue="Python.insyte-analytics demand-response-baseline" />
       <item itemvalue="Python.insyte-analytics demand-response-boolean" />
       <item itemvalue="Python.insyte-analytics demand-response-check" />
@@ -644,8 +635,12 @@
       <item itemvalue="Python.insyte_analytics prediction holt winters auto" />
       <item itemvalue="Python.insyte_analytics prediction holt winters" />
       <item itemvalue="Python.insyte_analytics test" />
+      <item itemvalue="Python.test_db_module" />
+      <item itemvalue="Python.test_delete" />
       <item itemvalue="Python.test_import" />
-      <item itemvalue="Python.analytics_server" />
+      <item itemvalue="Python.test_influx" />
+      <item itemvalue="Python.test_insert" />
+      <item itemvalue="Python.test_read" />
     </list>
     <recent_temporary>
       <list>
@@ -678,13 +673,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1555416435785</updated>
-    </task>
-    <task id="LOCAL-00007" summary="io dix">
-      <created>1557221111826</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1557221111826</updated>
     </task>
     <task id="LOCAL-00008" summary="io fix">
       <created>1557221565228</created>
@@ -1022,7 +1010,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585526466599</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="server influx scripts new scheme">
+      <created>1585601105621</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1585601105621</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -1054,7 +1049,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="demand response expected data calculation" />
     <MESSAGE value="prediction holt-winters/brutlag" />
     <MESSAGE value="output fix" />
     <MESSAGE value="new output" />
@@ -1079,13 +1073,14 @@
     <MESSAGE value="server influx test JSONs" />
     <MESSAGE value="server influx micro fixes" />
     <MESSAGE value="server influx scripts import" />
-    <option name="LAST_COMMIT_MESSAGE" value="server influx scripts import" />
+    <MESSAGE value="server influx scripts new scheme" />
+    <option name="LAST_COMMIT_MESSAGE" value="server influx scripts new scheme" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585563988819">
+    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585602066540">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1585563988819" />
+    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1585602066540" />
     <state x="451" y="231" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1173@67.27.1853.1173" timestamp="1584030247280" />
     <state x="676" y="280" width="624" height="544" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1584016649868">
       <screen x="67" y="27" width="1853" height="1053" />
@@ -1099,10 +1094,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="751" y="205" key="#xdebugger.evaluate/67.27.1853.1053@67.27.1853.1053" timestamp="1581859115500" />
-    <state x="506" y="92" width="1146" height="810" key="CommitChangelistDialog2" timestamp="1585526466424">
+    <state x="506" y="92" width="1146" height="810" key="CommitChangelistDialog2" timestamp="1585601105369">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="506" y="92" width="1146" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1585526466424" />
+    <state x="506" y="92" width="1146" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1585601105369" />
     <state x="432" y="111" key="CommitChangelistDialog2/67.27.1853.1173@67.27.1853.1173" timestamp="1584032375344" />
     <state x="167" y="125" width="1653" height="855" key="DiffContextDialog" timestamp="1584018309854">
       <screen x="67" y="27" width="1853" height="1053" />
@@ -1116,63 +1111,63 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="67" y="27" width="1843" height="1053" key="FileDocumentManager.FileCacheConflict/67.27.1853.1053@67.27.1853.1053" timestamp="1585576756747" />
-    <state width="1830" height="190" key="GridCell.Tab.0.bottom" timestamp="1585600741808">
+    <state width="1830" height="241" key="GridCell.Tab.0.bottom" timestamp="1585692569470">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="190" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1585600741808" />
+    <state width="1830" height="241" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1585692569470" />
     <state width="1830" height="134" key="GridCell.Tab.0.bottom/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579755" />
-    <state width="1830" height="190" key="GridCell.Tab.0.center" timestamp="1585600741808">
+    <state width="1830" height="241" key="GridCell.Tab.0.center" timestamp="1585692569469">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="190" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1585600741808" />
+    <state width="1830" height="241" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1585692569469" />
     <state width="1830" height="134" key="GridCell.Tab.0.center/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579754" />
-    <state width="1830" height="190" key="GridCell.Tab.0.left" timestamp="1585600741807">
+    <state width="1830" height="241" key="GridCell.Tab.0.left" timestamp="1585692569469">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="190" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1585600741807" />
+    <state width="1830" height="241" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1585692569469" />
     <state width="1830" height="134" key="GridCell.Tab.0.left/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579754" />
-    <state width="1830" height="190" key="GridCell.Tab.0.right" timestamp="1585600741808">
+    <state width="1830" height="241" key="GridCell.Tab.0.right" timestamp="1585692569470">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="190" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1585600741808" />
+    <state width="1830" height="241" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1585692569470" />
     <state width="1830" height="134" key="GridCell.Tab.0.right/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579755" />
-    <state width="1830" height="190" key="GridCell.Tab.1.bottom" timestamp="1585600745628">
+    <state width="1830" height="241" key="GridCell.Tab.1.bottom" timestamp="1585692569470">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="190" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1585600745628" />
+    <state width="1830" height="241" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1585692569470" />
     <state width="1830" height="406" key="GridCell.Tab.1.bottom/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579750" />
-    <state width="1830" height="190" key="GridCell.Tab.1.center" timestamp="1585600745628">
+    <state width="1830" height="241" key="GridCell.Tab.1.center" timestamp="1585692569470">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="190" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1585600745628" />
+    <state width="1830" height="241" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1585692569470" />
     <state width="1830" height="406" key="GridCell.Tab.1.center/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579749" />
-    <state width="1830" height="190" key="GridCell.Tab.1.left" timestamp="1585600745628">
+    <state width="1830" height="241" key="GridCell.Tab.1.left" timestamp="1585692569470">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="190" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1585600745628" />
+    <state width="1830" height="241" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1585692569470" />
     <state width="1830" height="406" key="GridCell.Tab.1.left/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579749" />
-    <state width="1830" height="190" key="GridCell.Tab.1.right" timestamp="1585600745628">
+    <state width="1830" height="241" key="GridCell.Tab.1.right" timestamp="1585692569470">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="190" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1585600745628" />
+    <state width="1830" height="241" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1585692569470" />
     <state width="1830" height="406" key="GridCell.Tab.1.right/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579749" />
     <state x="629" y="228" key="SettingsEditor" timestamp="1581414971946">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="629" y="228" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1581414971946" />
-    <state x="588" y="288" width="800" height="551" key="Vcs.Push.Dialog.v2" timestamp="1585526468509">
+    <state x="588" y="288" width="800" height="551" key="Vcs.Push.Dialog.v2" timestamp="1585601117929">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1585526468509" />
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1585601117929" />
     <state x="588" y="318" width="800" height="551" key="Vcs.Push.Dialog.v2/67.27.1853.1173@67.27.1853.1173" timestamp="1584032377142" />
     <state width="926" height="527" key="XDebugger.FullValuePopup" timestamp="1585594664870">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state width="926" height="527" key="XDebugger.FullValuePopup/67.27.1853.1053@67.27.1853.1053" timestamp="1585594664870" />
-    <state x="649" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1585562579704">
+    <state x="649" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1585735397913">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="649" y="380" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1585562579704" />
+    <state x="649" y="380" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1585735397913" />
     <state x="761" y="472" width="464" height="160" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1581874594034">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -1252,67 +1247,67 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/analytics/scripts/analysis_autocorrelation.py</url>
-          <line>37</line>
+          <line>38</line>
           <option name="timeStamp" value="167" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/analytics/scripts/analysis_correlation.py</url>
-          <line>40</line>
+          <line>41</line>
           <option name="timeStamp" value="169" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/analytics/scripts/analysis_statistics_normalization.py</url>
-          <line>38</line>
+          <line>39</line>
           <option name="timeStamp" value="170" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/analytics/scripts/analysis_peak_prediction_ml.py</url>
-          <line>51</line>
+          <line>52</line>
           <option name="timeStamp" value="171" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/analytics/scripts/analysis_peak_prediction_statistical.py</url>
-          <line>42</line>
+          <line>43</line>
           <option name="timeStamp" value="172" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/analytics/scripts/analysis_prediction_holt_winters.py</url>
-          <line>44</line>
+          <line>45</line>
           <option name="timeStamp" value="173" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/analytics/scripts/analysis_demand_response_baseline.py</url>
-          <line>43</line>
+          <line>44</line>
           <option name="timeStamp" value="179" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/analytics/scripts/analysis_demand_response_boolean.py</url>
-          <line>49</line>
+          <line>50</line>
           <option name="timeStamp" value="180" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/analytics/scripts/analysis_demand_response_check.py</url>
-          <line>49</line>
+          <line>50</line>
           <option name="timeStamp" value="181" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/analytics/scripts/analysis_demand_response_deviation.py</url>
-          <line>49</line>
+          <line>50</line>
           <option name="timeStamp" value="182" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/analytics/scripts/analysis_demand_response_discharge.py</url>
-          <line>46</line>
+          <line>47</line>
           <option name="timeStamp" value="183" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/analytics/scripts/analysis_demand_response_expected.py</url>
-          <line>47</line>
+          <line>48</line>
           <option name="timeStamp" value="184" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/analytics/scripts/analysis_demand_response_rrmse.py</url>
-          <line>49</line>
+          <line>50</line>
           <option name="timeStamp" value="185" />
         </line-breakpoint>
       </breakpoints>

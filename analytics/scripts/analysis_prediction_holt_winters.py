@@ -13,6 +13,7 @@ A_ARGS = {"analysis_code": "PREDICTION-HOLT-WINTERS",
           "input": "1 time series",
           "action": "Predicts future values and builds confidence interval",
           "output": "3 time series with predictions and 2 confidence intervals (lower and upper bonds)",
+          "mode": "rw",
           "parameters": [
               {"name": "alpha", "count": 1, "type": "FLOAT", "info": "smoothing hyperparameter"},
               {"name": "beta", "count": 1, "type": "FLOAT", "info": "trend hyperparameter"},

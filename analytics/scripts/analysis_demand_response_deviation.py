@@ -15,6 +15,7 @@ A_ARGS = {"analysis_code": "DEMAND_RESPONSE_DEVIATION",
           "input": "1 time series",
           "action": "Calculates the deviation of demand-response",
           "output": "1 time series",
+          "mode": "rw",
           "parameters": [
               {"name": "target_day", "count": 1, "type": "DATE", "info": "target day for analysis"},
               {"name": "exception_days", "count": -1, "type": "DATE", "info": "days to exclude from analysis"},
