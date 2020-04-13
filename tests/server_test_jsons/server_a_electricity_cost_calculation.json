@@ -1,0 +1,49 @@
+{
+  "db_io_parameters": {
+    "mode": "r",
+    "result_id": [
+      "00000000-0000-0000-0000-000000000012"
+    ],
+    "device_id": [
+      "c98fda23-9298-4521-af43-64eb46faf13b"
+    ],
+    "data_source_id": [
+      "160"
+    ],
+    "time_upload": [
+      "2019-12-01_00:00:00+0000",
+      "2019-12-31_23:00:00+0000"
+    ],
+    "limit": 300
+  },
+  "analysis_parameters": {
+    "analysis": "electricity-cost-calculation",
+    "analysis_arguments": {
+      "method": [
+        "four_category"
+      ],
+      "region": [
+        "RU-SVE"
+      ],
+      "retailer": [
+        "ORENBENE_PSVERDLE"
+      ],
+      "time_four_cat": [
+        ["07:00:00","12:59:00"],
+        ["14:00:00","21:59:00"]
+      ],
+      "tariff_sales": [
+        0.47000
+      ],
+      "tariff_losses_four": [
+        670.99
+      ],
+      "tariff_maintenance_four": [
+        1247937.88
+      ],
+      "tariff_losses_three": [
+        3.29579
+      ]
+    }
+  }
+}
