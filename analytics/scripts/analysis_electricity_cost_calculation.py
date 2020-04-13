@@ -26,13 +26,13 @@ A_ARGS = {"analysis_code": "CORRELATION",
                "info": "Sales companies listed on the atsenergo.ru website"},
               {"name": "time_four_cat", "count": 1, "type": "DICT OF TIME",
                "info": 'Set of dictionaries containing time intervals. ["07:00:00","12:59:00"],["14:00:00","21:59:00"] '},
-              {"name": "tariff_losses_three", "count": 1, "type": "FLOAT", "info": "Rate for payment of technological losses, category: 3"},
+              {"name": "tariff_one_ee", "count": 1, "type": "FLOAT", "info": "Maximum level of unregulated prices (RUB/MWh): 1"},
+              {"name": "tariff_losses_three", "count": 1, "type": "FLOAT", "info": "Rate for payment of technological losses, category: 1, 2, 3"},
               {"name": "tariff_maintenance_four", "count": 1, "type": "FLOAT", "info": "Tariff for maintenance of the power supply network, category: 4"},
               {"name": "tariff_losses_four", "count": 1, "type": "FLOAT", "info": "Rate for payment of technological losses, category: 4"},
               {"name": "tariff_sales", "count": 1, "type": "FLOAT", "info": "Rate for payment of technological losses, categories: 3, 4"},
               {"name": "actual_volume_other_service", "count": 1, "type": "FLOAT", "info": "Actual volume of electricity consumption by the guaranteeing supplier on the wholesale market, MW·h"},
               {"name": "volume_other_service", "count": 1, "type": "FLOAT", "info": "Volume of purchase of electric energy by the guaranteeing supplier from producers of electric energy (capacity) on retail markets, MW*h"},
-
           ]}
 
 class ElectricityCostCalculationAnalysis(Analysis):
@@ -52,11 +52,9 @@ class ElectricityCostCalculationAnalysis(Analysis):
         try:
             p = self._parse_parameters(parameters)
             d = self._preprocess_df(data)
-            print(d)
             res = self._analyze(p, d)
-            pd.options.display.max_columns = 100
-            print(res)
-            # out = self._prepare_for_output(p, d, res)
+            # pd.options.display.max_columns = 100
+            # print(res)
             return res
         except Exception as err:
             self.logger.error(err)
@@ -127,7 +125,7 @@ class ElectricityCostCalculationAnalysis(Analysis):
         """
         Parameters parsing (type conversion, modification, etc).
         """
-        self.logger.debug("Parsing parameters for four category")
+        self.logger.debug("Parsing parameters for the fourth category")
         try:
             parameters = p['all']
             pn = dict()
@@ -146,7 +144,7 @@ class ElectricityCostCalculationAnalysis(Analysis):
         """
         Parameters parsing (type conversion, modification, etc).
         """
-        self.logger.debug("Parsing parameters for three category")
+        self.logger.debug("Parsing parameters for the third category")
         try:
             parameters = p['all']
             pn = dict()
@@ -158,6 +156,21 @@ class ElectricityCostCalculationAnalysis(Analysis):
         except Exception as err:
             self.logger.error("Error in _parse_parameters_three_cat: " + str(err))
             raise Exception("Error in _parse_parameters_three_cat: " + str(err))
+
+    def _parse_parameters_one_cat(self, p):
+        """
+        Parameters parsing (type conversion, modification, etc).
+        """
+        self.logger.debug("Parsing parameters for the first category")
+        try:
+            parameters = p['all']
+            pn = dict()
+            pn['tariff_one_ee'] = self._check_float(parameters['tariff_one_ee'][0])
+            pn['tariff_losses_three'] = self._check_float(parameters['tariff_losses_three'][0])
+            return pn
+        except Exception as err:
+            self.logger.error("Error in _parse_parameters_one_cat: " + str(err))
+            raise Exception("Error in _parse_parameters_one_cat: " + str(err))
 
     def _check_time_dict(self, times_dict):
         """
@@ -479,7 +492,6 @@ class ElectricityCostCalculationAnalysis(Analysis):
                 t = t + datetime.timedelta(hours=1)
                 val = hourly_prices.loc[hourly_prices.index[-24], 'value']
                 add = pd.DataFrame(data = {'value':[val], 'time':[t]})
-                print(add)
                 hourly_prices = hourly_prices.append(add)
             return hourly_prices.reset_index(drop=True)
         except Exception as err:
@@ -501,8 +513,7 @@ class ElectricityCostCalculationAnalysis(Analysis):
             self.logger.error("Incorrect tariff power: " + str(err))
             raise Exception("Incorrect tariff power: " + str(err))
 
-    #стоимость ЭЭ
-    def _calculate_ee (self, all_data, price):
+    def _calculate_ee(self, all_data, price):
         """
         Calculates the cost of electricity
         :param all_data:
@@ -515,7 +526,7 @@ class ElectricityCostCalculationAnalysis(Analysis):
             self.logger.error("Error in _calculate_ee: " + str(err))
             raise Exception("Error in _calculate_ee: " + str(err))
 
-    def _sum_peak (self, all_data, peaks, tariff_power):
+    def _sum_peak(self, all_data, peaks, tariff_power):
         """
         Calculates the cost of power
         :param all_data:
@@ -534,33 +545,19 @@ class ElectricityCostCalculationAnalysis(Analysis):
             self.logger.error("Error in _sum_peak: " + str(err))
             raise Exception("Error in _sum_peak: " + str(err))
 
-    def _transfer (self, all_data, tariff_losses):
+    def _multiplication_data_tariff(self, all_data, tariff):
         """
-        Calculates the cost of services for the transfer of 3 price categories
+        Multiplies the amount of kW by the tariff
         :param all_data:
-        :param tariff_losses:
+        :param tariff:
         :return: float result
         """
         try:
-            return all_data.value.sum()*tariff_losses
+            return all_data.value.sum()*tariff
         except Exception as err:
-            self.logger.error("Error in _transfer: " + str(err))
-            raise Exception("Error in _transfer: " + str(err))
+            self.logger.error("Error in _multiplication_data_tariff: " + str(err))
+            raise Exception("Error in _multiplication_data_tariff: " + str(err))
 
-    def _sales_add (self, all_data, tariff_sales):
-        """
-        Calculates the cost of the sales markup
-        :param all_data:
-        :param tariff_sales:
-        :return: float result
-        """
-        try:
-            return all_data.value.sum()*tariff_sales
-        except Exception as err:
-            self.logger.error("Error in _sales_add: " + str(err))
-            raise Exception("Error in _sales_add: " + str(err))
-
-    # стоимость передачи
     def _maintenance(self, all_data, time_zone, tariff_maintenance):
         """
         Calculates the cost of maintenance (4 price categories)
@@ -591,20 +588,6 @@ class ElectricityCostCalculationAnalysis(Analysis):
             self.logger.error("Error in _maintenance: " + str(err))
             raise Exception("Error in _maintenance: " + str(err))
 
-
-    def _other_services (self, all_data, tariff_other_services):
-        """
-        Calculates the cost of other services
-        :param all_data:
-        :param tariff_other_services:
-        :return: float result
-        """
-        try:
-            return all_data.value.sum()*tariff_other_services
-        except Exception as err:
-            self.logger.error("Error in _sales_add: " + str(err))
-            raise Exception("Error in _sales_add: " + str(err))
-
     def _three_category(self, p, d):
         """
         Calculates the total cost for 3 price categories
@@ -628,14 +611,13 @@ class ElectricityCostCalculationAnalysis(Analysis):
             price_three_cat = self._get_hourly_prices(xls)
             tariff_power = self._get_tariff(xls)
             peaks = self._get_peaks(self._parse_xls(self._dls_calcfacthour(start_date, p)))
-
-            total = self._calculate_ee(d, price_three_cat) + self._sum_peak(d, peaks, tariff_power) + self._transfer(d, tariff_losses) + self._sales_add(d, tariff_sales_three) + self._other_services(d, tariff_other_services)
+            total = self._calculate_ee(d, price_three_cat) + self._sum_peak(d, peaks, tariff_power) + self._multiplication_data_tariff(d, tariff_losses) + self._multiplication_data_tariff(d, tariff_sales_three) + self._multiplication_data_tariff(d, tariff_other_services)
             summ_kw = d.value.sum()
-            transfer = self._transfer(d, tariff_losses)
-            sales_add = self._sales_add(d, tariff_sales_three)
+            transfer = self._multiplication_data_tariff(d, tariff_losses)
+            sales_add = self._multiplication_data_tariff(d, tariff_sales_three)
             calculate_ee = self._calculate_ee(d, price_three_cat)
             power_cost = self._sum_peak(d, peaks, tariff_power)
-            other_services = self._other_services(d, tariff_other_services)
+            other_services = self._multiplication_data_tariff(d, tariff_other_services)
             d = {'summ_kw': [summ_kw], 'transfer': [transfer], 'sales_add': [sales_add], 'calculate_ee': [calculate_ee], 'power_cost': [power_cost], 'other_services': [other_services], 'total': [total]}
             df = pd.DataFrame(data=d, index=pd.date_range(start=start_date, end=start_date))
             return df
@@ -662,30 +644,27 @@ class ElectricityCostCalculationAnalysis(Analysis):
 
             xls = self._parse_xls(self._dls_other_services(start_date))
             tariff_other_services = self._get_tariff_other_services(xls, p, pn)
-
             tariff_sales_four = pn['tariff_sales']
             tariff_losses = pn['tariff_losses_four'] / 1000
 
             time_zone = pn['time_four_cat']
-
             tariff_maintenance_four = pn['tariff_maintenance_four']
-
             xls = self._parse_xls(self._dls_retail(start_date, p))
             price_three_cat = self._get_hourly_prices(xls)
             tariff_power = self._get_tariff(xls)
             peaks = self._get_peaks(self._parse_xls(self._dls_calcfacthour(start_date, p)))
 
             total = self._calculate_ee(d, price_three_cat) + self._sum_peak(d, peaks, tariff_power) + self._maintenance(d, time_zone,
-                                                                                              tariff_maintenance_four) + self._transfer(
-                d, tariff_losses) + self._sales_add(d, tariff_sales_four) + self._other_services(d, tariff_other_services)
+                                                                                              tariff_maintenance_four) + self._multiplication_data_tariff(
+                d, tariff_losses) + self._multiplication_data_tariff(d, tariff_sales_four) + self._multiplication_data_tariff(d, tariff_other_services)
 
             summ_kw = d.value.sum()
-            transfer = self._transfer(d, tariff_losses)
-            sales_add = self._sales_add(d, tariff_sales_four)
+            transfer = self._multiplication_data_tariff(d, tariff_losses)
+            sales_add = self._multiplication_data_tariff(d, tariff_sales_four)
             calculate_ee = self._calculate_ee(d, price_three_cat)
             maintenance = self._maintenance(d, time_zone, tariff_maintenance_four)
             power_cost = self._sum_peak(d, peaks, tariff_power)
-            other_services = self._other_services(d, tariff_other_services)
+            other_services = self._multiplication_data_tariff(d, tariff_other_services)
 
             d = {'summ_kw': [summ_kw], 'transfer': [transfer], 'sales_add': [sales_add], 'calculate_ee': [calculate_ee], 'power_cost': [power_cost], 'maintenance': [maintenance], 'other_services': [other_services], 'total': [total]}
             df = pd.DataFrame(data=d, index=pd.date_range(start=start_date, end=start_date))
@@ -695,13 +674,44 @@ class ElectricityCostCalculationAnalysis(Analysis):
             self.logger.error("Error in the _four_category: " + str(err))
             raise Exception("Error in the _four_category: " + str(err))
 
+    def _one_category(self, p, d):
+        """
+        Calculates the total cost for 1 price categories
+        :param p:
+        :param d:
+        :return df: DataFrame with result
+        """
+        try:
+            try:
+                start_date = d.loc[d.index[0], 'time']
+            except Exception as err:
+                self.logger.error("Error in the start date: " + str(err))
+                raise Exception("Error in the start date: " + str(err))
+            pn = self._parse_parameters_one_cat(p)
+            tariff_one_ee = pn['tariff_one_ee']
+            tariff_losses_three = pn['tariff_losses_three']
+            transfer = self._multiplication_data_tariff(d, tariff_losses_three)
+            calculate_ee = self._multiplication_data_tariff(d, tariff_one_ee)
+            total = transfer + calculate_ee
+            summ_kw = d.value.sum()
+            d = {'summ_kw': [summ_kw], 'transfer': [transfer], 'calculate_ee': [calculate_ee], 'total': [total]}
+            df = pd.DataFrame(data=d, index=pd.date_range(start=start_date, end=start_date))
+            return df
+
+        except Exception as err:
+            self.logger.error("Error in the _one_category: " + str(err))
+            raise Exception("Error in the _one_category: " + str(err))
+
     def _analyze(self, p, d):
         """
         Run analysis.
         :return: output DataFrame
         """
         try:
-            if p['method'] == 'three_category':
+            if p['method'] == 'one_category':
+                self.logger.debug("one_category")
+                result = self._one_category(p, d)
+            elif p['method'] == 'three_category':
                 self.logger.debug("three_category")
                 result = self._three_category(p, d)
             elif p['method'] == 'four_category':

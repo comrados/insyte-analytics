@@ -15,7 +15,7 @@ cluster = Cluster(contact_points, auth_provider=auth, port=port)
 session = cluster.connect(keyspace_name)
 session.row_factory = dict_factory
 
-device_id = "00000000-0000-0000-0000-000000000000"
+device_id = "56b3c866-e8ce-412f-918b-5e0ab448ef4f"
 data_source_id = 108
 date = ("2011-01-01", "2020-01-01")
 result_id = "00000000-0000-0000-0000-000000000011"
@@ -26,12 +26,15 @@ query = "SELECT * FROM data WHERE device_id={} and data_source_id={} and time_up
 
 query2 = "SELECT * FROM data_result WHERE result_id={} and time_upload >= '{}' and time_upload < '{}' ALLOW FILTERING".format(result_id, date[0], date[1])
 
-print(query2)
+query3 = "SELECT * FROM data WHERE device_id={}"
 
-rows = session.execute(query2, timeout=10)
+print(query3)
+# print(query2)
+#
+# rows = session.execute(query2, timeout=10)
 
 r = []
 
-r.extend(rows)
+# r.extend(rows)
 
 print(len(r))
