@@ -17,7 +17,8 @@ A_ARGS = {"analysis_code": "CORRELATION",
           "parameters": [
               {"name": "method", "count": 1, "type": "SELECT", "options": ["one_category", "two_category", "three_category", "four_category"],
                "info": "one_category - Calculation of cost for the first category, "
-                       "two_category - Calculation of the cost of the second category, "
+                       "two_category_two_zones - Calculation of the cost of the second category, two zones"
+                       "two_category_three_zones - Calculation of the cost of the second category, three zones"
                        "three_category - Calculation of cost for the third category, "
                        "four_category - Calculating the cost of the fourth category"},
               {"name": "region", "count": 1, "type": "SELECT", "options": REGIONS,
@@ -25,8 +26,14 @@ A_ARGS = {"analysis_code": "CORRELATION",
               {"name": "retailer", "count": 1, "type": "SELECT", "options": RETAILERS,
                "info": "Sales companies listed on the atsenergo.ru website"},
               {"name": "time_four_cat", "count": 1, "type": "DICT OF TIME",
-               "info": 'Set of dictionaries containing time intervals. ["07:00:00","12:59:00"],["14:00:00","21:59:00"] '},
+               "info": 'Set of dictionaries containing time intervals. Example: ["07:00:00","12:59:00"],["14:00:00","21:59:00"] '},
+              {"name": "time_two_cat_night_zones", "count": 1, "type": "DICT OF TIME",
+               "info": 'Set of dictionaries containing time intervals for second category. Night zone. Example: ["07:00:00","12:59:00"],["14:00:00","17:59:00"],["19:00:00","21:59:00"] '},
+              {"name": "time_two_cat_peak_zones", "count": 1, "type": "DICT OF TIME",
+               "info": 'Set of dictionaries containing time intervals for second category. Peak zone. Example: ["07:00:00","12:59:00"],["14:00:00","21:59:00"]'},
               {"name": "tariff_one_ee", "count": 1, "type": "FLOAT", "info": "Maximum level of unregulated prices (RUB/MWh): 1"},
+              {"name": "tariff_two_two_zones_ee", "count": 2, "type": "FLOAT", "info": "Tariffs of the second category. 2 numbers: night, day. Example: 1.43, 4.87"},
+              {"name": "tariff_two_three_zones_ee", "count": 3, "type": "FLOAT", "info": "Tariffs of the second category. 3 numbers: night, semi-peak, peak. Example: 1.43, 2.77, 7.85"},
               {"name": "tariff_losses_three", "count": 1, "type": "FLOAT", "info": "Rate for payment of technological losses, category: 1, 2, 3"},
               {"name": "tariff_maintenance_four", "count": 1, "type": "FLOAT", "info": "Tariff for maintenance of the power supply network, category: 4"},
               {"name": "tariff_losses_four", "count": 1, "type": "FLOAT", "info": "Rate for payment of technological losses, category: 4"},
@@ -172,6 +179,28 @@ class ElectricityCostCalculationAnalysis(Analysis):
             self.logger.error("Error in _parse_parameters_one_cat: " + str(err))
             raise Exception("Error in _parse_parameters_one_cat: " + str(err))
 
+    def _parse_parameters_two_cat(self, p, peak = False):
+        """
+        Parameters parsing (type conversion, modification, etc).
+        """
+        self.logger.debug("Parsing parameters for the second category")
+        try:
+            parameters = p['all']
+            pn = dict()
+            pn['tariff_losses_three'] = self._check_float(parameters['tariff_losses_three'][0])
+            pn['time_two_cat_night_zones'] = self._generate_time_df(parameters['time_two_cat_night_zones'])
+            pn['tariff_two_night'] = self._check_float(parameters['tariff_two_three_zones_ee'][0])
+            if peak:
+                pn['tariff_two_semipeak'] = self._check_float(parameters['tariff_two_three_zones_ee'][1])
+                pn['tariff_two_peak'] = self._check_float(parameters['tariff_two_three_zones_ee'][2])
+                pn['time_two_cat_peak_zones'] = self._generate_time_df(parameters['time_two_cat_peak_zones'])
+            else:
+                pn['tariff_two_day'] = self._check_float(parameters['tariff_two_two_zones_ee'][1])
+            return pn
+        except Exception as err:
+            self.logger.error("Error in _parse_parameters_two_cat: " + str(err))
+            raise Exception("Error in _parse_parameters_two_cat: " + str(err))
+
     def _check_time_dict(self, times_dict):
         """
         Checks 'time dict' parameter
@@ -188,13 +217,31 @@ class ElectricityCostCalculationAnalysis(Analysis):
             self.logger.debug("Error in dict of time: " + str(err))
             raise Exception("Error in dict of time: " + str(err))
 
+    def _generate_time_df(self, times_dict):
+        """
+        Checks 'time dict' parameter
+        """
+        try:
+            new_times_dict = pd.DataFrame()
+            for time_v in times_dict:
+                start_time = pd.Timestamp(time_v[0])
+                end_time = pd.Timestamp(time_v[1])
+                df = pd.DataFrame(data={'time': pd.date_range(start=start_time,
+                                     end=end_time, freq='1H')})
+                new_times_dict = new_times_dict.append(df)
+
+            return new_times_dict.reset_index(drop=True)
+        except Exception as err:
+            self.logger.debug("Error in the _generate_time_df: " + str(err))
+            raise Exception("Error in the _generate_time_df: " + str(err))
+
     def _check_method(self, parameters):
         """
         Checks 'method' parameter
         """
         try:
             method = parameters['method'][0]
-            if method not in ["one_category", "two_category", "three_category", "four_category"]:
+            if method not in ["one_category", "two_category_two_zones", "two_category_three_zones", "three_category", "four_category"]:
                 raise Exception
             self.logger.debug("Parsed parameter 'method': " + str(method))
             return method
@@ -702,6 +749,57 @@ class ElectricityCostCalculationAnalysis(Analysis):
             self.logger.error("Error in the _one_category: " + str(err))
             raise Exception("Error in the _one_category: " + str(err))
 
+    def _two_category(self, p, d, peak = False):
+        """
+        Calculates the total cost for 2 price categories
+        :param p:
+        :param d:
+        :return df: DataFrame with result
+        """
+        try:
+            try:
+                start_date = d.loc[d.index[0], 'time']
+            except Exception as err:
+                self.logger.error("Error in the start date: " + str(err))
+                raise Exception("Error in the start date: " + str(err))
+            pn = self._parse_parameters_two_cat(p, peak)
+            tariff_two_night = pn['tariff_two_night']
+            tariff_losses_three = pn['tariff_losses_three']
+            transfer = self._multiplication_data_tariff(d, tariff_losses_three)
+            d2 = pn['time_two_cat_night_zones']
+            d['hour'] = pd.to_datetime(d['time']).dt.hour
+            d2['hour'] = pd.to_datetime(d2['time']).dt.hour
+            r2 = pd.merge(d, d2, how='inner', on=['hour'])
+            summ_kw = d.value.sum()
+            summ_kw_night = r2['value'].sum()
+            calculate_ee_night = summ_kw_night*tariff_two_night
+            if peak:
+                tariff_two_peak = pn['tariff_two_peak']
+                tariff_two_semipeak = pn['tariff_two_semipeak']
+                d2 = pn['time_two_cat_peak_zones']
+                d2['hour'] = pd.to_datetime(d2['time']).dt.hour
+                r2 = pd.merge(d, d2, how='inner', on=['hour'])
+                summ_kw_peak = r2['value'].sum()
+                calculate_ee_peak = summ_kw_peak * tariff_two_peak
+                calculate_ee_semipeak = (summ_kw - summ_kw_night - summ_kw_peak)*tariff_two_semipeak
+                total = transfer + calculate_ee_semipeak + calculate_ee_night + calculate_ee_peak
+                d = {'summ_kw': [summ_kw], 'transfer': [transfer], 'calculate_ee_night': [calculate_ee_night],
+                     'calculate_ee_semipeak': [calculate_ee_semipeak], 'calculate_ee_peak': [calculate_ee_peak],
+                     'total': [total]}
+            else:
+                tariff_two_day = pn['tariff_two_day']
+                calculate_ee_day = (summ_kw - summ_kw_night)*tariff_two_day
+                total = transfer + calculate_ee_day+calculate_ee_night
+                d = {'summ_kw': [summ_kw], 'transfer': [transfer], 'calculate_ee_night': [calculate_ee_night], 'calculate_ee_day': [calculate_ee_day],
+                     'total': [total]}
+
+            df = pd.DataFrame(data=d, index=pd.date_range(start=start_date, end=start_date))
+            return df
+
+        except Exception as err:
+            self.logger.error("Error in the _two_category: " + str(err))
+            raise Exception("Error in the _two_category: " + str(err))
+
     def _analyze(self, p, d):
         """
         Run analysis.
@@ -711,6 +809,12 @@ class ElectricityCostCalculationAnalysis(Analysis):
             if p['method'] == 'one_category':
                 self.logger.debug("one_category")
                 result = self._one_category(p, d)
+            elif p['method'] == 'two_category_two_zones':
+                self.logger.debug("two_category_two_zones")
+                result = self._two_category(p, d)
+            elif p['method'] == 'two_category_three_zones':
+                self.logger.debug("two_category_three_zones")
+                result = self._two_category(p, d, True)
             elif p['method'] == 'three_category':
                 self.logger.debug("three_category")
                 result = self._three_category(p, d)

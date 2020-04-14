@@ -5,16 +5,16 @@
       "00000000-0000-0000-0000-000000000012"
     ],
     "device_id": [
-      "c98fda23-9298-4521-af43-64eb46faf13b"
+      "6859f2d3-f165-43df-be79-e2aa08eb4701"
     ],
     "data_source_id": [
-      "160"
+      "442"
     ],
     "time_upload": [
       "2019-12-01_00:00:00+0000",
       "2019-12-31_23:00:00+0000"
     ],
-    "limit": 300
+    "limit": 900
   },
   "analysis_parameters": {
     "analysis": "electricity-cost-calculation",
@@ -32,8 +32,25 @@
         ["07:00:00","12:59:00"],
         ["14:00:00","21:59:00"]
       ],
+      "time_two_cat_night_zones": [
+        ["00:00:00","06:59:00"],
+        ["23:00:00","23:59:00"]
+      ],
+      "time_two_cat_peak_zones": [
+        ["08:00:00","10:59:00"],
+        ["20:00:00","21:59:00"]
+      ],
       "tariff_sales": [
         0.47000
+      ],
+      "tariff_one_ee": [
+        2.64387
+      ],
+      "tariff_two_two_zones_ee": [
+        1.43538, 4.87469
+      ],
+      "tariff_two_three_zones_ee": [
+        1.43538, 2.77911, 7.85947
       ],
       "tariff_losses_four": [
         670.99
@@ -43,6 +60,12 @@
       ],
       "tariff_losses_three": [
         3.29579
+      ],
+      "actual_volume_other_service": [
+      	1122728.24
+      ],
+      "volume_other_service":[
+    	59933.148
       ]
     }
   }
