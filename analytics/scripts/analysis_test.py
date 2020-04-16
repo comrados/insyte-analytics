@@ -15,7 +15,7 @@ A_ARGS = {"analysis_code": "TEST",
           "parameters": [
               {"name": "operation", "count": 1, "type": "SELECT", "options": ["add", "sub", "mul", "div"],
                "info": "operation to execute: add, subtract, multiply or divide"},
-              {"name": "value", "count": 1, "type": "FLOAT", "info": "value of alteration"}
+              {"name": "value", "count": 1, "type": "FLOAT", "info": "value"}
           ]}
 
 

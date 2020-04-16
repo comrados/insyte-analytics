@@ -8,10 +8,11 @@ import datetime
 import logging
 import time
 import json
-from db import InfluxServerIO
 
-import analytics.utils as u
 import analytics
+import analytics.utils as u
+
+from db import InfluxServerIO
 
 
 def parse_args(args):
@@ -80,9 +81,10 @@ class AnalyticsServer(HTTPServer):
     Server instance.
     """
 
-    def __init__(self, request_handler_class, settings):
+    def __init__(self, request_handler_class, settings, analytics_module):
         self.ctn = threading.current_thread()
         self.s = settings
+        self.am = analytics_module
         super().__init__((self.s.srv_host, self.s.srv_port), request_handler_class)
 
     def start(self):
@@ -111,6 +113,7 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
 
     def __init__(self, request, client_address, server):
         self.s = server.s
+        self.am = server.am
         self.ctn = threading.current_thread()
         self.time = datetime.datetime.utcnow()
         self.json = None  # analysis request
@@ -137,12 +140,22 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
                 self.end_headers()
-                self.wfile.write(bytes(json.dumps(analytics.ANALYSIS_ARGS, indent=4, sort_keys=True), 'utf-8'))
+                self.wfile.write(bytes(json.dumps(self.am.ANALYSIS_ARGS, indent=4, sort_keys=True), 'utf-8'))
+            elif self.path in ["/update_analysis_functions/", "/update_analysis_functions"]:
+                logger.info("GET 'update_analysis_functions' request from " + client)
+                self.am.update_analysis_functions()
+                self.send_response(200)
+                self.send_header('Content-type', 'application/json')
+                self.end_headers()
+                self.wfile.write(bytes(json.dumps(self.am.ANALYSIS_ARGS, indent=4, sort_keys=True), 'utf-8'))
             else:
                 self.send_error(404, 'Unknown resource: %s' % self.path)
         except Exception as err:
+            logger.error("GET-failure: " + str(err))
+
             self.send_response(400)
-            logger.error("Something went wrong: " + str(err))
+            msg = {'result': 'ERROR', 'error_message': str(err)}
+            self.wfile.write(bytes(json.dumps(msg, indent=4, sort_keys=True), 'utf-8'))
 
     def do_POST(self):
         """
@@ -166,15 +179,16 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
             self.end_headers()
-            msg = {'result': 'DONE'}
+            msg = {'result': 'DONE', 'active_threads': threading.active_count()}
             self.wfile.write(bytes(json.dumps(msg, indent=4, sort_keys=True), 'utf-8'))
         except Exception as err:
-            self.send_response(400)
+            logger.error("POST-failure: " + str(err))
             self.influx.disconnect()
-            logger.error("Something went wrong: " + str(err))
+
+            self.send_response(400)
             self.send_header('Content-type', 'application/json')
             self.end_headers()
-            msg = {'result': 'ERROR', 'error_message': str(err)}
+            msg = {'result': 'ERROR', 'error_message': str(err), 'active_threads': threading.active_count()}
             self.wfile.write(bytes(json.dumps(msg, indent=4, sort_keys=True), 'utf-8'))
 
     def log_message(self, format, *args):
@@ -219,7 +233,7 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
         """
         try:
             ap = self.json["analysis_parameters"]
-            self.output = analytics.analyze_influx(ap['analysis'], ap['analysis_arguments'], self.input)
+            self.output = self.am.run_analysis(ap['analysis'], ap['analysis_arguments'], self.input)
         except Exception as err:
             logger.error("Failed to analyze the data: " + str(err))
             raise Exception("Failed to analyze the data: " + str(err))
@@ -313,7 +327,16 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
 
         :return: dictionary with status variables
         """
-        return {"active_threads": threading.active_count()}
+
+        def thread_name(t):
+            name = t.name + ' (' + str(t.ident) + ')'
+            if t.daemon:
+                name += ' daemon'
+            return name
+
+        threads = [thread_name(t) for t in threading.enumerate()]
+        return {"active_threads": threading.active_count(),
+                "active_list": threads}
 
 
 if __name__ == "__main__":
@@ -324,7 +347,9 @@ if __name__ == "__main__":
 
     logger.info("Server started: " + str(vars(a)))
 
-    srv = AnalyticsServerThreaded(AnalyticsRequestHandler, a)
+    am = analytics.AnalyticsModule()
+
+    srv = AnalyticsServerThreaded(AnalyticsRequestHandler, a, am)
     srv_thread = threading.Thread(target=srv.start, daemon=True)
     try:
         srv_thread.start()

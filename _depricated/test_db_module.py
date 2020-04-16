@@ -1,4 +1,4 @@
-from db.insyte_cassandra_io import InsyteCassandraIO
+from _depricated.insyte_cassandra_io import InsyteCassandraIO
 import logging
 import os
 import uuid

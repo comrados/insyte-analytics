@@ -1,52 +1,139 @@
-2020-03-31 13:28:05.597 INFO analytics_server.<module> MainThread (140255065274176) Server started: {'srv_host': 'localhost', 'srv_port': 65000, 'db_host': 'ems.insyte.ru', 'db_port': 8086, 'db_name': 'ems', 'db_user': 'ems_user', 'db_password': '4rERYTPhfTtvU!99', 'log_file': 'analytics_server.log', 'log_level': 20, 'log_gmt': True}
-2020-03-31 13:28:06.88 INFO analytics_server.start Thread-6 (140254447707904) Analytics Server's address: http://localhost:65000
-2020-03-31 13:28:34.540 INFO analytics_server.do_POST Thread-8 (140254371641088) 703 bytes from 127.0.0.1:35406
-2020-03-31 13:28:34.546 INFO analytics_server._content_to_json Thread-8 (140254371641088) JSON content: {'db_io_parameters': {'mode': 'rw', 'result_id': ['00000000-0000-0000-0000-000000000005'], 'device_id': ['c98fda23-9298-4521-af43-64eb46faf13b', 'c98fda23-9298-4521-af43-64eb46faf13b', 'c98fda23-9298-4521-af43-64eb46faf13b'], 'data_source_id': [160, 161, 159], 'time_upload': ['2018-10-01_00:00:00+0000', '2019-04-01_00:00:00+0000', '2018-10-01_00:00:00+0000', '2019-04-01_00:00:00+0000', '2018-10-01_00:00:00+0000', '2019-04-01_00:00:00+0000'], 'limit': None}, 'analysis_parameters': {'analysis': 'correlation', 'analysis_arguments': {'method': ['spearman']}}}
-2020-03-31 13:28:36.838 INFO analytics_server._read_data Thread-8 (140254371641088) Data has been successfully read from DB: (719, 3) (rows, columns)
-2020-03-31 13:32:04.746 INFO analytics_server.<module> MainThread (140255065274176) Server stopped by user
+2020-04-16 19:35:43.466 INFO analytics_server.<module> MainThread (140682988140352) Server started: {'srv_host': 'localhost', 'srv_port': 65000, 'db_host': 'ems.insyte.ru', 'db_port': 8086, 'db_name': 'ems', 'db_user': 'ems_user', 'db_password': '4rERYTPhfTtvU!99', 'log_file': 'analytics_server.log', 'log_level': 20, 'log_gmt': True}
+2020-04-16 19:39:44.997 INFO analytics_server.<module> MainThread (140242825492288) Server started: {'srv_host': 'localhost', 'srv_port': 65000, 'db_host': 'ems.insyte.ru', 'db_port': 8086, 'db_name': 'ems', 'db_user': 'ems_user', 'db_password': '4rERYTPhfTtvU!99', 'log_file': 'analytics_server.log', 'log_level': 20, 'log_gmt': True}
+2020-04-16 19:39:45.8 INFO analytics_server.start Thread-1 (140242090723072) Analytics Server's address: http://localhost:65000
+2020-04-16 19:40:14.666 INFO analytics_server.do_POST Thread-1 (140242090723072) 0 bytes from 127.0.0.1:54204
+2020-04-16 19:40:14.672 ERROR analytics_server._content_to_json Thread-1 (140242090723072) Impossible to process sent data (not a JSON): Expecting value: line 1 column 1 (char 0)
+2020-04-16 19:40:14.677 ERROR analytics_server.do_POST Thread-1 (140242090723072) POST-error: Impossible to process sent data (not a JSON): Expecting value: line 1 column 1 (char 0)
+2020-04-16 19:41:13.979 INFO analytics_server.do_POST Thread-1 (140242090723072) 703 bytes from 127.0.0.1:54236
+2020-04-16 19:41:13.986 INFO analytics_server._content_to_json Thread-1 (140242090723072) JSON content: {'db_io_parameters': {'mode': 'rw', 'result_id': ['00000000-0000-0000-0000-000000000005'], 'device_id': ['c98fda23-9298-4521-af43-64eb46faf13b', 'c98fda23-9298-4521-af43-64eb46faf13b', 'c98fda23-9298-4521-af43-64eb46faf13b'], 'data_source_id': [160, 161, 159], 'time_upload': ['2018-10-01_00:00:00+0000', '2019-04-01_00:00:00+0000', '2018-10-01_00:00:00+0000', '2019-04-01_00:00:00+0000', '2018-10-01_00:00:00+0000', '2019-04-01_00:00:00+0000'], 'limit': None}, 'analysis_parameters': {'analysis': 'correlation', 'analysis_arguments': {'method': ['spearman']}}}
+2020-04-16 19:41:15.153 INFO analytics_server._read_data Thread-1 (140242090723072) Data has been successfully read from DB: (719, 3) (rows, columns)
+2020-04-16 19:41:15.869 INFO analytics_server._write_results Thread-1 (140242090723072) Data has been saved into DB: (9, 1) ['00000000-0000-0000-0000-000000000005']
+2020-04-16 19:41:15.911 INFO analytics_server.do_POST Thread-1 (140242090723072) 454 bytes from 127.0.0.1:54240
+2020-04-16 19:41:15.916 INFO analytics_server._content_to_json Thread-1 (140242090723072) JSON content: {'db_io_parameters': {'mode': 'rw', 'result_id': ['00000000-0000-0000-0000-000000000055'], 'device_id': ['c98fda23-9298-4521-af43-64eb46faf13b'], 'data_source_id': [161], 'time_upload': ['2018-10-01_00:00:00+0000', '2019-11-01_00:00:00+0000'], 'limit': None}, 'analysis_parameters': {'analysis': 'autocorrelation', 'analysis_arguments': {'step': [2]}}}
+2020-04-16 19:41:16.382 INFO analytics_server._read_data Thread-1 (140242090723072) Data has been successfully read from DB: (1438, 1) (rows, columns)
+2020-04-16 19:41:37.67 INFO analytics_server._write_results Thread-1 (140242090723072) Data has been saved into DB: (719, 1) ['00000000-0000-0000-0000-000000000055']
+2020-04-16 19:41:37.108 INFO analytics_server.do_GET Thread-1 (140242090723072) GET 'status' request from 127.0.0.1:54270
+2020-04-16 19:41:56.201 INFO analytics_server.do_POST Thread-1 (140242090723072) 454 bytes from 127.0.0.1:54286
+2020-04-16 19:41:56.207 INFO analytics_server._content_to_json Thread-1 (140242090723072) JSON content: {'db_io_parameters': {'mode': 'rw', 'result_id': ['00000000-0000-0000-0000-000000000055'], 'device_id': ['c98fda23-9298-4521-af43-64eb46faf13b'], 'data_source_id': [161], 'time_upload': ['2018-10-01_00:00:00+0000', '2019-11-01_00:00:00+0000'], 'limit': None}, 'analysis_parameters': {'analysis': 'autocorrelation', 'analysis_arguments': {'step': [2]}}}
+2020-04-16 19:41:56.725 INFO analytics_server._read_data Thread-1 (140242090723072) Data has been successfully read from DB: (1438, 1) (rows, columns)
+2020-04-16 19:42:34.61 INFO analytics_server._write_results Thread-1 (140242090723072) Data has been saved into DB: (719, 1) ['00000000-0000-0000-0000-000000000055']
+2020-04-16 19:42:34.104 INFO analytics_server.do_POST Thread-1 (140242090723072) 454 bytes from 127.0.0.1:54290
+2020-04-16 19:42:34.110 INFO analytics_server._content_to_json Thread-1 (140242090723072) JSON content: {'db_io_parameters': {'mode': 'rw', 'result_id': ['00000000-0000-0000-0000-000000000055'], 'device_id': ['c98fda23-9298-4521-af43-64eb46faf13b'], 'data_source_id': [161], 'time_upload': ['2018-10-01_00:00:00+0000', '2019-11-01_00:00:00+0000'], 'limit': None}, 'analysis_parameters': {'analysis': 'autocorrelation', 'analysis_arguments': {'step': [2]}}}
+2020-04-16 19:42:34.574 INFO analytics_server._read_data Thread-1 (140242090723072) Data has been successfully read from DB: (1438, 1) (rows, columns)
+2020-04-16 19:43:08.251 INFO analytics_server._write_results Thread-1 (140242090723072) Data has been saved into DB: (719, 1) ['00000000-0000-0000-0000-000000000055']
+2020-04-16 19:43:08.293 INFO analytics_server.do_GET Thread-1 (140242090723072) GET 'status' request from 127.0.0.1:54294
+2020-04-16 19:43:11.901 INFO analytics_server.do_GET Thread-1 (140242090723072) GET 'status' request from 127.0.0.1:54314
+2020-04-16 19:43:12.788 INFO analytics_server.do_GET Thread-1 (140242090723072) GET 'status' request from 127.0.0.1:54318
+2020-04-16 19:43:13.545 INFO analytics_server.do_GET Thread-1 (140242090723072) GET 'status' request from 127.0.0.1:54322
+2020-04-16 19:43:14.875 INFO analytics_server.do_GET Thread-1 (140242090723072) GET 'status' request from 127.0.0.1:54326
+2020-04-16 19:43:20.465 INFO analytics_server.<module> MainThread (140242825492288) Server stopped by user
 
 
-2020-04-06 17:23:28.842 INFO analytics_server.<module> MainThread (140434425300800) Server started: {'srv_host': 'localhost', 'srv_port': 65000, 'db_host': 'ems.insyte.ru', 'db_port': 8086, 'db_name': 'ems', 'db_user': 'ems_user', 'db_password': '4rERYTPhfTtvU!99', 'log_file': 'analytics_server.log', 'log_level': 20, 'log_gmt': True}
-2020-04-06 17:23:28.853 INFO analytics_server.start Thread-1 (140434102630144) Analytics Server's address: http://localhost:65000
-2020-04-06 17:23:30.825 INFO analytics_server.<module> MainThread (140434425300800) Server stopped by user
+2020-04-16 19:43:28.921 INFO analytics_server.<module> MainThread (140502467737408) Server started: {'srv_host': 'localhost', 'srv_port': 65000, 'db_host': 'ems.insyte.ru', 'db_port': 8086, 'db_name': 'ems', 'db_user': 'ems_user', 'db_password': '4rERYTPhfTtvU!99', 'log_file': 'analytics_server.log', 'log_level': 20, 'log_gmt': True}
+2020-04-16 19:43:28.927 INFO analytics_server.start Thread-1 (140501732968192) Analytics Server's address: http://localhost:65000
+2020-04-16 19:43:33.88 INFO analytics_server.do_POST Thread-2 (140501724575488) 454 bytes from 127.0.0.1:54332
+2020-04-16 19:43:33.98 INFO analytics_server._content_to_json Thread-2 (140501724575488) JSON content: {'db_io_parameters': {'mode': 'rw', 'result_id': ['00000000-0000-0000-0000-000000000055'], 'device_id': ['c98fda23-9298-4521-af43-64eb46faf13b'], 'data_source_id': [161], 'time_upload': ['2018-10-01_00:00:00+0000', '2019-11-01_00:00:00+0000'], 'limit': None}, 'analysis_parameters': {'analysis': 'autocorrelation', 'analysis_arguments': {'step': [2]}}}
+2020-04-16 19:43:33.638 INFO analytics_server._read_data Thread-2 (140501724575488) Data has been successfully read from DB: (1438, 1) (rows, columns)
+2020-04-16 19:43:35.339 INFO analytics_server.do_GET Thread-3 (140501600696064) GET 'status' request from 127.0.0.1:54338
+2020-04-16 19:43:36.192 INFO analytics_server.do_GET Thread-4 (140501592303360) GET 'status' request from 127.0.0.1:54342
+2020-04-16 19:43:37.134 INFO analytics_server.do_GET Thread-5 (140501600696064) GET 'status' request from 127.0.0.1:54346
+2020-04-16 19:43:37.973 INFO analytics_server.do_GET Thread-6 (140501592303360) GET 'status' request from 127.0.0.1:54350
+2020-04-16 19:43:38.685 INFO analytics_server.do_GET Thread-7 (140501600696064) GET 'status' request from 127.0.0.1:54354
+2020-04-16 19:43:39.447 INFO analytics_server.do_GET Thread-8 (140501592303360) GET 'status' request from 127.0.0.1:54360
+2020-04-16 19:43:39.946 INFO analytics_server.do_GET Thread-9 (140501600696064) GET 'status' request from 127.0.0.1:54364
+2020-04-16 19:43:40.354 INFO analytics_server.do_GET Thread-10 (140501592303360) GET 'status' request from 127.0.0.1:54368
+2020-04-16 19:43:40.811 INFO analytics_server.do_GET Thread-11 (140501600696064) GET 'status' request from 127.0.0.1:54372
+2020-04-16 19:43:47.756 INFO analytics_server.do_GET Thread-12 (140501592303360) GET 'functions' request from 127.0.0.1:54376
+2020-04-16 19:43:50.729 INFO analytics_server.do_GET Thread-13 (140501600696064) GET 'status' request from 127.0.0.1:54384
+2020-04-16 19:43:51.540 INFO analytics_server.do_GET Thread-14 (140501592303360) GET 'status' request from 127.0.0.1:54388
+2020-04-16 19:43:52.328 INFO analytics_server.do_GET Thread-15 (140501600696064) GET 'status' request from 127.0.0.1:54392
+2020-04-16 19:44:05.187 INFO analytics_server._write_results Thread-2 (140501724575488) Data has been saved into DB: (719, 1) ['00000000-0000-0000-0000-000000000055']
+2020-04-16 19:44:15.50 INFO analytics_server.<module> MainThread (140502467737408) Server stopped by user
 
 
-2020-04-06 17:23:34.940 INFO analytics_server.<module> MainThread (140210130679616) Server started: {'srv_host': 'localhost', 'srv_port': 65000, 'db_host': 'ems.insyte.ru', 'db_port': 8086, 'db_name': 'ems', 'db_user': 'ems_user', 'db_password': '4rERYTPhfTtvU!99', 'log_file': 'analytics_server.log', 'log_level': 20, 'log_gmt': True}
-2020-04-06 17:23:35.470 INFO analytics_server.start Thread-6 (140209513113344) Analytics Server's address: http://localhost:65000
-2020-04-06 17:24:12.663 INFO analytics_server.do_POST Thread-8 (140209504458496) 560 bytes from 127.0.0.1:44592
-2020-04-06 17:24:12.664 INFO analytics_server._content_to_json Thread-8 (140209504458496) JSON content: {'db_io_parameters': {'mode': 'rw', 'result_id': ['1a54a0e8-6fb0-4fed-a762-e30fa882fa3b'], 'device_id': ['dd2af57e-fb5f-4852-a947-61524470b6f1'], 'data_source_id': ['166'], 'time_upload': ['2019-12-10_00:00:00+0000', '2020-01-24_23:59:59+0000'], 'limit': 'null'}, 'analysis_parameters': {'analysis': 'demand-response-baseline', 'analysis_arguments': {'target_day': ['2020-01-24'], 'exception_days': [], 'except_weekends': ['false']}}}
-2020-04-06 17:24:58.523 INFO analytics_server._read_data Thread-8 (140209504458496) Data has been successfully read from DB: (0, 1) (rows, columns)
-2020-04-06 17:25:19.195 INFO analytics_server.<module> MainThread (140210130679616) Server stopped by user
+2020-04-16 19:44:58.812 INFO analytics_server.<module> MainThread (140158872680256) Server started: {'srv_host': 'localhost', 'srv_port': 65000, 'db_host': 'ems.insyte.ru', 'db_port': 8086, 'db_name': 'ems', 'db_user': 'ems_user', 'db_password': '4rERYTPhfTtvU!99', 'log_file': 'analytics_server.log', 'log_level': 20, 'log_gmt': True}
+2020-04-16 19:45:25.447 INFO analytics_server.start Thread-10 (140157906286336) Analytics Server's address: http://localhost:65000
+2020-04-16 19:46:09.515 INFO analytics_server.<module> MainThread (140158872680256) Server stopped by user
 
 
-2020-04-06 17:25:24.415 INFO analytics_server.<module> MainThread (140298699732800) Server started: {'srv_host': 'localhost', 'srv_port': 65000, 'db_host': 'ems.insyte.ru', 'db_port': 8086, 'db_name': 'ems', 'db_user': 'ems_user', 'db_password': '4rERYTPhfTtvU!99', 'log_file': 'analytics_server.log', 'log_level': 20, 'log_gmt': True}
-2020-04-06 17:25:25.14 INFO analytics_server.start Thread-6 (140298082158336) Analytics Server's address: http://localhost:65000
-2020-04-06 17:25:37.843 INFO analytics_server.do_POST Thread-8 (140298073503488) 560 bytes from 127.0.0.1:44616
-2020-04-06 17:25:37.848 INFO analytics_server._content_to_json Thread-8 (140298073503488) JSON content: {'db_io_parameters': {'mode': 'rw', 'result_id': ['1a54a0e8-6fb0-4fed-a762-e30fa882fa3b'], 'device_id': ['dd2af57e-fb5f-4852-a947-61524470b6f1'], 'data_source_id': ['166'], 'time_upload': ['2019-12-10_00:00:00+0000', '2020-01-24_23:59:59+0000'], 'limit': 'null'}, 'analysis_parameters': {'analysis': 'demand-response-baseline', 'analysis_arguments': {'target_day': ['2020-01-24'], 'exception_days': [], 'except_weekends': ['false']}}}
-2020-04-06 17:25:46.208 INFO analytics_server._read_data Thread-8 (140298073503488) Data has been successfully read from DB: (0, 1) (rows, columns)
-2020-04-06 17:26:55.605 INFO analytics_server.<module> MainThread (140298699732800) Server stopped by user
+2020-04-16 19:53:34.208 INFO analytics_server.<module> MainThread (140070822414144) Server started: {'srv_host': 'localhost', 'srv_port': 65000, 'db_host': 'ems.insyte.ru', 'db_port': 8086, 'db_name': 'ems', 'db_user': 'ems_user', 'db_password': '4rERYTPhfTtvU!99', 'log_file': 'analytics_server.log', 'log_level': 20, 'log_gmt': True}
+2020-04-16 20:02:07.373 INFO analytics_server.<module> MainThread (139976966227776) Server started: {'srv_host': 'localhost', 'srv_port': 65000, 'db_host': 'ems.insyte.ru', 'db_port': 8086, 'db_name': 'ems', 'db_user': 'ems_user', 'db_password': '4rERYTPhfTtvU!99', 'log_file': 'analytics_server.log', 'log_level': 20, 'log_gmt': True}
+2020-04-16 20:02:10.642 INFO analytics_server.start Thread-10 (139976002205440) Analytics Server's address: http://localhost:65000
+2020-04-16 20:02:40.347 INFO analytics_server.<module> MainThread (139976966227776) Server stopped by user
 
 
-2020-04-06 17:27:03.688 INFO analytics_server.<module> MainThread (140227315214144) Server started: {'srv_host': 'localhost', 'srv_port': 65000, 'db_host': 'ems.insyte.ru', 'db_port': 8086, 'db_name': 'ems', 'db_user': 'ems_user', 'db_password': '4rERYTPhfTtvU!99', 'log_file': 'analytics_server.log', 'log_level': 20, 'log_gmt': True}
-2020-04-06 17:27:04.198 INFO analytics_server.start Thread-6 (140226697656064) Analytics Server's address: http://localhost:65000
-2020-04-06 17:27:36.525 INFO analytics_server.do_POST Thread-8 (140226689001216) 600 bytes from 127.0.0.1:44644
-2020-04-06 17:27:36.530 INFO analytics_server._content_to_json Thread-8 (140226689001216) JSON content: {'db_io_parameters': {'mode': 'rw', 'result_id': ['00000000-0000-0000-0000-000000000011'], 'device_id': ['c98fda23-9298-4521-af43-64eb46faf13b'], 'data_source_id': [160], 'time_upload': ['2018-11-01_00:00:00+0000', '2019-02-01_00:00:00+0000'], 'limit': None}, 'analysis_parameters': {'analysis': 'demand-response-baseline', 'analysis_arguments': {'target_day': ['2018-12-01'], 'exception_days': ['2018-11-05', '2018-11-06'], 'except_weekends': [True]}}}
-2020-04-06 17:27:37.340 INFO analytics_server._read_data Thread-8 (140226689001216) Data has been successfully read from DB: (717, 1) (rows, columns)
-2020-04-06 17:28:47.851 INFO utils._init_num_threads Thread-8 (140226689001216) NumExpr defaulting to 8 threads.
-2020-04-06 17:28:53.96 INFO analytics_server._write_results Thread-8 (140226689001216) Data has been saved into DB: (24, 1) ['00000000-0000-0000-0000-000000000011']
-2020-04-06 17:29:49.8 INFO analytics_server.do_POST Thread-16 (140226689001216) 606 bytes from 127.0.0.1:44664
-2020-04-06 17:29:49.23 INFO analytics_server._content_to_json Thread-16 (140226689001216) JSON content: {'db_io_parameters': {'mode': 'rw', 'result_id': ['00000000-0000-0000-0000-000000000011'], 'device_id': ['c98fda23-9298-4521-af43-64eb46faf13b'], 'data_source_id': ['160'], 'time_upload': ['2018-11-01_00:00:00+0000', '2019-02-01_00:00:00+0000'], 'limit': 'null'}, 'analysis_parameters': {'analysis': 'demand-response-baseline', 'analysis_arguments': {'target_day': ['2018-12-01'], 'exception_days': ['2018-11-05', '2018-11-06'], 'except_weekends': ['true']}}}
-2020-04-06 17:29:49.559 INFO analytics_server._read_data Thread-16 (140226689001216) Data has been successfully read from DB: (717, 1) (rows, columns)
-2020-04-06 17:31:36.286 INFO analytics_server.<module> MainThread (140227315214144) Server stopped by user
+2020-04-16 20:02:53.520 INFO analytics_server.<module> MainThread (140235164636992) Server started: {'srv_host': 'localhost', 'srv_port': 65000, 'db_host': 'ems.insyte.ru', 'db_port': 8086, 'db_name': 'ems', 'db_user': 'ems_user', 'db_password': '4rERYTPhfTtvU!99', 'log_file': 'analytics_server.log', 'log_level': 20, 'log_gmt': True}
+2020-04-16 20:03:19.635 INFO analytics_server.start Thread-21 (140234200585984) Analytics Server's address: http://localhost:65000
+2020-04-16 20:03:52.375 INFO analytics_server.<module> MainThread (140235164636992) Server stopped by user
 
 
-2020-04-06 19:46:15.646 INFO analytics_server.<module> MainThread (139981449459520) Server started: {'srv_host': 'localhost', 'srv_port': 65000, 'db_host': 'ems.insyte.ru', 'db_port': 8086, 'db_name': 'ems', 'db_user': 'ems_user', 'db_password': '4rERYTPhfTtvU!99', 'log_file': 'analytics_server.log', 'log_level': 20, 'log_gmt': True}
-2020-04-06 19:46:15.659 INFO analytics_server.start Thread-1 (139981126788864) Analytics Server's address: http://localhost:65000
-2020-04-06 19:46:20.869 INFO analytics_server.do_POST Thread-2 (139981118396160) 606 bytes from 127.0.0.1:54300
-2020-04-06 19:46:20.874 INFO analytics_server._content_to_json Thread-2 (139981118396160) JSON content: {'db_io_parameters': {'mode': 'rw', 'result_id': ['00000000-0000-0000-0000-000000000011'], 'device_id': ['c98fda23-9298-4521-af43-64eb46faf13b'], 'data_source_id': ['160'], 'time_upload': ['2018-11-01_00:00:00+0000', '2019-02-01_00:00:00+0000'], 'limit': 'null'}, 'analysis_parameters': {'analysis': 'demand-response-baseline', 'analysis_arguments': {'target_day': ['2018-12-01'], 'exception_days': ['2018-11-05', '2018-11-06'], 'except_weekends': ['true']}}}
-2020-04-06 19:46:21.540 INFO analytics_server._read_data Thread-2 (139981118396160) Data has been successfully read from DB: (717, 1) (rows, columns)
-2020-04-06 19:46:22.125 INFO utils._init_num_threads Thread-2 (139981118396160) NumExpr defaulting to 8 threads.
-2020-04-06 19:46:22.596 INFO analytics_server._write_results Thread-2 (139981118396160) Data has been saved into DB: (24, 1) ['00000000-0000-0000-0000-000000000011']
-2020-04-06 19:46:32.250 INFO analytics_server.<module> MainThread (139981449459520) Server stopped by user
+2020-04-16 20:03:55.546 INFO analytics_server.<module> MainThread (140432885589824) Server started: {'srv_host': 'localhost', 'srv_port': 65000, 'db_host': 'ems.insyte.ru', 'db_port': 8086, 'db_name': 'ems', 'db_user': 'ems_user', 'db_password': '4rERYTPhfTtvU!99', 'log_file': 'analytics_server.log', 'log_level': 20, 'log_gmt': True}
+2020-04-16 20:04:05.26 INFO analytics_server.start Thread-9 (140431921477376) Analytics Server's address: http://localhost:65000
+2020-04-16 20:04:51.254 INFO analytics_server.<module> MainThread (140432885589824) Server stopped by user
+
+
+2020-04-16 20:05:14.793 INFO analytics_server.<module> MainThread (140210252224320) Server started: {'srv_host': 'localhost', 'srv_port': 65000, 'db_host': 'ems.insyte.ru', 'db_port': 8086, 'db_name': 'ems', 'db_user': 'ems_user', 'db_password': '4rERYTPhfTtvU!99', 'log_file': 'analytics_server.log', 'log_level': 20, 'log_gmt': True}
+2020-04-16 20:05:18.211 INFO analytics_server.start Thread-9 (140209288177408) Analytics Server's address: http://localhost:65000
+2020-04-16 20:07:03.184 INFO analytics_server.<module> MainThread (140210252224320) Server stopped by user
+
+
+2020-04-16 20:12:56.180 INFO analytics_server.<module> MainThread (140692078380864) Server started: {'srv_host': 'localhost', 'srv_port': 65000, 'db_host': 'ems.insyte.ru', 'db_port': 8086, 'db_name': 'ems', 'db_user': 'ems_user', 'db_password': '4rERYTPhfTtvU!99', 'log_file': 'analytics_server.log', 'log_level': 20, 'log_gmt': True}
+2020-04-16 20:13:01.797 INFO analytics_server.start Thread-9 (140691126212352) Analytics Server's address: http://localhost:65000
+2020-04-16 20:13:14.176 INFO analytics_server.<module> MainThread (140692078380864) Server stopped by user
+
+
+2020-04-16 20:16:41.450 INFO analytics_server.<module> MainThread (140530392639296) Server started: {'srv_host': 'localhost', 'srv_port': 65000, 'db_host': 'ems.insyte.ru', 'db_port': 8086, 'db_name': 'ems', 'db_user': 'ems_user', 'db_password': '4rERYTPhfTtvU!99', 'log_file': 'analytics_server.log', 'log_level': 20, 'log_gmt': True}
+2020-04-16 20:16:41.690 INFO analytics_server.start Thread-1 (140529671968512) Analytics Server's address: http://localhost:65000
+2020-04-16 20:16:43.835 INFO analytics_server.do_GET Thread-2 (140529663575808) GET 'status' request from 127.0.0.1:54816
+2020-04-16 20:17:16.864 INFO analytics_server.do_GET Thread-4 (140529585092352) GET 'update_analysis_functions' request from 127.0.0.1:54838
+2020-04-16 20:17:29.299 INFO analytics_server.do_GET Thread-6 (140529585092352) GET 'update_analysis_functions' request from 127.0.0.1:54848
+2020-04-16 20:17:37.403 INFO analytics_server.<module> MainThread (140530392639296) Server stopped by user
+
+
+2020-04-16 20:18:23.263 INFO analytics_server.<module> MainThread (139903642494784) Server started: {'srv_host': 'localhost', 'srv_port': 65000, 'db_host': 'ems.insyte.ru', 'db_port': 8086, 'db_name': 'ems', 'db_user': 'ems_user', 'db_password': '4rERYTPhfTtvU!99', 'log_file': 'analytics_server.log', 'log_level': 20, 'log_gmt': True}
+2020-04-16 20:18:23.496 INFO analytics_server.start Thread-1 (139902921824000) Analytics Server's address: http://localhost:65000
+2020-04-16 20:18:26.161 INFO analytics_server.do_GET Thread-2 (139902913431296) GET 'update_analysis_functions' request from 127.0.0.1:54860
+2020-04-16 20:18:27.36 INFO analytics_server.do_GET Thread-3 (139902905038592) GET 'update_analysis_functions' request from 127.0.0.1:54864
+2020-04-16 20:18:47.235 INFO analytics_server.do_GET Thread-5 (139902913431296) GET 'update_analysis_functions' request from 127.0.0.1:54874
+2020-04-16 20:19:27.167 INFO analytics_server.<module> MainThread (139903642494784) Server stopped by user
+
+
+2020-04-16 20:19:49.42 INFO analytics_server.<module> MainThread (139995481323328) Server started: {'srv_host': 'localhost', 'srv_port': 65000, 'db_host': 'ems.insyte.ru', 'db_port': 8086, 'db_name': 'ems', 'db_user': 'ems_user', 'db_password': '4rERYTPhfTtvU!99', 'log_file': 'analytics_server.log', 'log_level': 20, 'log_gmt': True}
+2020-04-16 20:19:49.257 INFO analytics_server.start Thread-1 (139994760652544) Analytics Server's address: http://localhost:65000
+2020-04-16 20:19:53.533 INFO analytics_server.do_POST Thread-2 (139994752259840) 454 bytes from 127.0.0.1:54898
+2020-04-16 20:19:53.543 INFO analytics_server._content_to_json Thread-2 (139994752259840) JSON content: {'db_io_parameters': {'mode': 'rw', 'result_id': ['00000000-0000-0000-0000-000000000055'], 'device_id': ['c98fda23-9298-4521-af43-64eb46faf13b'], 'data_source_id': [161], 'time_upload': ['2018-10-01_00:00:00+0000', '2019-11-01_00:00:00+0000'], 'limit': None}, 'analysis_parameters': {'analysis': 'autocorrelation', 'analysis_arguments': {'step': [2]}}}
+2020-04-16 20:19:54.263 INFO analytics_server._read_data Thread-2 (139994752259840) Data has been successfully read from DB: (1438, 1) (rows, columns)
+2020-04-16 20:20:13.102 INFO analytics_server.do_POST Thread-3 (139994736637696) 703 bytes from 127.0.0.1:54904
+2020-04-16 20:20:13.103 INFO analytics_server._content_to_json Thread-3 (139994736637696) JSON content: {'db_io_parameters': {'mode': 'rw', 'result_id': ['00000000-0000-0000-0000-000000000005'], 'device_id': ['c98fda23-9298-4521-af43-64eb46faf13b', 'c98fda23-9298-4521-af43-64eb46faf13b', 'c98fda23-9298-4521-af43-64eb46faf13b'], 'data_source_id': [160, 161, 159], 'time_upload': ['2018-10-01_00:00:00+0000', '2019-04-01_00:00:00+0000', '2018-10-01_00:00:00+0000', '2019-04-01_00:00:00+0000', '2018-10-01_00:00:00+0000', '2019-04-01_00:00:00+0000'], 'limit': None}, 'analysis_parameters': {'analysis': 'correlation', 'analysis_arguments': {'method': ['spearman']}}}
+2020-04-16 20:20:13.897 INFO analytics_server._read_data Thread-3 (139994736637696) Data has been successfully read from DB: (719, 3) (rows, columns)
+2020-04-16 20:20:14.663 INFO analytics_server._write_results Thread-3 (139994736637696) Data has been saved into DB: (9, 1) ['00000000-0000-0000-0000-000000000005']
+2020-04-16 20:20:34.144 INFO analytics_server._write_results Thread-2 (139994752259840) Data has been saved into DB: (719, 1) ['00000000-0000-0000-0000-000000000055']
+2020-04-16 20:20:34.160 ERROR analytics_server.do_POST Thread-2 (139994752259840) POST-error: [Errno 32] Broken pipe
+2020-04-16 20:21:17.336 INFO analytics_server.<module> MainThread (139995481323328) Server stopped by user
+
+
+2020-04-16 20:21:20.91 INFO analytics_server.<module> MainThread (140329860556608) Server started: {'srv_host': 'localhost', 'srv_port': 65000, 'db_host': 'ems.insyte.ru', 'db_port': 8086, 'db_name': 'ems', 'db_user': 'ems_user', 'db_password': '4rERYTPhfTtvU!99', 'log_file': 'analytics_server.log', 'log_level': 20, 'log_gmt': True}
+2020-04-16 20:21:20.304 INFO analytics_server.start Thread-1 (140329139885824) Analytics Server's address: http://localhost:65000
+2020-04-16 20:21:23.964 INFO analytics_server.do_POST Thread-2 (140329063806720) 703 bytes from 127.0.0.1:54918
+2020-04-16 20:21:23.969 INFO analytics_server._content_to_json Thread-2 (140329063806720) JSON content: {'db_io_parameters': {'mode': 'rw', 'result_id': ['00000000-0000-0000-0000-000000000005'], 'device_id': ['c98fda23-9298-4521-af43-64eb46faf13b', 'c98fda23-9298-4521-af43-64eb46faf13b', 'c98fda23-9298-4521-af43-64eb46faf13b'], 'data_source_id': [160, 161, 159], 'time_upload': ['2018-10-01_00:00:00+0000', '2019-04-01_00:00:00+0000', '2018-10-01_00:00:00+0000', '2019-04-01_00:00:00+0000', '2018-10-01_00:00:00+0000', '2019-04-01_00:00:00+0000'], 'limit': None}, 'analysis_parameters': {'analysis': 'correlation', 'analysis_arguments': {'method': ['spearman']}}}
+2020-04-16 20:21:25.16 INFO analytics_server._read_data Thread-2 (140329063806720) Data has been successfully read from DB: (719, 3) (rows, columns)
+2020-04-16 20:21:25.766 INFO analytics_server._write_results Thread-2 (140329063806720) Data has been saved into DB: (9, 1) ['00000000-0000-0000-0000-000000000005']
+2020-04-16 20:21:31.203 INFO analytics_server.do_GET Thread-3 (140329063806720) GET 'update_analysis_functions' request from 127.0.0.1:54926
+2020-04-16 20:21:32.723 INFO analytics_server.do_GET Thread-4 (140329048708864) GET 'update_analysis_functions' request from 127.0.0.1:54930
+2020-04-16 20:21:40.49 INFO analytics_server.<module> MainThread (140329860556608) Server stopped by user
+
+
+2020-04-16 20:25:19.993 INFO analytics_server.<module> MainThread (140045586716480) Server started: {'srv_host': 'localhost', 'srv_port': 65000, 'db_host': 'ems.insyte.ru', 'db_port': 8086, 'db_name': 'ems', 'db_user': 'ems_user', 'db_password': '4rERYTPhfTtvU!99', 'log_file': 'analytics_server.log', 'log_level': 20, 'log_gmt': True}
+2020-04-16 20:25:20.216 INFO analytics_server.start Thread-1 (140044866045696) Analytics Server's address: http://localhost:65000
+2020-04-16 20:25:24.277 INFO analytics_server.do_GET Thread-2 (140044857652992) GET 'update_analysis_functions' request from 127.0.0.1:54970
+2020-04-16 20:25:41.950 INFO analytics_server.do_GET Thread-4 (140044857652992) GET 'update_analysis_functions' request from 127.0.0.1:54986
+2020-04-16 20:26:06.68 INFO analytics_server.do_GET Thread-6 (140044849260288) GET 'update_analysis_functions' request from 127.0.0.1:55002
+2020-04-16 20:26:46.146 INFO analytics_server.<module> MainThread (140045586716480) Server stopped by user
+
+
+2020-04-16 20:26:54.923 INFO analytics_server.<module> MainThread (140604969228096) Server started: {'srv_host': 'localhost', 'srv_port': 65000, 'db_host': 'ems.insyte.ru', 'db_port': 8086, 'db_name': 'ems', 'db_user': 'ems_user', 'db_password': '4rERYTPhfTtvU!99', 'log_file': 'analytics_server.log', 'log_level': 20, 'log_gmt': True}
+2020-04-16 20:26:55.194 INFO analytics_server.start Thread-1 (140604234458880) Analytics Server's address: http://localhost:65000
+2020-04-16 20:27:00.966 INFO analytics_server.do_GET Thread-2 (140604226066176) GET 'update_analysis_functions' request from 127.0.0.1:55014
+2020-04-16 20:28:13.753 INFO analytics_server.<module> MainThread (140604969228096) Server stopped by user
 
 

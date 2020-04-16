@@ -357,7 +357,7 @@ async def influx(arg):
         df = None
 
     # Analyze data
-    output_data = analytics.analyze_influx(arg.analysis, arg.analysis_args, df)
+    output_data = analytics.run_analysis(arg.analysis, arg.analysis_args, df)
 
     # write if needed
     if arg.mode in ['w', 'rw']:
