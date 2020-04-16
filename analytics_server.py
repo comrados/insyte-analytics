@@ -141,7 +141,8 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
                 self.send_header('Content-type', 'application/json')
                 self.end_headers()
                 self.wfile.write(bytes(json.dumps(self.am.ANALYSIS_ARGS, indent=4, sort_keys=True), 'utf-8'))
-            elif self.path in ["/update_analysis_functions/", "/update_analysis_functions"]:
+            elif self.path in ["/update_analysis_functions/", "/update_analysis_functions",
+                               "/update_analysis_functions.json"]:
                 logger.info("GET 'update_analysis_functions' request from " + client)
                 self.am.update_analysis_functions()
                 self.send_response(200)
