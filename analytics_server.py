@@ -28,6 +28,8 @@ def parse_args(args):
     server_group = parser.add_argument_group('Server', "Server's settings")
     server_group.add_argument("-sh", "--srv-host", dest="srv_host", default="92.53.78.60", help="server's host address")
     server_group.add_argument("-sp", "--srv-port", dest="srv_port", default=65000, type=int, help="server's port")
+    server_group.add_argument("-sah", "--srv-allowed-hosts", dest="srv_allowed_hosts", default=[], nargs="*",
+                              help="list of allowed hosts")
 
     # database
     dbc_group = parser.add_argument_group("Database", "Database's settings")
@@ -96,12 +98,28 @@ class AnalyticsServer(HTTPServer):
         logger.info(s)
         self.serve_forever()
 
+    def finish_request(self, request, client_address):
+        """Finish one request by instantiating RequestHandlerClass."""
+        client = client_address[0] + ':' + str(client_address[1])
+        if self._check_host_allowance(client_address):
+            logger.info("Request from: " + client)
+            self.RequestHandlerClass(request, client_address, self)
+        else:
+            logger.warning("Ignoring request from unauthorized host: " + client)
+
+    def _check_host_allowance(self, client_address):
+        if len(self.s.srv_allowed_hosts) > 0:
+            return True if client_address[0] in self.s.srv_allowed_hosts else False
+        else:
+            return True
+
 
 class AnalyticsServerThreaded(ThreadingMixIn, AnalyticsServer):
     """
-    Threading enabler.
+    Threading enabler: inherits form threading class and server class.
     """
-    pass
+    daemon_threads = False  # init request processing threads as non-daemonic
+    block_on_close = True  # wait until the completion of all non-daemonic threads before termination
 
 
 class AnalyticsRequestHandler(BaseHTTPRequestHandler):
@@ -116,12 +134,14 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
         self.am = server.am
         self.ctn = threading.current_thread()
         self.time = datetime.datetime.utcnow()
-        self.json = None  # analysis request
         self.influx = InfluxServerIO(self.s.db_host, self.s.db_name, self.s.db_port, self.s.db_user, self.s.db_password)
+        self.json_request = None  # analysis request
         self.input = None
         self.output = None
 
         super().__init__(request, client_address, server)
+
+        print()
 
     def do_GET(self):
         """
@@ -203,8 +223,8 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
         Converts POST-request's content into proper json
         """
         try:
-            self.json = json.loads(content)
-            logger.info("JSON content: " + str(self.json))
+            self.json_request = json.loads(content)
+            logger.info("JSON content: " + str(self.json_request))
         except Exception as err:
             logger.error("Impossible to process sent data (not a JSON): " + str(err))
             raise Exception("Impossible to process sent data (not a JSON): " + str(err))
@@ -214,7 +234,7 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
         Read data for processing
         """
         try:
-            db_io = self.json["db_io_parameters"]
+            db_io = self.json_request["db_io_parameters"]
             if db_io['limit'] == 'null':
                 db_io['limit'] = None
             if 'r' in db_io['mode']:
@@ -233,7 +253,7 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
         Analysis caller
         """
         try:
-            ap = self.json["analysis_parameters"]
+            ap = self.json_request["analysis_parameters"]
             self.output = self.am.run_analysis(ap['analysis'], ap['analysis_arguments'], self.input)
         except Exception as err:
             logger.error("Failed to analyze the data: " + str(err))
@@ -244,7 +264,7 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
         Write analysis results to DB
         """
         try:
-            db_io = self.json["db_io_parameters"]
+            db_io = self.json_request["db_io_parameters"]
             if 'w' in db_io['mode']:
                 self._check_write_parameters(db_io['result_id'], self.output)
                 self.influx.connect()

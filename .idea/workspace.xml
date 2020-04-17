@@ -1,7 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="12f8726f-fb14-4ba6-9c8b-89c2ed12558e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/insyte-analytics.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/insyte-analytics.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/analytics_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics_server.py" afterDir="false" />
     </list>
@@ -83,7 +102,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/analytics_server.py" />
-      <option name="PARAMETERS" value="-sh localhost -sp 65000 -lf analytics_server.log -ll 20 -dbh ems.insyte.ru -dbn ems -dbp 8086 -dbu ems_user -dbpw 4rERYTPhfTtvU!99" />
+      <option name="PARAMETERS" value="-sh localhost -sp 65000 -sah localhost 127.0.0.1 -lf analytics_server.log -ll 20 -dbh ems.insyte.ru -dbn ems -dbp 8086 -dbu ems_user -dbpw 4rERYTPhfTtvU!99" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -642,13 +661,6 @@
       <option name="presentableId" value="Default" />
       <updated>1555416435785</updated>
     </task>
-    <task id="LOCAL-00012" summary="dbs extension">
-      <created>1568293992782</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1568293992782</updated>
-    </task>
     <task id="LOCAL-00013" summary="datetime, date, time formatting">
       <created>1568475344910</created>
       <option name="number" value="00013" />
@@ -985,7 +997,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587069015126</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="server influx analysis list on the fly update">
+      <created>1587069936069</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1587069936069</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -1044,10 +1063,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="server influx analysis list on the fly update" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1587062510663">
+    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1587121185354">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1587062510663" />
+    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1587121185354" />
     <state x="451" y="231" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1173@67.27.1853.1173" timestamp="1584030247280" />
     <state x="676" y="280" width="624" height="544" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1584016649868">
       <screen x="67" y="27" width="1853" height="1053" />
@@ -1061,10 +1080,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="751" y="205" key="#xdebugger.evaluate/67.27.1853.1053@67.27.1853.1053" timestamp="1581859115500" />
-    <state x="506" y="92" width="1146" height="810" key="CommitChangelistDialog2" timestamp="1587069014945">
+    <state x="506" y="92" width="1146" height="810" key="CommitChangelistDialog2" timestamp="1587069936000">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="506" y="92" width="1146" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1587069014945" />
+    <state x="506" y="92" width="1146" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1587069936000" />
     <state x="432" y="111" key="CommitChangelistDialog2/67.27.1853.1173@67.27.1853.1173" timestamp="1584032375344" />
     <state x="167" y="125" width="1653" height="855" key="DiffContextDialog" timestamp="1586207888237">
       <screen x="67" y="27" width="1853" height="1053" />
@@ -1078,58 +1097,58 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="67" y="27" width="1843" height="1053" key="FileDocumentManager.FileCacheConflict/67.27.1853.1053@67.27.1853.1053" timestamp="1585576756747" />
-    <state width="1830" height="141" key="GridCell.Tab.0.bottom" timestamp="1587068814524">
+    <state width="1830" height="211" key="GridCell.Tab.0.bottom" timestamp="1587121021186">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="141" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1587068814524" />
+    <state width="1830" height="211" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1587121021186" />
     <state width="1830" height="134" key="GridCell.Tab.0.bottom/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579755" />
-    <state width="1830" height="141" key="GridCell.Tab.0.center" timestamp="1587068814524">
+    <state width="1830" height="211" key="GridCell.Tab.0.center" timestamp="1587121021185">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="141" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1587068814524" />
+    <state width="1830" height="211" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1587121021185" />
     <state width="1830" height="134" key="GridCell.Tab.0.center/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579754" />
-    <state width="1830" height="141" key="GridCell.Tab.0.left" timestamp="1587068814524">
+    <state width="1830" height="211" key="GridCell.Tab.0.left" timestamp="1587121021185">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="141" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1587068814524" />
+    <state width="1830" height="211" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1587121021185" />
     <state width="1830" height="134" key="GridCell.Tab.0.left/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579754" />
-    <state width="1830" height="141" key="GridCell.Tab.0.right" timestamp="1587068814524">
+    <state width="1830" height="211" key="GridCell.Tab.0.right" timestamp="1587121021186">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="141" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1587068814524" />
+    <state width="1830" height="211" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1587121021186" />
     <state width="1830" height="134" key="GridCell.Tab.0.right/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579755" />
-    <state width="1830" height="182" key="GridCell.Tab.1.bottom" timestamp="1587068201040">
+    <state width="1830" height="218" key="GridCell.Tab.1.bottom" timestamp="1587119058908">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="182" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1587068201040" />
+    <state width="1830" height="218" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1587119058908" />
     <state width="1830" height="406" key="GridCell.Tab.1.bottom/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579750" />
-    <state width="1830" height="182" key="GridCell.Tab.1.center" timestamp="1587068201039">
+    <state width="1830" height="218" key="GridCell.Tab.1.center" timestamp="1587119058908">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="182" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1587068201039" />
+    <state width="1830" height="218" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1587119058908" />
     <state width="1830" height="406" key="GridCell.Tab.1.center/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579749" />
-    <state width="1830" height="182" key="GridCell.Tab.1.left" timestamp="1587068201039">
+    <state width="1830" height="218" key="GridCell.Tab.1.left" timestamp="1587119058907">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="182" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1587068201039" />
+    <state width="1830" height="218" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1587119058907" />
     <state width="1830" height="406" key="GridCell.Tab.1.left/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579749" />
-    <state width="1830" height="182" key="GridCell.Tab.1.right" timestamp="1587068201039">
+    <state width="1830" height="218" key="GridCell.Tab.1.right" timestamp="1587119058908">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="182" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1587068201039" />
+    <state width="1830" height="218" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1587119058908" />
     <state width="1830" height="406" key="GridCell.Tab.1.right/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579749" />
     <state x="247" y="116" width="1482" height="872" key="MergeDialog" timestamp="1587062018077">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="247" y="116" width="1482" height="872" key="MergeDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1587062018077" />
-    <state x="629" y="228" key="SettingsEditor" timestamp="1587062478535">
+    <state x="577" y="195" key="SettingsEditor" timestamp="1587116309560">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="629" y="228" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1587062478535" />
-    <state x="588" y="288" width="800" height="551" key="Vcs.Push.Dialog.v2" timestamp="1587069020576">
+    <state x="577" y="195" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1587116309560" />
+    <state x="588" y="288" width="800" height="551" key="Vcs.Push.Dialog.v2" timestamp="1587069938633">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1587069020576" />
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1587069938633" />
     <state x="588" y="318" width="800" height="551" key="Vcs.Push.Dialog.v2/67.27.1853.1173@67.27.1853.1173" timestamp="1584032377142" />
     <state width="926" height="527" key="XDebugger.FullValuePopup" timestamp="1586202329346">
       <screen x="67" y="27" width="1853" height="1053" />
@@ -1139,10 +1158,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="649" y="380" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1586266607687" />
-    <state x="761" y="472" width="464" height="170" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1587061941377">
+    <state x="761" y="472" width="464" height="170" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1587070273362">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="761" y="472" width="464" height="170" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/67.27.1853.1053@67.27.1853.1053" timestamp="1587061941377" />
+    <state x="761" y="472" width="464" height="170" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/67.27.1853.1053@67.27.1853.1053" timestamp="1587070273362" />
     <state x="738" y="196" width="501" height="713" key="refactoring.ChangeSignatureDialog" timestamp="1585562806585">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -1278,13 +1297,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/analytics_server.py</url>
-          <line>116</line>
-          <option name="timeStamp" value="193" />
+          <line>150</line>
+          <option name="timeStamp" value="196" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/analytics_server.py</url>
-          <line>87</line>
-          <option name="timeStamp" value="194" />
+          <line>103</line>
+          <option name="timeStamp" value="200" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
