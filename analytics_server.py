@@ -30,6 +30,12 @@ def parse_args(args):
     server_group.add_argument("-sp", "--srv-port", dest="srv_port", default=65000, type=int, help="server's port")
     server_group.add_argument("-sah", "--srv-allowed-hosts", dest="srv_allowed_hosts", default=[], nargs="*",
                               help="list of allowed hosts")
+    server_group.add_argument("-sum", "--srv-update-mode", dest="srv_update_mode", default="both",
+                              choices=["auto", "manual", "both"], help="analysis functions update modes: "
+                                                                       "'auto' - time-interval based automatic, "
+                                                                       "'manual' - via GET-request, 'both' - both")
+    server_group.add_argument("-saui", "--srv-auto-update-int", dest="srv_auto_update_int", default=15 * 60, type=int,
+                              help="analysis functions auto update interval (seconds), <= 0 if disabled")
 
     # database
     dbc_group = parser.add_argument_group("Database", "Database's settings")
@@ -51,6 +57,9 @@ def parse_args(args):
 
     try:
         parsed = parser.parse_args(args)
+        parsed.srv_auto_update = (parsed.srv_update_mode in ["auto", "both"]) and (parsed.srv_auto_update_int > 0)
+        parsed.srv_manual_update = parsed.srv_update_mode in ["manual", "both"]
+
     except argparse.ArgumentError:
         parser.print_help()
         sys.exit(2)
@@ -76,6 +85,20 @@ def init_logger(log_file, log_level, log_gmt):
     if log_gmt:
         logging.Formatter.converter = time.gmtime
     return logging.getLogger("analytics_server")
+
+
+def auto_update_analysis_functions(args, analysis_module):
+    """
+    Updates analysis functions with given frequency (if enabled)
+
+    :param args: parsed args
+    :param analysis_module: analysis module instance
+    :return:
+    """
+    if args.srv_auto_update:
+        time.sleep(args.srv_auto_update_int)
+        analysis_module.update_analysis_functions()
+        logger.info("Analysis functions updated automatically")
 
 
 class AnalyticsServer(HTTPServer):
@@ -118,7 +141,7 @@ class AnalyticsServerThreaded(ThreadingMixIn, AnalyticsServer):
     """
     Threading enabler: inherits form threading class and server class.
     """
-    daemon_threads = False  # init request processing threads as non-daemonic
+    daemon_threads = True  # init request processing threads as daemonic
     block_on_close = True  # wait until the completion of all non-daemonic threads before termination
 
 
@@ -164,11 +187,15 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
             elif self.path in ["/update_analysis_functions/", "/update_analysis_functions",
                                "/update_analysis_functions.json"]:
                 logger.info("GET 'update_analysis_functions' request from " + client)
-                self.am.update_analysis_functions()
-                self.send_response(200)
-                self.send_header('Content-type', 'application/json')
-                self.end_headers()
-                self.wfile.write(bytes(json.dumps(self.am.ANALYSIS_ARGS, indent=4, sort_keys=True), 'utf-8'))
+                if self.s.srv_manual_update:
+                    self.am.update_analysis_functions()
+                    self.send_response(200)
+                    self.send_header('Content-type', 'application/json')
+                    self.end_headers()
+                    self.wfile.write(bytes(json.dumps(self.am.ANALYSIS_ARGS, indent=4, sort_keys=True), 'utf-8'))
+                    logger.info("Analysis functions updated manually")
+                else:
+                    logger.warning("Manual analysis functions update is disabled")
             else:
                 self.send_error(404, 'Unknown resource: %s' % self.path)
         except Exception as err:
@@ -361,21 +388,25 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-
+    # parse args
     a = parse_args(sys.argv[1:])
 
+    # init logger
     logger = init_logger(a.log_file, a.log_level, a.log_gmt)
-
     logger.info("Server started: " + str(vars(a)))
 
+    # init analytics server
     am = analytics.AnalyticsModule()
-
     srv = AnalyticsServerThreaded(AnalyticsRequestHandler, a, am)
     srv_thread = threading.Thread(target=srv.start, daemon=True)
+
+    # main loop
     try:
         srv_thread.start()
         while True:
+            auto_update_analysis_functions(a, am)
             continue
+    # shutdown
     except KeyboardInterrupt:
         logger.info("Server stopped by user\n\n")
         print('Server stopped by user')
