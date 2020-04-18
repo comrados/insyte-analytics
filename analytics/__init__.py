@@ -1,12 +1,14 @@
 import logging
 import os
 import importlib
+import sys
 
 
 class AnalyticsModule:
     logger = logging.getLogger('analytics')
 
-    def __init__(self):
+    def __init__(self, script_folders):
+        self.script_folders = script_folders
         self.ANALYSIS, self.ANALYSIS_ARGS = self._import_analysis_functions()
 
     def run_analysis(self, analysis_name, analysis_arguments, loaded_data):
@@ -50,33 +52,41 @@ class AnalyticsModule:
     def _import_analysis_functions(self):
         # import all scripts from 'analytics/scripts' and 'analytics/_in_development' folders
         analytics_dir = "analytics"
-        analysis_scripts_dir = "scripts"
-        in_development_scripts_dir = "_in_development"
+        analysis_scripts_dir = os.path.join(analytics_dir, "scripts")
+        in_development_scripts_dir = os.path.join(analytics_dir, "_in_development")
+
+        folders = [analysis_scripts_dir, in_development_scripts_dir, *self.script_folders]
 
         analysis = {}  # name : class
         analysis_args = {}  # name : analysis arguments
 
         # loop through directories with scripts
-        for scripts_dir in [analysis_scripts_dir, in_development_scripts_dir]:
-            scripts_list = os.listdir(os.path.join(analytics_dir, scripts_dir))
-            for script in scripts_list:
-                name, ext = os.path.splitext(script)
-                if name.startswith("analysis_"):
-                    # try to import and update dictionaries
-                    try:
-                        i = importlib.import_module(analytics_dir + "." + scripts_dir + "." + name)
-                        # imported module constants
-                        a_name = getattr(i, "ANALYSIS_NAME")
-                        a_class_name = getattr(i, "CLASS_NAME")
-                        a_class = getattr(i, a_class_name)
-                        a_args = getattr(i, "A_ARGS")
-                        a_args["folder"] = scripts_dir
-                        # update dictionaries
-                        analysis[a_name] = a_class
-                        analysis_args[a_name] = a_args
-                        self.logger.debug("Module imported: " + name)
-                    except Exception as err:
-                        self.logger.error("Failed to import module: " + name + ", " + str(err))
+        for folder in folders:
+            if os.path.isdir(folder):
+                file_list = os.listdir(folder)
+                sys.path.append(folder)
+                for file in file_list:
+                    name, ext = os.path.splitext(file)
+                    if name.startswith("analysis_"):
+                        # try to import and update dictionaries
+                        try:
+                            # module_name = folder.replace(r'/', r'.') + "." + name
+                            # i = importlib.import_module(module_name)
+                            i = importlib.import_module(name)
+                            # imported module constants
+                            a_name = getattr(i, "ANALYSIS_NAME")
+                            a_class_name = getattr(i, "CLASS_NAME")
+                            a_class = getattr(i, a_class_name)
+                            a_args = getattr(i, "A_ARGS")
+                            a_args["folder"] = folder
+                            # update dictionaries
+                            analysis[a_name] = a_class
+                            analysis_args[a_name] = a_args
+                            self.logger.debug("Module imported: " + name)
+                        except Exception as err:
+                            self.logger.error("Failed to import module: " + name + ", " + str(err))
+            else:
+                self.logger.warning("Impossible import from folder: " + folder)
         return analysis, analysis_args
 
     ################################################## OLD FUNCTIONS ###################################################

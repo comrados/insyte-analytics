@@ -34,8 +34,11 @@ def parse_args(args):
                               choices=["auto", "manual", "both"], help="analysis functions update modes: "
                                                                        "'auto' - time-interval based automatic, "
                                                                        "'manual' - via GET-request, 'both' - both")
-    server_group.add_argument("-saui", "--srv-auto-update-int", dest="srv_auto_update_int", default=15 * 60, type=int,
+    server_group.add_argument("-saui", "--srv-auto-update-int", dest="srv_auto_update_int", default=900, type=int,
                               help="analysis functions auto update interval (seconds), <= 0 if disabled")
+    server_group.add_argument("-ssf", "--srv-script-folders", dest="srv_script_folders", default=[], nargs="*",
+                              help="additional analytics script folders with , default ones ('analytics/scripts' "
+                                   "and 'analytics/_in_development') will be used in any case")
 
     # database
     dbc_group = parser.add_argument_group("Database", "Database's settings")
@@ -396,7 +399,7 @@ if __name__ == "__main__":
     logger.info("Server started: " + str(vars(a)))
 
     # init analytics server
-    am = analytics.AnalyticsModule()
+    am = analytics.AnalyticsModule(a.srv_script_folders)
     srv = AnalyticsServerThreaded(AnalyticsRequestHandler, a, am)
     srv_thread = threading.Thread(target=srv.start, daemon=True)
 
