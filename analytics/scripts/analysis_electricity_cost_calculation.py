@@ -9,7 +9,7 @@ CLASS_NAME = "ElectricityCostCalculationAnalysis"
 ANALYSIS_NAME = "electricity-cost-calculation"
 REGIONS = ["RU-SVE", "RU-PER", "RU-BA", "RU-UD"]
 RETAILERS = ["ORENBENE_PSVERDLE", "EKATSBKO_PEKELSK1", "ORENSES3_PROSKOM1", "OBTEPENG_PNUESBK1", "PERMENER_PPERMENE", "BASHKESK_PBASHENE", "ORENBENE_PUDMURTE"]
-A_ARGS = {"analysis_code": "CORRELATION",
+A_ARGS = {"analysis_code": "ELECTRICITYCOSTCALCULATION",
           "analysis_name": ANALYSIS_NAME,
           "input": "1 time series",
           "action": "Calculates the cost of electricity in 6 categories",
