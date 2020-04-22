@@ -1,38 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="12f8726f-fb14-4ba6-9c8b-89c2ed12558e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/tests/server_test_jsons/a.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/server_test_jsons/b.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/analytics/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/analysis.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_autocorrelation.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_autocorrelation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_correlation.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_correlation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_baseline.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_baseline.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_boolean.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_boolean.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_check.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_check.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_deviation.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_deviation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_discharge.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_discharge.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_expected.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_expected.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_rrmse.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_demand_response_rrmse.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_peak_prediction_ml.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_peak_prediction_ml.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_peak_prediction_statistical.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_peak_prediction_statistical.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_prediction_holt_winters.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_prediction_holt_winters.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_statistics_normalization.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_statistics_normalization.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics/scripts/analysis_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics/scripts/analysis_test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/analytics_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics_server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/influx_server_io.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/influx_server_io.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/analytics_server.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/analytics_server.log" afterDir="false" />
     </list>
     <list id="8f3402cf-8e05-46bd-8019-c70b228793b0" name="Revert: demand-response" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FavoritesManager">
-    <favorites_list name="insyte-analytics" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -61,14 +57,13 @@
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/tests/server_test_jsons" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/_a" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -78,19 +73,19 @@
     </option>
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/analytics/scripts" />
-      <recent name="$PROJECT_DIR$/analytics" />
-      <recent name="$PROJECT_DIR$/analytics/demand_response" />
-      <recent name="$PROJECT_DIR$/tests/server_test_jsons" />
-      <recent name="$PROJECT_DIR$/analytics/correlation" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/_a" />
+      <recent name="$PROJECT_DIR$/analytics/_a" />
       <recent name="$PROJECT_DIR$/tests/server_test_jsons" />
       <recent name="$PROJECT_DIR$/analytics/prediction" />
       <recent name="$PROJECT_DIR$/analytics/demand_response" />
-      <recent name="D:\insyte-analytics\analytics\correlation" />
-      <recent name="D:\insyte-analytics\models" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/_depricated" />
+      <recent name="$PROJECT_DIR$/analytics/scripts" />
+      <recent name="$PROJECT_DIR$/analytics" />
+      <recent name="$PROJECT_DIR$/analytics/demand_response" />
     </key>
   </component>
   <component name="RunManager" selected="Python.analytics_server">
@@ -101,13 +96,13 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
+      <option name="SDK_HOME" value="$PROJECT_DIR$/venv/bin/python" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/analytics_server.py" />
-      <option name="PARAMETERS" value="-sh localhost -sp 65000 -lf analytics_server.log -ll 20 -dbh ems.insyte.ru -dbn ems -dbp 8086 -dbu ems_user -dbpw 4rERYTPhfTtvU!99" />
+      <option name="PARAMETERS" value="-sh localhost -sp 65000 -sah localhost 127.0.0.1 -sum both -saui 15 -ssf _a -lf analytics_server.log -ll 20 -dbh ems.insyte.ru -dbn ems -dbp 8086 -dbu ems_user -dbpw 4rERYTPhfTtvU!99" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -148,7 +143,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/_depricated/insyte_analytics.py" />
       <option name="PARAMETERS" value="--log --log-path logs --log-level 20 --connection-type influx --host-address ems.insyte.ru --database ems --port 8086 --username ems_user --password 4rERYTPhfTtvU!99 --mode rw --result-id 00000000-0000-0000-0000-000000000012 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 --time_upload 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 --limit 300 --analysis demand-response-baseline --analysis-args target_day 1 2018-12-01 except_weekends 1 True exception_days 2 2018-11-05 2018-11-06" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -169,7 +164,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/_depricated/insyte_analytics.py" />
       <option name="PARAMETERS" value="--log --log-path logs --log-level 10 --result-id 00000000-0000-0000-0000-000000544412 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 --time_upload 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 --analysis demand-response-boolean --analysis-args target_day 1 2018-12-01 exception_days 2 2018-11-05 2018-11-06 except_weekends 1 True discharge_start_hour 1 12 discharge_value 1 1.0 discharge_duration 1 4 mode 1 expected" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -190,7 +185,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/_depricated/insyte_analytics.py" />
       <option name="PARAMETERS" value="--log --log-path logs --log-level 10 --result-id 00000000-0000-0000-0000-000000183272 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 --time_upload 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 --analysis demand-response-check --analysis-args target_day 1 2018-12-01 exception_days 2 2018-11-05 2018-11-06 except_weekends 1 True discharge_start_hour 1 12 discharge_value 1 1.0 discharge_duration 1 4 mode 1 expected" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -211,7 +206,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/_depricated/insyte_analytics.py" />
       <option name="PARAMETERS" value="--log --log-path logs --log-level 10 --result-id 00000000-0000-0000-0000-000000000012 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 --time_upload 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 --analysis demand-response-deviation --analysis-args target_day 1 2018-12-01 exception_days 2 2018-11-05 2018-11-06 except_weekends 1 True discharge_start_hour 1 12 discharge_value 1 1.0 discharge_duration 1 4 mode 1 expected" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -232,7 +227,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/_depricated/insyte_analytics.py" />
       <option name="PARAMETERS" value="--log --log-path logs --log-level 10 --result-id 00000000-0000-0000-0000-000000000012 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 --time_upload 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 --analysis demand-response-discharge --analysis-args target_day 1 2018-11-29 exception_days 2 2018-11-05 2018-11-06 except_weekends 1 True discharge_start_hour 1 16 discharge_value 1 4.0 discharge_duration 1 4" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -253,7 +248,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/_depricated/insyte_analytics.py" />
       <option name="PARAMETERS" value="--log --log-path logs --log-level 10 --result-id 00000000-0000-0000-0000-000000000012 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 --time_upload 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 --analysis demand-response-expected --analysis-args target_day 1 2018-11-29 exception_days 2 2018-11-05 2018-11-06 except_weekends 1 True discharge_start_hour 1 16 discharge_value 1 4.0 discharge_duration 1 4" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -274,7 +269,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/_depricated/insyte_analytics.py" />
       <option name="PARAMETERS" value="--log --log-path logs --log-level 10 --result-id 00000000-0000-0000-0000-000000000012 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 --time_upload 2018-11-01_00:00:00+0000 2019-02-01_00:00:00+0000 --analysis demand-response-rrmse --analysis-args target_day 1 2018-12-01 exception_days 2 2018-11-05 2018-11-06 except_weekends 1 True discharge_start_hour 1 12 discharge_value 1 1.0 discharge_duration 1 4 mode 1 expected" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -295,7 +290,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/_depricated/insyte_analytics.py" />
       <option name="PARAMETERS" value="--help" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -316,7 +311,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/_depricated/insyte_analytics.py" />
       <option name="PARAMETERS" value="--log --log-level 10 --result-id 00000000-0000-0000-0000-000000000055 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 161 --time_upload 2018-10-01_00:00:00+0000 2019-11-01_00:00:00+0000 --analysis autocorrelation --analysis-args step 1 2" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -337,7 +332,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/_depricated/insyte_analytics.py" />
       <option name="PARAMETERS" value="--log --log-level 10 --result-id 00000000-0000-0000-0000-000000000005 --device-id c98fda23-9298-4521-af43-64eb46faf13b c98fda23-9298-4521-af43-64eb46faf13b c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 161 159 --time_upload 2018-10-01_00:00:00+0000 2019-04-01_00:00:00+0000 2018-10-01_00:00:00+0000 2019-04-01_00:00:00+0000 2018-10-01_00:00:00+0000 2019-04-01_00:00:00+0000 --analysis correlation --analysis-args method 1 spearman" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -358,7 +353,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/_depricated/insyte_analytics.py" />
       <option name="PARAMETERS" value="--log --log-level 10 --result-id 00000000-0000-0000-0000-000000000041 00000000-0000-0000-0000-000000000042 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 --time_upload 2018-10-01_00:00:00+0000 2019-04-01_00:00:00+0000 --analysis evaluation-brutlag --analysis-args alpha 1 1.0 beta 1 1.0 gamma 1 1.0 season_length 1 24 scaling_factor 1 2.0 n_predictions 1 100" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -379,7 +374,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/_depricated/insyte_analytics.py" />
       <option name="PARAMETERS" value="--log --log-level 10 --result-id 00000000-0000-0000-0000-000000000081 00000000-0000-0000-0000-000000000082 00000000-0000-0000-0000-000000000083 --device-id c98fda23-9298-4521-af43-64eb46faf13b c98fda23-9298-4521-af43-64eb46faf13b c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 161 159 --time_upload 2018-10-01_00:00:00+0000 2019-04-01_00:00:00+0000 2018-10-01_00:00:00+0000 2019-04-01_00:00:00+0000 2018-10-01_00:00:00+0000 2019-04-01_00:00:00+0000 --analysis normalization --analysis-args min_value 1 -1 max_value 1 1" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -400,7 +395,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/_depricated/insyte_analytics.py" />
       <option name="PARAMETERS" value="--log -ll 10 --mode w --result-id 00000000-0000-0000-0000-000000022815 --analysis peak-prediction-ml --analysis-args model 1 nn date 3 2019-06-26 2019-06-27 2019-06-28 sunrise 3 04:13:00 04:14:00 04:15:00 sunset 3 22:23:00 22:23:00 22:23:00 daylength 3 18:09:00 18:09:00 18:09:00 temperature 3 12.4 13.5375 15.2875 pressure 3 762.4125 759.8125 757.25 humidity 3 74.875 70.25 64.625 windspeed 3 1.25 1.375 3.125" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -421,7 +416,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/_depricated/insyte_analytics.py" />
       <option name="PARAMETERS" value="--log --mode w --result-id 00000000-0000-0000-0000-000000022813 --analysis peak-prediction-statistical --analysis-args year 1 2019 month 1 8" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -442,7 +437,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/_depricated/insyte_analytics.py" />
       <option name="PARAMETERS" value="--log --log-level 10 --result-id 00000000-0000-0000-0000-000000000391 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 --time_upload 2018-10-01_00:00:00+0000 2019-04-01_00:00:00+0000 --analysis prediction-holt-winters-auto --analysis-args season_length 1 24 n_predictions 1 100 tolerance 1 6" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -463,7 +458,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/_depricated/insyte_analytics.py" />
       <option name="PARAMETERS" value="--log --log-level 10 --result-id 00000000-0000-0000-0000-000000000031 00000000-0000-0000-0000-000000000032 00000000-0000-0000-0000-000000000033 --device-id c98fda23-9298-4521-af43-64eb46faf13b --data-source-id 160 --time_upload 2018-10-01_00:00:00+0000 2019-04-01_00:00:00+0000 --analysis prediction-holt-winters --analysis-args alpha 1 1.0 beta 1 1.0 gamma 1 1.0 season_length 1 24 n_predictions 1 100 scaling_factor 1 2" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -484,7 +479,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insyte_analytics.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/_depricated/insyte_analytics.py" />
       <option name="PARAMETERS" value="--log --result-id 00000000-0000-0000-0000-000000000010 --device-id c98fda23-9298-4521-af43-64eb46faf13b c98fda23-9298-4521-af43-64eb46faf13b 0d318ce3-d8e6-425d-af0a-2f1e7de7acf5 --data-source-id 160 161 1 --time_upload 2018-10-01_00:00:00+0000 2019-04-01_00:00:00+0000 2018-10-01_00:00:00+0000 2019-04-01_00:00:00+0000 2018-10-01_00:00:00+0000 2019-04-01_00:00:00+0000 --limit 300 --analysis test --analysis-args operation 1 add value 1 150.0" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -505,7 +500,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tests/test_db_module.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/_depricated/test_db_module.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -542,7 +537,7 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="/opt/anaconda3/bin/python3" />
+      <option name="SDK_HOME" value="$PROJECT_DIR$/venv/bin/python" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/analytics" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -568,7 +563,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tests/test_influx.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/_depricated/test_influx.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -610,7 +605,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tests/test_read.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/_depricated/test_read.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -620,12 +615,8 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.test_db_module" />
-      <item itemvalue="Python.test_influx" />
-      <item itemvalue="Python.test_read" />
+      <item itemvalue="Python.analytics_server" />
       <item itemvalue="Python.args_to_json" />
-      <item itemvalue="Python.test_delete" />
-      <item itemvalue="Python.test_insert" />
       <item itemvalue="Python.insyte-analytics demand-response-baseline" />
       <item itemvalue="Python.insyte-analytics demand-response-boolean" />
       <item itemvalue="Python.insyte-analytics demand-response-check" />
@@ -643,8 +634,12 @@
       <item itemvalue="Python.insyte_analytics prediction holt winters auto" />
       <item itemvalue="Python.insyte_analytics prediction holt winters" />
       <item itemvalue="Python.insyte_analytics test" />
+      <item itemvalue="Python.test_db_module" />
+      <item itemvalue="Python.test_delete" />
       <item itemvalue="Python.test_import" />
-      <item itemvalue="Python.analytics_server" />
+      <item itemvalue="Python.test_influx" />
+      <item itemvalue="Python.test_insert" />
+      <item itemvalue="Python.test_read" />
     </list>
     <recent_temporary>
       <list>
@@ -654,18 +649,6 @@
         <item itemvalue="Python.test_delete" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <treeState>
-            <expand />
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -677,41 +660,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1555416435785</updated>
-    </task>
-    <task id="LOCAL-00010" summary="dbs extension">
-      <created>1565613900075</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1565613900075</updated>
-    </task>
-    <task id="LOCAL-00011" summary="dbs extension">
-      <created>1568293796713</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1568293796713</updated>
-    </task>
-    <task id="LOCAL-00012" summary="dbs extension">
-      <created>1568293992782</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1568293992782</updated>
-    </task>
-    <task id="LOCAL-00013" summary="datetime, date, time formatting">
-      <created>1568475344910</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1568475344910</updated>
-    </task>
-    <task id="LOCAL-00014" summary="reading and preprocessing fix">
-      <created>1570544411427</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1570544411427</updated>
     </task>
     <task id="LOCAL-00015" summary="demand response discharged">
       <created>1571499348058</created>
@@ -1021,7 +969,42 @@
       <option name="project" value="LOCAL" />
       <updated>1586185693955</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="server influx error handling fixes">
+      <created>1586202748761</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1586202748762</updated>
+    </task>
+    <task id="LOCAL-00060" summary="server influx analysis list on the fly update">
+      <created>1587069015125</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1587069015126</updated>
+    </task>
+    <task id="LOCAL-00061" summary="server influx analysis list on the fly update">
+      <created>1587069936069</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1587069936069</updated>
+    </task>
+    <task id="LOCAL-00062" summary="server influx white list">
+      <created>1587121749269</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1587121749270</updated>
+    </task>
+    <task id="LOCAL-00063" summary="server influx analysis functions auto update">
+      <created>1587126132261</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1587126132261</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -1029,9 +1012,7 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
@@ -1050,13 +1031,10 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="new output" />
-    <MESSAGE value="back to the old output, tags: 'value', 'boolean'" />
-    <MESSAGE value="last error console output" />
-    <MESSAGE value="fix" />
     <MESSAGE value="requirements update" />
     <MESSAGE value="booleans to float" />
     <MESSAGE value="booleans" />
@@ -1078,35 +1056,39 @@
     <MESSAGE value="server influx scripts new scheme" />
     <MESSAGE value="server influx MIME &amp; a_args fixes" />
     <MESSAGE value="server influx read limit check" />
-    <option name="LAST_COMMIT_MESSAGE" value="server influx read limit check" />
+    <MESSAGE value="server influx error handling fixes" />
+    <MESSAGE value="server influx analysis list on the fly update" />
+    <MESSAGE value="server influx white list" />
+    <MESSAGE value="server influx analysis functions auto update" />
+    <option name="LAST_COMMIT_MESSAGE" value="server influx analysis functions auto update" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585602066540">
+    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1587230410673">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1585602066540" />
+    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1587230410673" />
     <state x="451" y="231" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1173@67.27.1853.1173" timestamp="1584030247280" />
     <state x="676" y="280" width="624" height="544" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1584016649868">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="676" y="280" width="624" height="544" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1584016649868" />
-    <state x="478" y="249" width="1373" height="590" key="#xdebugger.XInspectDialog" timestamp="1585577701392">
+    <state x="478" y="249" width="1373" height="590" key="#xdebugger.XInspectDialog" timestamp="1587229939906">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="478" y="249" width="1373" height="590" key="#xdebugger.XInspectDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1585577701392" />
-    <state x="751" y="205" key="#xdebugger.evaluate" timestamp="1581859115500">
+    <state x="478" y="249" width="1373" height="590" key="#xdebugger.XInspectDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1587229939906" />
+    <state x="751" y="205" key="#xdebugger.evaluate" timestamp="1587229988367">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="751" y="205" key="#xdebugger.evaluate/67.27.1853.1053@67.27.1853.1053" timestamp="1581859115500" />
-    <state x="506" y="92" width="1146" height="810" key="CommitChangelistDialog2" timestamp="1586185693807">
+    <state x="751" y="205" key="#xdebugger.evaluate/67.27.1853.1053@67.27.1853.1053" timestamp="1587229988367" />
+    <state x="506" y="92" width="1146" height="810" key="CommitChangelistDialog2" timestamp="1587126132113">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="506" y="92" width="1146" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1586185693807" />
+    <state x="506" y="92" width="1146" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1587126132113" />
     <state x="432" y="111" key="CommitChangelistDialog2/67.27.1853.1173@67.27.1853.1173" timestamp="1584032375344" />
-    <state x="167" y="125" width="1653" height="855" key="DiffContextDialog" timestamp="1584018309854">
+    <state x="167" y="125" width="1653" height="855" key="DiffContextDialog" timestamp="1586207888237">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="167" y="125" width="1653" height="855" key="DiffContextDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1584018309854" />
+    <state x="167" y="125" width="1653" height="855" key="DiffContextDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1586207888237" />
     <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl" timestamp="1585521504642">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -1115,67 +1097,75 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="67" y="27" width="1843" height="1053" key="FileDocumentManager.FileCacheConflict/67.27.1853.1053@67.27.1853.1053" timestamp="1585576756747" />
-    <state width="1830" height="235" key="GridCell.Tab.0.bottom" timestamp="1586202376749">
+    <state width="1830" height="185" key="GridCell.Tab.0.bottom" timestamp="1587230280837">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="235" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1586202376749" />
+    <state width="1830" height="185" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1587230280837" />
     <state width="1830" height="134" key="GridCell.Tab.0.bottom/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579755" />
-    <state width="1830" height="235" key="GridCell.Tab.0.center" timestamp="1586202376749">
+    <state width="1830" height="185" key="GridCell.Tab.0.center" timestamp="1587230280837">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="235" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1586202376749" />
+    <state width="1830" height="185" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1587230280837" />
     <state width="1830" height="134" key="GridCell.Tab.0.center/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579754" />
-    <state width="1830" height="235" key="GridCell.Tab.0.left" timestamp="1586202376748">
+    <state width="1830" height="185" key="GridCell.Tab.0.left" timestamp="1587230280837">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="235" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1586202376748" />
+    <state width="1830" height="185" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1587230280837" />
     <state width="1830" height="134" key="GridCell.Tab.0.left/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579754" />
-    <state width="1830" height="235" key="GridCell.Tab.0.right" timestamp="1586202376749">
+    <state width="1830" height="185" key="GridCell.Tab.0.right" timestamp="1587230280837">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="235" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1586202376749" />
+    <state width="1830" height="185" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1587230280837" />
     <state width="1830" height="134" key="GridCell.Tab.0.right/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579755" />
-    <state width="1830" height="148" key="GridCell.Tab.1.bottom" timestamp="1586202374994">
+    <state width="1830" height="185" key="GridCell.Tab.1.bottom" timestamp="1587230282115">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="148" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1586202374994" />
+    <state width="1830" height="185" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1587230282115" />
     <state width="1830" height="406" key="GridCell.Tab.1.bottom/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579750" />
-    <state width="1830" height="148" key="GridCell.Tab.1.center" timestamp="1586202374993">
+    <state width="1830" height="185" key="GridCell.Tab.1.center" timestamp="1587230282114">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="148" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1586202374993" />
+    <state width="1830" height="185" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1587230282114" />
     <state width="1830" height="406" key="GridCell.Tab.1.center/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579749" />
-    <state width="1830" height="148" key="GridCell.Tab.1.left" timestamp="1586202374993">
+    <state width="1830" height="185" key="GridCell.Tab.1.left" timestamp="1587230282114">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="148" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1586202374993" />
+    <state width="1830" height="185" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1587230282114" />
     <state width="1830" height="406" key="GridCell.Tab.1.left/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579749" />
-    <state width="1830" height="148" key="GridCell.Tab.1.right" timestamp="1586202374994">
+    <state width="1830" height="185" key="GridCell.Tab.1.right" timestamp="1587230282114">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="148" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1586202374994" />
+    <state width="1830" height="185" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1587230282114" />
     <state width="1830" height="406" key="GridCell.Tab.1.right/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579749" />
-    <state x="629" y="228" key="SettingsEditor" timestamp="1581414971946">
+    <state x="247" y="116" width="1482" height="872" key="MergeDialog" timestamp="1587062018077">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="629" y="228" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1581414971946" />
-    <state x="588" y="288" width="800" height="551" key="Vcs.Push.Dialog.v2" timestamp="1586185696716">
+    <state x="247" y="116" width="1482" height="872" key="MergeDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1587062018077" />
+    <state x="577" y="195" key="SettingsEditor" timestamp="1587116309560">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1586185696716" />
+    <state x="577" y="195" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1587116309560" />
+    <state x="588" y="288" width="800" height="551" key="Vcs.Push.Dialog.v2" timestamp="1587126135413">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1587126135413" />
     <state x="588" y="318" width="800" height="551" key="Vcs.Push.Dialog.v2/67.27.1853.1173@67.27.1853.1173" timestamp="1584032377142" />
     <state width="926" height="527" key="XDebugger.FullValuePopup" timestamp="1586202329346">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state width="926" height="527" key="XDebugger.FullValuePopup/67.27.1853.1053@67.27.1853.1053" timestamp="1586202329346" />
-    <state x="649" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1586194740011">
+    <state x="649" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1586266607687">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="649" y="380" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1586194740011" />
-    <state x="761" y="472" width="464" height="160" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1581874594034">
+    <state x="649" y="380" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1586266607687" />
+    <state x="761" y="472" width="464" height="170" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1587070273362">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="761" y="472" width="464" height="160" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/67.27.1853.1053@67.27.1853.1053" timestamp="1581874594034" />
+    <state x="761" y="472" width="464" height="170" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/67.27.1853.1053@67.27.1853.1053" timestamp="1587070273362" />
+    <state x="727" y="395" width="523" height="314" key="git4idea.ui.GitTagDialog" timestamp="1587226250663">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="727" y="395" width="523" height="314" key="git4idea.ui.GitTagDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1587226250663" />
     <state x="738" y="196" width="501" height="713" key="refactoring.ChangeSignatureDialog" timestamp="1585562806585">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -1200,17 +1190,17 @@
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/tests/test_read.py</url>
-          <line>36</line>
+          <url>file://$PROJECT_DIR$/_depricated/test_read.py</url>
+          <line>39</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/tests/test_influx.py</url>
+          <url>file://$PROJECT_DIR$/_depricated/test_influx.py</url>
           <line>10</line>
           <option name="timeStamp" value="19" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/db/insyte_influx_io.py</url>
+          <url>file://$PROJECT_DIR$/_depricated/insyte_influx_io.py</url>
           <line>282</line>
           <option name="timeStamp" value="106" />
         </line-breakpoint>
@@ -1225,7 +1215,7 @@
           <option name="timeStamp" value="115" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/insyte_analytics.py</url>
+          <url>file://$PROJECT_DIR$/_depricated/insyte_analytics.py</url>
           <line>359</line>
           <option name="timeStamp" value="141" />
         </line-breakpoint>
@@ -1233,11 +1223,6 @@
           <url>file://$PROJECT_DIR$/tests/args_to_json.py</url>
           <line>145</line>
           <option name="timeStamp" value="144" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics_server.py</url>
-          <line>127</line>
-          <option name="timeStamp" value="152" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/analytics/test_import.py</url>
@@ -1311,18 +1296,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/analytics/__init__.py</url>
-          <line>119</line>
+          <line>38</line>
           <option name="timeStamp" value="188" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics_server.py</url>
-          <line>161</line>
-          <option name="timeStamp" value="189" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/analytics/__init__.py</url>
-          <line>41</line>
-          <option name="timeStamp" value="190" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
