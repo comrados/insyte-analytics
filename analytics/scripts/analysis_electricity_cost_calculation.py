@@ -637,7 +637,12 @@ class ElectricityCostCalculationAnalysis(Analysis):
             raise Exception("Error in _maintenance: " + str(err))
 
     def _peaks_row (self, p, d):
-
+        """
+        Output of combined maximum hours
+        :param p:
+        :param d:
+        :return: dataframe with hours and peaks
+        """
         try:
             try:
                 start_date = d.loc[d.index[0], 'time']
