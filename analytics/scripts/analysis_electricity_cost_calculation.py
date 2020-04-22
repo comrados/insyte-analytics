@@ -16,11 +16,12 @@ A_ARGS = {"analysis_code": "CORRELATION",
           "output": "Dataframe with costs (double)",
           "parameters": [
               {"name": "method", "count": 1, "type": "SELECT", "options": ["one_category", "two_category", "three_category", "four_category"],
-               "info": "one_category - Calculation of cost for the first category, "
+               "info": "one_category - Calculation of cost for the first category"
                        "two_category_two_zones - Calculation of the cost of the second category, two zones"
                        "two_category_three_zones - Calculation of the cost of the second category, three zones"
-                       "three_category - Calculation of cost for the third category, "
-                       "four_category - Calculating the cost of the fourth category"},
+                       "three_category - Calculation of cost for the third category"
+                       "four_category - Calculating the cost of the fourth category"
+                        "peak_hours - Combined maximum hours"},
               {"name": "region", "count": 1, "type": "SELECT", "options": REGIONS,
                "info": "Regions of Russia (ISO 3166-2): RU-SVE, RU-PER, RU-BA, RU-UD"},
               {"name": "retailer", "count": 1, "type": "SELECT", "options": RETAILERS,
@@ -241,7 +242,7 @@ class ElectricityCostCalculationAnalysis(Analysis):
         """
         try:
             method = parameters['method'][0]
-            if method not in ["one_category", "two_category_two_zones", "two_category_three_zones", "three_category", "four_category"]:
+            if method not in ["one_category", "two_category_two_zones", "two_category_three_zones", "three_category", "four_category", "peak_hours"]:
                 raise Exception
             self.logger.debug("Parsed parameter 'method': " + str(method))
             return method
@@ -635,6 +636,26 @@ class ElectricityCostCalculationAnalysis(Analysis):
             self.logger.error("Error in _maintenance: " + str(err))
             raise Exception("Error in _maintenance: " + str(err))
 
+    def _peaks_row (self, p, d):
+
+        try:
+            try:
+                start_date = d.loc[d.index[0], 'time']
+            except Exception as err:
+                self.logger.error("Error in the start date: " + str(err))
+                raise Exception("Error in the start date: " + str(err))
+
+            peaks = self._get_peaks(self._parse_xls(self._dls_calcfacthour(start_date, p)))
+            d['peak'] = (d['time'].isin(peaks['time'])).astype(int)
+            d = d.set_index(['time'])
+            d = d.drop(['value'], axis=1)
+            d.index.name = None
+            return d
+
+        except Exception as err:
+            self.logger.error("Error in the _peaks_row: " + str(err))
+            raise Exception("Error in the _peaks_row: " + str(err))
+
     def _three_category(self, p, d):
         """
         Calculates the total cost for 3 price categories
@@ -693,7 +714,6 @@ class ElectricityCostCalculationAnalysis(Analysis):
             tariff_other_services = self._get_tariff_other_services(xls, p, pn)
             tariff_sales_four = pn['tariff_sales']
             tariff_losses = pn['tariff_losses_four'] / 1000
-
             time_zone = pn['time_four_cat']
             tariff_maintenance_four = pn['tariff_maintenance_four']
             xls = self._parse_xls(self._dls_retail(start_date, p))
@@ -789,7 +809,7 @@ class ElectricityCostCalculationAnalysis(Analysis):
             else:
                 tariff_two_day = pn['tariff_two_day']
                 calculate_ee_day = (summ_kw - summ_kw_night)*tariff_two_day
-                total = transfer + calculate_ee_day+calculate_ee_night
+                total = transfer + calculate_ee_day + calculate_ee_night
                 d = {'summ_kw': [summ_kw], 'transfer': [transfer], 'calculate_ee_night': [calculate_ee_night], 'calculate_ee_day': [calculate_ee_day],
                      'total': [total]}
 
@@ -821,6 +841,9 @@ class ElectricityCostCalculationAnalysis(Analysis):
             elif p['method'] == 'four_category':
                 self.logger.debug("four_category")
                 result = self._four_category(p, d)
+            elif p['method'] == 'peak_hours':
+                self.logger.debug("peak_hours")
+                result = self._peaks_row(p, d)
             else:
                 raise Exception("Unknown method: " + str(p['method']))
             return result
