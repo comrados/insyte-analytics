@@ -86,7 +86,7 @@ class AnalyticsModule:
                         except Exception as err:
                             self.logger.error("Failed to import module: " + name + ", " + str(err))
             else:
-                self.logger.warning("Impossible import from folder: " + folder + " " + str(err))
+                self.logger.warning("Impossible to import from folder (check the existence): " + folder)
         return analysis, analysis_args
 
     ################################################## OLD FUNCTIONS ###################################################
