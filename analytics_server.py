@@ -8,6 +8,7 @@ import datetime
 import logging
 import time
 import json
+import typing
 
 import analytics
 import analytics.utils as u
@@ -130,7 +131,7 @@ class AnalyticsServer(HTTPServer):
         """Finish one request by instantiating RequestHandlerClass."""
         client = client_address[0] + ':' + str(client_address[1])
         if self._check_host_allowance(client_address):
-            logger.info("Request from: " + client)
+            logger.debug("Request from: " + client)
             self.RequestHandlerClass(request, client_address, self)
         else:
             logger.warning("Ignoring request from unauthorized host: " + client)
@@ -192,9 +193,8 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
 
         except Exception as err:
             logger.error("GET-failure: " + str(err))
-            self.send_response(400)
             msg = {'result': 'ERROR', 'error_message': str(err)}
-            self.wfile.write(bytes(json.dumps(msg, indent=4, sort_keys=True), 'utf-8'))
+            self._send_response_code_and_content(200, msg, 'application/json')
 
     def _do_get_status(self, client):
         """
@@ -203,10 +203,7 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
         :param client: address
         """
         logger.info("GET 'status' request from " + client)
-        self.send_response(200)
-        self.send_header('Content-type', 'application/json')
-        self.end_headers()
-        self.wfile.write(bytes(json.dumps(self._get_status_msg(), indent=4, sort_keys=True), 'utf-8'))
+        self._send_response_code_and_content(200, self._get_status_msg(), 'application/json')
 
     def _do_get_functions(self, client):
         """
@@ -215,10 +212,7 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
         :param client: address
         """
         logger.info("GET 'functions' request from " + client)
-        self.send_response(200)
-        self.send_header('Content-type', 'application/json')
-        self.end_headers()
-        self.wfile.write(bytes(json.dumps(self.am.ANALYSIS_ARGS, indent=4, sort_keys=True), 'utf-8'))
+        self._send_response_code_and_content(200, self.am.ANALYSIS_ARGS, 'application/json')
 
     def _do_get_update_analysis_functions(self, client):
         """
@@ -236,6 +230,8 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
             logger.info("Analysis functions updated manually")
         else:
             logger.warning("Manual analysis functions update is disabled")
+            msg = {'result': 'WARNING', 'warning_message': "Manual analysis functions update is disabled"}
+            self._send_response_code_and_content(200, msg, 'application/json')
 
     def _do_get_log(self, client):
         """
@@ -246,10 +242,7 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
         logger.info("GET 'log' request from " + client)
         with open(os.path.join(self.s.log_dir, self.s.log_file), "r") as log:
             content = log.read()
-        self.send_response(200)
-        self.send_header('Content-type', 'text/plain')
-        self.end_headers()
-        self.wfile.write(bytes(content, 'utf-8'))
+        self._send_response_code_and_content(200, content, 'text/plain')
 
     def do_POST(self):
         """
@@ -270,26 +263,33 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
             self._write_results()
 
             # send response
-            self.send_response(200)
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
             msg = {'result': 'DONE', 'active_threads': threading.active_count()}
-            self.wfile.write(bytes(json.dumps(msg, indent=4, sort_keys=True), 'utf-8'))
+            self._send_response_code_and_content(200, msg, 'application/json')
+
         except Exception as err:
             logger.error("POST-failure: " + str(err))
             self.influx.disconnect()
-
-            self.send_response(400)
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
             msg = {'result': 'ERROR', 'error_message': str(err), 'active_threads': threading.active_count()}
-            self.wfile.write(bytes(json.dumps(msg, indent=4, sort_keys=True), 'utf-8'))
+            self._send_response_code_and_content(400, msg, 'application/json')
 
     def log_message(self, format, *args):
         """
         Disables default logging
         """
         pass
+
+    def _send_response_code_and_content(self, code: int, content: typing.Union[str, dict],
+                                        content_type: str = 'application/json'):
+        if isinstance(content, str):
+            pass
+        elif isinstance(content, dict):
+            content = json.dumps(content, indent=4, sort_keys=True)
+        else:
+            content = str(content)
+        self.send_response(code)
+        self.send_header('Content-type', content_type)
+        self.end_headers()
+        self.wfile.write(bytes(content, 'utf-8'))
 
     def _content_to_json(self, content):
         """
