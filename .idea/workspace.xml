@@ -25,9 +25,9 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="12f8726f-fb14-4ba6-9c8b-89c2ed12558e" name="Default Changelist" comment="">
+    <list default="true" id="12f8726f-fb14-4ba6-9c8b-89c2ed12558e" name="Default Changelist" comment="fixes and optimization">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytics_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/analytics_server.py" afterDir="false" />
     </list>
     <list id="8f3402cf-8e05-46bd-8019-c70b228793b0" name="Revert: demand-response" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -68,6 +68,7 @@
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
@@ -671,13 +672,6 @@
       <option name="presentableId" value="Default" />
       <updated>1555416435785</updated>
     </task>
-    <task id="LOCAL-00018" summary="demand response booleans">
-      <created>1571670594004</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1571670594004</updated>
-    </task>
     <task id="LOCAL-00019" summary="demand response result check">
       <created>1571672797715</created>
       <option name="number" value="00019" />
@@ -1014,7 +1008,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588011557684</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="fixes and optimization">
+      <created>1588076457225</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1588076457226</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -1057,7 +1058,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="checklist" />
     <MESSAGE value="requirements.txt versions change" />
     <MESSAGE value="holt-winters (manual)" />
     <MESSAGE value="analysis caller fix" />
@@ -1082,9 +1082,14 @@
     <MESSAGE value="server influx analysis folders selection" />
     <MESSAGE value="logging fix" />
     <MESSAGE value="GET-request: log" />
-    <option name="LAST_COMMIT_MESSAGE" value="GET-request: log" />
+    <MESSAGE value="fixes and optimization" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixes and optimization" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="788" y="414" width="400" height="277" key="#Scopes" timestamp="1588077655274">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="788" y="414" width="400" height="277" key="#Scopes/67.27.1853.1053@67.27.1853.1053" timestamp="1588077655274" />
     <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1588009230871">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -1102,10 +1107,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="751" y="205" key="#xdebugger.evaluate/67.27.1853.1053@67.27.1853.1053" timestamp="1587229988367" />
-    <state x="506" y="92" width="1146" height="810" key="CommitChangelistDialog2" timestamp="1588011557526">
+    <state x="506" y="92" width="1146" height="810" key="CommitChangelistDialog2" timestamp="1588077791019">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="506" y="92" width="1146" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1588011557526" />
+    <state x="506" y="92" width="1146" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1588077791019" />
     <state x="432" y="111" key="CommitChangelistDialog2/67.27.1853.1173@67.27.1853.1173" timestamp="1584032375344" />
     <state x="167" y="125" width="1653" height="855" key="DiffContextDialog" timestamp="1586207888237">
       <screen x="67" y="27" width="1853" height="1053" />
@@ -1119,45 +1124,45 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="67" y="27" width="1843" height="1053" key="FileDocumentManager.FileCacheConflict/67.27.1853.1053@67.27.1853.1053" timestamp="1585576756747" />
-    <state width="1830" height="198" key="GridCell.Tab.0.bottom" timestamp="1588076254053">
+    <state width="1830" height="180" key="GridCell.Tab.0.bottom" timestamp="1588077193664">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="198" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1588076254053" />
+    <state width="1830" height="180" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1588077193664" />
     <state width="1830" height="134" key="GridCell.Tab.0.bottom/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579755" />
-    <state width="1830" height="198" key="GridCell.Tab.0.center" timestamp="1588076254053">
+    <state width="1830" height="180" key="GridCell.Tab.0.center" timestamp="1588077193664">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="198" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1588076254053" />
+    <state width="1830" height="180" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1588077193664" />
     <state width="1830" height="134" key="GridCell.Tab.0.center/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579754" />
-    <state width="1830" height="198" key="GridCell.Tab.0.left" timestamp="1588076254052">
+    <state width="1830" height="180" key="GridCell.Tab.0.left" timestamp="1588077193663">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="198" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1588076254052" />
+    <state width="1830" height="180" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1588077193663" />
     <state width="1830" height="134" key="GridCell.Tab.0.left/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579754" />
-    <state width="1830" height="198" key="GridCell.Tab.0.right" timestamp="1588076254053">
+    <state width="1830" height="180" key="GridCell.Tab.0.right" timestamp="1588077193664">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="198" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1588076254053" />
+    <state width="1830" height="180" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1588077193664" />
     <state width="1830" height="134" key="GridCell.Tab.0.right/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579755" />
-    <state width="1830" height="198" key="GridCell.Tab.1.bottom" timestamp="1588076290615">
+    <state width="1830" height="177" key="GridCell.Tab.1.bottom" timestamp="1588077193656">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="198" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1588076290615" />
+    <state width="1830" height="177" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1588077193656" />
     <state width="1830" height="406" key="GridCell.Tab.1.bottom/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579750" />
-    <state width="1830" height="198" key="GridCell.Tab.1.center" timestamp="1588076290615">
+    <state width="1830" height="177" key="GridCell.Tab.1.center" timestamp="1588077193656">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="198" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1588076290615" />
+    <state width="1830" height="177" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1588077193656" />
     <state width="1830" height="406" key="GridCell.Tab.1.center/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579749" />
-    <state width="1830" height="198" key="GridCell.Tab.1.left" timestamp="1588076290614">
+    <state width="1830" height="177" key="GridCell.Tab.1.left" timestamp="1588077193656">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="198" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1588076290614" />
+    <state width="1830" height="177" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1588077193656" />
     <state width="1830" height="406" key="GridCell.Tab.1.left/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579749" />
-    <state width="1830" height="198" key="GridCell.Tab.1.right" timestamp="1588076290615">
+    <state width="1830" height="177" key="GridCell.Tab.1.right" timestamp="1588077193656">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1830" height="198" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1588076290615" />
+    <state width="1830" height="177" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1588077193656" />
     <state width="1830" height="406" key="GridCell.Tab.1.right/67.27.1853.1173@67.27.1853.1173" timestamp="1584032579749" />
     <state x="247" y="116" width="1482" height="872" key="MergeDialog" timestamp="1587062018077">
       <screen x="67" y="27" width="1853" height="1053" />
@@ -1167,10 +1172,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="577" y="195" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1587116309560" />
-    <state x="588" y="288" width="800" height="551" key="Vcs.Push.Dialog.v2" timestamp="1588011560608">
+    <state x="588" y="288" width="800" height="551" key="Vcs.Push.Dialog.v2" timestamp="1588076461628">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1588011560608" />
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1588076461628" />
     <state x="588" y="318" width="800" height="551" key="Vcs.Push.Dialog.v2/67.27.1853.1173@67.27.1853.1173" timestamp="1584032377142" />
     <state width="926" height="527" key="XDebugger.FullValuePopup" timestamp="1586202329346">
       <screen x="67" y="27" width="1853" height="1053" />
@@ -1184,6 +1189,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="761" y="472" width="464" height="170" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/67.27.1853.1053@67.27.1853.1053" timestamp="1588005177272" />
+    <state x="684" y="164" width="618" height="777" key="find.popup" timestamp="1588077634649">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="684" y="164" width="618" height="777" key="find.popup/67.27.1853.1053@67.27.1853.1053" timestamp="1588077634649" />
     <state x="727" y="395" width="533" height="314" key="git4idea.ui.GitTagDialog" timestamp="1587230495593">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -1331,22 +1340,17 @@
           <line>254</line>
           <option name="timeStamp" value="190" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file:///opt/anaconda3/lib/python3.7/http/server.py</url>
+          <line>278</line>
+          <option name="timeStamp" value="191" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file:///opt/anaconda3/lib/python3.7/http/server.py</url>
+          <line>284</line>
+          <option name="timeStamp" value="192" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ScopeChooserConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
   </component>
 </project>
