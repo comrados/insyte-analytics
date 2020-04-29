@@ -681,7 +681,7 @@ class ElectricityCostCalculationAnalysis(Analysis):
                 raise Exception("Error in the start date: " + str(err))
 
             peaks = self._get_peaks(self._parse_xls(self._dls_calcfacthour(start_date, p)))
-            d['peak'] = (d['time'].isin(peaks['time'])).astype(int)
+            d['val_peak'] = (d['time'].isin(peaks['time'])).astype(int)
             d = d.set_index(['time'])
             d = d.drop(['value'], axis=1)
             d.index.name = None
