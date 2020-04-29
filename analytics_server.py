@@ -8,6 +8,7 @@ import datetime
 import logging
 import time
 import json
+import typing
 
 import analytics
 import analytics.utils as u
@@ -54,6 +55,7 @@ def parse_args(args):
     log_group = parser.add_argument_group("Logger", "Logger's settings")
 
     log_group.add_argument('-lf', '--log-file', dest='log_file', default="analytics_server.log", help='Log file')
+    log_group.add_argument('-ld', '--log-dir', dest='log_dir', default="logs", help='Log directory')
     log_group.add_argument('-ll', '--log-level', dest='log_level', default=20, type=int, help='Logging level')
     log_group.add_argument('-lgmt', '--log-gmt', dest='log_gmt', default=True, action='store_false',
                            help='Disable GMT+0 logging time zone, use local time instead')
@@ -70,20 +72,21 @@ def parse_args(args):
         return parsed
 
 
-def init_logger(log_file, log_level, log_gmt):
+def init_logger(log_file, log_dir, log_level, log_gmt):
     """
     Initialize logger. Logging is thread safe.
 
-    :param log_file: log file path
+    :param log_file: log file name
+    :param log_dir: log directory
     :param log_level: logging level https://docs.python.org/3.7/library/logging.html#logging-levels
     :param log_gmt: set timezone to GMT
     :return: Logger object
     """
     f = '%(asctime)s.%(msecs)d %(levelname)s %(module)s.%(funcName)s %(threadName)s (%(thread)d) %(message)s'
     configs = {'filemode': 'a', 'format': f, 'datefmt': '%Y-%m-%d %H:%M:%S', 'level': log_level,
-               'filename': os.path.join('logs', log_file)}
-    if not os.path.exists('logs'):
-        os.makedirs('logs')
+               'filename': os.path.join(log_dir, log_file)}
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
     logging.basicConfig(**configs)
     if log_gmt:
         logging.Formatter.converter = time.gmtime
@@ -128,7 +131,7 @@ class AnalyticsServer(HTTPServer):
         """Finish one request by instantiating RequestHandlerClass."""
         client = client_address[0] + ':' + str(client_address[1])
         if self._check_host_allowance(client_address):
-            logger.info("Request from: " + client)
+            logger.debug("Request from: " + client)
             self.RequestHandlerClass(request, client_address, self)
         else:
             logger.warning("Ignoring request from unauthorized host: " + client)
@@ -165,6 +168,14 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
         self.input = None
         self.output = None
 
+        self.get_requests = [
+            (["/status/", "/status", "/status.json"], self._do_get_status),
+            (["/functions/", "/functions", "/functions.json"], self._do_get_functions),
+            (["/update_analysis_functions/", "/update_analysis_functions", "/update_analysis_functions.json"],
+             self._do_get_update_analysis_functions),
+            (["/logs", "/logs/", "/log", "/log/"], self._do_get_log)
+        ]
+
         super().__init__(request, client_address, server)
 
         print()
@@ -175,38 +186,63 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
         """
         try:
             client = self.client_address[0] + ':' + str(self.client_address[1])
-            if self.path in ["/status/", "/status", "/status.json"]:
-                logger.info("GET 'status' request from " + client)
-                self.send_response(200)
-                self.send_header('Content-type', 'application/json')
-                self.end_headers()
-                self.wfile.write(bytes(json.dumps(self._get_status(), indent=4, sort_keys=True), 'utf-8'))
-            elif self.path in ["/functions/", "/functions", "/functions.json"]:
-                logger.info("GET 'functions' request from " + client)
-                self.send_response(200)
-                self.send_header('Content-type', 'application/json')
-                self.end_headers()
-                self.wfile.write(bytes(json.dumps(self.am.ANALYSIS_ARGS, indent=4, sort_keys=True), 'utf-8'))
-            elif self.path in ["/update_analysis_functions/", "/update_analysis_functions",
-                               "/update_analysis_functions.json"]:
-                logger.info("GET 'update_analysis_functions' request from " + client)
-                if self.s.srv_manual_update:
-                    self.am.update_analysis_functions()
-                    self.send_response(200)
-                    self.send_header('Content-type', 'application/json')
-                    self.end_headers()
-                    self.wfile.write(bytes(json.dumps(self.am.ANALYSIS_ARGS, indent=4, sort_keys=True), 'utf-8'))
-                    logger.info("Analysis functions updated manually")
-                else:
-                    logger.warning("Manual analysis functions update is disabled")
-            else:
-                self.send_error(404, 'Unknown resource: %s' % self.path)
+            # addr - addresses, func - function caller
+            for addr, func in self.get_requests:
+                if self.path in addr:
+                    func(client)
+
         except Exception as err:
             logger.error("GET-failure: " + str(err))
-
-            self.send_response(400)
             msg = {'result': 'ERROR', 'error_message': str(err)}
-            self.wfile.write(bytes(json.dumps(msg, indent=4, sort_keys=True), 'utf-8'))
+            self._send_response_code_and_content(200, msg, 'application/json')
+
+    def _do_get_status(self, client):
+        """
+        GET 'status' request processor
+
+        :param client: address
+        """
+        logger.info("GET 'status' request from " + client)
+        self._send_response_code_and_content(200, self._get_status_msg(), 'application/json')
+
+    def _do_get_functions(self, client):
+        """
+        GET 'functions' request processor
+
+        :param client: address
+        """
+        logger.info("GET 'functions' request from " + client)
+        self._send_response_code_and_content(200, self.am.ANALYSIS_ARGS, 'application/json')
+
+    def _do_get_update_analysis_functions(self, client):
+        """
+        GET 'update_analysis_functions' request processor
+
+        :param client: address
+        """
+        logger.info("GET 'update_analysis_functions' request from " + client)
+        if self.s.srv_manual_update:
+            self.am.update_analysis_functions()
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(bytes(json.dumps(self.am.ANALYSIS_ARGS, indent=4, sort_keys=True), 'utf-8'))
+            logger.info("Analysis functions updated manually")
+        else:
+            logger.warning("Manual analysis functions update is disabled")
+            msg = {'result': 'WARNING', 'warning_message': "Manual analysis functions update is disabled"}
+            self._send_response_code_and_content(200, msg, 'application/json')
+
+    def _do_get_log(self, client):
+        """
+        GET 'functions' request processor
+
+        :param client: address
+        """
+        logger.info("GET 'log' request from " + client)
+        with open(os.path.join(self.s.log_dir, self.s.log_file), "r") as log:
+            content = log.read()
+        self._send_response_code_and_content(200, content, 'text/plain')
 
     def do_POST(self):
         """
@@ -227,26 +263,33 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
             self._write_results()
 
             # send response
-            self.send_response(200)
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
             msg = {'result': 'DONE', 'active_threads': threading.active_count()}
-            self.wfile.write(bytes(json.dumps(msg, indent=4, sort_keys=True), 'utf-8'))
+            self._send_response_code_and_content(200, msg, 'application/json')
+
         except Exception as err:
             logger.error("POST-failure: " + str(err))
             self.influx.disconnect()
-
-            self.send_response(400)
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
             msg = {'result': 'ERROR', 'error_message': str(err), 'active_threads': threading.active_count()}
-            self.wfile.write(bytes(json.dumps(msg, indent=4, sort_keys=True), 'utf-8'))
+            self._send_response_code_and_content(400, msg, 'application/json')
 
     def log_message(self, format, *args):
         """
         Disables default logging
         """
         pass
+
+    def _send_response_code_and_content(self, code: int, content: typing.Union[str, dict],
+                                        content_type: str = 'application/json'):
+        if isinstance(content, str):
+            pass
+        elif isinstance(content, dict):
+            content = json.dumps(content, indent=4, sort_keys=True)
+        else:
+            content = str(content)
+        self.send_response(code)
+        self.send_header('Content-type', content_type)
+        self.end_headers()
+        self.wfile.write(bytes(content, 'utf-8'))
 
     def _content_to_json(self, content):
         """
@@ -372,7 +415,7 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
         logger.debug("Writing parameters successfully checked")
 
     @staticmethod
-    def _get_status():
+    def _get_status_msg():
         """
         Server's status wrapper
 
@@ -395,7 +438,7 @@ if __name__ == "__main__":
     a = parse_args(sys.argv[1:])
 
     # init logger
-    logger = init_logger(a.log_file, a.log_level, a.log_gmt)
+    logger = init_logger(a.log_file, a.log_dir, a.log_level, a.log_gmt)
     logger.info("Server started: " + str(vars(a)))
 
     # init analytics server
