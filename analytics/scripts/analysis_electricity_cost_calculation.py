@@ -15,12 +15,16 @@ A_ARGS = {"analysis_code": "ELECTRICITYCOSTCALCULATION",
           "action": "Calculates the cost of electricity in 6 categories",
           "output": "Dataframe with costs (double)",
           "parameters": [
-              {"name": "method", "count": 1, "type": "SELECT", "options": ["one_category", "two_category", "three_category", "four_category"],
+              {"name": "method", "count": 1, "type": "SELECT", "options": ["one_category", "two_category_two_zones", "two_category_three_zones", "three_category", "four_category"],
                "info": "one_category - Calculation of cost for the first category"
                        "two_category_two_zones - Calculation of the cost of the second category, two zones"
                        "two_category_three_zones - Calculation of the cost of the second category, three zones"
                        "three_category - Calculation of cost for the third category"
+                       "three_category_energy_storage - Calculation of cost for the third category with energy storage"
+                       "three_category_energy_storage_effect - Calculation of the effect for the third category with energy storage" 
                        "four_category - Calculating the cost of the fourth category"
+                       "four_category_energy_storage - Calculating the cost of the fourth category with energy storage"
+                        "three_category_energy_storage_effect - Calculation of the effect for the third category with energy storage" 
                         "peak_hours - Combined maximum hours"},
               {"name": "region", "count": 1, "type": "SELECT", "options": REGIONS,
                "info": "Regions of Russia (ISO 3166-2): RU-SVE, RU-PER, RU-BA, RU-UD"},
@@ -41,6 +45,12 @@ A_ARGS = {"analysis_code": "ELECTRICITYCOSTCALCULATION",
               {"name": "tariff_sales", "count": 1, "type": "FLOAT", "info": "Rate for payment of technological losses, categories: 3, 4"},
               {"name": "actual_volume_other_service", "count": 1, "type": "FLOAT", "info": "Actual volume of electricity consumption by the guaranteeing supplier on the wholesale market, MW·h"},
               {"name": "volume_other_service", "count": 1, "type": "FLOAT", "info": "Volume of purchase of electric energy by the guaranteeing supplier from producers of electric energy (capacity) on retail markets, MW*h"},
+              {"name": "power_return_energy_storage", "count": 1, "type": "FLOAT", "info": "Electric power storage discharge power, kW*h"},
+              {"name": "power_charging_energy_storage", "count": 1, "type": "FLOAT", "info": "Electric power storage charge, kW*h"},
+              {"name": "time_charging_energy_storage", "count": 1, "type": "DICT OF TIME",
+               "info": 'Set of dictionaries containing time intervals. Example: ["2019-12-01_00:00:00","2019-12-01_03:00:00"],["2019-12-02_00:00:00","2019-12-02_04:00:00"] '},
+              {"name": "time_return_energy_storage", "count": 1, "type": "DICT OF TIME",
+               "info": 'Set of dictionaries containing time intervals. Example: ["2019-12-01_07:00:00","2019-12-01_08:00:00"],["2019-12-02_00:05:00","2019-12-02_08:00:00"] '},
           ]}
 
 class ElectricityCostCalculationAnalysis(Analysis):
@@ -71,22 +81,23 @@ class ElectricityCostCalculationAnalysis(Analysis):
     def _preprocess_df(self, data):
         """
         Preprocesses DataFrame
+
         Fills NaN with 0s
         """
         self.logger.debug("Preprocessing DataFrame")
         try:
             # Fill NaNs
             if data is not None:
-                dat = data.fillna(0)
+                if data.empty:
+                    raise Exception("Empty DataFrame")
+                dat = data.fillna(0.)
+                new_data = dat.rename_axis('time').reset_index()
+                new_data.columns = ['time', 'value']
+                new_data['time'] = new_data['time'].apply(lambda x:
+                                                          datetime.datetime.strptime(str(x), '%Y-%m-%d %H:%M:%S+00:00'))
             else:
-                dat = None
+                raise Exception("DataFrame is None")
             self.logger.debug("DataFrame preprocessed")
-            new_data = dat.rename_axis('time').reset_index()
-            new_data.columns = ['time', 'value']
-            new_data['time'] = new_data['time'].apply(lambda x:
-                                                       datetime.datetime.strptime(str(x), '%Y-%m-%d %H:%M:%S+00:00'))
-            # pandas.to_datetime(
-            # new_data['time'] = pd.to_datetime(new_data['time'])
             return new_data
         except Exception as err:
             self.logger.error("Failed to preprocess DataFrame: " + str(err))
@@ -202,6 +213,23 @@ class ElectricityCostCalculationAnalysis(Analysis):
             self.logger.error("Error in _parse_parameters_two_cat: " + str(err))
             raise Exception("Error in _parse_parameters_two_cat: " + str(err))
 
+    def _parse_parameters_energy_storage(self, p):
+        """
+        Parameters parsing (type conversion, modification, etc).
+        """
+        self.logger.debug("Parsing parameters for the energy storage")
+        try:
+            parameters = p['all']
+            pn = dict()
+            pn['power_return_energy_storage'] = self._check_float(parameters['power_return_energy_storage'][0])
+            pn['power_charging_energy_storage'] = self._check_float(parameters['power_charging_energy_storage'][0])
+            pn['time_return_energy_storage'] = self._generate_time_df(parameters['time_return_energy_storage'])
+            pn['time_charging_energy_storage'] = self._generate_time_df(parameters['time_charging_energy_storage'])
+            return pn
+        except Exception as err:
+            self.logger.error("Error in _parse_parameters_energy_storage: " + str(err))
+            raise Exception("Error in _parse_parameters_energy_storage: " + str(err))
+
     def _check_time_dict(self, times_dict):
         """
         Checks 'time dict' parameter
@@ -242,9 +270,11 @@ class ElectricityCostCalculationAnalysis(Analysis):
         """
         try:
             method = parameters['method'][0]
-            if method not in ["one_category", "two_category_two_zones", "two_category_three_zones", "three_category", "four_category", "peak_hours"]:
+            if method not in ["one_category", "two_category_two_zones", "two_category_three_zones", "three_category",
+                              "three_category_energy_storage", "three_category_energy_storage_effect", "four_category",
+                              "four_category_energy_storage", "four_category_energy_storage_effect", "peak_hours"]:
                 raise Exception
-            self.logger.debug("Parsed parameter 'method': " + str(method))
+                self.logger.debug("Parsed parameter 'method': " + str(method))
             return method
         except Exception as err:
             self.logger.debug("Wrong parameter 'method': " + str(parameters['method']) + " " + str(err))
@@ -661,6 +691,32 @@ class ElectricityCostCalculationAnalysis(Analysis):
             self.logger.error("Error in the _peaks_row: " + str(err))
             raise Exception("Error in the _peaks_row: " + str(err))
 
+    def _offset_power_profile(self, p, d):
+        """
+        Output of combined maximum hours
+        :param p:
+        :param d:
+        :return: dataframe with times and value
+        """
+
+        try:
+            pn = self._parse_parameters_energy_storage(p)
+            return_storage = pn['time_return_energy_storage']
+            return_storage['valuem'] = pn['power_return_energy_storage']
+            charging_storage = pn['time_charging_energy_storage']
+            charging_storage['valuep'] = pn['power_charging_energy_storage']
+            rm = pd.merge(d, return_storage, how='outer', on=['time'])
+            rm = pd.merge(rm, charging_storage, how='outer', on=['time'])
+            rm = rm.fillna(0)
+            rm['value'] = rm['value'] - rm['valuem']
+            rm['value'] = rm['value'] + rm['valuep']
+            rm = rm.drop(['valuem', 'valuep'], axis=1)
+            return rm
+
+        except Exception as err:
+            self.logger.error("Error in the _offset_power_profile: " + str(err))
+            raise Exception("Error in the _offset_power_profile: " + str(err))
+
     def _three_category(self, p, d):
         """
         Calculates the total cost for 3 price categories
@@ -691,8 +747,9 @@ class ElectricityCostCalculationAnalysis(Analysis):
             calculate_ee = self._calculate_ee(d, price_three_cat)
             power_cost = self._sum_peak(d, peaks, tariff_power)
             other_services = self._multiplication_data_tariff(d, tariff_other_services)
-            d = {'summ_kw': [summ_kw], 'transfer': [transfer], 'sales_add': [sales_add], 'calculate_ee': [calculate_ee], 'power_cost': [power_cost], 'other_services': [other_services], 'total': [total]}
+            d = {'val_summ_kw': [summ_kw], 'val_transfer': [transfer], 'val_sales_add': [sales_add], 'val_calculate_ee': [calculate_ee], 'val_power_cost': [power_cost], 'val_other_services': [other_services], 'val_total': [total]}
             df = pd.DataFrame(data=d, index=pd.date_range(start=start_date, end=start_date))
+            df = df.astype(float)
             return df
 
         except Exception as err:
@@ -738,8 +795,9 @@ class ElectricityCostCalculationAnalysis(Analysis):
             power_cost = self._sum_peak(d, peaks, tariff_power)
             other_services = self._multiplication_data_tariff(d, tariff_other_services)
 
-            d = {'summ_kw': [summ_kw], 'transfer': [transfer], 'sales_add': [sales_add], 'calculate_ee': [calculate_ee], 'power_cost': [power_cost], 'maintenance': [maintenance], 'other_services': [other_services], 'total': [total]}
+            d = {'val_summ_kw': [summ_kw], 'val_transfer': [transfer], 'val_sales_add': [sales_add], 'val_calculate_ee': [calculate_ee], 'val_power_cost': [power_cost], 'val_maintenance': [maintenance], 'val_other_services': [other_services], 'val_total': [total]}
             df = pd.DataFrame(data=d, index=pd.date_range(start=start_date, end=start_date))
+            df = df.astype(float)
             return df
 
         except Exception as err:
@@ -766,8 +824,9 @@ class ElectricityCostCalculationAnalysis(Analysis):
             calculate_ee = self._multiplication_data_tariff(d, tariff_one_ee)
             total = transfer + calculate_ee
             summ_kw = d.value.sum()
-            d = {'summ_kw': [summ_kw], 'transfer': [transfer], 'calculate_ee': [calculate_ee], 'total': [total]}
+            d = {'val_summ_kw': [summ_kw], 'val_transfer': [transfer], 'val_calculate_ee': [calculate_ee], 'val_total': [total]}
             df = pd.DataFrame(data=d, index=pd.date_range(start=start_date, end=start_date))
+            df = df.astype(float)
             return df
 
         except Exception as err:
@@ -808,17 +867,18 @@ class ElectricityCostCalculationAnalysis(Analysis):
                 calculate_ee_peak = summ_kw_peak * tariff_two_peak
                 calculate_ee_semipeak = (summ_kw - summ_kw_night - summ_kw_peak)*tariff_two_semipeak
                 total = transfer + calculate_ee_semipeak + calculate_ee_night + calculate_ee_peak
-                d = {'summ_kw': [summ_kw], 'transfer': [transfer], 'calculate_ee_night': [calculate_ee_night],
+                d = {'val_summ_kw': [summ_kw], 'val_transfer': [transfer], 'val_calculate_ee_night': [calculate_ee_night],
                      'calculate_ee_semipeak': [calculate_ee_semipeak], 'calculate_ee_peak': [calculate_ee_peak],
-                     'total': [total]}
+                     'val_total': [total]}
             else:
                 tariff_two_day = pn['tariff_two_day']
                 calculate_ee_day = (summ_kw - summ_kw_night)*tariff_two_day
                 total = transfer + calculate_ee_day + calculate_ee_night
-                d = {'summ_kw': [summ_kw], 'transfer': [transfer], 'calculate_ee_night': [calculate_ee_night], 'calculate_ee_day': [calculate_ee_day],
-                     'total': [total]}
+                d = {'val_summ_kw': [summ_kw], 'val_transfer': [transfer], 'val_calculate_ee_night': [calculate_ee_night], 'val_calculate_ee_day': [calculate_ee_day],
+                     'val_total': [total]}
 
             df = pd.DataFrame(data=d, index=pd.date_range(start=start_date, end=start_date))
+            df = df.astype(float)
             return df
 
         except Exception as err:
@@ -843,9 +903,29 @@ class ElectricityCostCalculationAnalysis(Analysis):
             elif p['method'] == 'three_category':
                 self.logger.debug("three_category")
                 result = self._three_category(p, d)
+            elif p['method'] == 'three_category_energy_storage':
+                self.logger.debug("three_category_energy_storage")
+                d_energy = self._offset_power_profile(p, d)
+                result = self._three_category(p, d_energy)
+            elif p['method'] == 'three_category_energy_storage_effect':
+                self.logger.debug("three_category_energy_storage_effect")
+                d_energy = self._offset_power_profile(p, d)
+                result_d = self._three_category(p, d)
+                result_storage = self._three_category(p, d_energy)
+                result = result_d - result_storage
             elif p['method'] == 'four_category':
                 self.logger.debug("four_category")
                 result = self._four_category(p, d)
+            elif p['method'] == 'four_category_energy_storage':
+                self.logger.debug("four_category_energy_storage")
+                d_energy = self._offset_power_profile(p, d)
+                result = self._four_category(p, d_energy)
+            elif p['method'] == 'four_category_energy_storage_effect':
+                self.logger.debug("four_category_energy_storage_effect")
+                d_energy = self._offset_power_profile(p, d)
+                result_d = self._four_category(p, d)
+                result_storage = self._four_category(p, d_energy)
+                result = result_d - result_storage
             elif p['method'] == 'peak_hours':
                 self.logger.debug("peak_hours")
                 result = self._peaks_row(p, d)
