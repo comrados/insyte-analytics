@@ -15,7 +15,7 @@ A_ARGS = {"analysis_code": "ELECTRICITYCOSTCALCULATION",
           "action": "Calculates the cost of electricity in 6 categories",
           "output": "Dataframe with costs (double)",
           "parameters": [
-              {"name": "method", "count": 1, "type": "SELECT", "options": ["one_category", "two_category_two_zones", "two_category_three_zones", "three_category", "four_category"],
+              {"name": "method", "count": 1, "type": "SELECT", "options": ["one_category", "two_category_two_zones", "two_category_three_zones", "three_category", "four_category", "energy_storage", "peak_hours"],
                "info": "one_category - Calculation of cost for the first category"
                        "two_category_two_zones - Calculation of the cost of the second category, two zones"
                        "two_category_three_zones - Calculation of the cost of the second category, three zones"
@@ -25,7 +25,9 @@ A_ARGS = {"analysis_code": "ELECTRICITYCOSTCALCULATION",
                        "four_category - Calculating the cost of the fourth category"
                        "four_category_energy_storage - Calculating the cost of the fourth category with energy storage"
                         "three_category_energy_storage_effect - Calculation of the effect for the third category with energy storage" 
-                        "peak_hours - Combined maximum hours"},
+                        "peak_hours - Combined maximum hours"
+                        "energy_storage - New profile with energy_storage"
+               },
               {"name": "region", "count": 1, "type": "SELECT", "options": REGIONS,
                "info": "Regions of Russia (ISO 3166-2): RU-SVE, RU-PER, RU-BA, RU-UD"},
               {"name": "retailer", "count": 1, "type": "SELECT", "options": RETAILERS,
@@ -71,8 +73,8 @@ class ElectricityCostCalculationAnalysis(Analysis):
             p = self._parse_parameters(parameters)
             d = self._preprocess_df(data)
             res = self._analyze(p, d)
-            # pd.options.display.max_columns = 100
-            # print(res)
+            # pd.options.display.max_rows = 100
+            # print(res[:50])
             return res
         except Exception as err:
             self.logger.error(err)
@@ -272,7 +274,7 @@ class ElectricityCostCalculationAnalysis(Analysis):
             method = parameters['method'][0]
             if method not in ["one_category", "two_category_two_zones", "two_category_three_zones", "three_category",
                               "three_category_energy_storage", "three_category_energy_storage_effect", "four_category",
-                              "four_category_energy_storage", "four_category_energy_storage_effect", "peak_hours"]:
+                              "four_category_energy_storage", "four_category_energy_storage_effect", "peak_hours", "energy_storage"]:
                 raise Exception
                 self.logger.debug("Parsed parameter 'method': " + str(method))
             return method
@@ -929,6 +931,12 @@ class ElectricityCostCalculationAnalysis(Analysis):
             elif p['method'] == 'peak_hours':
                 self.logger.debug("peak_hours")
                 result = self._peaks_row(p, d)
+            elif p['method'] == 'energy_storage':
+                self.logger.debug("energy_storage")
+                d_energy = self._offset_power_profile(p, d)
+                d_energy = d_energy.set_index(['time'])
+                d_energy.index.name = None
+                result = d_energy
             else:
                 raise Exception("Unknown method: " + str(p['method']))
             return result
