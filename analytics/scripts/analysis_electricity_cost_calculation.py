@@ -221,12 +221,13 @@ class ElectricityCostCalculationAnalysis(Analysis):
             pn = dict()
             pn['tariff_losses_three'] = self._check_float(parameters['tariff_losses_three'][0])
             pn['time_two_cat_night_zones'] = self._generate_time_df(parameters['time_two_cat_night_zones'])
-            pn['tariff_two_night'] = self._check_float(parameters['tariff_two_three_zones_ee'][0])
             if peak:
+                pn['tariff_two_night'] = self._check_float(parameters['tariff_two_three_zones_ee'][0])
                 pn['tariff_two_semipeak'] = self._check_float(parameters['tariff_two_three_zones_ee'][1])
                 pn['tariff_two_peak'] = self._check_float(parameters['tariff_two_three_zones_ee'][2])
                 pn['time_two_cat_peak_zones'] = self._generate_time_df(parameters['time_two_cat_peak_zones'])
             else:
+                pn['tariff_two_night'] = self._check_float(parameters['tariff_two_two_zones_ee'][0])
                 pn['tariff_two_day'] = self._check_float(parameters['tariff_two_two_zones_ee'][1])
             return pn
         except Exception as err:
