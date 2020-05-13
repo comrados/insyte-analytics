@@ -1017,7 +1017,7 @@ class ElectricityCostCalculationAnalysis(Analysis):
             'three_category_energy_storage_effect_val_calculate_ee': lambda: self._delta_result(self._three_category(p, d, 'val_calculate_ee'), self._three_category(p, self._offset_power_profile(p, d), 'val_calculate_ee')),
             'three_category_energy_storage_effect_val_power_cost': lambda: self._delta_result(self._three_category(p, d, 'val_power_cost'), self._three_category(p, self._offset_power_profile(p, d), 'val_power_cost')),
             'three_category_energy_storage_effect_val_total': lambda: self._delta_result(self._three_category(p, d, 'val_total'), self._three_category(p, self._offset_power_profile(p, d), 'val_total')),
-            'four_categoryval_summ_kw': lambda: self._four_category(p, d, 'val_summ_kw'),
+            'four_category_val_summ_kw': lambda: self._four_category(p, d, 'val_summ_kw'),
             'four_category_val_transfer': lambda: self._four_category(p, d, 'val_transfer'),
             'four_category_val_sales_add': lambda: self._four_category(p, d, 'val_sales_add'),
             'four_category_val_calculate_ee': lambda: self._four_category(p, d, 'val_calculate_ee'),
