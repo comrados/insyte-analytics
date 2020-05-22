@@ -76,7 +76,18 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
             # days to analyse and preceding 10 days
             days_for_baselines = {d: working_days[i:10 + i] for i, d in enumerate(days_to_analyze)}
 
+            # table 2
             baselines = self._calculate_baselines(days_for_baselines)
+            original_lines = self._get_original_lines(days_to_analyze)
+
+            # adjustment values
+            adjustments_all = self._get_adjustments_all(baselines, original_lines)
+            adjustments_last_working = self._adjustments_remove_last_working(adjustments_all)
+
+            # adjustments
+            not_adjusted_baselines = baselines.copy()
+            adjusted_all_baselines, adjustments_all = self._adjust_all_baselines(baselines)
+            adjusted_last_working_baselines, adjustments_last_working = self._adjust_last_working_baselines(baselines)
 
             # means for each day (среднесуточные)
             avg_day = self.data.groupby(['date']).mean()
@@ -119,6 +130,25 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
         except Exception as err:
             self.logger.error("Impossible to analyze: " + str(err))
             raise Exception("Impossible to analyze: " + str(err))
+
+    def _adjust_last_working_baselines(self, baselines):
+        pass
+
+    def _adjust_all_baselines(self, baselines):
+        pass
+
+    def _get_adjustments_all(self, baselines, original_lines):
+        adj0 = original_lines.iloc[self.peak_hours[0]] - baselines.iloc[self.peak_hours[0]]
+        adj1 = original_lines.iloc[self.peak_hours[1]] - baselines.iloc[self.peak_hours[1]]
+        return (adj0 + adj1) / 2
+
+    def _adjustments_remove_last_working(self, adjustments_all):
+        adj_last_working = adjustments_all.copy()
+        dates_index = adj_last_working.index
+        for date in dates_index.values:
+            if self._is_previous_date_weekend_or_exception(date):
+                adj_last_working[date] = 0
+        return adj_last_working
 
     def _preprocess_df(self, data):
         """
@@ -196,6 +226,9 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
         try:
             self.peak_hours = [int(i) for i in self.parameters['peak_hours']]
             self.logger.debug("Parsed parameter 'peak_hours': " + str(self.peak_hours))
+            if len(self.peak_hours) > 2:
+                self.logger.error("'peak_hours' must have 2 elements")
+                raise Exception("'peak_hours' must have 2 elements")
         except Exception as err:
             self.logger.error("Wrong parameter 'peak_hours': " + str(self.parameters['peak_hours']) + " " + str(err))
             raise Exception("Wrong parameter 'peak_hours': " + str(self.parameters['peak_hours']) + " " + str(err))
@@ -247,15 +280,23 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
             return True
         return False
 
-    def _is_exception(self, day):
+    def _is_exception_day(self, day):
         """
         Checks if date is contained in exceptions
 
         :param day: date
         :return: flag
         """
-
         if day in self.exception_days:
+            return True
+        return False
+
+    def _is_previous_date_weekend_or_exception(self, day):
+        td = datetime.timedelta(days=1)
+        dow = day.weekday()
+        if self._is_weekend(day - td) and self.except_weekends:
+            return True
+        if self._is_exception_day(day - td):
             return True
         return False
 
@@ -286,19 +327,30 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
         for day in self._dates_generator(self.data['date'].min(), self.data['date'].max()):
             if self._is_weekend(day) and self.except_weekends:
                 continue
-            if self._is_exception(day):
+            if self._is_exception_day(day):
                 continue
             days.append(day)
 
         return days
 
     def _calculate_baselines(self, days_for_baselines):
-        baselines = {}
+        baselines_df = None
         for date, days_avg in days_for_baselines.items():
             data_for_date = self.data.loc[self.data['date'].isin(days_avg)]
             baseline_for_date = data_for_date.groupby(['time']).mean()
-            baselines[date] = baseline_for_date
-        return baselines
+            if baselines_df is None:
+                baselines_df = pd.DataFrame(index=baseline_for_date.index)
+            baselines_df[date] = baseline_for_date
+        return baselines_df
+
+    def _get_original_lines(self, days_to_analyze):
+        original_lines_df = None
+        for day in days_to_analyze:
+            data_for_date = self.data.loc[self.data['date'] == day]
+            if original_lines_df is None:
+                original_lines_df = pd.DataFrame(index=data_for_date['time'])
+            original_lines_df[day] = list(data_for_date[data_for_date.columns[0]])
+        return original_lines_df
 
     @staticmethod
     def _get_last_10_days_mean(condition1, avg_day):
