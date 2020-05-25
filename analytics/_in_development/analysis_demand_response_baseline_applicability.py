@@ -80,14 +80,21 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
             baselines = self._calculate_baselines(days_for_baselines)
             original_lines = self._get_original_lines(days_to_analyze)
 
+            # modified original lines and baselines
+            modified_original_lines = self._get_only_adjustment_hours(original_lines)
+            modified_baselines = self._get_only_adjustment_hours(baselines)
+
             # adjustment values
             adjustments_all = self._get_adjustments_all(baselines, original_lines)
             adjustments_last_working = self._adjustments_remove_last_working(adjustments_all)
 
-            # adjustments
-            not_adjusted_baselines = baselines.copy()
-            adjusted_all_baselines, adjustments_all = self._adjust_all_baselines(baselines)
-            adjusted_last_working_baselines, adjustments_last_working = self._adjust_last_working_baselines(baselines)
+            # adjust baselines (with 0.8 < adj < 1.2 restrictions)
+            adjusted_baselines_all = self._adjust_baseline(modified_baselines, adjustments_all)
+            adjusted_baselines_last_working = self._adjust_baseline(modified_baselines,
+                                                                    adjustments_last_working)
+
+            # calculate RRMSE
+            # TODO
 
             # means for each day (среднесуточные)
             avg_day = self.data.groupby(['date']).mean()
@@ -131,11 +138,15 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
             self.logger.error("Impossible to analyze: " + str(err))
             raise Exception("Impossible to analyze: " + str(err))
 
-    def _adjust_last_working_baselines(self, baselines):
-        pass
+    def _get_only_adjustment_hours(self, full_lines):
+        modified_lines = full_lines.iloc[self.adjustment_hours]
+        return modified_lines
 
-    def _adjust_all_baselines(self, baselines):
-        pass
+    def _adjust_baseline(self, baselines, adjustments):
+        adjusted = baselines.copy()
+        for column in baselines.columns:
+            adjusted[column] = self._adjust(adjustments[column], adjusted[column])
+        return adjusted
 
     def _get_adjustments_all(self, baselines, original_lines):
         adj0 = original_lines.iloc[self.peak_hours[0]] - baselines.iloc[self.peak_hours[0]]
@@ -237,6 +248,9 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
         try:
             self.adjustment_hours = [int(i) for i in self.parameters['adjustment_hours']]
             self.logger.debug("Parsed parameter 'adjustment_hours': " + str(self.adjustment_hours))
+            for i in self.adjustment_hours:
+                if i > 23:
+                    raise Exception("Wrong value in 'adjustment_hours', values must be in range(0, 24)")
         except Exception as err:
             self.logger.error(
                 "Wrong parameter 'adjustment_hours': " + str(self.parameters['adjustment_hours']) + " " + str(err))
