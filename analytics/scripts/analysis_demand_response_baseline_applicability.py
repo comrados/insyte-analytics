@@ -2,7 +2,6 @@ import pandas as pd
 from analytics.analysis import Analysis
 import datetime
 from analytics import utils
-import numpy as np
 
 """
 Demand-response. Calculation of RRMSE between baseline and prediction/fact.
@@ -93,47 +92,27 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
             adjusted_baselines_last_working = self._adjust_baseline(modified_baselines,
                                                                     adjustments_last_working)
 
-            # calculate RRMSE
-            # TODO
+            # calculate square errors
+            error_none = modified_original_lines.sub(modified_baselines, fill_value=0.) ** 2
+            error_all = modified_original_lines.sub(adjusted_baselines_all, fill_value=0.) ** 2
+            error_last_working = modified_original_lines.sub(adjusted_baselines_last_working, fill_value=0.) ** 2
 
-            # means for each day (среднесуточные)
-            avg_day = self.data.groupby(['date']).mean()
+            # C, RMSE, RRMSE
+            c = modified_original_lines.mean().mean()
 
-            last_10_days_mean = self._get_last_10_days_mean(working_days, avg_day)
-            self.logger.debug("Mean for the last 10 days: " + str(last_10_days_mean))
+            rmse_none = error_none.mean().mean() ** 0.5
+            rmse_all = error_all.mean().mean() ** 0.5
+            rmse_last_working = error_last_working.mean().mean() ** 0.5
 
-            condition2 = self._get_10_fitting_days(last_10_days_mean, working_days, avg_day, measurements_per_day)
-            self.logger.debug("Fitting days, condition 2: " + str(working_days))
+            rrmse_none = rmse_none / c
+            rrmse_all = rmse_all / c
+            rrmse_last_working = rmse_last_working / c
 
-            if len(condition2) < 10:
-                self.logger.warning('Only data for ' + str(len(condition2)) + ' days exists')
-            if len(condition2) == 0:
-                raise Exception("Condition 2 has no data. Check the input data")
+            # return df
+            # values order: c, rmse_none, rrmse_none, rmse_all, rrmse_all, rmse_last_working, rrmse_last_working
+            res = [c, rmse_none, rrmse_none, rmse_all, rrmse_all, rmse_last_working, rrmse_last_working]
 
-            # base values
-            b = self._get_base_value(self.data, condition2)
-            self.logger.debug("Base values:\n\n" + str(b) + "\n")
-
-            # last day values
-            c = self._get_c(self.data, condition2)
-            self.logger.debug("Last day:\n\n" + str(c) + "\n")
-
-            a = self._get_correction(b, c)
-            self.logger.debug("Correction: " + str(a))
-
-            # adjust (0.8*b < b_adj < 1.2*b)
-            b_adj = self._adjust(a, b)
-
-            self.logger.debug("Adjusted base values:\n\n" + str(b_adj) + "\n")
-
-            # apply discharge
-            b_discharged = self._discharge(b_adj)
-
-            b_to_compare, c_date = self._get_day_to_compare_with_discharged(self.data, measurements_per_day, condition2)
-
-            rrmse = self._rrmse(b_discharged, b_to_compare, c_date)
-
-            return rrmse
+            return res
         except Exception as err:
             self.logger.error("Impossible to analyze: " + str(err))
             raise Exception("Impossible to analyze: " + str(err))
@@ -367,95 +346,6 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
         return original_lines_df
 
     @staticmethod
-    def _get_last_10_days_mean(condition1, avg_day):
-        """
-        Calculates mean for last 10 working days
-
-        :param condition1: days that fit condition 1
-        :param avg_day: averages matrix
-        :return: mean of the last 10 days
-        """
-        last_10_days = []
-
-        for day in condition1:
-            if day in avg_day.index:
-                last_10_days.append(day)
-            if len(last_10_days) == 10:
-                break
-
-        return avg_day[avg_day.columns[0]][last_10_days].mean()
-
-    @staticmethod
-    def _get_10_fitting_days(last_10_days_mean, condition1, avg_day, mpd):
-        """
-        Get 10 (or less) days, fitting the condition 2, and these days have 24 measumenets
-
-        :param last_10_days_mean: mean for the last 10 days
-        :param condition1: days that fit condition 1
-        :param avg_day: averages matrix
-        :param mpd: measurements per day
-        :return: fitting 10 days
-        """
-        fitting_days = []
-        for day in condition1:
-            if day in avg_day.index:
-                if avg_day[avg_day.columns[0]][day] >= last_10_days_mean * 0.5 and mpd[mpd.columns[0]][day] == 24:
-                    fitting_days.append(day)
-            if len(fitting_days) >= 10:
-                return fitting_days
-        return fitting_days
-
-    @staticmethod
-    def _get_base_value(df, condition2):
-        """
-        Calculate base values
-
-        :param df: original dataframe with values
-        :param condition2: days that fit condition 2
-        :return: base values
-        """
-        fitting_days_values = df[df['date'].isin(condition2)].copy()
-
-        fitting_days_values['time'] = fitting_days_values['datetime'].dt.time
-
-        aggr = fitting_days_values.groupby(['time']).mean()
-
-        return aggr
-
-    @staticmethod
-    def _get_c(df, condition2):
-        """
-        Get cs
-
-        :param df: original dataframe with values
-        :param condition2: days that fit condition 2
-        :return: correction values
-        """
-        # get only previous day values
-        temp = pd.DataFrame()
-        for i in range(len(condition2)):
-            temp = df[df['date'].isin([condition2[i]])].copy()
-            if len(temp) == 24:
-                break
-        if len(temp) != 24:
-            raise Exception("All previous days have missing data, impossible to select one to calculate correction")
-        # this is unnecessary, but is done to remove spare columns (make data look alike b)
-        return temp.groupby(['time']).mean()
-
-    @staticmethod
-    def _get_correction(b, c):
-        """
-        Calculates correction (a)
-
-        :param b: bases
-        :param c: correction
-        :return: corrected (not adjusted) values
-        """
-        a16 = c.iloc[16] - b.iloc[16]
-        a17 = c.iloc[17] - b.iloc[17]
-        return (a16 + a17) / 2
-
-    @staticmethod
     def _adjust(a, b):
         """
         Adjust according to the thresholds
@@ -481,10 +371,14 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
 
     def _prepare_for_output(self, p, d, res):
         """
-        format results for output
+        format results for output, converts matrix to series
+        stacks values in top-down left-right order
 
-        :param res: unformatted results
         :return: formatted results
         """
-
-        return res
+        try:
+            idx = pd.date_range('2000-01-01', periods=len(res))  # dummy index
+            return pd.DataFrame(res, idx, ['value'])
+        except Exception as err:
+            self.logger.error("Output preparation: " + str(err))
+            raise Exception("Output preparation: " + str(err))
