@@ -2,6 +2,7 @@ from analytics.analysis import Analysis
 import datetime
 import pandas as pd
 import requests
+import math
 from bs4 import BeautifulSoup
 
 
@@ -27,6 +28,13 @@ A_ARGS = {"analysis_code": "ELECTRICITYCOSTCALCULATION",
                         "three_category_energy_storage_effect - Calculation of the effect for the third category with energy storage" 
                         "peak_hours - Combined maximum hours"
                         "energy_storage - New profile with energy_storage"
+               },
+              {"name": "mode_energy_storage", "count": 1, "type": "SELECT", "options": ["auto", "manual"],
+               "info": "auto"
+                       "manual - with time_return_energy_storage"
+               },
+              {"name": "capacity_energy_storage", "count": 1, "type": "STRING",
+               "info": "Capacity, kW*h"
                },
               {"name": "region", "count": 1, "type": "SELECT", "options": REGIONS,
                "info": "Regions of Russia (ISO 3166-2): RU-SVE, RU-PER, RU-BA, RU-UD"},
@@ -234,7 +242,7 @@ class ElectricityCostCalculationAnalysis(Analysis):
             self.logger.error("Error in _parse_parameters_two_cat: " + str(err))
             raise Exception("Error in _parse_parameters_two_cat: " + str(err))
 
-    def _parse_parameters_energy_storage(self, p):
+    def _parse_parameters_energy_storage(self, p, c):
         """
         Parameters parsing (type conversion, modification, etc).
         """
@@ -244,8 +252,18 @@ class ElectricityCostCalculationAnalysis(Analysis):
             pn = dict()
             pn['power_return_energy_storage'] = self._check_float(parameters['power_return_energy_storage'][0])
             pn['power_charging_energy_storage'] = self._check_float(parameters['power_charging_energy_storage'][0])
-            pn['time_return_energy_storage'] = self._generate_time_df(parameters['time_return_energy_storage'])
-            pn['time_charging_energy_storage'] = self._generate_time_df(parameters['time_charging_energy_storage'])
+            pn['mode_energy_storage'] = parameters['mode_energy_storage'][0]
+            if pn['mode_energy_storage'] == "auto":
+                pn['capacity_energy_storage'] = parameters['capacity_energy_storage'][0]
+            else:
+                pn['time_return_energy_storage'] = self._generate_time_df(parameters['time_return_energy_storage'])
+                pn['time_charging_energy_storage'] = self._generate_time_df(parameters['time_charging_energy_storage'])
+            if c == 4:
+                pn['time_four_cat'] = self._check_time_dict(parameters['time_four_cat'])
+            if c == 2 or c == 20:
+                pn['time_two_cat_night_zones'] = self._generate_time_df(parameters['time_two_cat_night_zones'])
+            if c == 20:
+                pn['time_two_cat_peak_zones'] = self._generate_time_df(parameters['time_two_cat_peak_zones'])
             return pn
         except Exception as err:
             self.logger.error("Error in _parse_parameters_energy_storage: " + str(err))
@@ -660,6 +678,33 @@ class ElectricityCostCalculationAnalysis(Analysis):
             self.logger.error("Error in _multiplication_data_tariff: " + str(err))
             raise Exception("Error in _multiplication_data_tariff: " + str(err))
 
+    def _search_max_maintenance(self, all_data, time_zone, day):
+        two_max = max = 0
+        time_max = ''
+        time_two_max = ''
+        try:
+            for index, row in all_data.iterrows():
+                if row.time.day == day:
+                    for time in time_zone:
+                        time_value = datetime.time(hour=row['time'].hour, minute=row['time'].minute)
+                        if time['start'] <= time_value < time['end']:
+                            if max < row.value:
+                                max = row['value']
+                                time_max = row.time
+                            if two_max < row.value and row.value != max:
+                                two_max = row['value']
+                                time_two_max = row.time
+                    # if row.time.hour == 23:
+                    #     sum += max
+                    #     max = 0
+                    #     count += 1
+        except Exception as err:
+            self.logger.error("Error in _multiplication_data_tariff: " + str(err))
+            raise Exception("Error in _multiplication_data_tariff: " + str(err))
+
+        dm = {'time': time_max, 'max': max, 'time_two_max': time_two_max, 'two_max': two_max}
+        return dm
+
     def _maintenance(self, all_data, time_zone, tariff_maintenance):
         """
         Calculates the cost of maintenance (4 price categories)
@@ -720,26 +765,143 @@ class ElectricityCostCalculationAnalysis(Analysis):
             self.logger.error("Error in the _peaks_row: " + str(err))
             raise Exception("Error in the _peaks_row: " + str(err))
 
-    def _offset_power_profile(self, p, d):
+    def _offset_power_profile(self, p, d, c):
         """
         Output of combined maximum hours
         :param p:
         :param d:
         :return: dataframe with times and value
         """
-
         try:
-            pn = self._parse_parameters_energy_storage(p)
-            return_storage = pn['time_return_energy_storage']
-            return_storage['valuem'] = pn['power_return_energy_storage']
-            charging_storage = pn['time_charging_energy_storage']
-            charging_storage['valuep'] = pn['power_charging_energy_storage']
-            rm = pd.merge(d, return_storage, how='outer', on=['time'])
-            rm = pd.merge(rm, charging_storage, how='outer', on=['time'])
-            rm = rm.fillna(0)
-            rm['value'] = rm['value'] - rm['valuem']
-            rm['value'] = rm['value'] + rm['valuep']
-            rm = rm.drop(['valuem', 'valuep'], axis=1)
+            pn = self._parse_parameters_energy_storage(p, c)
+            if pn['mode_energy_storage'] == "auto":
+                return_storage = self._peaks_row(p)
+                return_storage = return_storage.loc[return_storage.val_peak == 1]
+                return_storage.reset_index(inplace=True)
+                return_storage.columns = ['time', 'val_peak']
+                return_storage['valuem'] = pn['power_return_energy_storage']
+                rm = pd.merge(d, return_storage, how='outer', on=['time'])
+                rm = rm.fillna(0)
+            else:
+                return_storage = pn['time_return_energy_storage']
+                return_storage['valuem'] = pn['power_return_energy_storage']
+                charging_storage = pn['time_charging_energy_storage']
+                charging_storage['valuep'] = pn['power_charging_energy_storage']
+                rm = pd.merge(d, return_storage, how='outer', on=['time'])
+                rm = pd.merge(rm, charging_storage, how='outer', on=['time'])
+                rm = rm.fillna(0)
+                rm['value'] = rm['value'] - rm['valuem']
+                rm['value'] = rm['value'] + rm['valuep']
+            new_rm = pd.DataFrame(columns=['day', 'delta', 'hours_charging'])
+
+            if pn['mode_energy_storage'] == "auto":
+
+                if c == 2:
+                    d_night = pn['time_two_cat_night_zones']
+                    d_all = d
+                    d_all['hour'] = pd.to_datetime(d_all['time']).dt.hour
+                    d_night['hour'] = pd.to_datetime(d_night['time']).dt.hour
+                    count_days = d_all['time'].count()/24
+                    rm_night = d_all.query("hour in @d_night.hour")
+                    rm_day = d_all.query("hour not in @d_night.hour")
+                    summ_kw = d.value.sum()
+                    count_night = rm_night['value'].count()
+                    count_day = rm_day['value'].count()
+                    minus_day = pn['capacity_energy_storage']*count_days / count_day
+                    plus_day = pn['capacity_energy_storage']*count_days / count_day
+                    pd.options.mode.chained_assignment = None  # default='warn'
+                    if (minus_day <= pn['power_return_energy_storage']):
+                        rm_day.loc[rm_day["value"] - minus_day >= 0, "value"] = rm_day.loc[rm_day["value"] - minus_day >= 0, "value"] - minus_day
+                        rm_day.loc[rm_day["value"] - minus_day < 0, "value"] = 0
+                    else:
+                        rm_day["value"] = rm_day["value"] - pn['power_return_energy_storage']
+                    if (plus_day <= pn['power_return_energy_storage']):
+                        rm_night["value"] = rm_night["value"] + plus_day
+                    else:
+                        rm_night["value"] = rm_night["value"] + pn['power_return_energy_storage']
+                    # rm = rm_day.merge(rm_night)
+                    rm = pd.concat([rm_day, rm_night], ignore_index=True)
+                    rm = rm.sort_values(by='time')
+                    # print(rm_day[10:60])
+                    rm = rm.drop(['hour'], axis=1)
+                    rm = rm.reset_index()
+                    rm = rm.drop(['index'], axis=1)
+                    # print(rm[24:75])
+
+                if c == 3 or c == 4:
+                    for index, row in rm.iterrows():
+                        if row['valuem'] > 0:
+                            deltar = list
+                            day = row['time'].day
+                            if row['value'] > row['valuem']:
+                                rm.loc[rm['time'] == row['time'], 'value'] = row['value'] - row['valuem']
+                                hours = math.ceil(pn['power_return_energy_storage'] / pn['power_charging_energy_storage'])
+                                deltar = {"day": day, "delta": pn['power_return_energy_storage'], "hours_charging": hours}
+                            else:
+                                delta = row['value']
+                                # rm['value'].iloc[index] = 0
+                                #rm['delta'].where(rm['time'].day == day, inplace = True) = delta
+                                # rm.loc[rm['time'].day() == day]['delta'] = delta
+                                rm.loc[pd.to_datetime(rm['time']).dt.day == day, 'delta'] = delta
+                                rm.loc[rm['time'] == row['time'], 'value'] = 0
+                                hours = math.ceil(delta / pn['power_charging_energy_storage'])
+                                deltar = {"day": day, "delta": delta, "hours_charging": hours}
+                    # rm['value'] = rm['value'] - rm['valuem']
+                    #         df = pd.DataFrame(data={'time': pd.date_range(start=start_time,
+                    #                                                       end=end_time, freq='1H')})
+                            new_rm = new_rm.append(deltar, ignore_index=True)
+
+                #С зарядкой
+                if c == 3:
+                    for index, row in rm.iterrows():
+                         for new_index, new_row in new_rm.iterrows():
+                             if row['time'].day == new_row['day'] and row['time'].hour == 0.0:
+                                 intFor = int(new_row['hours_charging'])
+                                 for i in range(intFor):
+                                     rm.loc[(rm['time'].dt.hour == (row['time'].hour+i)) & (rm['time'].dt.day == row['time'].day), 'value'] = row['value'] + (new_row['delta']/new_row['hours_charging'])
+
+                    # rm['value'] = rm['value'] - rm['valuem']
+                    #         df = pd.DataFrame(data={'time': pd.date_range(start=start_time,
+                    #                                                       end=end_time, freq='1H')})
+                if c == 4:
+                    for new_index, new_row in new_rm.iterrows():
+                        time_zone = pn['time_four_cat']
+                        delta_k = new_row['delta']
+                        while delta_k>0:
+                            one_max = self._search_max_maintenance(rm, time_zone, new_row['day'])['max']
+                            two_max = self._search_max_maintenance(rm, time_zone, new_row['day'])['two_max']
+                            count_max = rm.loc[rm['value'] == one_max, 'value'].count()
+                            # delta_k = delta_k - 1000
+                            if (delta_k - ((one_max-two_max)*count_max)) > 0:
+                                delta_k = delta_k - ((one_max-two_max)*count_max)
+                                if two_max != '' and two_max > 0:
+                                    rm.loc[(rm['value'] == one_max) & (rm['time'].dt.day == new_row['day']), 'value'] = two_max
+                            else:
+                                if (one_max-delta_k/count_max) >= 0:
+                                    rm.loc[(rm['value'] == one_max) & (rm['time'].dt.day == new_row['day']), 'value'] = round(one_max-delta_k/count_max, 9)
+                                delta_k = 0
+                    for index, row in rm.iterrows():
+                         for new_index, new_row in new_rm.iterrows():
+                             if row['time'].day == new_row['day'] and row['time'].hour == 0.0:
+                                 hours_charging = math.ceil(pn['capacity_energy_storage']/pn['power_charging_energy_storage'])
+                                 intFor = int(hours_charging)
+                                 for i in range(intFor):
+                                     rm.loc[(rm['time'].dt.hour == (row['time'].hour+i)) & (rm['time'].dt.day == row['time'].day), 'value'] = row['value'] + pn['power_charging_energy_storage']
+                    # rm['value'] = rm['value'] + rm['valuep']
+
+            try:
+                if pn['mode_energy_storage'] == "auto" and (c == 3 or c == 4):
+                    rm = rm.drop(['delta', 'val_peak', 'valuem'], axis=1)
+                if pn['mode_energy_storage'] != "auto":
+                    rm = rm.drop(['valuem', 'valuep'], axis=1)
+            except Exception as err:
+                self.logger.error("Error in the _offset_power_profile: " + str(err))
+                raise Exception("Error in the _offset_power_profile: " + str(err))
+            # d.to_csv('d.csv', index=False)
+            # rm_csv = rm.drop(['time'], axis=1)
+            # rm_csv.to_csv('offset_power_profile_'+str(c)+'.csv', index=False)
+            # new_rm.to_csv('new_rm.csv', index=False)
+
             return rm
 
         except Exception as err:
@@ -994,6 +1156,8 @@ class ElectricityCostCalculationAnalysis(Analysis):
             'two_category_two_zones_val_calculate_ee_night': lambda: self._two_category(p, d, 'val_calculate_ee_night'),
             'two_category_two_zones_val_calculate_ee_day': lambda: self._two_category(p, d, 'val_calculate_ee_day'),
             'two_category_two_zones_val_total': lambda: self._two_category(p, d, 'val_total'),
+            'two_category_two_zones_energy_storage_val_total': lambda: self._two_category(p, self._offset_power_profile(p, d, 2), 'val_total'),
+            'two_category_two_zones_energy_storage_effect_val_total': lambda: self._delta_result(self._two_category(p, d, 'val_total'), self._two_category(p, self._offset_power_profile(p, d, 2), 'val_total')),
             'two_category_three_zones_val_summ_kw': lambda: self._two_category(p, d, 'val_summ_kw', True),
             'two_category_three_zones_val_transfer': lambda: self._two_category(p, d, 'val_transfer', True),
             'two_category_three_zones_val_calculate_ee_night': lambda: self._two_category(p, d, 'val_calculate_ee_night', True),
@@ -1007,16 +1171,16 @@ class ElectricityCostCalculationAnalysis(Analysis):
             'three_category_val_power_cost': lambda: self._three_category(p, d, 'val_power_cost'),
             'three_category_val_other_services': lambda: self._three_category(p, d, 'val_other_services'),
             'three_category_val_total': lambda: self._three_category(p, d, 'val_total'),
-            'three_category_energy_storage_val_summ_kw': lambda: self._three_category(p, self._offset_power_profile(p, d), 'val_summ_kw'),
-            'three_category_energy_storage_val_transfer': lambda: self._three_category(p, self._offset_power_profile(p, d), 'val_transfer'),
-            'three_category_energy_storage_val_sales_add': lambda: self._three_category(p, self._offset_power_profile(p, d), 'val_sales_add'),
-            'three_category_energy_storage_val_calculate_ee': lambda: self._three_category(p, self._offset_power_profile(p, d), 'val_calculate_ee'),
-            'three_category_energy_storage_val_power_cost': lambda: self._three_category(p, self._offset_power_profile(p, d), 'val_power_cost'),
-            'three_category_energy_storage_val_other_services': lambda: self._three_category(p, self._offset_power_profile(p, d), 'val_other_services'),
-            'three_category_energy_storage_val_total': lambda: self._three_category(p, self._offset_power_profile(p, d), 'val_total'),
-            'three_category_energy_storage_effect_val_calculate_ee': lambda: self._delta_result(self._three_category(p, d, 'val_calculate_ee'), self._three_category(p, self._offset_power_profile(p, d), 'val_calculate_ee')),
-            'three_category_energy_storage_effect_val_power_cost': lambda: self._delta_result(self._three_category(p, d, 'val_power_cost'), self._three_category(p, self._offset_power_profile(p, d), 'val_power_cost')),
-            'three_category_energy_storage_effect_val_total': lambda: self._delta_result(self._three_category(p, d, 'val_total'), self._three_category(p, self._offset_power_profile(p, d), 'val_total')),
+            'three_category_energy_storage_val_summ_kw': lambda: self._three_category(p, self._offset_power_profile(p, d, 3), 'val_summ_kw'),
+            'three_category_energy_storage_val_transfer': lambda: self._three_category(p, self._offset_power_profile(p, d, 3), 'val_transfer'),
+            'three_category_energy_storage_val_sales_add': lambda: self._three_category(p, self._offset_power_profile(p, d, 3), 'val_sales_add'),
+            'three_category_energy_storage_val_calculate_ee': lambda: self._three_category(p, self._offset_power_profile(p, d, 3), 'val_calculate_ee'),
+            'three_category_energy_storage_val_power_cost': lambda: self._three_category(p, self._offset_power_profile(p, d, 3), 'val_power_cost'),
+            'three_category_energy_storage_val_other_services': lambda: self._three_category(p, self._offset_power_profile(p, d, 3), 'val_other_services'),
+            'three_category_energy_storage_val_total': lambda: self._three_category(p, self._offset_power_profile(p, d, 3), 'val_total'),
+            'three_category_energy_storage_effect_val_calculate_ee': lambda: self._delta_result(self._three_category(p, d, 'val_calculate_ee'), self._three_category(p, self._offset_power_profile(p, d, 3), 'val_calculate_ee')),
+            'three_category_energy_storage_effect_val_power_cost': lambda: self._delta_result(self._three_category(p, d, 'val_power_cost'), self._three_category(p, self._offset_power_profile(p, d, 3), 'val_power_cost')),
+            'three_category_energy_storage_effect_val_total': lambda: self._delta_result(self._three_category(p, d, 'val_total'), self._three_category(p, self._offset_power_profile(p, d, 3), 'val_total')),
             'four_category_val_summ_kw': lambda: self._four_category(p, d, 'val_summ_kw'),
             'four_category_val_transfer': lambda: self._four_category(p, d, 'val_transfer'),
             'four_category_val_sales_add': lambda: self._four_category(p, d, 'val_sales_add'),
@@ -1025,19 +1189,22 @@ class ElectricityCostCalculationAnalysis(Analysis):
             'four_category_val_maintenance': lambda: self._four_category(p, d, 'val_maintenance'),
             'four_category_val_other_services': lambda: self._four_category(p, d, 'val_other_services'),
             'four_category_val_total': lambda: self._four_category(p, d, 'val_total'),
-            'four_category_energy_storage_val_summ_kw': lambda: self._four_category(p, self._offset_power_profile(p, d), 'val_summ_kw'),
-            'four_category_energy_storage_val_transfer': lambda: self._four_category(p, self._offset_power_profile(p, d), 'val_transfer'),
-            'four_category_energy_storage_val_sales_add': lambda: self._four_category(p, self._offset_power_profile(p, d), 'val_sales_add'),
-            'four_category_energy_storage_val_calculate_ee': lambda: self._four_category(p, self._offset_power_profile(p, d), 'val_calculate_ee'),
-            'four_category_energy_storage_val_power_cost': lambda: self._four_category(p, self._offset_power_profile(p, d), 'val_power_cost'),
-            'four_category_energy_storage_val_maintenance': lambda: self._four_category(p, self._offset_power_profile(p, d), 'val_maintenance'),
-            'four_category_energy_storage_val_other_services': lambda: self._four_category(p, self._offset_power_profile(p, d), 'val_other_services'),
-            'four_category_energy_storage_val_total': lambda: self._four_category(p, self._offset_power_profile(p, d), 'val_total'),
-            'four_category_energy_storage_effect_val_calculate_ee': lambda: self._delta_result(self._four_category(p, d, 'val_calculate_ee'), self._four_category(p, self._offset_power_profile(p, d), 'val_calculate_ee')),
-            'four_category_energy_storage_effect_val_power_cost': lambda: self._delta_result(self._four_category(p, d, 'val_power_cost'), self._four_category(p, self._offset_power_profile(p, d), 'val_power_cost')),
-            'four_category_energy_storage_effect_val_total': lambda: self._delta_result(self._four_category(p, d, 'val_total'), self._four_category(p, self._offset_power_profile(p, d), 'val_total')),
+            'four_category_energy_storage_val_summ_kw': lambda: self._four_category(p, self._offset_power_profile(p, d, 4), 'val_summ_kw'),
+            'four_category_energy_storage_val_transfer': lambda: self._four_category(p, self._offset_power_profile(p, d, 4), 'val_transfer'),
+            'four_category_energy_storage_val_sales_add': lambda: self._four_category(p, self._offset_power_profile(p, d, 4), 'val_sales_add'),
+            'four_category_energy_storage_val_calculate_ee': lambda: self._four_category(p, self._offset_power_profile(p, d, 4), 'val_calculate_ee'),
+            'four_category_energy_storage_val_power_cost': lambda: self._four_category(p, self._offset_power_profile(p, d, 4), 'val_power_cost'),
+            'four_category_energy_storage_val_maintenance': lambda: self._four_category(p, self._offset_power_profile(p, d, 4), 'val_maintenance'),
+            'four_category_energy_storage_val_other_services': lambda: self._four_category(p, self._offset_power_profile(p, d, 4), 'val_other_services'),
+            'four_category_energy_storage_val_total': lambda: self._four_category(p, self._offset_power_profile(p, d, 4), 'val_total'),
+            'four_category_energy_storage_effect_val_calculate_ee': lambda: self._delta_result(self._four_category(p, d, 'val_calculate_ee'), self._four_category(p, self._offset_power_profile(p, 4), 'val_calculate_ee')),
+            'four_category_energy_storage_effect_val_power_cost': lambda: self._delta_result(self._four_category(p, d, 'val_power_cost'), self._four_category(p, self._offset_power_profile(p, d, 4), 'val_power_cost')),
+            'four_category_energy_storage_effect_val_total': lambda: self._delta_result(self._four_category(p, d, 'val_total'), self._four_category(p, self._offset_power_profile(p, d, 4), 'val_total')),
             'peak_hours': lambda: self._peaks_row(p),
-            'energy_storage': lambda: self._offset_power_profile(p, d).set_index(['time']),
+            'two_category_two_zones_energy_storage': lambda: self._offset_power_profile(p, d, 2).set_index(['time']),
+            'two_category_three_zones_energy_storage': lambda: self._offset_power_profile(p, d, 2).set_index(['time']),
+            'three_category_energy_storage': lambda: self._offset_power_profile(p, d, 3).set_index(['time']),
+            'four_category_energy_storage': lambda: self._offset_power_profile(p, d, 4).set_index(['time']),
 
             # 'three_category_': lambda: self._three_category(p, d, ''),
         }.get(p['method'], lambda: None)()
