@@ -828,6 +828,39 @@ class ElectricityCostCalculationAnalysis(Analysis):
                     rm = rm.drop(['index'], axis=1)
                     # print(rm[24:75])
 
+                if c == 20:
+                    d_peak = pn['time_two_cat_peak_zones']
+                    d_night = pn['time_two_cat_night_zones']
+                    d_all = d
+                    d_all['hour'] = pd.to_datetime(d_all['time']).dt.hour
+                    d_night['hour'] = pd.to_datetime(d_night['time']).dt.hour
+                    d_peak['hour'] = pd.to_datetime(d_peak['time']).dt.hour
+                    count_days = d_all['time'].count()/24
+                    rm_night = d_all.query("hour in @d_night.hour")
+                    rm_peak = d_all.query("hour in @d_peak.hour")
+                    print(rm_peak)
+                    count_night = rm_night['value'].count()
+                    count_peak = rm_peak['value'].count()
+                    minus_day = pn['capacity_energy_storage']*count_days / count_peak
+                    plus_day = pn['capacity_energy_storage']*count_days / count_peak
+                    pd.options.mode.chained_assignment = None  # default='warn'
+                    if (minus_day <= pn['power_return_energy_storage']):
+                        rm_peak.loc[rm_peak["value"] - minus_day >= 0, "value"] = rm_peak.loc[rm_peak["value"] - minus_day >= 0, "value"] - minus_day
+                        rm_peak.loc[rm_peak["value"] - minus_day < 0, "value"] = 0
+                    else:
+                        rm_peak["value"] = rm_peak["value"] - pn['power_return_energy_storage']
+                    if (plus_day <= pn['power_return_energy_storage']):
+                        rm_night["value"] = rm_night["value"] + plus_day
+                    else:
+                        rm_night["value"] = rm_night["value"] + pn['power_return_energy_storage']
+                    rm = pd.concat([rm_peak, rm_night], ignore_index=True)
+                    rm = rm.sort_values(by='time')
+                    # print(rm_day[10:60])
+                    rm = rm.drop(['hour'], axis=1)
+                    rm = rm.reset_index()
+                    rm = rm.drop(['index'], axis=1)
+                    print(rm[30:60])
+
                 if c == 3 or c == 4:
                     for index, row in rm.iterrows():
                         if row['valuem'] > 0:
@@ -898,8 +931,8 @@ class ElectricityCostCalculationAnalysis(Analysis):
                 self.logger.error("Error in the _offset_power_profile: " + str(err))
                 raise Exception("Error in the _offset_power_profile: " + str(err))
             # d.to_csv('d.csv', index=False)
-            # rm_csv = rm.drop(['time'], axis=1)
-            # rm_csv.to_csv('offset_power_profile_'+str(c)+'.csv', index=False)
+            #rm_csv = rm.drop(['time'], axis=1)
+            rm.to_csv('2offset_power_profile_'+str(c)+'.csv', index=False)
             # new_rm.to_csv('new_rm.csv', index=False)
 
             return rm
@@ -1164,6 +1197,10 @@ class ElectricityCostCalculationAnalysis(Analysis):
             'two_category_three_zones_val_calculate_ee_semipeak': lambda: self._two_category(p, d, 'calculate_ee_semipeak', True),
             'two_category_three_zones_val_calculate_ee_peak': lambda: self._two_category(p, d, 'calculate_ee_peak', True),
             'two_category_three_zones_val_total': lambda: self._two_category(p, d, 'val_total', True),
+            'two_category_three_zones_energy_storage_effect_val_total': lambda: self._delta_result(
+                self._two_category(p, d, 'val_total', True),
+                self._two_category(p, self._offset_power_profile(p, d, 20), 'val_total', True)),
+            'two_category_three_zones_energy_storage_val_total': lambda: self._two_category(p, self._offset_power_profile(p,d,20), 'val_total', True),
             'three_category_val_summ_kw': lambda: self._three_category(p, d, 'val_summ_kw'),
             'three_category_val_transfer': lambda: self._three_category(p, d, 'val_transfer'),
             'three_category_val_sales_add': lambda: self._three_category(p, d, 'val_sales_add'),
@@ -1202,7 +1239,7 @@ class ElectricityCostCalculationAnalysis(Analysis):
             'four_category_energy_storage_effect_val_total': lambda: self._delta_result(self._four_category(p, d, 'val_total'), self._four_category(p, self._offset_power_profile(p, d, 4), 'val_total')),
             'peak_hours': lambda: self._peaks_row(p),
             'two_category_two_zones_energy_storage': lambda: self._offset_power_profile(p, d, 2).set_index(['time']),
-            'two_category_three_zones_energy_storage': lambda: self._offset_power_profile(p, d, 2).set_index(['time']),
+            'two_category_three_zones_energy_storage': lambda: self._offset_power_profile(p, d, 20).set_index(['time']),
             'three_category_energy_storage': lambda: self._offset_power_profile(p, d, 3).set_index(['time']),
             'four_category_energy_storage': lambda: self._offset_power_profile(p, d, 4).set_index(['time']),
 
