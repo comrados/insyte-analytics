@@ -20,7 +20,14 @@ A_ARGS = {"analysis_code": "DEMAND_RESPONSE_BASELINE_APPLICABILITY",
               {"name": "exception_days", "count": -1, "type": "DATE", "info": "days to exclude from analysis"},
               {"name": "except_weekends", "count": 1, "type": "BOOLEAN", "info": "except weekends from analysis"},
               {"name": "peak_hours", "count": -1, "type": "INTEGER", "info": "array of planned peak hours"},
-              {"name": "adjustment_hours", "count": -1, "type": "INTEGER", "info": "array of adjustment hours"}
+              {"name": "adjustment_hours", "count": -1, "type": "INTEGER", "info": "array of adjustment hours"},
+              {"name": "method", "count": 1, "type": "SELECT", "options":["all_applicability","c_applicability",
+                                                                          "rmse_none_applicability","rrmse_none_applicability",
+                                                                          "rmse_all_applicability", "rrmse_all_applicability",
+                                                                          "rmse_last_working_applicability", "rrmse_last_working_applicability",
+                                                                          "min_profile", "rrmse_all_profile", "rrmse_none_profile",
+                                                                          "rrmse_last_working_profile"], "info": "Method for calculating"},
+
           ]}
 
 
@@ -42,14 +49,16 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
             self.parameters = parameters
             self._parse_parameters(None)
             self.data = self._preprocess_df(data)
+            # print(data)
             res = self._analyze(None, None)
-            out = self._prepare_for_output(None, None, res)
-            return out
+            # out = self._prepare_for_output(None, None, res)
+            # print(res)
+            return res
         except Exception as err:
             self.logger.error(err)
             raise Exception(str(err))
 
-    def _analyze(self, p, d):
+    def _applicability(self, p, d):
         try:
             super()._analyze(p, d)
 
@@ -114,8 +123,108 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
 
             return res
         except Exception as err:
+            self.logger.error("Impossible to _applicability: " + str(err))
+            raise Exception("Impossible to _applicability: " + str(err))
+
+    def _analyze(self, p, d):
+        """
+        Run analysis.
+        :return: output DataFrame
+        """
+        try:
+            return self._dispatch_dict(self.parameters, d)
+        except Exception as err:
             self.logger.error("Impossible to analyze: " + str(err))
             raise Exception("Impossible to analyze: " + str(err))
+
+    def _dispatch_dict(self, p, d):
+        """
+        Switch analysis.
+        :return: output DataFrame
+        """
+        # p['method'] = 'all_applicability'
+        return {
+            'all_applicability': lambda: self._prepare_for_output(None, None, self._applicability(None, None)),
+            'c_applicability': lambda: self._prepare_for_output(None, None, [self._applicability(None, None)[0]]),
+            'rmse_none_applicability': lambda: self._prepare_for_output(None, None, [self._applicability(None, None)[1]]),
+            'rrmse_none_applicability': lambda: self._prepare_for_output(None, None, [self._applicability(None, None)[2]]),
+            'rmse_all_applicability': lambda: self._prepare_for_output(None, None, [self._applicability(None, None)[3]]),
+            'rrmse_all_applicability': lambda: self._prepare_for_output(None, None, [self._applicability(None, None)[4]]),
+            'rmse_last_working_applicability': lambda: self._prepare_for_output(None, None, [self._applicability(None, None)[5]]),
+            'rrmse_last_working_applicability': lambda: self._prepare_for_output(None, None, [self._applicability(None, None)[6]]),
+            'min_rrmse': lambda: self._prepare_for_output(None, None, self._min_rrmse(self._applicability(None, None))),
+            'min_profile': lambda: self._min_profile(None, None, self._applicability(None, None)),
+            'rrmse_all_profile': lambda: self._rrmse_all_profile(None, None, self._applicability(None, None)),
+            'rrmse_none_profile': lambda: self._rrmse_none_profile(None, None, self._applicability(None, None)),
+            'rrmse_last_working_profile': lambda: self._rrmse_last_working_profile(None, None, self._applicability(None, None)),
+        }.get(p['method'][0], lambda: self._prepare_for_output(None, None, self._applicability(None, None)))()
+
+    def _min_profile(self, p, d, applicability):
+        """
+        Return profile with minimal rrmse.
+        :return: output DataFrame
+        """
+        rrmse = [applicability[2],applicability[4], applicability[6]]
+
+        min_rrmse = min(rrmse)
+        new_d = self.data
+        min_profile = new_d.iloc[:, [0]] * min_rrmse
+
+        return min_profile
+
+    def _min_rrmse(self, applicability):
+        """
+        Return profile with minimal rrmse.
+        :return: output DataFrame
+        """
+        rrmse = [applicability[2],applicability[4], applicability[6]]
+
+        min_rrmse = min(rrmse)
+        if min_rrmse == applicability[2]:
+            return ["rrmse_none"]
+        if min_rrmse == applicability[4]:
+            return ["rrmse_all"]
+        if min_rrmse == applicability[6]:
+            return ["rrmse_last_working"]
+
+    def _rrmse_none_profile(self, p, d, applicability):
+        """
+        Return profile with rrmse_none.
+        :return: output DataFrame
+        """
+        rrmse = [applicability[2],applicability[4], applicability[6]]
+
+        select_rrmse = rrmse[0]
+        new_d = self.data
+        profile = new_d.iloc[:, [0]] * select_rrmse
+
+        return profile
+
+    def _rrmse_all_profile(self, p, d, applicability):
+        """
+        Return profile with rrmse_all.
+        :return: output DataFrame
+        """
+        rrmse = [applicability[2],applicability[4], applicability[6]]
+
+        select_rrmse = rrmse[1]
+        new_d = self.data
+        profile = new_d.iloc[:, [0]] * select_rrmse
+
+        return profile
+
+    def _rrmse_last_working_profile(self, p, d, applicability):
+        """
+        Return profile with rrmse_last_working.
+        :return: output DataFrame
+        """
+        rrmse = [applicability[2],applicability[4], applicability[6]]
+
+        select_rrmse = rrmse[2]
+        new_d = self.data
+        profile = new_d.iloc[:, [0]] * select_rrmse
+
+        return profile
 
     def _get_only_adjustment_hours(self, full_lines):
         modified_lines = full_lines.iloc[self.adjustment_hours]
