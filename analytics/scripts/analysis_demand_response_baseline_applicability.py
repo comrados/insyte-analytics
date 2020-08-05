@@ -25,8 +25,9 @@ A_ARGS = {"analysis_code": "DEMAND_RESPONSE_BASELINE_APPLICABILITY",
                                                                           "rmse_none_applicability","rrmse_none_applicability",
                                                                           "rmse_all_applicability", "rrmse_all_applicability",
                                                                           "rmse_last_working_applicability", "rrmse_last_working_applicability",
-                                                                          "min_profile", "rrmse_all_profile", "rrmse_none_profile",
-                                                                          "rrmse_last_working_profile"], "info": "Method for calculating"},
+                                                                          ""
+                                                                          "", "rrmse_all_profile", "rrmse_none_profile",
+                                                                          "rrmse_last_working_profile", "min_rrmse"], "info": "Method for calculating"},
 
           ]}
 
@@ -49,7 +50,6 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
             self.parameters = parameters
             self._parse_parameters(None)
             self.data = self._preprocess_df(data)
-            # print(data)
             res = self._analyze(None, None)
             # out = self._prepare_for_output(None, None, res)
             # print(res)
@@ -86,9 +86,8 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
 
             # table 2
             baselines = self._calculate_baselines(days_for_baselines)
+            pd_bs = self._calculate_baselines_dates(days_for_baselines)
             original_lines = self._get_original_lines(days_to_analyze)
-
-            # modified original lines and baselines
             modified_original_lines = self._get_only_adjustment_hours(original_lines)
             modified_baselines = self._get_only_adjustment_hours(baselines)
 
@@ -119,7 +118,7 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
 
             # return df
             # values order: c, rmse_none, rrmse_none, rmse_all, rrmse_all, rmse_last_working, rrmse_last_working
-            res = [c, rmse_none, rrmse_none, rmse_all, rrmse_all, rmse_last_working, rrmse_last_working]
+            res = [c, rmse_none, rrmse_none, rmse_all, rrmse_all, rmse_last_working, rrmse_last_working, pd_bs]
 
             return res
         except Exception as err:
@@ -142,7 +141,6 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
         Switch analysis.
         :return: output DataFrame
         """
-        # p['method'] = 'all_applicability'
         return {
             'all_applicability': lambda: self._prepare_for_output(None, None, self._applicability(None, None)),
             'c_applicability': lambda: self._prepare_for_output(None, None, [self._applicability(None, None)[0]]),
@@ -152,6 +150,7 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
             'rrmse_all_applicability': lambda: self._prepare_for_output(None, None, [self._applicability(None, None)[4]]),
             'rmse_last_working_applicability': lambda: self._prepare_for_output(None, None, [self._applicability(None, None)[5]]),
             'rrmse_last_working_applicability': lambda: self._prepare_for_output(None, None, [self._applicability(None, None)[6]]),
+            'baseline_none': lambda: self._applicability(None, None)[7],
             'min_rrmse': lambda: self._prepare_for_output(None, None, self._min_rrmse(self._applicability(None, None))),
             'min_profile': lambda: self._min_profile(None, None, self._applicability(None, None)),
             'rrmse_all_profile': lambda: self._rrmse_all_profile(None, None, self._applicability(None, None)),
@@ -197,7 +196,6 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
         select_rrmse = rrmse[0]
         new_d = self.data
         profile = new_d.iloc[:, [0]] * select_rrmse
-
         return profile
 
     def _rrmse_all_profile(self, p, d, applicability):
@@ -438,12 +436,40 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
     def _calculate_baselines(self, days_for_baselines):
         baselines_df = None
         for date, days_avg in days_for_baselines.items():
+
             data_for_date = self.data.loc[self.data['date'].isin(days_avg)]
             baseline_for_date = data_for_date.groupby(['time']).mean()
+
             if baselines_df is None:
                 baselines_df = pd.DataFrame(index=baseline_for_date.index)
+
             baselines_df[date] = baseline_for_date
+
         return baselines_df
+
+    def _calculate_baselines_dates(self, days_for_baselines):
+        baselines_df = None
+        baseline_full_date = pd.DataFrame()
+        for date, days_avg in days_for_baselines.items():
+
+            data_for_date = self.data.loc[self.data['date'].isin(days_avg)]
+            baseline_for_date = data_for_date.groupby(['time']).mean()
+
+            if baselines_df is None:
+                baselines_df = pd.DataFrame(index=baseline_for_date.index)
+            # baseline_full_date = None
+            if baseline_full_date is None:
+                # new_index = date + baseline_for_date.index
+
+                baseline_full_date = pd.DataFrame(index=pd.date_range(start=date, periods=24, freq='1H'))
+
+            baselines_df[date] = baseline_for_date
+            add = baseline_for_date
+            idx = pd.date_range(start=date, periods=24, freq='1H')
+            add['dtime'] = idx
+            add = add.set_index(['dtime'])
+            baseline_full_date = baseline_full_date.append(add)
+        return baseline_full_date
 
     def _get_original_lines(self, days_to_analyze):
         original_lines_df = None
