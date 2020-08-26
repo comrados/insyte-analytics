@@ -15,7 +15,7 @@ A_ARGS = {"analysis_code": "DEMAND_RESPONSE_BASELINE_APPLICABILITY",
           "analysis_name": ANALYSIS_NAME,
           "input": "1 time series",
           "action": "Checks the applicability of demand-response's baseline",
-          "output": "1 time series (6 values)",
+          "output": "1 time series",
           "mode": "rw",
           "parameters": [
               {"name": "target_day", "count": 1, "type": "DATE", "info": "target day for analysis"},
@@ -27,8 +27,8 @@ A_ARGS = {"analysis_code": "DEMAND_RESPONSE_BASELINE_APPLICABILITY",
                                                                           "rmse_none_applicability","rrmse_none_applicability",
                                                                           "rmse_all_applicability", "rrmse_all_applicability",
                                                                           "rmse_without_monday_applicability", "rrmse_without_monday_applicability",
-                                                                          ""
-                                                                          "", "rrmse_all_profile", "rrmse_none_profile",
+                                                                          "baseline_none", "baseline_all", "baseline_without_monday",
+                                                                          "rrmse_all_profile", "rrmse_none_profile",
                                                                           "rrmse_without_monday_profile", "min_rrmse"], "info": "Method for calculating"},
 
           ]}
