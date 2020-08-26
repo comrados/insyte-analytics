@@ -7,6 +7,8 @@ from analytics import utils
 Demand-response. Calculation of RRMSE between baseline and prediction/fact.
 """
 
+# without_monday и without_monday считать равнозначными
+
 CLASS_NAME = "DemandResponseBaselineApplicabilityAnalysis"
 ANALYSIS_NAME = "demand-response-baseline-applicability"
 A_ARGS = {"analysis_code": "DEMAND_RESPONSE_BASELINE_APPLICABILITY",
@@ -24,10 +26,10 @@ A_ARGS = {"analysis_code": "DEMAND_RESPONSE_BASELINE_APPLICABILITY",
               {"name": "method", "count": 1, "type": "SELECT", "options":["all_applicability","c_applicability",
                                                                           "rmse_none_applicability","rrmse_none_applicability",
                                                                           "rmse_all_applicability", "rrmse_all_applicability",
-                                                                          "rmse_last_working_applicability", "rrmse_last_working_applicability",
+                                                                          "rmse_without_monday_applicability", "rrmse_without_monday_applicability",
                                                                           ""
                                                                           "", "rrmse_all_profile", "rrmse_none_profile",
-                                                                          "rrmse_last_working_profile", "min_rrmse"], "info": "Method for calculating"},
+                                                                          "rrmse_without_monday_profile", "min_rrmse"], "info": "Method for calculating"},
 
           ]}
 
@@ -52,7 +54,8 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
             self.data = self._preprocess_df(data)
             res = self._analyze(None, None)
             # out = self._prepare_for_output(None, None, res)
-            # print(res)
+            print(data)
+            print(res)
             return res
         except Exception as err:
             self.logger.error(err)
@@ -87,38 +90,61 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
             # table 2
             baselines = self._calculate_baselines(days_for_baselines)
             pd_bs = self._calculate_baselines_dates(days_for_baselines)
+            # pd_bs = self._convert_df(baselines)
             original_lines = self._get_original_lines(days_to_analyze)
             modified_original_lines = self._get_only_adjustment_hours(original_lines)
             modified_baselines = self._get_only_adjustment_hours(baselines)
 
             # adjustment values
             adjustments_all = self._get_adjustments_all(baselines, original_lines)
-            adjustments_last_working = self._adjustments_remove_last_working(adjustments_all)
+            # adjustments_all = adjustments_all.tshift(1, freq='D')
+            # adjustments_all.index = adjustments_all.index + pd.DateOffset(days=1)
+            #
+            # adjustments_all.index = adjustments_all.index + datetime.timedelta(days=1)
+
+            print('podstr')
+            adjustments_all = self._reindex_date_add_one_day(adjustments_all)
+            print(adjustments_all)
+            adjustments_without_monday = self._adjustments_remove_without_monday(adjustments_all)
 
             # adjust baselines (with 0.8 < adj < 1.2 restrictions)
             adjusted_baselines_all = self._adjust_baseline(modified_baselines, adjustments_all)
-            adjusted_baselines_last_working = self._adjust_baseline(modified_baselines,
-                                                                    adjustments_last_working)
+
+            pd_adjusted_baselines_all = self._convert_df(self._adjust_baseline(modified_baselines, adjustments_all))
+            pd_adjusted_baselines_all = pd_bs.join(pd_adjusted_baselines_all)
+            pd_adjusted_baselines_all.columns = ['value_old', 'value']
+            pd_adjusted_baselines_all['value'].fillna((pd_adjusted_baselines_all['value_old']), inplace=True)
+            pd_adjusted_baselines_all = pd_adjusted_baselines_all.drop(['value_old'], axis=1)
+
+            adjusted_baselines_without_monday = self._adjust_baseline(modified_baselines,
+                                                                    adjustments_without_monday)
+
+            pd_adjusted_baselines_without_monday = self._convert_df(adjusted_baselines_without_monday)
+            pd_adjusted_baselines_without_monday = pd_bs.join(pd_adjusted_baselines_without_monday)
+            pd_adjusted_baselines_without_monday.columns = ['value_old', 'value']
+            pd_adjusted_baselines_without_monday['value'].fillna((pd_adjusted_baselines_without_monday['value_old']), inplace=True)
+            pd_adjusted_baselines_without_monday = pd_adjusted_baselines_without_monday.drop(['value_old'], axis=1)
+
 
             # calculate square errors
             error_none = modified_original_lines.sub(modified_baselines, fill_value=0.) ** 2
             error_all = modified_original_lines.sub(adjusted_baselines_all, fill_value=0.) ** 2
-            error_last_working = modified_original_lines.sub(adjusted_baselines_last_working, fill_value=0.) ** 2
+            error_without_monday = modified_original_lines.sub(adjusted_baselines_without_monday, fill_value=0.) ** 2
 
             # C, RMSE, RRMSE
             c = modified_original_lines.mean().mean()
 
             rmse_none = error_none.mean().mean() ** 0.5
             rmse_all = error_all.mean().mean() ** 0.5
-            rmse_last_working = error_last_working.mean().mean() ** 0.5
+            rmse_without_monday = error_without_monday.mean().mean() ** 0.5
 
             rrmse_none = rmse_none / c
             rrmse_all = rmse_all / c
-            rrmse_last_working = rmse_last_working / c
+            rrmse_without_monday = rmse_without_monday / c
 
             # return df
-            # values order: c, rmse_none, rrmse_none, rmse_all, rrmse_all, rmse_last_working, rrmse_last_working
-            res = [c, rmse_none, rrmse_none, rmse_all, rrmse_all, rmse_last_working, rrmse_last_working, pd_bs]
+            # values order: c, rmse_none, rrmse_none, rmse_all, rrmse_all, rmse_without_monday, rrmse_without_monday
+            res = [c, rmse_none, rrmse_none, rmse_all, rrmse_all, rmse_without_monday, rrmse_without_monday, pd_bs, pd_adjusted_baselines_all, pd_adjusted_baselines_without_monday]
 
             return res
         except Exception as err:
@@ -142,21 +168,39 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
         :return: output DataFrame
         """
         return {
-            'all_applicability': lambda: self._prepare_for_output(None, None, self._applicability(None, None)),
+            'all_applicability': lambda: self._prepare_for_output(None, None, self._applicability(None, None)[0:7]),
             'c_applicability': lambda: self._prepare_for_output(None, None, [self._applicability(None, None)[0]]),
             'rmse_none_applicability': lambda: self._prepare_for_output(None, None, [self._applicability(None, None)[1]]),
             'rrmse_none_applicability': lambda: self._prepare_for_output(None, None, [self._applicability(None, None)[2]]),
             'rmse_all_applicability': lambda: self._prepare_for_output(None, None, [self._applicability(None, None)[3]]),
             'rrmse_all_applicability': lambda: self._prepare_for_output(None, None, [self._applicability(None, None)[4]]),
-            'rmse_last_working_applicability': lambda: self._prepare_for_output(None, None, [self._applicability(None, None)[5]]),
-            'rrmse_last_working_applicability': lambda: self._prepare_for_output(None, None, [self._applicability(None, None)[6]]),
+            'rmse_without_monday_applicability': lambda: self._prepare_for_output(None, None, [self._applicability(None, None)[5]]),
+            'rrmse_without_monday_applicability': lambda: self._prepare_for_output(None, None, [self._applicability(None, None)[6]]),
             'baseline_none': lambda: self._applicability(None, None)[7],
+            'baseline_all': lambda: self._applicability(None, None)[8],
+            'baseline_without_monday': lambda: self._applicability(None, None)[9],
             'min_rrmse': lambda: self._prepare_for_output(None, None, self._min_rrmse(self._applicability(None, None))),
             'min_profile': lambda: self._min_profile(None, None, self._applicability(None, None)),
             'rrmse_all_profile': lambda: self._rrmse_all_profile(None, None, self._applicability(None, None)),
             'rrmse_none_profile': lambda: self._rrmse_none_profile(None, None, self._applicability(None, None)),
-            'rrmse_last_working_profile': lambda: self._rrmse_last_working_profile(None, None, self._applicability(None, None)),
+            'rrmse_without_monday_profile': lambda: self._rrmse_without_monday_profile(None, None, self._applicability(None, None)),
         }.get(p['method'][0], lambda: self._prepare_for_output(None, None, self._applicability(None, None)))()
+
+    def _reindex_date_add_one_day(self, df):
+        try:
+            new_indexes = []
+            new_index = df.index[0]
+            for elem in df.items():
+                new_index = new_index + datetime.timedelta(days= 7-new_index.weekday() if new_index.weekday()>3 else 1)
+                new_indexes.append(new_index)
+            ndf = pd.DataFrame(columns=['value'], index=df.index, data=df)
+            ndf['indexes'] = new_indexes
+            df['new_indexes'] = ndf['indexes']
+            ndf = ndf.set_index(['indexes'])
+        except Exception as err:
+                    self.logger.error("Error in _reindex_date_add_one_day: " + str(err))
+                    raise Exception("Error in _reindex_date_add_one_day: " + str(err))
+        return ndf
 
     def _min_profile(self, p, d, applicability):
         """
@@ -184,7 +228,7 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
         if min_rrmse == applicability[4]:
             return ["rrmse_all"]
         if min_rrmse == applicability[6]:
-            return ["rrmse_last_working"]
+            return ["rrmse_without_monday"]
 
     def _rrmse_none_profile(self, p, d, applicability):
         """
@@ -211,9 +255,9 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
 
         return profile
 
-    def _rrmse_last_working_profile(self, p, d, applicability):
+    def _rrmse_without_monday_profile(self, p, d, applicability):
         """
-        Return profile with rrmse_last_working.
+        Return profile with rrmse_without_monday.
         :return: output DataFrame
         """
         rrmse = [applicability[2],applicability[4], applicability[6]]
@@ -224,14 +268,54 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
 
         return profile
 
+    def _convert_df(self, df):
+        n_df = df.stack()
+        n_df = n_df.reset_index()
+        n_df['time'] = n_df.apply(lambda r : datetime.datetime.combine(r['level_1'],r['time']),1)
+        n_df = n_df.set_index(['time'])
+        n_df = n_df.drop(['level_1'], axis=1)
+        n_df.columns = ['value']
+        # n_df['time'] = pd.to_datetime(n_df['level_1'] + ' ' + n_df['time'])
+        return n_df
+
     def _get_only_adjustment_hours(self, full_lines):
         modified_lines = full_lines.iloc[self.adjustment_hours]
         return modified_lines
 
     def _adjust_baseline(self, baselines, adjustments):
         adjusted = baselines.copy()
-        for column in baselines.columns:
-            adjusted[column] = self._adjust(adjustments[column], adjusted[column])
+        try:
+            i = 0
+            for column in baselines.columns:
+                if (column in adjustments.index):
+                    adjustments_t = adjustments.T
+                    adjusted[column] = self._adjust(adjustments_t[column].values[0], adjusted[column])
+                    # if (adjustments_t[column].values[0] < 0):
+                    #     adjusted[column] = adjusted[column] * 0.8
+                    # else:
+                    #     adjusted[column] = adjusted[column] * 1.2
+
+                #     print(column)
+                #     print(adjustments.T)
+                #     print(adjusted)
+                #     n_adj = adjusted
+                #     n_adj[column] = adjustments.T[column]
+                #     print(n_adj)
+                #     adjusted2[column] = self._adjust(adjustments.T[column], adjusted[column])
+                # continue
+                # print('adjusted[column]')
+                # print(adjusted)
+                # print('adjustments[column]')
+                # print(adjustments)
+                # adjusted[column] = i
+                # i = i+1
+                # continue
+                # i = i+1
+                # if (i>1):
+                # adjusted[column] = self._adjust(adjustments_t[column].values[0], adjusted[column])
+        except Exception as err:
+                    self.logger.error("Error in _adjust_baseline: " + str(err))
+                    raise Exception("Error in _adjust_baseline: " + str(err))
         return adjusted
 
     def _get_adjustments_all(self, baselines, original_lines):
@@ -239,13 +323,13 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
         adj1 = original_lines.iloc[self.peak_hours[1]] - baselines.iloc[self.peak_hours[1]]
         return (adj0 + adj1) / 2
 
-    def _adjustments_remove_last_working(self, adjustments_all):
-        adj_last_working = adjustments_all.copy()
-        dates_index = adj_last_working.index
+    def _adjustments_remove_without_monday(self, adjustments_all):
+        adj_without_monday = adjustments_all.copy()
+        dates_index = adj_without_monday.index
         for date in dates_index.values:
             if self._is_previous_date_weekend_or_exception(date):
-                adj_last_working[date] = 0
-        return adj_last_working
+                adj_without_monday[date] = 0
+        return adj_without_monday
 
     def _preprocess_df(self, data):
         """
@@ -480,8 +564,8 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
             original_lines_df[day] = list(data_for_date[data_for_date.columns[0]])
         return original_lines_df
 
-    @staticmethod
-    def _adjust(a, b):
+    # @staticmethod
+    def _adjust(self, a, b):
         """
         Adjust according to the thresholds
 
@@ -489,18 +573,23 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
         :param b: base
         :return: adjusted values
         """
-        b_adj = b + a
+        try:
+            b_adj = b + a
 
-        b_high = b * 1.2
-        b_low = b * 0.8
+            b_high = b * 1.2
+            b_low = b * 0.8
 
-        flag = b_adj > b_high
+            flag = b_adj > b_high
 
-        b_adj[flag] = b_high[flag]
+            b_adj[flag] = b_high[flag]
 
-        flag = b_adj < b_low
+            flag = b_adj < b_low
 
-        b_adj[flag] = b_low[flag]
+            b_adj[flag] = b_low[flag]
+
+        except Exception as err:
+            self.logger.error("Error in _adjust: " + str(err))
+            raise Exception("Error in _adjust: " + str(err))
 
         return b_adj
 
