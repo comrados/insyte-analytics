@@ -103,10 +103,11 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
             # adjustments_all.index = adjustments_all.index + datetime.timedelta(days=1)
 
             print('podstr')
-            adjustments_all = self._reindex_date_add_one_day(adjustments_all)
             print(adjustments_all)
-            adjustments_without_monday = self._adjustments_remove_without_monday(adjustments_all)
 
+            adjustments_all = self._reindex_date_add_one_day(adjustments_all)
+            adjustments_without_monday = self._adjustments_remove_without_monday(adjustments_all)
+            print(adjustments_without_monday)
             # adjust baselines (with 0.8 < adj < 1.2 restrictions)
             adjusted_baselines_all = self._adjust_baseline(modified_baselines, adjustments_all)
 
@@ -290,29 +291,6 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
                 if (column in adjustments.index):
                     adjustments_t = adjustments.T
                     adjusted[column] = self._adjust(adjustments_t[column].values[0], adjusted[column])
-                    # if (adjustments_t[column].values[0] < 0):
-                    #     adjusted[column] = adjusted[column] * 0.8
-                    # else:
-                    #     adjusted[column] = adjusted[column] * 1.2
-
-                #     print(column)
-                #     print(adjustments.T)
-                #     print(adjusted)
-                #     n_adj = adjusted
-                #     n_adj[column] = adjustments.T[column]
-                #     print(n_adj)
-                #     adjusted2[column] = self._adjust(adjustments.T[column], adjusted[column])
-                # continue
-                # print('adjusted[column]')
-                # print(adjusted)
-                # print('adjustments[column]')
-                # print(adjustments)
-                # adjusted[column] = i
-                # i = i+1
-                # continue
-                # i = i+1
-                # if (i>1):
-                # adjusted[column] = self._adjust(adjustments_t[column].values[0], adjusted[column])
         except Exception as err:
                     self.logger.error("Error in _adjust_baseline: " + str(err))
                     raise Exception("Error in _adjust_baseline: " + str(err))
@@ -328,7 +306,7 @@ class DemandResponseBaselineApplicabilityAnalysis(Analysis):
         dates_index = adj_without_monday.index
         for date in dates_index.values:
             if self._is_previous_date_weekend_or_exception(date):
-                adj_without_monday[date] = 0
+                adj_without_monday.loc[adj_without_monday.index == date] = 0
         return adj_without_monday
 
     def _preprocess_df(self, data):
