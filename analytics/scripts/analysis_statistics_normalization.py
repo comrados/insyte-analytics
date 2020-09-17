@@ -15,7 +15,8 @@ A_ARGS = {"analysis_code": "NORMALIZATION",
           "mode": "rw",
           "parameters": [
               {"name": "min_value", "count": 1, "type": "FLOAT", "info": "lower bond"},
-              {"max_value": "beta", "count": 1, "type": "FLOAT", "info": "upper bond"}
+              {"name": "max_value", "count": 1, "type": "FLOAT", "info": "upper bond"}
+              # {"max_value": "beta", "count": 1, "type": "FLOAT", "info": "upper bond"}
           ]}
 
 

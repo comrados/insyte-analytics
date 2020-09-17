@@ -7,8 +7,6 @@ from analytics import utils
 Demand-response. Calculation of RRMSE between baseline and prediction/fact.
 """
 
-# without_monday и without_monday считать равнозначными
-
 CLASS_NAME = "DemandResponseBaselineApplicabilityAnalysis"
 ANALYSIS_NAME = "demand-response-baseline-applicability"
 A_ARGS = {"analysis_code": "DEMAND_RESPONSE_BASELINE_APPLICABILITY",
@@ -21,8 +19,8 @@ A_ARGS = {"analysis_code": "DEMAND_RESPONSE_BASELINE_APPLICABILITY",
               {"name": "target_day", "count": 1, "type": "DATE", "info": "target day for analysis"},
               {"name": "exception_days", "count": -1, "type": "DATE", "info": "days to exclude from analysis"},
               {"name": "except_weekends", "count": 1, "type": "BOOLEAN", "info": "except weekends from analysis"},
-              {"name": "peak_hours", "count": -1, "type": "INTEGER", "info": "array of planned peak hours"},
-              {"name": "adjustment_hours", "count": -1, "type": "INTEGER", "info": "array of adjustment hours"},
+              {"name": "peak_hours", "count": -1, "type": "ARRAY_OF_HOURS", "info": "array of planned peak hours"},
+              {"name": "adjustment_hours", "count": -1, "type": "ARRAY_OF_HOURS", "info": "array of adjustment hours"},
               {"name": "method", "count": 1, "type": "SELECT", "options":["all_applicability","c_applicability",
                                                                           "rmse_none_applicability","rrmse_none_applicability",
                                                                           "rmse_all_applicability", "rrmse_all_applicability",
