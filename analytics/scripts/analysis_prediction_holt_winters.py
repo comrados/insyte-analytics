@@ -19,7 +19,8 @@ A_ARGS = {"analysis_code": "PREDICTION-HOLT-WINTERS",
               {"name": "beta", "count": 1, "type": "FLOAT", "info": "trend hyperparameter"},
               {"name": "gamma", "count": 1, "type": "FLOAT", "info": "seasonality hyperparameter"},
               {"name": "season_length", "count": 1, "type": "INTEGER", "info": "season length"},
-              {"name": "n_predictions", "count": 1, "type": "INTEGER", "info": "number of predictions"}
+              {"name": "n_predictions", "count": 1, "type": "INTEGER", "info": "number of predictions"},
+              {"name": "scaling_factor", "count": 1, "type": "FLOAT", "info": "factor of confidence interval scaling"}
           ]}
 
 
