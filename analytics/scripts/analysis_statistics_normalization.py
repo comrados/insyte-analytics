@@ -13,6 +13,9 @@ A_ARGS = {"analysis_code": "NORMALIZATION",
           "action": "Normalizes the data (linear normalization)",
           "output": "N normalized time series",
           "mode": "rw",
+          "inputs_count": -1,
+          "outputs_count": -1,
+          "inputs_outputs_always_same_count": True,
           "parameters": [
               {"name": "min_value", "count": 1, "type": "FLOAT", "info": "lower bond"},
               {"max_value": "beta", "count": 1, "type": "FLOAT", "info": "upper bond"}

@@ -13,6 +13,9 @@ A_ARGS = {"analysis_code": "AUTOCORRELATION",
           "action": "Calculates autocorellation series for input data",
           "output": "1 time series (shorter length)",
           "mode": "rw",
+          "inputs_count": 1,
+          "outputs_count": 1,
+          "inputs_outputs_always_same_count": True,
           "parameters": [
               {"name": "step", "count": 1, "type": "INTEGER", "info": "autocorrelation shifting step"}
           ]}

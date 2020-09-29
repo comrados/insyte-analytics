@@ -16,6 +16,9 @@ A_ARGS = {"analysis_code": "PEAK_PREDICTION_STATISTICAL",
           "action": "Returns the probability of peak consumption hour for each given day (statistics based)",
           "output": "1 time series with predictions for given month",
           "mode": "w",
+          "inputs_count": 0,
+          "outputs_count": 1,
+          "inputs_outputs_always_same_count": False,
           "parameters": [
               {"name": "month", "count": 1, "type": "INTEGER", "info": "prediction month"},
               {"name": "year", "count": 1, "type": "INTEGER", "info": "prediction year"}
