@@ -1,0 +1,42 @@
+{
+  "db_io_parameters": {
+    "mode": "rw",
+    "result_id": [
+      "4ed9c780-06a2-402b-aa74-ef6e275295b7"
+    ],
+    "device_id": [
+      "dd2af57e-fb5f-4852-a947-61524470b6f1"
+    ],
+    "data_source_id": [
+      "166"
+    ],
+    "time_upload": [
+      "2019-03-01_00:00:00+0000",
+      "2019-03-31_23:59:59+0000"
+    ],
+    "limit": null
+  },
+  "analysis_parameters": {
+    "analysis": "prediction-holt-winters",
+    "analysis_arguments": {
+      "alpha": [
+        "1"
+      ],
+      "beta": [
+        "1"
+      ],
+      "gamma": [
+        "1"
+      ],
+      "season_length": [
+        "24"
+      ],
+      "n_predictions": [
+        "24"
+      ],
+      "scaling_factor": [
+        "1"
+      ]
+    }
+  }
+}

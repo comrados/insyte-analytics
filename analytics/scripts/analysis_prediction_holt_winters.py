@@ -14,12 +14,16 @@ A_ARGS = {"analysis_code": "PREDICTION-HOLT-WINTERS",
           "action": "Predicts future values and builds confidence interval",
           "output": "3 time series with predictions and 2 confidence intervals (lower and upper bonds)",
           "mode": "rw",
+          "inputs_count": 1,
+          "outputs_count": 3,
+          "inputs_outputs_always_same_count": False,
           "parameters": [
               {"name": "alpha", "count": 1, "type": "FLOAT", "info": "smoothing hyperparameter"},
               {"name": "beta", "count": 1, "type": "FLOAT", "info": "trend hyperparameter"},
               {"name": "gamma", "count": 1, "type": "FLOAT", "info": "seasonality hyperparameter"},
               {"name": "season_length", "count": 1, "type": "INTEGER", "info": "season length"},
-              {"name": "n_predictions", "count": 1, "type": "INTEGER", "info": "number of predictions"}
+              {"name": "n_predictions", "count": 1, "type": "INTEGER", "info": "number of predictions"},
+              {"name": "scaling_factor", "count": 1, "type": "FLOAT", "info": "factor of confidence interval scaling"}
           ]}
 
 

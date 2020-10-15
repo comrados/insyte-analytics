@@ -15,6 +15,9 @@ A_ARGS = {"analysis_code": "ELECTRICITYCOSTCALCULATION",
           "input": "1 time series",
           "action": "Calculates the cost of electricity in 6 categories",
           "output": "Dataframe with costs (double)",
+          "inputs_count": 1,
+          "outputs_count": 1,
+          "inputs_outputs_always_same_count": True,
           "parameters": [
               {"name": "method", "count": 1, "type": "SELECT", "options": ["one_category_*", "two_category_two_zones_*", "two_category_three_zones_*", "three_category_*", "four_category_*", "energy_storage", "peak_hours"],
                "info": "one_category - Calculation of cost for the first category"
