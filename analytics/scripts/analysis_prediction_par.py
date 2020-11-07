@@ -3,7 +3,6 @@ import os
 import datetime
 import pandas as pd
 import numpy as np
-import plotly.express as px
 from analytics.analysis import Analysis
 from padasip.filters.base_filter import AdaptiveFilter
 
