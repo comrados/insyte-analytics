@@ -50,4 +50,3 @@ Werkzeug==1.0.1
 wrapt==1.12.1
 xlrd==1.2.0
 padasip==1.1.1
-analytics==0.6.5
