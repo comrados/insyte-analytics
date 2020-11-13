@@ -129,12 +129,14 @@ class analysisPredictionPar(Analysis):
         try:
             p = self._parse_parameters(parameters)
             d = self._preprocess_df(data)
-            print(d)
+            # print(d)
             res = self._analyze(p, d)
+            res = res.set_index('date_time')
+            res = res.astype(float)
             # res = self._prepare_for_output(p, d, res)
 
             # pd.options.display.max_columns = 100
-            print(res)
+            # print(res)
             return res
         except Exception as err:
             self.logger.error(err)
@@ -187,15 +189,15 @@ class analysisPredictionPar(Analysis):
         data.columns = ['date_time', 'E_load_Wh']
         format_out = '%Y-%m-%d %H:%M:%S'
         data['date_time'] = data['date_time'].apply(lambda x: x.strftime(format_out))
-        print(datetime.timedelta(days=1))
+        # print(datetime.timedelta(days=1))
         data['date_time'] = pd.to_datetime(data['date_time'])
-        print((data['date_time'].iloc[-1].date()))
+        # print((data['date_time'].iloc[-1].date()))
         add_time = data['date_time'].iloc[-1]
         list_of_hours = []
         for i in range(24):
             add_time = add_time + datetime.timedelta(hours=1)
             list_of_hours.append(add_time)
-        print(list_of_hours)
+        # print(list_of_hours)
         # data = data.append(pd.DataFrame(list_of_hours, columns=['date_time']),ignore_index=True)
 
         data.set_index("date_time", inplace=True)
