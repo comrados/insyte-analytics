@@ -19,7 +19,6 @@ from db import InfluxServerIO
 def parse_args(args):
     """
     Arguments parser.
-
     :param args: arguments
     :return: Parsed arguments
     """
@@ -75,7 +74,6 @@ def parse_args(args):
 def init_logger(log_file, log_dir, log_level, log_gmt):
     """
     Initialize logger. Logging is thread safe.
-
     :param log_file: log file name
     :param log_dir: log directory
     :param log_level: logging level https://docs.python.org/3.7/library/logging.html#logging-levels
@@ -96,7 +94,6 @@ def init_logger(log_file, log_dir, log_level, log_gmt):
 def auto_update_analysis_functions(args, analysis_module):
     """
     Updates analysis functions with given frequency (if enabled)
-
     :param args: parsed args
     :param analysis_module: analysis module instance
     :return:
@@ -199,7 +196,6 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
     def _do_get_status(self, client):
         """
         GET 'status' request processor
-
         :param client: address
         """
         logger.info("GET 'status' request from " + client)
@@ -208,7 +204,6 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
     def _do_get_functions(self, client):
         """
         GET 'functions' request processor
-
         :param client: address
         """
         logger.info("GET 'functions' request from " + client)
@@ -217,7 +212,6 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
     def _do_get_update_analysis_functions(self, client):
         """
         GET 'update_analysis_functions' request processor
-
         :param client: address
         """
         logger.info("GET 'update_analysis_functions' request from " + client)
@@ -236,7 +230,6 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
     def _do_get_log(self, client):
         """
         GET 'functions' request processor
-
         :param client: address
         """
         logger.info("GET 'log' request from " + client)
@@ -351,7 +344,6 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
     def _check_reading_lengths(self, time_upload, device_id, data_source_id):
         """
         Checks if lengths of reading parameters equal
-
         :param time_upload: list of tuples of datetimes [(d_min1 d_max1), (d_min2 d_max2), ..., (d_minN d_maxN)]
         :param device_id: list of uuid objects [uuid1, uuid2, ..., uuidN]
         :param data_source_id: list of integers [id1, id2, ..., idN]
@@ -369,7 +361,6 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
     def _format_tu(time_upload):
         """
         Checks and reformats time upload argument.
-
         :param time_upload: list of upload times (strings) [d_min1, d_max1, d_min2, d_max2, ..., d_minN, d_maxN]
         :return: list of tuples of upload times (datetimes) [(d_min1 d_max1), (d_min2 d_max2), ..., (d_minN d_maxN)]
         """
@@ -394,7 +385,6 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
     def _check_write_parameters(result_id, output_data):
         """
         Check writing parameters
-
         :param result_id:
         :param output_data:
         :return:
@@ -418,7 +408,6 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
     def _get_status_msg():
         """
         Server's status wrapper
-
         :return: dictionary with status variables
         """
 
@@ -439,7 +428,7 @@ if __name__ == "__main__":
 
     # init logger
     logger = init_logger(a.log_file, a.log_dir, a.log_level, a.log_gmt)
-    logger.info("Server started: " + str(vars(a)))
+    logger.info("Server started")
 
     # init analytics server
     am = analytics.AnalyticsModule(a.srv_script_folders)
