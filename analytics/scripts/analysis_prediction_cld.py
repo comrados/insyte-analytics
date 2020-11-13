@@ -42,12 +42,14 @@ class analysisPredictionCld(Analysis):
         try:
             p = self._parse_parameters(parameters)
             d = self._preprocess_df(data)
-            print(d)
+            # print(d)
             res = self._analyze(p, d)
+            res = res.astype(float)
+
             # res = self._prepare_for_output(p, d, res)
 
             # pd.options.display.max_columns = 100
-            print(res)
+            # print(res)
             return res
         except Exception as err:
             self.logger.error(err)
@@ -82,6 +84,7 @@ class analysisPredictionCld(Analysis):
         self.logger.debug("Start analyze")
         try:
             date_list = self.create_unique_dates(self.separate_dt(d))
+            # print(date_list)
             return self.run_CLD(p, d, date_list[1])
 
         except Exception as err:
@@ -117,7 +120,7 @@ class analysisPredictionCld(Analysis):
             max_target_day = day_list[len(day_list) - 1] + datetime.timedelta(days=1)
             if (target_day > max_target_day):
                 self.logger.error("Target day outside of analysis")
-                return False;
+                return []
             condition1 = self.get_days(target_day, N_days * 7,
                                        weekend_flag=2)  # days - array of 3 previous  same days, e.i. 3 previous Mondays
             condition2 = self.get_NSP_days(condition1, N_days)  # a list of 3 values
