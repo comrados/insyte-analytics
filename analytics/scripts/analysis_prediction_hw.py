@@ -121,9 +121,9 @@ class analysisPredictionHW(Analysis):
         try:
             p = self._parse_parameters(parameters)
             d = self._preprocess_df(data)
-            print(d)
+            # print(d)
             res = self._analyze(p, d)
-            print(res)
+            # print(res)
             res = res.astype(float)
 
             # res = self._prepare_for_output(p, d, res)
@@ -219,7 +219,6 @@ class analysisPredictionHW(Analysis):
                 df['date_time'] = df.date_time + datetime.timedelta(days=1)
                 df.set_index('date_time', inplace=True)
                 return df.loc[df.index.date == target_day][['val_hw']]
-            print(len(day_list) - (max_target_day - target_day.date()).days)
             for k in range(copy_from, len(day_list)+1):  # why 508 instead of 522?
                 data = df['E_load_Wh'][(k - copy_from) * N:(k - 1) * N]
 
