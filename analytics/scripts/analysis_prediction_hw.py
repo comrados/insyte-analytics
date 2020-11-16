@@ -129,8 +129,8 @@ class analysisPredictionHW(Analysis):
             # res = self._prepare_for_output(p, d, res)
 
             # pd.options.display.max_columns = 100
-            print(res.round(1))
-            return res.round(1)
+            print(res.round(0))
+            return res.round(0)
         except Exception as err:
             self.logger.error(err)
             raise Exception(str(err))
