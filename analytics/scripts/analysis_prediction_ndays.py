@@ -43,14 +43,14 @@ class analysisPredictionNdays(Analysis):
         try:
             p = self._parse_parameters(parameters)
             d = self._preprocess_df(data)
-            print(d)
+            # print(d)
             res = self._analyze(p, d)
             res = res.astype(float)
 
             # res = self._prepare_for_output(p, d, res)
 
             # pd.options.display.max_columns = 100
-            print(res)
+            # print(res)
             return res
         except Exception as err:
             self.logger.error(err)
@@ -139,12 +139,18 @@ class analysisPredictionNdays(Analysis):
             b = self.get_base_value(df, condition2)
             c = self.get_last_day(df, condition2, N)
             a = self.get_correction(b, c)
+            # print(f'b {b}')
+            # print(f'c {c}')
+            # print(f'a {a}')
+
             copy_new_data = self.adjust(a, b)  # adjust (0.8*b < b_adj < 1.2*b)
             copy_new_data.reset_index(inplace=True)
             copy_new_data['date_time'] = copy_new_data['time'].apply(lambda x: datetime.datetime.combine(target_day, x))
             copy_new_data.set_index("date_time", inplace=True)
             copy_new_data.drop(['time'], axis=1, inplace=True)
             copy_new_data.columns = ['val_nd']
+            # print(f'copy_new_data {copy_new_data}')
+
             return copy_new_data
             # print(df[1899:1968])
 
@@ -209,8 +215,9 @@ class analysisPredictionNdays(Analysis):
 
     def get_last_day(self, df, condition2, N):  # get only previous day values
         temp = pd.DataFrame()
+        # print(f'condition2 {condition2}')
         for i in range(len(condition2)):
-            temp = df[df["date"].isin([condition2[i]])].copy()[["date", "time", "E_load_Wh"]]
+            temp = df[pd.to_datetime(df["date"]).isin([condition2[i]])].copy()[["date", "time", "E_load_Wh"]]
             if len(temp) == N:
                 break
         return temp.groupby(['time']).mean()
@@ -265,9 +272,14 @@ class analysisPredictionNdays(Analysis):
 
 
     def get_base_value(self, df, condition):
-        fitting_days_values = df[df["date"].isin(condition)].copy()[["date", "time", "E_load_Wh"]]
+        # print(f'df {df}')
+        # print(f'condition {condition}')
+        fitting_days_values = df[pd.to_datetime(df["date"]).isin(condition)].copy()[["date", "time", "E_load_Wh"]]
         result = fitting_days_values.groupby(["time"]).mean()  # group by 15 minutes intervals -
+        # print(f'result {result}')
         return result
 
 
     # rmse.RMSE_CALC(df, day_list, "val_cld", "val_cld"RMSE)
+
+# 2020-11-18 10:21:58.836 INFO analytics_server._content_to_json Thread-58 (140063009740544) JSON content: {'db_io_parameters': {'mode': 'rw', 'result_id': ['4966a9c1-6b8a-4a6a-ad86-c80337d5c2fc'], 'device_id': ['dd2af57e-fb5f-4852-a947-61524470b6f1'], 'data_source_id': ['166'], 'time_upload': ['2019-02-14_00:00:00+0000', '2019-04-01_23:59:59+0000'], 'limit': 'null'}, 'analysis_parameters': {'analysis': 'analysis-prediction-ndays', 'analysis_arguments': {'target_day': ['2019-03-31']}}}
