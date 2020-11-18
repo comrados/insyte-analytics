@@ -131,7 +131,6 @@ class analysisPredictionPar(Analysis):
             d = self._preprocess_df(data)
             # print(d)
             res = self._analyze(p, d)
-            res = res.set_index('date_time')
             res = res.astype(float)
             # res = self._prepare_for_output(p, d, res)
 
@@ -216,6 +215,13 @@ class analysisPredictionPar(Analysis):
             if (target_day > max_target_day):
                 self.logger.error("Target day outside of analysis")
                 return False;
+            delta_target_day = len(day_list) - (max_target_day - target_day.date()).days
+            if (len(day_list) < 3 or delta_target_day < 3):
+                df['val_par'] = df['E_load_Wh']
+                df.reset_index(inplace=True)
+                df['date_time'] = df['date_time'] + datetime.timedelta(days=1)
+                df.set_index('date_time', inplace=True)
+                return df.loc[df.index.date == target_day.date()][['val_par']]
             # RLS parameters
             num_par = 4  # number of alfa for AR model, a1,a2,a3,a4
             num_m = 3  # number of circles of the data calculations
@@ -231,7 +237,7 @@ class analysisPredictionPar(Analysis):
                     i = i + 1
                 num_s = i
                 num_s_max = i
-            N = len(df.loc[df.index.date == day_list[len(day_list) - 1]])
+            N = len(df.loc[df.index.date == day_list[len(day_list) - 2]])
             time_interval = 24/N * 60 #minutes
             day = 0  # day of the number of days used so far
             n_rls = 3
@@ -305,16 +311,13 @@ class analysisPredictionPar(Analysis):
                             y_estimate[t, day] = 0
 
                         w_list[N * day + t] = w[t]
-                    # print(f'LOAD_data[:, day]: {LOAD_data[:, day]}')
-                    # print(f'w: {w}')
+
                     if (day+1) % (num_s):
                         try:
                             y, e, w = filt.run(LOAD_data[:, day], y_before)
                         except:
                             pass
                     day = day + 1  # day keeps track of the total number of used day
-            print(f'day {day}')
-            print(f'y_estimate {y_estimate}')
             print("3rd out of 3 loops")
             add_time = target_day
             list_of_time = []
@@ -327,30 +330,12 @@ class analysisPredictionPar(Analysis):
                     add_time = add_time + datetime.timedelta(minutes=time_interval)
 
                 res = pd.DataFrame({'date_time': list_of_time, 'val_par': list_of_estimate})
+                res = res.set_index('date_time')
                 return res
             except Exception as err:
                 self.logger.error("Error in run_PAR (list): " + str(err))
                 raise Exception("Error in run_PAR (list): " + str(err))
-            print(list_of_estimate)
-            for i in range(len(day_list)):
-                copy_to_data = df[df["date"].isin([list(day_list)[i]])].copy()[
-                    ["date", "time", "E_load_Wh"]]
-                for j in range(len(copy_to_data)):
-                    l = copy_to_data.index[j]
-                    df.loc[l, 'val_par'] = float(y_estimate[j, i + (num_m - 1) * num_s])
 
-            # # rmse.RMSE_CALC(df, day_list, 'val_par', params.LFPARRMSE)
-            fig = px.bar(df, x=df.index, y='val_par',
-
-                         labels={'pop': 'population of Canada'}, height=400)
-            # # Here we modify the tickangle of the xaxis, resulting in rotated labels.
-            fig.update_layout(barmode='group', xaxis_tickangle=-45)
-            # fig.show()
-            print("END  PAR")
-            print(df)
-            # print(df.loc[df['val_par'] != 2000])
-            return (w_list)
-            # return copy_new_data
 
         except Exception as err:
             self.logger.error("Error in run_PAR: " + str(err))
