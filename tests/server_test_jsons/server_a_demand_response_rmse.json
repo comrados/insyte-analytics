@@ -1,0 +1,29 @@
+{
+  "db_io_parameters": {
+    "mode": "rw",
+    "result_id": [
+      "a17fe9b9-a1ca-44bb-97dd-3758a6044616"
+    ],
+    "device_id": [
+      "4f70fdc6-9cdd-4b1b-a963-dfa81a169301",
+      "4f70fdc6-9cdd-4b1b-a963-dfa81a169301"
+    ],
+    "data_source_id": [
+      682,
+      680
+    ],
+    "time_upload": [
+      "2020-10-01_00:00:00+0000",
+      "2020-11-18_23:59:00+0000",
+      "2020-10-01_00:00:00+0000",
+      "2020-11-18_23:59:00+0000"
+    ],
+    "limit": null
+  },
+  "analysis_parameters": {
+    "analysis": "analysis-demand-response-rmse",
+    "analysis_arguments": {
+
+    }
+  }
+}

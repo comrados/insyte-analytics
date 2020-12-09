@@ -1,0 +1,27 @@
+{
+  "db_io_parameters": {
+    "mode": "rw",
+    "result_id": [
+      "058baa14-5bc4-4ac0-99a4-670b5ea4ba9f"
+    ],
+    "device_id": [
+      "4bd52f97-2a69-4d50-a76c-7a4bae6c04ff"
+    ],
+    "data_source_id": [
+      744
+    ],
+    "time_upload": [
+      "2020-09-28_00:00:00+0000",
+      "2020-11-12_23:59:59+0000"
+    ],
+    "limit": null
+  },
+  "analysis_parameters": {
+    "analysis": "analysis-prediction-hw",
+    "analysis_arguments": {
+      "target_day": [
+       "2020-11-12"
+     ]
+    }
+  }
+}

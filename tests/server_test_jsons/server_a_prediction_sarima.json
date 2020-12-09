@@ -1,0 +1,27 @@
+{
+  "db_io_parameters": {
+    "mode": "rw",
+    "result_id": [
+      "a17fe9b9-a1ca-44bb-97dd-3758a6044616"
+    ],
+    "device_id": [
+      "4bd52f97-2a69-4d50-a76c-7a4bae6c04ff"
+    ],
+    "data_source_id": [
+      744
+    ],
+    "time_upload": [
+      "2020-10-01_00:00:00+0000",
+      "2020-11-18_23:59:00+0000"
+    ],
+    "limit": null
+  },
+  "analysis_parameters": {
+    "analysis": "analysis-prediction-sarima",
+    "analysis_arguments": {
+      "target_day": [
+       "2020-11-12"
+     ]
+    }
+  }
+}
