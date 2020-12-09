@@ -8,23 +8,23 @@ from analytics.analysis import Analysis
 RMSE function.
 """
 
-CLASS_NAME = "analysisDemandResponseRMSE"
-ANALYSIS_NAME = "analysis-demand-response-rmse"
-A_ARGS = {"analysis_code": "ANALYSISDEMANDRESPONSERMSE",
+CLASS_NAME = "analysisDemandResponseRMSEScalar"
+ANALYSIS_NAME = "analysis-demand-response-rmse-scalar"
+A_ARGS = {"analysis_code": "ANALYSISDEMANDRESPONSERMSESCALAR",
           "analysis_name": ANALYSIS_NAME,
-          "input": "2 time series",
+          "input": "1 time series",
           "action": "RMSE",
-          "output": "1 time series",
+          "output": "1 float",
           "inputs_count": 2,
           "outputs_count": 1,
-          "inputs_outputs_always_same_count": True,
+          "inputs_outputs_always_same_count": False,
           "mode": "rw",
           "parameters": [
 
           ]}
 
 
-class analysisDemandResponseRMSE(Analysis):
+class analysisDemandResponseRMSEScalar(Analysis):
     logger = logging.getLogger(os.path.split(__file__)[1])
 
     def __init__(self):
@@ -93,24 +93,14 @@ class analysisDemandResponseRMSE(Analysis):
         For example, average of the 3 previous mondays"""
         self.logger.debug("START RMSE")
         try:
-            if len(df1) != len(df2):
-                self.logger.error("Different input data lengths")
-                raise Exception("Different input data lengths")
-            df1["RMSE_calc"] = 0  # the column with the error in the df is initialized with 0s
-            for i in range(len(day_list)):
-                copy1 = df1[df1["date"].isin([list(day_list)[i]])].copy()[["date", "time", "value"]]
-                copy2 = df2[df2["date"].isin([list(day_list)[i]])].copy()[["date", "time", "value"]]
-                x1 = np.zeros((len(copy1)))
-                x2 = np.zeros((len(copy2)))
 
-                for j in range(len(copy1)):
-                    x1[j] = copy1.loc[copy1.index[j], "value"]
-                    x2[j] = copy2.loc[copy2.index[j], "value"]
-
-                rmse = pa.misc.RMSE(x1, x2)
-                for j in range(len(copy1)):
-                    df1.loc[copy1.index[j], "RMSE_calc"] = rmse
-            return df1[["RMSE_calc"]]
+            x1= df1["value"]
+            x2= df2["value"]
+            rmse = pa.misc.RMSE(x1, x2)
+            start_date = df1.index[0]
+            df = pd.DataFrame(data={'val_rmse': [rmse]}, index=pd.date_range(start=start_date, end=start_date))
+            return df
+            # return df1[["RMSE_calc"]]
 
         except Exception as err:
             self.logger.error("Error in run_RMSE: " + str(err))
