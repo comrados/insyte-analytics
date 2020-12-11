@@ -12,7 +12,7 @@ CLASS_NAME = "analysisDemandResponseRMSEScalar"
 ANALYSIS_NAME = "analysis-demand-response-rmse-scalar"
 A_ARGS = {"analysis_code": "ANALYSISDEMANDRESPONSERMSESCALAR",
           "analysis_name": ANALYSIS_NAME,
-          "input": "1 time series",
+          "input": "2 time series",
           "action": "RMSE",
           "output": "1 float",
           "inputs_count": 2,
