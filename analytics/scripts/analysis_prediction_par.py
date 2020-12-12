@@ -3,6 +3,7 @@ import os
 import datetime
 import pandas as pd
 import numpy as np
+import sys
 from analytics.analysis import Analysis
 from padasip.filters.base_filter import AdaptiveFilter
 
@@ -129,13 +130,13 @@ class analysisPredictionPar(Analysis):
         try:
             p = self._parse_parameters(parameters)
             d = self._preprocess_df(data)
-            # print(d)
+            print(d)
             res = self._analyze(p, d)
             res = res.astype(float)
             # res = self._prepare_for_output(p, d, res)
 
             # pd.options.display.max_columns = 100
-            # print(res)
+            print(res)
             return res
         except Exception as err:
             self.logger.error(err)
@@ -224,7 +225,7 @@ class analysisPredictionPar(Analysis):
                 return df.loc[df.index.date == target_day.date()][['val_par']]
             # RLS parameters
             num_par = 4  # number of alfa for AR model, a1,a2,a3,a4
-            num_m = 3  # number of circles of the data calculations
+            num_m = 10  # number of circles of the data calculations
             # print(f'inxd {day_list.index(target_day)}')
             if (target_day == max_target_day):
                 num_s = day_list.index(day_list[len(day_list) - 1])+2
@@ -270,8 +271,8 @@ class analysisPredictionPar(Analysis):
                     # 1566 columns in LOAD_data means each day is taken three times
                     # 96 rows in LOAD_data means all instances of the day are taken
                     # LOAD_data[:,0] and LOAD_data[:,522]) are identical
+            filt = False
             filt = FilterRLS(4, mu=0.999, eps=1e-8)  # method of weights optimization
-
             print("2nd out of 3 loops")
             for m in range(num_m):  # multiple passes through the same data
                 for s in range(0, num_s):  # for each available day in the data
@@ -315,6 +316,7 @@ class analysisPredictionPar(Analysis):
                     if (day+1) % (num_s):
                         try:
                             y, e, w = filt.run(LOAD_data[:, day], y_before)
+                            # print(w)
                         except:
                             pass
                     day = day + 1  # day keeps track of the total number of used day
