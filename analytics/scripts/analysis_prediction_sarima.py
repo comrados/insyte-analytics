@@ -129,7 +129,7 @@ class analysisPredictionSarima(Analysis):
 
             if (len(day_list) >= 14):
                 copy_from = 2 * 7   # start after this day
-            if (len(day_list) >= 7):
+            if (len(day_list) >= 7 & len(day_list) < 14):
                 copy_from = 7   # start after this day
             delta_target_day = len(day_list) - (max_target_day - target_day.date()).days
             if (len(day_list) < 7 or delta_target_day < 7):
@@ -153,25 +153,12 @@ class analysisPredictionSarima(Analysis):
             model = sm.tsa.statespace.SARIMAX(train["E_load_Wh"], order=(p, d, q), seasonal_order=(P, D, Q, S)).fit(
                 disp=-1)
             # print('Обучена')
-            pred_data = model.predict(len(train), len(train) + N - 1, dynamic=True)
+            pred_data = model.predict(len(train)-N, len(train) + N - 1 + N, dynamic=True)
             pred_data = pd.DataFrame({'date_time': pred_data.index, 'val_sarima': pred_data.values})
             pred_data.set_index('date_time', inplace = True)
+            return pred_data.loc[pred_data.index.date == target_day][['val_sarima']]
             # pred_data = pd.DataFrame(data=pred_data, columns=['val_sarima'])
             # print(pred_data)
-            return pred_data
-            # for i in range(copy_from, copy_from + 150):  # There are few bugs with data in a 421-429 range
-            #     temp = pd.DataFrame(df["E_load_Wh"][(i - 14) * 48:(i - 1) * 48])
-            #
-            #
-            #     # print(i/len(day_list)*100)
-            #
-            #     pred_data = model.predict(len(temp), len(temp) + 48, dynamic=True)
-            #     copy_to_data = df[df["date"].isin([list(day_list)[i]])].copy()[["date", "time", "E_load_Wh"]]
-            #     for j in range(0, len(copy_to_data)):
-            #         l = copy_to_data.index[j]
-            #         if (pred_data[j] > 0):
-            #             df.loc[l, 'val_sarima'] = pred_data[j]
-
 
         except Exception as err:
                 self.logger.error("Error in run_SARIMA: " + str(err))
