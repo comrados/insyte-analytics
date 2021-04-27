@@ -37,7 +37,11 @@ A_ARGS = {"analysis_code": "ELECTRICITYCOSTCALCULATION",
                "info": "auto"
                        "manual - with time_return_energy_storage"
                },
-              {"name": "capacity_energy_storage", "count": 1, "type": "FLOAT",
+              {"name": "data_type", "count": 1, "type": "SELECT", "options": ["current", "power"],
+                "info": "current"
+                       "power - default"
+               },
+               {"name": "capacity_energy_storage", "count": 1, "type": "FLOAT",
                "info": "Capacity, kW*h"
                },
               {"name": "region", "count": 1, "type": "SELECT", "options": REGIONS,
