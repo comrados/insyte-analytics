@@ -3,6 +3,7 @@ import datetime
 import pandas as pd
 import requests
 import math
+import re
 from bs4 import BeautifulSoup
 
 
@@ -84,7 +85,7 @@ class ElectricityCostCalculationAnalysis(Analysis):
         """
         try:
             p = self._parse_parameters(parameters)
-            d = self._preprocess_df(data)
+            d = self._preprocess_df(data, p)
             res = self._analyze(p, d)
             # pd.options.display.max_columns = 100
             # print(res)
@@ -93,7 +94,7 @@ class ElectricityCostCalculationAnalysis(Analysis):
             self.logger.error(err)
             raise Exception(str(err))
 
-    def _preprocess_df(self, data):
+    def _preprocess_df(self, data, p):
         """
         Preprocesses DataFrame
 
@@ -108,12 +109,86 @@ class ElectricityCostCalculationAnalysis(Analysis):
                 dat = data.fillna(0.)
                 new_data = dat.rename_axis('time').reset_index()
                 new_data.columns = ['time', 'value']
+                # new_data['time'] = new_data['time'].apply(lambda x:
+                #                                           datetime.datetime.strptime(str(x), '%Y-%m-%d %H:%M:%S.%f+00:00'))
                 new_data['time'] = new_data['time'].apply(lambda x:
-                                                          datetime.datetime.strptime(str(x), '%Y-%m-%d %H:%M:%S+00:00'))
+                                                          self._clean_date(x))
+                new_data['time'] = pd.to_datetime(new_data.time, format='%Y-%m-%d %H:%M:%S')
+                print(new_data)
+                if p['data_type'] == "current":
+                    new_data = self._preprocess_df_current(new_data)
+                else:
+                    new_data = self._preprocess_df_power(new_data)
             else:
                 raise Exception("DataFrame is None")
             self.logger.debug("DataFrame preprocessed")
             return new_data
+        except Exception as err:
+            self.logger.error("Failed to preprocess DataFrame: " + str(err))
+            raise Exception("Failed to preprocess DataFrame: " + str(err))
+
+    def _clean_date(self, x):
+        try:
+            first_match = re.search(r'\d{4}(-|\/)\d{2}(-|\/)\d{2} ([0-1]\d|2[0-3])(:[0-5]\d){2}', str(x))
+            # first_match = re.search('2019', str(x))
+            if first_match:
+                return first_match.group()
+
+        except Exception as err:
+            self.logger.error("Failed to _clean_date: " + str(err))
+            raise Exception("Failed to _clean_date: " + str(err))
+
+    def _preprocess_df_current(self, data):
+        """
+        Convert DataFrame to Power/hour
+        """
+        self.logger.debug("Preprocessing DataFrame")
+        try:
+            # Fill NaNs
+            if data is not None:
+                if data.empty:
+                    raise Exception("Empty DataFrame")
+                # print(pd.to_datetime(new_data.time).dt.minute)
+                ndf = data.groupby(pd.Grouper(key="time", freq="1H")).count()
+                ndf.columns = ['count_val']
+                ndf['sum_val'] = data.groupby(pd.Grouper(key="time", freq="1H")).sum()
+                voltage = 230
+                ndf['sum_power'] = ndf.sum_val * voltage/ndf.count_val
+                ndf.reset_index(inplace=True)
+                ndf.rename(columns={'sum_power': 'value', 'index': 'time'},
+                                     inplace=True)
+                print(ndf)
+                return ndf[['time', 'value']]
+            else:
+                raise Exception("DataFrame is None")
+            self.logger.debug("DataFrame preprocessed")
+        except Exception as err:
+            self.logger.error("Failed to preprocess DataFrame: " + str(err))
+            raise Exception("Failed to preprocess DataFrame: " + str(err))
+
+    def _preprocess_df_power(self, data):
+        """
+        Convert DataFrame to Power/hour
+        """
+        self.logger.debug("Preprocessing DataFrame")
+        try:
+            # Fill NaNs
+            if data is not None:
+                if data.empty:
+                    raise Exception("Empty DataFrame")
+                # print(pd.to_datetime(new_data.time).dt.minute)
+                ndf = data.groupby(pd.Grouper(key="time", freq="1H")).count()
+                ndf.columns = ['count_val']
+                ndf['sum_val'] = data.groupby(pd.Grouper(key="time", freq="1H")).sum()
+                ndf['sum_power'] = ndf.sum_val/ndf.count_val
+                ndf.reset_index(inplace=True)
+                ndf.rename(columns={'sum_power': 'value', 'index': 'time'},
+                                     inplace=True)
+                print(ndf)
+                return ndf[['time', 'value']]
+            else:
+                raise Exception("DataFrame is None")
+            self.logger.debug("DataFrame preprocessed")
         except Exception as err:
             self.logger.error("Failed to preprocess DataFrame: " + str(err))
             raise Exception("Failed to preprocess DataFrame: " + str(err))
@@ -146,6 +221,7 @@ class ElectricityCostCalculationAnalysis(Analysis):
         self.logger.debug("Parsing parameters")
         try:
             pn = {'method': self._check_method(parameters),
+                  'data_type': self._check_data_type(parameters),
                     'region': self._check_region(parameters),
                     'retailer': self._check_retailer(parameters),
                     'all':parameters
@@ -324,6 +400,18 @@ class ElectricityCostCalculationAnalysis(Analysis):
         except Exception as err:
             self.logger.debug("Wrong parameter 'method': " + str(parameters['method']) + " " + str(err))
             raise Exception("Wrong parameter 'method': " + str(parameters['method']) + " " + str(err))
+
+    def _check_data_type(self, parameters):
+        """
+        Checks 'method' parameter
+        """
+        try:
+            data_type = parameters['data_type'][0]
+            if data_type not in ["current", "power"]:
+                data_type = "power"
+            return data_type
+        except Exception:
+            return "power"
 
     def _check_float(self, x):
         """
@@ -947,6 +1035,7 @@ class ElectricityCostCalculationAnalysis(Analysis):
     def _three_category(self, p, d, type_val):
         """
         Calculates the total cost for 3 price categories
+        :param p:
         :param p:
         :param d:
         :return df: DataFrame with result
