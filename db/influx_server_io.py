@@ -28,7 +28,7 @@ class InfluxServerIO:
         try:
             self.logger.debug("Connecting to DB")
 
-            self.client = DataFrameClient(self.host, self.port, self.username, self.password, self.database, timeout=2)
+            self.client = DataFrameClient(self.host, self.port, self.username, self.password, self.database, timeout=4)
             self.client.ping()
 
             self.logger.debug("DB Connection set")
