@@ -28,7 +28,7 @@ class InfluxServerIO:
         try:
             self.logger.debug("Connecting to DB")
 
-            self.client = DataFrameClient(self.host, self.port, self.username, self.password, self.database, timeout=1)
+            self.client = DataFrameClient(self.host, self.port, self.username, self.password, self.database, timeout=2)
             self.client.ping()
 
             self.logger.debug("DB Connection set")
@@ -53,12 +53,10 @@ class InfluxServerIO:
     def read_data(self, device_id=None, data_source_id=None, time_upload=None, limit=None):
         """
         Read data from db according to object's parameters.
-
         :param device_id: list of ids [uuid1, uuid2, ..., uuidN]
         :param data_source_id: list of ids [id1, id2, ..., idN]
         :param time_upload: list of tuples of dates [(d_min1 d_max1), (d_min2 d_max2), ..., (d_minN d_maxN)]
         :param limit: retrieved data rows limit
-
         :return: list of queries results
         """
         results = pd.DataFrame()
@@ -105,10 +103,8 @@ class InfluxServerIO:
     def write_data(self, result_id=None, output_data=None):
         """
         Write data from this object to db.
-
         :param result_id: list of ids [uuid1, uuid2, ..., uuidK]
         :param output_data: DataFrame
-
         :return: list of result objects
         """
         self.logger.debug("Writing data")

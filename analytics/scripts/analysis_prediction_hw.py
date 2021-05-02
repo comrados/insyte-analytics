@@ -121,15 +121,16 @@ class analysisPredictionHW(Analysis):
         try:
             p = self._parse_parameters(parameters)
             d = self._preprocess_df(data)
-            # print(d)
+            # print("Входные данные:")
+            # print(data)
             res = self._analyze(p, d)
             # print(res)
             res = res.astype(float)
-
+            # print("Результат программы:")
+            # print(res.round(0))
             # res = self._prepare_for_output(p, d, res)
 
             # pd.options.display.max_columns = 100
-            print(res.round(0))
             return res.round(0)
         except Exception as err:
             self.logger.error(err)
@@ -185,8 +186,32 @@ class analysisPredictionHW(Analysis):
         # format_in = '%Y-%m-%d %H:%M:%S+00:00'
         data['date_time'] = data['date_time'].apply(lambda x: x.strftime(format_out))
         data['date_time'] = pd.to_datetime(data['date_time'])
-        data.set_index("date_time", inplace=True)
+        # data.set_index("date_time", inplace=True)
+        data = self._preprocess_df_power(data)
         return data
+
+    def _preprocess_df_power(self, data):
+        """
+        Convert DataFrame to Power/hour
+        """
+        try:
+            # Fill NaNs
+            if data is not None:
+                if data.empty:
+                    raise Exception("Empty DataFrame")
+                ndf = data.groupby(pd.Grouper(key="date_time", freq="1H")).count()
+                ndf.columns = ['count_val']
+                ndf['sum_val'] = data.groupby(pd.Grouper(key="date_time", freq="1H")).sum()
+                ndf['sum_power'] = ndf.sum_val / ndf.count_val
+                # ndf.reset_index(inplace=True)
+                ndf.rename(columns={'sum_power': 'E_load_Wh'},
+                           inplace=True)
+                return ndf[['E_load_Wh']]
+            else:
+                raise Exception("DataFrame is None")
+        except Exception as err:
+            self.logger.error("Failed to preprocess DataFrame: " + str(err))
+            raise Exception("Failed to preprocess DataFrame: " + str(err))
 
     def run_HW(self, p, df, day_list):
         """ Forecasting LOAD by Holt Winters Method """
@@ -197,15 +222,16 @@ class analysisPredictionHW(Analysis):
             gamma_final = 0
             e_list = []
             N = len(df.loc[df.index.date == day_list[len(day_list) - 2]])
-            target_day = pd.to_datetime(p['target_day'], errors='ignore')
+            format_out = '%Y-%m-%d'
+            target_day = datetime.datetime.strptime(p['target_day'], format_out)
             max_target_day = day_list[len(day_list) - 1] + datetime.timedelta(days=1)
-            if (target_day > max_target_day):
+            if (target_day.date() > max_target_day):
                 self.logger.error("Target day outside of analysis")
                 return False
-            if (target_day < max_target_day):
-                target_k = day_list.index(target_day)
+            if (target_day.date() < max_target_day):
+                target_k = day_list.index(target_day.date())
             else:
-                if (target_day == max_target_day):
+                if (target_day.date() == max_target_day):
                     target_k = len(day_list)
 
             if (len(day_list) >= 14):
@@ -218,7 +244,7 @@ class analysisPredictionHW(Analysis):
                 df.reset_index(inplace=True)
                 df['date_time'] = df.date_time + datetime.timedelta(days=1)
                 df.set_index('date_time', inplace=True)
-                return df.loc[df.index.date == target_day][['val_hw']]
+                return df.loc[df.index.date == target_day.date()][['val_hw']]
             for k in range(copy_from, len(day_list)+1):  # why 508 instead of 522?
                 data = df['E_load_Wh'][(k - copy_from) * N:(k - 1) * N]
 
@@ -232,9 +258,9 @@ class analysisPredictionHW(Analysis):
                 model = HoltWinters(data, slen=N, alpha=alpha_final, beta=beta_final, gamma=gamma_final, n_preds=N,
                                     scaling_factor=2.56)
                 model.triple_exponential_smoothing()
-                copy_to_data = df[df['date'].isin([list(day_list)[k-1]])].copy()[['date', 'time']]
+                copy_to_data = df[df['date'].isin([list(day_list)[k-2]])].copy()[['date', 'time']]
                 copy_to_data.reset_index(inplace=True)
-                copy_to_data['date_time'] = copy_to_data.date_time + datetime.timedelta(days=1)
+                copy_to_data['date_time'] = copy_to_data.date_time + datetime.timedelta(days=2)
                 copy_to_data.set_index('date_time', inplace=True)
 
                 for j in range(len(copy_to_data)):

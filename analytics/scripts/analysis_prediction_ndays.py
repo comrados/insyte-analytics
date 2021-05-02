@@ -42,15 +42,17 @@ class analysisPredictionNdays(Analysis):
         """
         try:
             p = self._parse_parameters(parameters)
+            # print("Входные данные:")
+            # print(data)
             d = self._preprocess_df(data)
-            # print(d)
+
             res = self._analyze(p, d)
             res = res.astype(float)
-
+            # print("Результат программы:")
+            # print(res)
             # res = self._prepare_for_output(p, d, res)
 
             # pd.options.display.max_columns = 100
-            # print(res)
             return res
         except Exception as err:
             self.logger.error(err)
@@ -106,8 +108,35 @@ class analysisPredictionNdays(Analysis):
         # format_in = '%Y-%m-%d %H:%M:%S+00:00'
         data['date_time'] = data['date_time'].apply(lambda x: x.strftime(format_out))
         data['date_time'] = pd.to_datetime(data['date_time'])
-        data.set_index("date_time", inplace=True)
+        data = self._preprocess_df_power(data)
+        # data.set_index("date_time", inplace=True)
         return data
+
+    def _preprocess_df_power(self, data):
+        """
+        Convert DataFrame to Power/hour
+        """
+        self.logger.debug("Preprocessing DataFrame")
+        try:
+            # Fill NaNs
+            if data is not None:
+                if data.empty:
+                    raise Exception("Empty DataFrame")
+                # print(pd.to_datetime(new_data.time).dt.minute)
+                ndf = data.groupby(pd.Grouper(key="date_time", freq="1H")).count()
+                ndf.columns = ['count_val']
+                ndf['sum_val'] = data.groupby(pd.Grouper(key="date_time", freq="1H")).sum()
+                ndf['sum_power'] = ndf.sum_val / ndf.count_val
+                # ndf.reset_index(inplace=True)
+                ndf.rename(columns={'sum_power': 'E_load_Wh'},
+                           inplace=True)
+                return ndf[['E_load_Wh']]
+            else:
+                raise Exception("DataFrame is None")
+            self.logger.debug("DataFrame preprocessed")
+        except Exception as err:
+            self.logger.error("Failed to preprocess DataFrame: " + str(err))
+            raise Exception("Failed to preprocess DataFrame: " + str(err))
 
     def run_ND(self, p, df, day_list, avg_day):
         """ Forecasting LOAD by Coping previous day depending on day position in a week
@@ -118,7 +147,8 @@ class analysisPredictionNdays(Analysis):
             df['val_nd'] = 0
             N_days = 10
             copy_from = N_days  # start from the N day in days list
-            target_day = pd.to_datetime(p['target_day'], errors='ignore')
+            format_out = '%Y-%m-%d'
+            target_day = datetime.datetime.strptime(p['target_day'], format_out).date() # pd.to_datetime(p['target_day'], errors='ignore')
             max_target_day = day_list[len(day_list) - 1] + datetime.timedelta(days=1)
             if (target_day > max_target_day):
                 self.logger.error("Target day outside of analysis")
@@ -139,17 +169,12 @@ class analysisPredictionNdays(Analysis):
             b = self.get_base_value(df, condition2)
             c = self.get_last_day(df, condition2, N)
             a = self.get_correction(b, c)
-            # print(f'b {b}')
-            # print(f'c {c}')
-            # print(f'a {a}')
-
             copy_new_data = self.adjust(a, b)  # adjust (0.8*b < b_adj < 1.2*b)
             copy_new_data.reset_index(inplace=True)
             copy_new_data['date_time'] = copy_new_data['time'].apply(lambda x: datetime.datetime.combine(target_day, x))
             copy_new_data.set_index("date_time", inplace=True)
             copy_new_data.drop(['time'], axis=1, inplace=True)
             copy_new_data.columns = ['val_nd']
-            # print(f'copy_new_data {copy_new_data}')
 
             return copy_new_data
             # print(df[1899:1968])
@@ -181,7 +206,7 @@ class analysisPredictionNdays(Analysis):
         try:
             last_N_days = []
             for day in condition:
-                if day.date() in avg_day.index:
+                if day in avg_day.index:
                     last_N_days.append(day)
                     if len(last_N_days) == n_days:
                         break
@@ -196,8 +221,8 @@ class analysisPredictionNdays(Analysis):
         try:
             some_days = []
             for day in condition:
-                if day.date() in avg_day.index:
-                    if avg_day[column][day.date()] >= last_N_days_mean * value:  # check the consumption, it should be more that 50% of mean from prev N days
+                if day in avg_day.index:
+                    if avg_day[column][day] >= last_N_days_mean * value:  # check the consumption, it should be more that 50% of mean from prev N days
                         some_days.append(day)
                 if len(some_days) >= n_days:
                     return some_days

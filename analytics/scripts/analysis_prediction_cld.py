@@ -41,15 +41,17 @@ class analysisPredictionCld(Analysis):
         """
         try:
             p = self._parse_parameters(parameters)
+            # print("Входные данные:")
+            # print(data)
             d = self._preprocess_df(data)
-            # print(d)
             res = self._analyze(p, d)
+            # print("Результат программы:")
+            # print(res)
             res = res.astype(float)
 
             # res = self._prepare_for_output(p, d, res)
 
             # pd.options.display.max_columns = 100
-            # print(res)
             return res
         except Exception as err:
             self.logger.error(err)
@@ -105,8 +107,35 @@ class analysisPredictionCld(Analysis):
         # format_in = '%Y-%m-%d %H:%M:%S+00:00'
         data['date_time'] = data['date_time'].apply(lambda x: x.strftime(format_out))
         data['date_time'] = pd.to_datetime(data['date_time'])
-        data.set_index("date_time", inplace=True)
+        data = self._preprocess_df_power(data)
+        # data.set_index("date_time", inplace=True)
         return data
+
+    def _preprocess_df_power(self, data):
+        """
+        Convert DataFrame to Power/hour
+        """
+        self.logger.debug("Preprocessing DataFrame")
+        try:
+            # Fill NaNs
+            if data is not None:
+                if data.empty:
+                    raise Exception("Empty DataFrame")
+                # print(pd.to_datetime(new_data.time).dt.minute)
+                ndf = data.groupby(pd.Grouper(key="date_time", freq="1H")).count()
+                ndf.columns = ['count_val']
+                ndf['sum_val'] = data.groupby(pd.Grouper(key="date_time", freq="1H")).sum()
+                ndf['sum_power'] = ndf.sum_val/ndf.count_val
+                # ndf.reset_index(inplace=True)
+                ndf.rename(columns={'sum_power': 'E_load_Wh'},
+                                     inplace=True)
+                return ndf[['E_load_Wh']]
+            else:
+                raise Exception("DataFrame is None")
+            self.logger.debug("DataFrame preprocessed")
+        except Exception as err:
+            self.logger.error("Failed to preprocess DataFrame: " + str(err))
+            raise Exception("Failed to preprocess DataFrame: " + str(err))
 
     def run_CLD(self, p, df, day_list):
         """ Forecasting LOAD by Coping previous day depending on day position in a week
@@ -116,7 +145,8 @@ class analysisPredictionCld(Analysis):
         try:
             N_days = 3  # number of days to look back and copy
             # copy_from = N_days * 7  # start from the 21st day in days list
-            target_day = pd.to_datetime(p['target_day'], errors='ignore')
+            format_out = '%Y-%m-%d'
+            target_day = datetime.datetime.strptime(p['target_day'], format_out).date() # pd.to_datetime(p['target_day'], errors='ignore')
             max_target_day = day_list[len(day_list) - 1] + datetime.timedelta(days=1)
             if (target_day > max_target_day):
                 self.logger.error("Target day outside of analysis")

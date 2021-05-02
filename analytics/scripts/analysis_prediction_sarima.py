@@ -43,14 +43,16 @@ class analysisPredictionSarima(Analysis):
         try:
             p = self._parse_parameters(parameters)
             d = self._preprocess_df(data)
-            print(d)
+            # print("Входные данные:")
+            # print(data)
             res = self._analyze(p, d)
             res = res.astype(float)
 
             # res = self._prepare_for_output(p, d, res)
 
             # pd.options.display.max_columns = 100
-            print(res)
+            # print("Результат программы:")
+            # print(res)
             return res
         except Exception as err:
             self.logger.error(err)
@@ -106,8 +108,32 @@ class analysisPredictionSarima(Analysis):
         # format_in = '%Y-%m-%d %H:%M:%S+00:00'
         data['date_time'] = data['date_time'].apply(lambda x: x.strftime(format_out))
         data['date_time'] = pd.to_datetime(data['date_time'])
-        data.set_index("date_time", inplace=True)
+        # data.set_index("date_time", inplace=True)
+        data = self._preprocess_df_power(data)
         return data
+
+    def _preprocess_df_power(self, data):
+        """
+        Convert DataFrame to Power/hour
+        """
+        try:
+            # Fill NaNs
+            if data is not None:
+                if data.empty:
+                    raise Exception("Empty DataFrame")
+                ndf = data.groupby(pd.Grouper(key="date_time", freq="1H")).count()
+                ndf.columns = ['count_val']
+                ndf['sum_val'] = data.groupby(pd.Grouper(key="date_time", freq="1H")).sum()
+                ndf['sum_power'] = ndf.sum_val / ndf.count_val
+                # ndf.reset_index(inplace=True)
+                ndf.rename(columns={'sum_power': 'E_load_Wh'},
+                           inplace=True)
+                return ndf[['E_load_Wh']]
+            else:
+                raise Exception("DataFrame is None")
+        except Exception as err:
+            self.logger.error("Failed to preprocess DataFrame: " + str(err))
+            raise Exception("Failed to preprocess DataFrame: " + str(err))
 
     def run_SARIMA(self, p, df, day_list):
         """ Forecasting LOAD by Coping previous day depending on day position in a week
@@ -116,15 +142,16 @@ class analysisPredictionSarima(Analysis):
         self.logger.debug("START SARIMA")
         try:
             N = len(df.loc[df.index.date == day_list[len(day_list) - 2]])
-            target_day = pd.to_datetime(p['target_day'], errors='ignore')
+            format_out = '%Y-%m-%d'
+            target_day = datetime.datetime.strptime(p['target_day'], format_out)
             max_target_day = day_list[len(day_list) - 1] + datetime.timedelta(days=1)
-            if (target_day > max_target_day):
+            if (target_day.date() > max_target_day):
                 self.logger.error("Target day outside of analysis")
                 return False
-            if (target_day < max_target_day):
-                target_k = day_list.index(target_day)
+            if (target_day.date() < max_target_day):
+                target_k = day_list.index(target_day.date())
             else:
-                if (target_day == max_target_day):
+                if (target_day.date() == max_target_day):
                     target_k = len(day_list)
 
             if (len(day_list) >= 14):
@@ -137,7 +164,7 @@ class analysisPredictionSarima(Analysis):
                 df.reset_index(inplace=True)
                 df['date_time'] = df.date_time + datetime.timedelta(days=1)
                 df.set_index('date_time', inplace=True)
-                return df.loc[df.index.date == target_day][['val_sarima']]
+                return df.loc[df.index.date == target_day.date()][['val_sarima']]
 
             train = pd.DataFrame(df["E_load_Wh"][(target_k - copy_from) * N:(target_k) * N])
             train.index = pd.DatetimeIndex(train.index.values,
@@ -156,7 +183,7 @@ class analysisPredictionSarima(Analysis):
             pred_data = model.predict(len(train)-N, len(train) + N - 1 + N, dynamic=True)
             pred_data = pd.DataFrame({'date_time': pred_data.index, 'val_sarima': pred_data.values})
             pred_data.set_index('date_time', inplace = True)
-            return pred_data.loc[pred_data.index.date == target_day][['val_sarima']]
+            return pred_data.loc[pred_data.index.date == target_day.date()][['val_sarima']]
             # pred_data = pd.DataFrame(data=pred_data, columns=['val_sarima'])
             # print(pred_data)
 

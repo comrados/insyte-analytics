@@ -130,13 +130,15 @@ class analysisPredictionPar(Analysis):
         try:
             p = self._parse_parameters(parameters)
             d = self._preprocess_df(data)
-            print(d)
+            # print("Входные данные:")
+            # print(data)
             res = self._analyze(p, d)
             res = res.astype(float)
             # res = self._prepare_for_output(p, d, res)
 
             # pd.options.display.max_columns = 100
-            print(res)
+            # print("Результат программы:")
+            # print(res)
             return res
         except Exception as err:
             self.logger.error(err)
@@ -191,6 +193,7 @@ class analysisPredictionPar(Analysis):
         data['date_time'] = data['date_time'].apply(lambda x: x.strftime(format_out))
         # print(datetime.timedelta(days=1))
         data['date_time'] = pd.to_datetime(data['date_time'])
+        data = self._preprocess_df_power(data)
         # print((data['date_time'].iloc[-1].date()))
         add_time = data['date_time'].iloc[-1]
         list_of_hours = []
@@ -204,6 +207,31 @@ class analysisPredictionPar(Analysis):
         data.fillna(0, inplace=True)
         return data
 
+
+    def _preprocess_df_power(self, data):
+        """
+        Convert DataFrame to Power/hour
+        """
+        try:
+            # Fill NaNs
+            if data is not None:
+                if data.empty:
+                    raise Exception("Empty DataFrame")
+                ndf = data.groupby(pd.Grouper(key="date_time", freq="1H")).count()
+                ndf.columns = ['count_val']
+                ndf['sum_val'] = data.groupby(pd.Grouper(key="date_time", freq="1H")).sum()
+                ndf['sum_power'] = ndf.sum_val / ndf.count_val
+                ndf.reset_index(inplace=True)
+                ndf.rename(columns={'sum_power': 'E_load_Wh'},
+                           inplace=True)
+                return ndf[['date_time', 'E_load_Wh']]
+            else:
+                raise Exception("DataFrame is None")
+        except Exception as err:
+            self.logger.error("Failed to preprocess DataFrame: " + str(err))
+            raise Exception("Failed to preprocess DataFrame: " + str(err))
+
+
     def run_PAR(self, p, df, day_list):
         """ Forecasting LOAD by Coping previous day depending on day position in a week
         It not just copy the previous value 3 weeks ago, it finds average among three previous same days
@@ -211,9 +239,10 @@ class analysisPredictionPar(Analysis):
         self.logger.debug("START PAR")
         try:
             df['val_par'] = 0  # initializes the E_load_forecast_PAR_Wh column with zeros
-            target_day = pd.to_datetime(p['target_day'], errors='ignore')
+            format_out = '%Y-%m-%d'
+            target_day = datetime.datetime.strptime(p['target_day'], format_out) # pd.to_datetime(p['target_day'], errors='ignore')
             max_target_day = day_list[len(day_list) - 1] + datetime.timedelta(days=1)
-            if (target_day > max_target_day):
+            if (target_day.date() > max_target_day):
                 self.logger.error("Target day outside of analysis")
                 return False;
             delta_target_day = len(day_list) - (max_target_day - target_day.date()).days
@@ -250,7 +279,7 @@ class analysisPredictionPar(Analysis):
             w = np.zeros((N, num_par))
             w_list = np.zeros((num_m * num_s * N, num_par))  # 1566*4
 
-            print("1st out of 3 loops")
+            # print("1st out of 3 loops")
             for i in range(num_m * num_s):
                 # if i is in range (0,1566) and num_s = 522
                 # then [i%num_s] is one number out of a list [0 1 2 3 ... 521 0 1 2 3 ... 521 0 1 2 3 ... 521 0]
@@ -273,7 +302,7 @@ class analysisPredictionPar(Analysis):
                     # LOAD_data[:,0] and LOAD_data[:,522]) are identical
             filt = False
             filt = FilterRLS(4, mu=0.999, eps=1e-8)  # method of weights optimization
-            print("2nd out of 3 loops")
+            # print("2nd out of 3 loops")
             for m in range(num_m):  # multiple passes through the same data
                 for s in range(0, num_s):  # for each available day in the data
                     y_before = np.zeros((N, num_par))
@@ -320,7 +349,7 @@ class analysisPredictionPar(Analysis):
                         except:
                             pass
                     day = day + 1  # day keeps track of the total number of used day
-            print("3rd out of 3 loops")
+            # print("3rd out of 3 loops")
             add_time = target_day
             list_of_time = []
             list_of_estimate = []
