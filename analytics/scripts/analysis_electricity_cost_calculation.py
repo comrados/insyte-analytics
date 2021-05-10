@@ -91,7 +91,9 @@ class ElectricityCostCalculationAnalysis(Analysis):
             p = self._parse_parameters(parameters)
             d = self._preprocess_df(data, p)
             res = self._analyze(p, d)
+            # print(d)
             # pd.options.display.max_columns = 100
+            # print("Результат")
             # print(res)
             return res
         except Exception as err:
@@ -118,7 +120,7 @@ class ElectricityCostCalculationAnalysis(Analysis):
                 new_data['time'] = new_data['time'].apply(lambda x:
                                                           self._clean_date(x))
                 new_data['time'] = pd.to_datetime(new_data.time, format='%Y-%m-%d %H:%M:%S')
-                print(new_data)
+
                 if p['data_type'] == "current":
                     new_data = self._preprocess_df_current(new_data)
                 else:
@@ -161,7 +163,6 @@ class ElectricityCostCalculationAnalysis(Analysis):
                 ndf.reset_index(inplace=True)
                 ndf.rename(columns={'sum_power': 'value', 'index': 'time'},
                                      inplace=True)
-                print(ndf)
                 return ndf[['time', 'value']]
             else:
                 raise Exception("DataFrame is None")
@@ -816,8 +817,12 @@ class ElectricityCostCalculationAnalysis(Analysis):
                 if row.time.weekday() < 5:
                     for time in time_zone:
                         time_value = datetime.time(hour=row['time'].hour, minute=row['time'].minute)
+                        print(row.value)
                         if time['start'] <= time_value < time['end']:
-                            if max < row.value: max = row.value
+                            try:
+                                if max < row.value: max = row.value
+                            except Exception as err:
+                                pass
                     if row.time.hour == 23:
                         sum += max
                         max = 0
