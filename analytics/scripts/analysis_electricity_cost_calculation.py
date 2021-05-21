@@ -692,8 +692,8 @@ class ElectricityCostCalculationAnalysis(Analysis):
         :return hourly_prices (DataFrame): time is a datetime column, value is a float column
         """
         try:
-            index_start = df.loc[df['Unnamed: 0'] == 'Дифференцированные по зонам суток расчетного периода средневзвешенные нерегулируемые цены на электрическую энергию (мощность) на оптовом рынке и средневзвешенные нерегулируемые цены на электрическую энергию на оптовом рынке, определяемые для соответствующих зон суток, руб/МВтч'].index[0]
-            filter_hourly_prices_start = df.index >= index_start + 32
+            index_start = df.loc[df['Unnamed: 2'] == 'Дифференцированная по часам расчетного периода нерегулируемая цена на электрическую энергию на оптовом рынке, определяемая по результатам конкурентного отбора ценовых заявок на сутки вперед, руб/МВтч'].index[0]
+            filter_hourly_prices_start = df.index >= index_start+1
             filter_hourly_prices_end = df['Unnamed: 5'].isnull() != True
             hourly_prices = df.loc[filter_hourly_prices_start & filter_hourly_prices_end][
                 ['Unnamed: 0', 'Unnamed: 1', 'Unnamed: 5']]
@@ -702,7 +702,6 @@ class ElectricityCostCalculationAnalysis(Analysis):
             hourly_prices.drop(['days', 'hours'], axis='columns', inplace=True)
             hourly_prices.time = hourly_prices.time - datetime.timedelta(hours=self.utc)
             hourly_prices.drop(hourly_prices.index[:self.utc], inplace=True)
-
             for i in range(int(self.utc)):
                 t = hourly_prices.loc[hourly_prices.index[-1], 'time']
                 t = t + datetime.timedelta(hours=1)
@@ -721,8 +720,8 @@ class ElectricityCostCalculationAnalysis(Analysis):
         :return: tariff_power (float)
         """
         try:
-            index_start = df.loc[df['Unnamed: 0'] == 'Дифференцированные по зонам суток расчетного периода средневзвешенные нерегулируемые цены на электрическую энергию (мощность) на оптовом рынке и средневзвешенные нерегулируемые цены на электрическую энергию на оптовом рынке, определяемые для соответствующих зон суток, руб/МВтч'].index[0]
-            tariff_power = df.loc[df.index == index_start + 15]['Unnamed: 1'].iloc[0]
+            index_start = df.loc[df['Unnamed: 0'] == 'Средневзвешенная нерегулируемая цена на мощность на оптовом рынке, руб/МВт'].index[0]
+            tariff_power = df.loc[df.index == index_start]['Unnamed: 1'].iloc[0]
             tariff_power = float(tariff_power.replace(',', '.'))
             return tariff_power
         except Exception as err:
@@ -817,7 +816,7 @@ class ElectricityCostCalculationAnalysis(Analysis):
                 if row.time.weekday() < 5:
                     for time in time_zone:
                         time_value = datetime.time(hour=row['time'].hour, minute=row['time'].minute)
-                        print(row.value)
+                        # print(row.value)
                         if time['start'] <= time_value < time['end']:
                             try:
                                 if max < row.value: max = row.value
@@ -938,7 +937,7 @@ class ElectricityCostCalculationAnalysis(Analysis):
                     count_days = d_all['time'].count()/24
                     rm_night = d_all.query("hour in @d_night.hour")
                     rm_peak = d_all.query("hour in @d_peak.hour")
-                    print(rm_peak)
+                    # print(rm_peak)
                     count_night = rm_night['value'].count()
                     count_peak = rm_peak['value'].count()
                     minus_day = pn['capacity_energy_storage']*count_days / count_peak
@@ -959,7 +958,7 @@ class ElectricityCostCalculationAnalysis(Analysis):
                     rm = rm.drop(['hour'], axis=1)
                     rm = rm.reset_index()
                     rm = rm.drop(['index'], axis=1)
-                    print(rm[30:60])
+                    # print(rm[30:60])
 
                 if c == 3 or c == 4:
                     for index, row in rm.iterrows():
