@@ -93,8 +93,8 @@ class ElectricityCostCalculationAnalysis(Analysis):
             res = self._analyze(p, d)
             # print(d)
             # pd.options.display.max_columns = 100
-            # print("Результат")
-            # print(res)
+            print("Результат")
+            print(res)
             return res
         except Exception as err:
             self.logger.error(err)
