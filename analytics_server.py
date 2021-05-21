@@ -232,7 +232,7 @@ class AnalyticsRequestHandler(BaseHTTPRequestHandler):
         GET 'functions' request processor
         :param client: address
         """
-        logger.info("GET 'log' request from " + client)
+        # logger.info("GET 'log' request from " + client)
         with open(os.path.join(self.s.log_dir, self.s.log_file), "r") as log:
             content = log.read()
         self._send_response_code_and_content(200, content, 'text/plain')
